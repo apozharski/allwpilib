@@ -23,8 +23,7 @@ public class AnalogAccelerometer extends SensorBase implements PIDSource, Sendab
   private double m_voltsPerG = 1.0;
   private double m_zeroGVoltage = 2.5;
   private boolean m_allocatedChannel;
-  protected PIDSourceType m_pidSource = PIDSourceType.kDisplacement;
-
+  
   /**
    * Common initialization.
    */
@@ -130,6 +129,9 @@ public class AnalogAccelerometer extends SensorBase implements PIDSource, Sendab
    */
   @Override
   public double pidGet() {
+    if (!pidSource.equals(PIDSourceType.kDisplacement)) {
+      throw new IllegalArgumentException("Only displacement PID is allowed for ultrasonics.");
+    }
     return getAcceleration();
   }
 
