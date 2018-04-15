@@ -54,8 +54,7 @@ public class Ultrasonic extends SensorBase implements PIDSource, Sendable {
   private static Thread m_task = null;
   private Unit m_units;
   private static int m_instances = 0;
-  protected PIDSourceType m_pidSource = PIDSourceType.kDisplacement;
-
+  
   /**
    * Background task that goes through the list of ultrasonic sensors and pings each one in turn.
    * The counter is configured to read the timing of the returned echo pulse.
@@ -324,26 +323,16 @@ public class Ultrasonic extends SensorBase implements PIDSource, Sendable {
     return getRangeInches() * 25.4;
   }
 
-  @Override
-  public void setPIDSourceType(PIDSourceType pidSource) {
-    if (!pidSource.equals(PIDSourceType.kDisplacement)) {
-      throw new IllegalArgumentException("Only displacement PID is allowed for ultrasonics.");
-    }
-    m_pidSource = pidSource;
-  }
-
-  @Override
-  public PIDSourceType getPIDSourceType() {
-    return m_pidSource;
-  }
-
   /**
    * Get the range in the current DistanceUnit for the PIDSource base object.
    *
    * @return The range in DistanceUnit
    */
   @Override
-  public double pidGet() {
+  public double pidGet(PIDSourceType pidSource) {
+    if (!pidSource.equals(PIDSourceType.kDisplacement)) {
+      throw new IllegalArgumentException("Only displacement PID is allowed for ultrasonics.");
+    }
     switch (m_units) {
       case kInches:
         return getRangeInches();

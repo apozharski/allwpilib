@@ -31,7 +31,6 @@ public class AnalogInput extends SensorBase implements PIDSource, Sendable {
   private int m_channel;
   private static final int[] kAccumulatorChannels = {0, 1};
   private long m_accumulatorOffset;
-  protected PIDSourceType m_pidSource = PIDSourceType.kDisplacement;
 
   /**
    * Construct an analog channel.
@@ -325,23 +324,13 @@ public class AnalogInput extends SensorBase implements PIDSource, Sendable {
     return AnalogJNI.getAnalogSampleRate();
   }
 
-  @Override
-  public void setPIDSourceType(PIDSourceType pidSource) {
-    m_pidSource = pidSource;
-  }
-
-  @Override
-  public PIDSourceType getPIDSourceType() {
-    return m_pidSource;
-  }
-
   /**
    * Get the average voltage for use with PIDController.
    *
    * @return the average voltage
    */
   @Override
-  public double pidGet() {
+  public double pidGet(PIDSourceType pidSource) {
     return getAverageVoltage();
   }
 

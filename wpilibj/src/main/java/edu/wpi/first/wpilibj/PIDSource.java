@@ -11,24 +11,11 @@ package edu.wpi.first.wpilibj;
  * This interface allows for PIDController to automatically read from this object.
  */
 public interface PIDSource {
-  /**
-   * Set which parameter of the device you are using as a process control variable.
-   *
-   * @param pidSource An enum to select the parameter.
-   */
-  void setPIDSourceType(PIDSourceType pidSource);
-
-  /**
-   * Get which parameter of the device you are using as a process control variable.
-   *
-   * @return the currently selected PID source parameter
-   */
-  PIDSourceType getPIDSourceType();
-
+  
   /**
    * Get the result to use in PIDController.
    *
    * @return the result to use in PIDController
    */
-  double pidGet();
+  double pidGet(PIDSourceType pidSource);
 }

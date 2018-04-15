@@ -14,23 +14,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableBuilder;
  * GyroBase is the common base class for Gyro implementations such as AnalogGyro.
  */
 public abstract class GyroBase extends SensorBase implements Gyro, PIDSource, Sendable {
-  private PIDSourceType m_pidSource = PIDSourceType.kDisplacement;
 
-  /**
-   * Set which parameter of the gyro you are using as a process control variable. The Gyro class
-   * supports the rate and displacement parameters
-   *
-   * @param pidSource An enum to select the parameter.
-   */
-  @Override
-  public void setPIDSourceType(PIDSourceType pidSource) {
-    m_pidSource = pidSource;
-  }
-
-  @Override
-  public PIDSourceType getPIDSourceType() {
-    return m_pidSource;
-  }
 
   /**
    * Get the output of the gyro for use with PIDControllers. May be the angle or rate depending on
@@ -39,7 +23,7 @@ public abstract class GyroBase extends SensorBase implements Gyro, PIDSource, Se
    * @return the output according to the gyro
    */
   @Override
-  public double pidGet() {
+  public double pidGet(PIDSourceType pidSource) {
     switch (m_pidSource) {
       case kRate:
         return getRate();

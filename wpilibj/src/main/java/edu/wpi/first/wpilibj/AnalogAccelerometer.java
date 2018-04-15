@@ -23,7 +23,6 @@ public class AnalogAccelerometer extends SensorBase implements PIDSource, Sendab
   private double m_voltsPerG = 1.0;
   private double m_zeroGVoltage = 2.5;
   private boolean m_allocatedChannel;
-  protected PIDSourceType m_pidSource = PIDSourceType.kDisplacement;
 
   /**
    * Common initialization.
@@ -113,25 +112,15 @@ public class AnalogAccelerometer extends SensorBase implements PIDSource, Sendab
     m_zeroGVoltage = zero;
   }
 
-  @Override
-  public void setPIDSourceType(PIDSourceType pidSource) {
-    m_pidSource = pidSource;
-  }
-
-  @Override
-  public PIDSourceType getPIDSourceType() {
-    return m_pidSource;
-  }
-
   /**
    * Get the Acceleration for the PID Source parent.
    *
    * @return The current acceleration in Gs.
    */
   @Override
-  public double pidGet() {
-    if (!m_pidSource.equals(PIDSourceType.kDisplacement)) {
-      throw new IllegalArgumentException("Only displacement PID is allowed for ultrasonics.");
+  public double pidGet(PIDSourceType pidSource) {
+    if (!pidSource.equals(PIDSourceType.kDisplacement)) {
+      throw new IllegalArgumentException("Only displacement PID is allowed for accelerometers.");
     }
     return getAcceleration();
   }

@@ -64,7 +64,6 @@ public class Counter extends SensorBase implements CounterBase, Sendable, PIDSou
   private boolean m_allocatedDownSource;
   private int m_counter; // /< The FPGA counter object.
   private int m_index; // /< The index of this counter.
-  private PIDSourceType m_pidSource;
   private double m_distancePerPulse; // distance of travel for each tick
 
   /**
@@ -522,28 +521,10 @@ public class Counter extends SensorBase implements CounterBase, Sendable, PIDSou
     m_distancePerPulse = distancePerPulse;
   }
 
-  /**
-   * Set which parameter of the encoder you are using as a process control variable. The counter
-   * class supports the rate and distance parameters.
-   *
-   * @param pidSource An enum to select the parameter.
-   */
-  public void setPIDSourceType(PIDSourceType pidSource) {
-    requireNonNull(pidSource, "PID Source Parameter given was null");
-    if (pidSource != PIDSourceType.kDisplacement && pidSource != PIDSourceType.kRate) {
-      throw new IllegalArgumentException("PID Source parameter was not valid type: " + pidSource);
-    }
-
-    m_pidSource = pidSource;
-  }
-
-  public PIDSourceType getPIDSourceType() {
-    return m_pidSource;
-  }
 
   @Override
-  public double pidGet() {
-    switch (m_pidSource) {
+  public double pidGet(PIDSourceType pidSource) {
+    switch (pidSource) {
       case kDisplacement:
         return getDistance();
       case kRate:

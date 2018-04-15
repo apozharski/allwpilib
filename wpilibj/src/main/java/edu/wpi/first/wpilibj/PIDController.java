@@ -57,6 +57,7 @@ public class PIDController extends SendableBase implements PIDInterface, Sendabl
   private double m_error = 0.0;
   private double m_result = 0.0;
   private double m_period = kDefaultPeriod;
+  private PIDSourceType m_pidSourceType = PIDSourceType.kdisplacement;
 
   PIDSource m_origSource;
   LinearDigitalFilter m_filter;
@@ -266,7 +267,6 @@ public class PIDController extends SendableBase implements PIDInterface, Sendabl
       double input;
 
       // Storage for function inputs
-      PIDSourceType pidSourceType;
       double P;
       double I;
       double D;
@@ -281,9 +281,7 @@ public class PIDController extends SendableBase implements PIDInterface, Sendabl
 
       m_thisMutex.lock();
       try {
-        input = m_pidInput.pidGet();
-
-        pidSourceType = m_pidInput.getPIDSourceType();
+	input = m_pidInput.pidGet(m_pidSourceType);
         P = m_P;
         I = m_I;
         D = m_D;
@@ -300,7 +298,7 @@ public class PIDController extends SendableBase implements PIDInterface, Sendabl
       // Storage for function outputs
       double result;
 
-      if (pidSourceType.equals(PIDSourceType.kRate)) {
+      if (m_pidSourceType.equals(PIDSourceType.kRate)) {
         if (P != 0) {
           totalError = clamp(totalError + error, minimumOutput / P,
               maximumOutput / P);
@@ -707,7 +705,7 @@ public class PIDController extends SendableBase implements PIDInterface, Sendabl
    * @param pidSource the type of input
    */
   void setPIDSourceType(PIDSourceType pidSource) {
-    m_pidInput.setPIDSourceType(pidSource);
+    m_pidSourceType = pidSource;
   }
 
   /**
@@ -716,7 +714,7 @@ public class PIDController extends SendableBase implements PIDInterface, Sendabl
    * @return the PID controller input type
    */
   PIDSourceType getPIDSourceType() {
-    return m_pidInput.getPIDSourceType();
+    return m_pidSourceType;
   }
 
   /**

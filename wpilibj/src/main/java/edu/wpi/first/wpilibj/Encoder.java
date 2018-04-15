@@ -57,7 +57,6 @@ public class Encoder extends SensorBase implements CounterBase, PIDSource, Senda
   private boolean m_allocatedA;
   private boolean m_allocatedB;
   private boolean m_allocatedI;
-  private PIDSourceType m_pidSource;
 
   private int m_encoder; // the HAL encoder object
 
@@ -74,8 +73,6 @@ public class Encoder extends SensorBase implements CounterBase, PIDSource, Senda
     m_encoder = EncoderJNI.initializeEncoder(m_aSource.getPortHandleForRouting(),
         m_aSource.getAnalogTriggerTypeForRouting(), m_bSource.getPortHandleForRouting(),
         m_bSource.getAnalogTriggerTypeForRouting(), reverseDirection, type.value);
-
-    m_pidSource = PIDSourceType.kDisplacement;
 
     int fpgaIndex = getFPGAIndex();
     HAL.report(tResourceType.kResourceType_Encoder, fpgaIndex, type.value);
@@ -475,28 +472,14 @@ public class Encoder extends SensorBase implements CounterBase, PIDSource, Senda
     return EncoderJNI.getEncoderSamplesToAverage(m_encoder);
   }
 
-  /**
-   * Set which parameter of the encoder you are using as a process control variable. The encoder
-   * class supports the rate and distance parameters.
-   *
-   * @param pidSource An enum to select the parameter.
-   */
-  public void setPIDSourceType(PIDSourceType pidSource) {
-    m_pidSource = pidSource;
-  }
-
-  @Override
-  public PIDSourceType getPIDSourceType() {
-    return m_pidSource;
-  }
 
   /**
    * Implement the PIDSource interface.
    *
    * @return The current value of the selected source parameter.
    */
-  public double pidGet() {
-    switch (m_pidSource) {
+  public double pidGet(PIDSourceType pidSource) {
+    switch (pidSource) {
       case kDisplacement:
         return getDistance();
       case kRate:
