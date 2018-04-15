@@ -129,7 +129,7 @@ public class AnalogAccelerometer extends SensorBase implements PIDSource, Sendab
    */
   @Override
   public double pidGet() {
-    if (!pidSource.equals(PIDSourceType.kDisplacement)) {
+    if (!m_pidSource.equals(PIDSourceType.kDisplacement)) {
       throw new IllegalArgumentException("Only displacement PID is allowed for ultrasonics.");
     }
     return getAcceleration();
