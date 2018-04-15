@@ -23,7 +23,8 @@ public class AnalogAccelerometer extends SensorBase implements PIDSource, Sendab
   private double m_voltsPerG = 1.0;
   private double m_zeroGVoltage = 2.5;
   private boolean m_allocatedChannel;
-  
+  protected PIDSourceType m_pidSource = PIDSourceType.kDisplacement;
+
   /**
    * Common initialization.
    */
