@@ -19,12 +19,8 @@ enum class PIDSourceType { kDisplacement, kRate };
  */
 class PIDSource {
  public:
-  virtual void SetPIDSourceType(PIDSourceType pidSource);
-  virtual PIDSourceType GetPIDSourceType() const;
-  virtual double PIDGet() = 0;
+  virtual double PIDGet(PIDSourceType) = 0;
 
- protected:
-  PIDSourceType m_pidSource = PIDSourceType::kDisplacement;
 };
 
 }  // namespace frc

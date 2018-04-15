@@ -161,6 +161,9 @@ class PIDController : public SendableBase, public PIDInterface {
   double m_period;
 
   std::shared_ptr<PIDSource> m_origSource;
+
+  PIDSourceType m_pidSourceType = PIDSourceType::kDisplacement;
+  
   LinearDigitalFilter m_filter{nullptr, {}, {}};
 
   mutable wpi::mutex m_thisMutex;

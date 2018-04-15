@@ -18,8 +18,8 @@ using namespace frc;
  *
  * @return The PIDOutput (angle or rate, defaults to angle)
  */
-double GyroBase::PIDGet() {
-  switch (GetPIDSourceType()) {
+double GyroBase::PIDGet(PIDSourceType pidSource) {
+  switch (pidSource) {
     case PIDSourceType::kRate:
       return GetRate();
     case PIDSourceType::kDisplacement:

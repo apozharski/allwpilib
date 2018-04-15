@@ -113,7 +113,7 @@ void AnalogAccelerometer::SetZero(double zero) { m_zeroGVoltage = zero; }
  *
  * @return The current acceleration in Gs.
  */
-double AnalogAccelerometer::PIDGet() { return GetAcceleration(); }
+double AnalogAccelerometer::PIDGet(PIDSourceType pidSource) { return GetAcceleration(); }
 
 void AnalogAccelerometer::InitSendable(SendableBuilder& builder) {
   builder.SetSmartDashboardType("Accelerometer");

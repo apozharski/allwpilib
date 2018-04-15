@@ -77,7 +77,7 @@ double AnalogPotentiometer::Get() const {
  *
  * @return The current reading.
  */
-double AnalogPotentiometer::PIDGet() { return Get(); }
+double AnalogPotentiometer::PIDGet(PIDSourceType pidsource) { return Get(); }
 
 /**
  * Live Window code, only does anything if live window is activated.

@@ -281,7 +281,7 @@ double Ultrasonic::GetRangeMM() const { return GetRangeInches() * 25.4; }
  *
  * @return The range in DistanceUnit
  */
-double Ultrasonic::PIDGet() {
+double Ultrasonic::PIDGet(PIDSourceType pidsource) {
   switch (m_units) {
     case Ultrasonic::kInches:
       return GetRangeInches();

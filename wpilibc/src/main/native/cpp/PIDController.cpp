@@ -138,7 +138,6 @@ void PIDController::Calculate() {
     double input;
 
     // Storage for function inputs
-    PIDSourceType pidSourceType;
     double P;
     double I;
     double D;
@@ -154,9 +153,8 @@ void PIDController::Calculate() {
     {
       std::lock_guard<wpi::mutex> lock(m_thisMutex);
 
-      input = m_pidInput->PIDGet();
+      input = m_pidInput->PIDGet(m_pidSourceType);
 
-      pidSourceType = m_pidInput->GetPIDSourceType();
       P = m_P;
       I = m_I;
       D = m_D;
@@ -171,7 +169,7 @@ void PIDController::Calculate() {
     // Storage for function outputs
     double result;
 
-    if (pidSourceType == PIDSourceType::kRate) {
+    if (m_pidSourceType == PIDSourceType::kRate) {
       if (P != 0) {
         totalError =
             clamp(totalError + error, minimumOutput / P, maximumOutput / P);
@@ -226,7 +224,7 @@ void PIDController::Calculate() {
  * the default period in this class's constructor).
  */
 double PIDController::CalculateFeedForward() {
-  if (m_pidInput->GetPIDSourceType() == PIDSourceType::kRate) {
+  if (m_pidSourceType == PIDSourceType::kRate) {
     return m_F * GetSetpoint();
   } else {
     double temp = m_F * GetDeltaSetpoint();
@@ -458,7 +456,7 @@ double PIDController::GetError() const {
   double setpoint = GetSetpoint();
   {
     std::lock_guard<wpi::mutex> lock(m_thisMutex);
-    return GetContinuousError(setpoint - m_pidInput->PIDGet());
+    return GetContinuousError(setpoint - m_pidInput->PIDGet(m_pidSourceType));
   }
 }
 
@@ -476,7 +474,7 @@ double PIDController::GetAvgError() const { return GetError(); }
  * Sets what type of input the PID controller will use.
  */
 void PIDController::SetPIDSourceType(PIDSourceType pidSource) {
-  m_pidInput->SetPIDSourceType(pidSource);
+  m_pidSourceType= pidSource;
 }
 /**
  * Returns the type of input the PID controller is using.
@@ -484,7 +482,7 @@ void PIDController::SetPIDSourceType(PIDSourceType pidSource) {
  * @return the PID controller input type
  */
 PIDSourceType PIDController::GetPIDSourceType() const {
-  return m_pidInput->GetPIDSourceType();
+    return m_pidSourceType;
 }
 
 /*

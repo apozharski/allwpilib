@@ -442,9 +442,9 @@ int Encoder::GetSamplesToAverage() const {
  *
  * @return The current value of the selected source parameter.
  */
-double Encoder::PIDGet() {
+double Encoder::PIDGet(PIDSourceType pidSource) {
   if (StatusIsFatal()) return 0.0;
-  switch (GetPIDSourceType()) {
+  switch (pidSource) {
     case PIDSourceType::kDisplacement:
       return GetDistance();
     case PIDSourceType::kRate:
