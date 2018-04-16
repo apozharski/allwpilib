@@ -32,7 +32,7 @@ class AnalogAccelerometer : public SensorBase, public PIDSource {
   double GetAcceleration() const;
   void SetSensitivity(double sensitivity);
   void SetZero(double zero);
-  double PIDGet() override;
+  double PIDGet(PIDSourceType pidSource) override;
 
   void InitSendable(SendableBuilder& builder) override;
 

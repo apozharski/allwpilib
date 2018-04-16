@@ -18,11 +18,11 @@ Filter::Filter(std::shared_ptr<PIDSource> source)
     : m_source(std::move(source)) {}
 
 void Filter::SetPIDSourceType(PIDSourceType pidSource) {
-  m_source->SetPIDSourceType(pidSource);
+  m_pidSourceType = pidSource;
 }
 
 PIDSourceType Filter::GetPIDSourceType() const {
-  return m_source->GetPIDSourceType();
+  return m_pidSourceType;
 }
 
-double Filter::PIDGetSource() { return m_source->PIDGet(); }
+double Filter::PIDGetSource() { return m_source->PIDGet(m_pidSourceType); }

@@ -238,4 +238,4 @@ double PIDSubsystem::GetRate() { return ReturnPIDInput(); }
 
 void PIDSubsystem::PIDWrite(double output) { UsePIDOutput(output); }
 
-double PIDSubsystem::PIDGet() { return ReturnPIDInput(); }
+double PIDSubsystem::PIDGet(PIDSourceType pidSource) { return ReturnPIDInput(); }

@@ -36,7 +36,7 @@ class PIDCommand : public Command, public PIDOutput, public PIDSource {
   void PIDWrite(double output) override;
 
   // PIDSource interface
-  double PIDGet() override;
+  double PIDGet(PIDSourceType pidSource) override;
 
  protected:
   std::shared_ptr<PIDController> GetPIDController() const;

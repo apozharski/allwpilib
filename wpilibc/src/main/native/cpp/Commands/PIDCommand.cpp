@@ -53,7 +53,7 @@ void PIDCommand::SetSetpointRelative(double deltaSetpoint) {
 
 void PIDCommand::PIDWrite(double output) { UsePIDOutput(output); }
 
-double PIDCommand::PIDGet() { return ReturnPIDInput(); }
+double PIDCommand::PIDGet(PIDSourceType pidSource) { return ReturnPIDInput(); }
 
 std::shared_ptr<PIDController> PIDCommand::GetPIDController() const {
   return m_controller;

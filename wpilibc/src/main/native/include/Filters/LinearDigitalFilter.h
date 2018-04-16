@@ -91,9 +91,9 @@ class LinearDigitalFilter : public Filter {
   // Filter interface
   double Get() const override;
   void Reset() override;
-
+  
   // PIDSource interface
-  double PIDGet() override;
+  double PIDGet(PIDSourceType pidSource) override;
 
  private:
   circular_buffer<double> m_inputs;

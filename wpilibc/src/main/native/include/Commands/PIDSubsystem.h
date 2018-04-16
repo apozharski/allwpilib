@@ -45,7 +45,7 @@ class PIDSubsystem : public Subsystem, public PIDOutput, public PIDSource {
   void PIDWrite(double output) override;
 
   // PIDSource interface
-  double PIDGet() override;
+  double PIDGet(PIDSourceType pidSource) override;
   void SetSetpoint(double setpoint);
   void SetSetpointRelative(double deltaSetpoint);
   void SetInputRange(double minimumInput, double maximumInput);

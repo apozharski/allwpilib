@@ -74,7 +74,7 @@ class Encoder : public SensorBase, public CounterBase, public PIDSource {
   void SetReverseDirection(bool reverseDirection);
   void SetSamplesToAverage(int samplesToAverage);
   int GetSamplesToAverage() const;
-  double PIDGet() override;
+  double PIDGet(PIDSourceType pidSource) override;
 
   void SetIndexSource(int channel, IndexingType type = kResetOnRisingEdge);
   void SetIndexSource(const DigitalSource& source,

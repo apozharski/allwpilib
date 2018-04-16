@@ -9,6 +9,8 @@
 
 #include "RobotController.h"
 #include "SmartDashboard/SendableBuilder.h"
+#include "Utility.h"
+#include "WPIErrors.h"
 
 using namespace frc;
 
@@ -75,9 +77,16 @@ double AnalogPotentiometer::Get() const {
 /**
  * Implement the PIDSource interface.
  *
+ * @param pidSource 
+ * 
  * @return The current reading.
  */
-double AnalogPotentiometer::PIDGet(PIDSourceType pidsource) { return Get(); }
+double AnalogPotentiometer::PIDGet(PIDSourceType pidSource) {
+  if (wpi_assert(pidSource == PIDSourceType::kDisplacement)) {
+    return Get();
+  }
+  else return 0.0;
+}
 
 /**
  * Live Window code, only does anything if live window is activated.

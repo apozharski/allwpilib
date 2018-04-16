@@ -64,7 +64,7 @@ class AnalogPotentiometer : public SensorBase, public Potentiometer {
    *
    * @return The current reading.
    */
-  double PIDGet() override;
+  double PIDGet(PIDSourceType pidSource) override;
 
   void InitSendable(SendableBuilder& builder) override;
 

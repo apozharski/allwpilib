@@ -69,7 +69,7 @@ class AnalogInput : public SensorBase, public PIDSource {
   static void SetSampleRate(double samplesPerSecond);
   static double GetSampleRate();
 
-  double PIDGet() override;
+  double PIDGet(PIDSourceType pidSource) override;
 
   void InitSendable(SendableBuilder& builder) override;
 

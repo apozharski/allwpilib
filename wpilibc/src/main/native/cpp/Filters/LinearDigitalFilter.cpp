@@ -172,9 +172,10 @@ void LinearDigitalFilter::Reset() {
 /**
  * Calculates the next value of the filter
  *
+ * TODO: This is currently a massive hack and ignores the parameter. I need to figure this out.
  * @return The filtered value at this step
  */
-double LinearDigitalFilter::PIDGet() {
+double LinearDigitalFilter::PIDGet(PIDSourceType pidSource) {
   double retVal = 0.0;
 
   // Rotate the inputs

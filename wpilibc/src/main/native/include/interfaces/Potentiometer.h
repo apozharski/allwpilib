@@ -25,7 +25,6 @@ class Potentiometer : public PIDSource {
    */
   virtual double Get() const = 0;
 
-  void SetPIDSourceType(PIDSourceType pidSource) override;
 };
 
 }  // namespace frc

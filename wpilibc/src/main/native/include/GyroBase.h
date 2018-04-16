@@ -20,7 +20,7 @@ namespace frc {
 class GyroBase : public Gyro, public SensorBase, public PIDSource {
  public:
   // PIDSource interface
-  double PIDGet() override;
+  double PIDGet(PIDSourceType pidSource) override;
 
   void InitSendable(SendableBuilder& builder) override;
 };

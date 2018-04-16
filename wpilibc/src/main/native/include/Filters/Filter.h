@@ -23,9 +23,9 @@ class Filter : public PIDSource {
   virtual ~Filter() = default;
 
   // PIDSource interface
-  void SetPIDSourceType(PIDSourceType pidSource) override;
-  PIDSourceType GetPIDSourceType() const override;
-  double PIDGet() override = 0;
+  void SetPIDSourceType(PIDSourceType pidSource);
+  PIDSourceType GetPIDSourceType() const;
+  double PIDGet(PIDSourceType pidSource) override = 0;
 
   /**
    * Returns the current filter estimate without also inserting new data as
@@ -50,6 +50,7 @@ class Filter : public PIDSource {
 
  private:
   std::shared_ptr<PIDSource> m_source;
+  PIDSourceType m_pidSourceType;
 };
 
 }  // namespace frc
