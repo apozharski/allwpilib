@@ -24,15 +24,15 @@
 namespace hal {
 
 class HandleBase {
- public:
+public:
   HandleBase();
   ~HandleBase();
-  HandleBase(const HandleBase&) = delete;
-  HandleBase& operator=(const HandleBase&) = delete;
+  HandleBase(const HandleBase &) = delete;
+  HandleBase &operator=(const HandleBase &) = delete;
   virtual void ResetHandles();
   static void ResetGlobalHandles();
 
- protected:
+protected:
   int16_t m_version;
 };
 
@@ -76,9 +76,11 @@ static inline bool isHandleCorrectVersion(HAL_Handle handle, int16_t version) {
 static inline int16_t getHandleTypedIndex(HAL_Handle handle,
                                           HAL_HandleEnum enumType,
                                           int16_t version) {
-  if (!isHandleType(handle, enumType)) return InvalidHandleIndex;
+  if (!isHandleType(handle, enumType))
+    return InvalidHandleIndex;
 #if !defined(__FRC_ROBORIO__)
-  if (!isHandleCorrectVersion(handle, version)) return InvalidHandleIndex;
+  if (!isHandleCorrectVersion(handle, version))
+    return InvalidHandleIndex;
 #endif
   return getHandleIndex(handle);
 }
@@ -94,19 +96,22 @@ static inline int16_t getHandleTypedIndex(HAL_Handle handle,
 
 // using a 16 bit value so we can store 0-255 and still report error
 static inline int16_t getPortHandleChannel(HAL_PortHandle handle) {
-  if (!isHandleType(handle, HAL_HandleEnum::Port)) return InvalidHandleIndex;
+  if (!isHandleType(handle, HAL_HandleEnum::Port))
+    return InvalidHandleIndex;
   return static_cast<uint8_t>(handle & 0xff);
 }
 
 // using a 16 bit value so we can store 0-255 and still report error
 static inline int16_t getPortHandleModule(HAL_PortHandle handle) {
-  if (!isHandleType(handle, HAL_HandleEnum::Port)) return InvalidHandleIndex;
+  if (!isHandleType(handle, HAL_HandleEnum::Port))
+    return InvalidHandleIndex;
   return static_cast<uint8_t>((handle >> 8) & 0xff);
 }
 
 // using a 16 bit value so we can store 0-255 and still report error
 static inline int16_t getPortHandleSPIEnable(HAL_PortHandle handle) {
-  if (!isHandleType(handle, HAL_HandleEnum::Port)) return InvalidHandleIndex;
+  if (!isHandleType(handle, HAL_HandleEnum::Port))
+    return InvalidHandleIndex;
   return static_cast<uint8_t>((handle >> 16) & 0xff);
 }
 
@@ -116,4 +121,4 @@ HAL_PortHandle createPortHandleForSPI(uint8_t channel);
 
 HAL_Handle createHandle(int16_t index, HAL_HandleEnum handleType,
                         int16_t version);
-}  // namespace hal
+} // namespace hal

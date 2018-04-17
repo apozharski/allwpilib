@@ -18,7 +18,7 @@ namespace frc {
  * MXP analog output class.
  */
 class AnalogOutput : public ErrorBase, public SendableBase {
- public:
+public:
   explicit AnalogOutput(int channel);
   ~AnalogOutput() override;
 
@@ -26,11 +26,11 @@ class AnalogOutput : public ErrorBase, public SendableBase {
   double GetVoltage() const;
   int GetChannel();
 
-  void InitSendable(SendableBuilder& builder) override;
+  void InitSendable(SendableBuilder &builder) override;
 
- protected:
+protected:
   int m_channel;
   HAL_AnalogOutputHandle m_port;
 };
 
-}  // namespace frc
+} // namespace frc

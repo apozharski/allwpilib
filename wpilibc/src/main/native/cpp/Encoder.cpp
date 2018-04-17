@@ -103,7 +103,7 @@ Encoder::Encoder(int aChannel, int bChannel, bool reverseDirection,
  *                         value will either exactly match the spec'd count or
  *                         be double (2x) the spec'd count.
  */
-Encoder::Encoder(DigitalSource* aSource, DigitalSource* bSource,
+Encoder::Encoder(DigitalSource *aSource, DigitalSource *bSource,
                  bool reverseDirection, EncodingType encodingType)
     : m_aSource(aSource, NullDeleter<DigitalSource>()),
       m_bSource(bSource, NullDeleter<DigitalSource>()) {
@@ -146,7 +146,7 @@ Encoder::Encoder(std::shared_ptr<DigitalSource> aSource,
  *                         value will either exactly match the spec'd count or
  *                         be double (2x) the spec'd count.
  */
-Encoder::Encoder(DigitalSource& aSource, DigitalSource& bSource,
+Encoder::Encoder(DigitalSource &aSource, DigitalSource &bSource,
                  bool reverseDirection, EncodingType encodingType)
     : m_aSource(&aSource, NullDeleter<DigitalSource>()),
       m_bSource(&bSource, NullDeleter<DigitalSource>()) {
@@ -185,7 +185,8 @@ int Encoder::GetEncodingScale() const {
  * @return Current raw count from the encoder
  */
 int Encoder::GetRaw() const {
-  if (StatusIsFatal()) return 0;
+  if (StatusIsFatal())
+    return 0;
   int32_t status = 0;
   int value = HAL_GetEncoderRaw(m_encoder, &status);
   wpi_setErrorWithContext(status, HAL_GetErrorMessage(status));
@@ -202,7 +203,8 @@ int Encoder::GetRaw() const {
  *         factor.
  */
 int Encoder::Get() const {
-  if (StatusIsFatal()) return 0;
+  if (StatusIsFatal())
+    return 0;
   int32_t status = 0;
   int value = HAL_GetEncoder(m_encoder, &status);
   wpi_setErrorWithContext(status, HAL_GetErrorMessage(status));
@@ -215,7 +217,8 @@ int Encoder::Get() const {
  * Resets the current count to zero on the encoder.
  */
 void Encoder::Reset() {
-  if (StatusIsFatal()) return;
+  if (StatusIsFatal())
+    return;
   int32_t status = 0;
   HAL_ResetEncoder(m_encoder, &status);
   wpi_setErrorWithContext(status, HAL_GetErrorMessage(status));
@@ -233,7 +236,8 @@ void Encoder::Reset() {
  * @return Period in seconds of the most recent pulse.
  */
 double Encoder::GetPeriod() const {
-  if (StatusIsFatal()) return 0.0;
+  if (StatusIsFatal())
+    return 0.0;
   int32_t status = 0;
   double value = HAL_GetEncoderPeriod(m_encoder, &status);
   wpi_setErrorWithContext(status, HAL_GetErrorMessage(status));
@@ -257,7 +261,8 @@ double Encoder::GetPeriod() const {
  *                  in seconds.
  */
 void Encoder::SetMaxPeriod(double maxPeriod) {
-  if (StatusIsFatal()) return;
+  if (StatusIsFatal())
+    return;
   int32_t status = 0;
   HAL_SetEncoderMaxPeriod(m_encoder, maxPeriod, &status);
   wpi_setErrorWithContext(status, HAL_GetErrorMessage(status));
@@ -273,7 +278,8 @@ void Encoder::SetMaxPeriod(double maxPeriod) {
  * @return True if the encoder is considered stopped.
  */
 bool Encoder::GetStopped() const {
-  if (StatusIsFatal()) return true;
+  if (StatusIsFatal())
+    return true;
   int32_t status = 0;
   bool value = HAL_GetEncoderStopped(m_encoder, &status);
   wpi_setErrorWithContext(status, HAL_GetErrorMessage(status));
@@ -286,7 +292,8 @@ bool Encoder::GetStopped() const {
  * @return The last direction the encoder value changed.
  */
 bool Encoder::GetDirection() const {
-  if (StatusIsFatal()) return false;
+  if (StatusIsFatal())
+    return false;
   int32_t status = 0;
   bool value = HAL_GetEncoderDirection(m_encoder, &status);
   wpi_setErrorWithContext(status, HAL_GetErrorMessage(status));
@@ -298,7 +305,8 @@ bool Encoder::GetDirection() const {
  * pulses.
  */
 double Encoder::DecodingScaleFactor() const {
-  if (StatusIsFatal()) return 0.0;
+  if (StatusIsFatal())
+    return 0.0;
   int32_t status = 0;
   double val = HAL_GetEncoderDecodingScaleFactor(m_encoder, &status);
   wpi_setErrorWithContext(status, HAL_GetErrorMessage(status));
@@ -312,7 +320,8 @@ double Encoder::DecodingScaleFactor() const {
  *         SetDistancePerPulse().
  */
 double Encoder::GetDistance() const {
-  if (StatusIsFatal()) return 0.0;
+  if (StatusIsFatal())
+    return 0.0;
   int32_t status = 0;
   double value = HAL_GetEncoderDistance(m_encoder, &status);
   wpi_setErrorWithContext(status, HAL_GetErrorMessage(status));
@@ -328,7 +337,8 @@ double Encoder::GetDistance() const {
  * @return The current rate of the encoder.
  */
 double Encoder::GetRate() const {
-  if (StatusIsFatal()) return 0.0;
+  if (StatusIsFatal())
+    return 0.0;
   int32_t status = 0;
   double value = HAL_GetEncoderRate(m_encoder, &status);
   wpi_setErrorWithContext(status, HAL_GetErrorMessage(status));
@@ -342,7 +352,8 @@ double Encoder::GetRate() const {
  *                scaled by the value from SetDistancePerPulse().
  */
 void Encoder::SetMinRate(double minRate) {
-  if (StatusIsFatal()) return;
+  if (StatusIsFatal())
+    return;
   int32_t status = 0;
   HAL_SetEncoderMinRate(m_encoder, minRate, &status);
   wpi_setErrorWithContext(status, HAL_GetErrorMessage(status));
@@ -366,7 +377,8 @@ void Encoder::SetMinRate(double minRate) {
  *                         to useful units.
  */
 void Encoder::SetDistancePerPulse(double distancePerPulse) {
-  if (StatusIsFatal()) return;
+  if (StatusIsFatal())
+    return;
   int32_t status = 0;
   HAL_SetEncoderDistancePerPulse(m_encoder, distancePerPulse, &status);
   wpi_setErrorWithContext(status, HAL_GetErrorMessage(status));
@@ -378,7 +390,8 @@ void Encoder::SetDistancePerPulse(double distancePerPulse) {
  * @return The scale factor that will be used to convert pulses to useful units.
  */
 double Encoder::GetDistancePerPulse() const {
-  if (StatusIsFatal()) return 0.0;
+  if (StatusIsFatal())
+    return 0.0;
   int32_t status = 0;
   double distancePerPulse = HAL_GetEncoderDistancePerPulse(m_encoder, &status);
   wpi_setErrorWithContext(status, HAL_GetErrorMessage(status));
@@ -394,7 +407,8 @@ double Encoder::GetDistancePerPulse() const {
  * @param reverseDirection true if the encoder direction should be reversed
  */
 void Encoder::SetReverseDirection(bool reverseDirection) {
-  if (StatusIsFatal()) return;
+  if (StatusIsFatal())
+    return;
   int32_t status = 0;
   HAL_SetEncoderReverseDirection(m_encoder, reverseDirection, &status);
   wpi_setErrorWithContext(status, HAL_GetErrorMessage(status));
@@ -443,14 +457,15 @@ int Encoder::GetSamplesToAverage() const {
  * @return The current value of the selected source parameter.
  */
 double Encoder::PIDGet() {
-  if (StatusIsFatal()) return 0.0;
+  if (StatusIsFatal())
+    return 0.0;
   switch (GetPIDSourceType()) {
-    case PIDSourceType::kDisplacement:
-      return GetDistance();
-    case PIDSourceType::kRate:
-      return GetRate();
-    default:
-      return 0.0;
+  case PIDSourceType::kDisplacement:
+    return GetDistance();
+  case PIDSourceType::kRate:
+    return GetRate();
+  default:
+    return 0.0;
   }
 }
 
@@ -477,7 +492,7 @@ void Encoder::SetIndexSource(int channel, Encoder::IndexingType type) {
  * @param channel A digital source to set as the encoder index
  * @param type    The state that will cause the encoder to reset
  */
-void Encoder::SetIndexSource(const DigitalSource& source,
+void Encoder::SetIndexSource(const DigitalSource &source,
                              Encoder::IndexingType type) {
   int32_t status = 0;
   HAL_SetEncoderIndexSource(
@@ -494,7 +509,7 @@ int Encoder::GetFPGAIndex() const {
   return val;
 }
 
-void Encoder::InitSendable(SendableBuilder& builder) {
+void Encoder::InitSendable(SendableBuilder &builder) {
   int32_t status = 0;
   HAL_EncoderEncodingType type = HAL_GetEncoderEncodingType(m_encoder, &status);
   wpi_setErrorWithContext(status, HAL_GetErrorMessage(status));

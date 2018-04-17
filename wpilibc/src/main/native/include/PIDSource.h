@@ -18,13 +18,13 @@ enum class PIDSourceType { kDisplacement, kRate };
  * that returns a standard value that will be used in the PID code.
  */
 class PIDSource {
- public:
+public:
   virtual void SetPIDSourceType(PIDSourceType pidSource);
   virtual PIDSourceType GetPIDSourceType() const;
   virtual double PIDGet() = 0;
 
- protected:
+protected:
   PIDSourceType m_pidSource = PIDSourceType::kDisplacement;
 };
 
-}  // namespace frc
+} // namespace frc

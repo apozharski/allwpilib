@@ -14,8 +14,8 @@ using namespace hal;
 namespace hal {
 namespace init {
 void InitializePorts() {}
-}  // namespace init
-}  // namespace hal
+} // namespace init
+} // namespace hal
 
 extern "C" {
 
@@ -38,4 +38,4 @@ int32_t HAL_GetNumSolenoidChannels(void) { return kNumSolenoidChannels; }
 int32_t HAL_GetNumPDPModules(void) { return kNumPDPModules; }
 int32_t HAL_GetNumPDPChannels(void) { return kNumPDPChannels; }
 
-}  // extern "C"
+} // extern "C"

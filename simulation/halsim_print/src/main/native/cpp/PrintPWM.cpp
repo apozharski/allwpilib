@@ -13,9 +13,9 @@
 #include "MockData/NotifyListener.h"
 #include "MockData/PWMData.h"
 
-static void PWMCallback(const char* name, void* param,
-                        const struct HAL_Value* value) {
-  auto pwm = static_cast<PrintPWM*>(param);
+static void PWMCallback(const char *name, void *param,
+                        const struct HAL_Value *value) {
+  auto pwm = static_cast<PrintPWM *>(param);
   pwm->Publish(value->data.v_double);
 }
 

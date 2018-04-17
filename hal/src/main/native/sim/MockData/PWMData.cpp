@@ -17,10 +17,10 @@ void InitializePWMData() {
   static PWMData spd[kNumPWMChannels];
   ::hal::SimPWMData = spd;
 }
-}  // namespace init
-}  // namespace hal
+} // namespace init
+} // namespace hal
 
-PWMData* hal::SimPWMData;
+PWMData *hal::SimPWMData;
 void PWMData::ResetData() {
   m_initialized = false;
   m_initializedCallbacks = nullptr;
@@ -37,10 +37,11 @@ void PWMData::ResetData() {
 }
 
 int32_t PWMData::RegisterInitializedCallback(HAL_NotifyCallback callback,
-                                             void* param,
+                                             void *param,
                                              HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -73,9 +74,10 @@ void PWMData::SetInitialized(HAL_Bool initialized) {
 }
 
 int32_t PWMData::RegisterRawValueCallback(HAL_NotifyCallback callback,
-                                          void* param, HAL_Bool initialNotify) {
+                                          void *param, HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -107,10 +109,11 @@ void PWMData::SetRawValue(int32_t rawValue) {
   }
 }
 
-int32_t PWMData::RegisterSpeedCallback(HAL_NotifyCallback callback, void* param,
+int32_t PWMData::RegisterSpeedCallback(HAL_NotifyCallback callback, void *param,
                                        HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -143,9 +146,10 @@ void PWMData::SetSpeed(double speed) {
 }
 
 int32_t PWMData::RegisterPositionCallback(HAL_NotifyCallback callback,
-                                          void* param, HAL_Bool initialNotify) {
+                                          void *param, HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -178,10 +182,11 @@ void PWMData::SetPosition(double position) {
 }
 
 int32_t PWMData::RegisterPeriodScaleCallback(HAL_NotifyCallback callback,
-                                             void* param,
+                                             void *param,
                                              HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -214,10 +219,11 @@ void PWMData::SetPeriodScale(int32_t periodScale) {
 }
 
 int32_t PWMData::RegisterZeroLatchCallback(HAL_NotifyCallback callback,
-                                           void* param,
+                                           void *param,
                                            HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -254,7 +260,7 @@ void HALSIM_ResetPWMData(int32_t index) { SimPWMData[index].ResetData(); }
 
 int32_t HALSIM_RegisterPWMInitializedCallback(int32_t index,
                                               HAL_NotifyCallback callback,
-                                              void* param,
+                                              void *param,
                                               HAL_Bool initialNotify) {
   return SimPWMData[index].RegisterInitializedCallback(callback, param,
                                                        initialNotify);
@@ -274,7 +280,7 @@ void HALSIM_SetPWMInitialized(int32_t index, HAL_Bool initialized) {
 
 int32_t HALSIM_RegisterPWMRawValueCallback(int32_t index,
                                            HAL_NotifyCallback callback,
-                                           void* param,
+                                           void *param,
                                            HAL_Bool initialNotify) {
   return SimPWMData[index].RegisterRawValueCallback(callback, param,
                                                     initialNotify);
@@ -294,7 +300,7 @@ void HALSIM_SetPWMRawValue(int32_t index, int32_t rawValue) {
 
 int32_t HALSIM_RegisterPWMSpeedCallback(int32_t index,
                                         HAL_NotifyCallback callback,
-                                        void* param, HAL_Bool initialNotify) {
+                                        void *param, HAL_Bool initialNotify) {
   return SimPWMData[index].RegisterSpeedCallback(callback, param,
                                                  initialNotify);
 }
@@ -313,7 +319,7 @@ void HALSIM_SetPWMSpeed(int32_t index, double speed) {
 
 int32_t HALSIM_RegisterPWMPositionCallback(int32_t index,
                                            HAL_NotifyCallback callback,
-                                           void* param,
+                                           void *param,
                                            HAL_Bool initialNotify) {
   return SimPWMData[index].RegisterPositionCallback(callback, param,
                                                     initialNotify);
@@ -333,7 +339,7 @@ void HALSIM_SetPWMPosition(int32_t index, double position) {
 
 int32_t HALSIM_RegisterPWMPeriodScaleCallback(int32_t index,
                                               HAL_NotifyCallback callback,
-                                              void* param,
+                                              void *param,
                                               HAL_Bool initialNotify) {
   return SimPWMData[index].RegisterPeriodScaleCallback(callback, param,
                                                        initialNotify);
@@ -353,7 +359,7 @@ void HALSIM_SetPWMPeriodScale(int32_t index, int32_t periodScale) {
 
 int32_t HALSIM_RegisterPWMZeroLatchCallback(int32_t index,
                                             HAL_NotifyCallback callback,
-                                            void* param,
+                                            void *param,
                                             HAL_Bool initialNotify) {
   return SimPWMData[index].RegisterZeroLatchCallback(callback, param,
                                                      initialNotify);
@@ -372,7 +378,7 @@ void HALSIM_SetPWMZeroLatch(int32_t index, HAL_Bool zeroLatch) {
 }
 
 void HALSIM_RegisterPWMAllCallbacks(int32_t index, HAL_NotifyCallback callback,
-                                    void* param, HAL_Bool initialNotify) {
+                                    void *param, HAL_Bool initialNotify) {
   SimPWMData[index].RegisterInitializedCallback(callback, param, initialNotify);
   SimPWMData[index].RegisterRawValueCallback(callback, param, initialNotify);
   SimPWMData[index].RegisterSpeedCallback(callback, param, initialNotify);
@@ -380,4 +386,4 @@ void HALSIM_RegisterPWMAllCallbacks(int32_t index, HAL_NotifyCallback callback,
   SimPWMData[index].RegisterPeriodScaleCallback(callback, param, initialNotify);
   SimPWMData[index].RegisterZeroLatchCallback(callback, param, initialNotify);
 }
-}  // extern "C"
+} // extern "C"

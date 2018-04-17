@@ -22,27 +22,27 @@ namespace frc {
  * It probably should not be used directly.
  */
 class I2C : public ErrorBase {
- public:
+public:
   enum Port { kOnboard = 0, kMXP };
 
   I2C(Port port, int deviceAddress);
   ~I2C() override;
 
-  I2C(const I2C&) = delete;
-  I2C& operator=(const I2C&) = delete;
+  I2C(const I2C &) = delete;
+  I2C &operator=(const I2C &) = delete;
 
-  bool Transaction(uint8_t* dataToSend, int sendSize, uint8_t* dataReceived,
+  bool Transaction(uint8_t *dataToSend, int sendSize, uint8_t *dataReceived,
                    int receiveSize);
   bool AddressOnly();
   bool Write(int registerAddress, uint8_t data);
-  bool WriteBulk(uint8_t* data, int count);
-  bool Read(int registerAddress, int count, uint8_t* data);
-  bool ReadOnly(int count, uint8_t* buffer);
-  bool VerifySensor(int registerAddress, int count, const uint8_t* expected);
+  bool WriteBulk(uint8_t *data, int count);
+  bool Read(int registerAddress, int count, uint8_t *data);
+  bool ReadOnly(int count, uint8_t *buffer);
+  bool VerifySensor(int registerAddress, int count, const uint8_t *expected);
 
- private:
+private:
   HAL_I2CPort m_port;
   int m_deviceAddress;
 };
 
-}  // namespace frc
+} // namespace frc

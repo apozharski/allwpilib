@@ -18,8 +18,8 @@ namespace frc {
  * class but may need to be calibrated per the Victor 884 user manual.
  */
 class Victor : public PWMSpeedController {
- public:
+public:
   explicit Victor(int channel);
 };
 
-}  // namespace frc
+} // namespace frc

@@ -5,10 +5,10 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
+#include "MockData/PCMData.h"
 #include "HAL/HAL.h"
 #include "HAL/Solenoid.h"
 #include "HAL/handles/HandlesInternal.h"
-#include "MockData/PCMData.h"
 #include "gtest/gtest.h"
 
 namespace hal {
@@ -16,8 +16,8 @@ namespace hal {
 std::string gTestSolenoidCallbackName;
 HAL_Value gTestSolenoidCallbackValue;
 
-void TestSolenoidInitializationCallback(const char* name, void* param,
-                                        const struct HAL_Value* value) {
+void TestSolenoidInitializationCallback(const char *name, void *param,
+                                        const struct HAL_Value *value) {
   gTestSolenoidCallbackName = name;
   gTestSolenoidCallbackValue = *value;
 }
@@ -80,4 +80,4 @@ TEST(SolenoidSimTests, TestSolenoidInitialization) {
   EXPECT_STREQ("SolenoidInitialized", gTestSolenoidCallbackName.c_str());
 }
 
-}  // namespace hal
+} // namespace hal

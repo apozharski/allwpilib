@@ -12,7 +12,7 @@
 namespace frc {
 
 class ControllerPower {
- public:
+public:
   WPI_DEPRECATED("Use RobotController static class method")
   static double GetInputVoltage();
   WPI_DEPRECATED("Use RobotController static class method")
@@ -43,4 +43,4 @@ class ControllerPower {
   static int GetFaultCount6V();
 };
 
-}  // namespace frc
+} // namespace frc

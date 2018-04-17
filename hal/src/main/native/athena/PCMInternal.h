@@ -21,7 +21,7 @@ namespace hal {
 
 extern std::unique_ptr<PCM> PCM_modules[kNumPCMModules];
 
-static inline bool checkPCMInit(int32_t module, int32_t* status) {
+static inline bool checkPCMInit(int32_t module, int32_t *status) {
   if (!HAL_CheckSolenoidModule(module)) {
     *status = RESOURCE_OUT_OF_RANGE;
     return false;
@@ -33,6 +33,6 @@ static inline bool checkPCMInit(int32_t module, int32_t* status) {
   return true;
 }
 
-void initializePCM(int32_t module, int32_t* status);
+void initializePCM(int32_t module, int32_t *status);
 
-}  // namespace hal
+} // namespace hal

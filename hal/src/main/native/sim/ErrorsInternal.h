@@ -8,16 +8,16 @@
 #pragma once
 
 typedef enum {
-  CTR_OKAY,       // No Error - Function executed as expected
-  CTR_RxTimeout,  // CAN frame has not been received within specified period of
-                  // time.
-  CTR_TxTimeout,  // Not used.
-  CTR_InvalidParamValue,  // Caller passed an invalid param
-  CTR_UnexpectedArbId,    // Specified CAN Id is invalid.
-  CTR_TxFailed,           // Could not transmit the CAN frame.
-  CTR_SigNotUpdated,      // Have not received an value response for signal.
-  CTR_BufferFull,  // Caller attempted to insert data into a buffer that is
-                   // full.
+  CTR_OKAY,      // No Error - Function executed as expected
+  CTR_RxTimeout, // CAN frame has not been received within specified period of
+                 // time.
+  CTR_TxTimeout, // Not used.
+  CTR_InvalidParamValue, // Caller passed an invalid param
+  CTR_UnexpectedArbId,   // Specified CAN Id is invalid.
+  CTR_TxFailed,          // Could not transmit the CAN frame.
+  CTR_SigNotUpdated,     // Have not received an value response for signal.
+  CTR_BufferFull, // Caller attempted to insert data into a buffer that is
+                  // full.
 } CTR_Code;
 
 // VISA Error

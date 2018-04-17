@@ -17,10 +17,10 @@ void InitializeRoboRioData() {
   static RoboRioData srrd[1];
   ::hal::SimRoboRioData = srrd;
 }
-}  // namespace init
-}  // namespace hal
+} // namespace init
+} // namespace hal
 
-RoboRioData* hal::SimRoboRioData;
+RoboRioData *hal::SimRoboRioData;
 void RoboRioData::ResetData() {
   m_fPGAButton = false;
   m_fPGAButtonCallbacks = nullptr;
@@ -55,10 +55,11 @@ void RoboRioData::ResetData() {
 }
 
 int32_t RoboRioData::RegisterFPGAButtonCallback(HAL_NotifyCallback callback,
-                                                void* param,
+                                                void *param,
                                                 HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -91,10 +92,11 @@ void RoboRioData::SetFPGAButton(HAL_Bool fPGAButton) {
 }
 
 int32_t RoboRioData::RegisterVInVoltageCallback(HAL_NotifyCallback callback,
-                                                void* param,
+                                                void *param,
                                                 HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -127,10 +129,11 @@ void RoboRioData::SetVInVoltage(double vInVoltage) {
 }
 
 int32_t RoboRioData::RegisterVInCurrentCallback(HAL_NotifyCallback callback,
-                                                void* param,
+                                                void *param,
                                                 HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -163,10 +166,11 @@ void RoboRioData::SetVInCurrent(double vInCurrent) {
 }
 
 int32_t RoboRioData::RegisterUserVoltage6VCallback(HAL_NotifyCallback callback,
-                                                   void* param,
+                                                   void *param,
                                                    HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -199,10 +203,11 @@ void RoboRioData::SetUserVoltage6V(double userVoltage6V) {
 }
 
 int32_t RoboRioData::RegisterUserCurrent6VCallback(HAL_NotifyCallback callback,
-                                                   void* param,
+                                                   void *param,
                                                    HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -235,10 +240,11 @@ void RoboRioData::SetUserCurrent6V(double userCurrent6V) {
 }
 
 int32_t RoboRioData::RegisterUserActive6VCallback(HAL_NotifyCallback callback,
-                                                  void* param,
+                                                  void *param,
                                                   HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -271,10 +277,11 @@ void RoboRioData::SetUserActive6V(HAL_Bool userActive6V) {
 }
 
 int32_t RoboRioData::RegisterUserVoltage5VCallback(HAL_NotifyCallback callback,
-                                                   void* param,
+                                                   void *param,
                                                    HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -307,10 +314,11 @@ void RoboRioData::SetUserVoltage5V(double userVoltage5V) {
 }
 
 int32_t RoboRioData::RegisterUserCurrent5VCallback(HAL_NotifyCallback callback,
-                                                   void* param,
+                                                   void *param,
                                                    HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -343,10 +351,11 @@ void RoboRioData::SetUserCurrent5V(double userCurrent5V) {
 }
 
 int32_t RoboRioData::RegisterUserActive5VCallback(HAL_NotifyCallback callback,
-                                                  void* param,
+                                                  void *param,
                                                   HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -379,10 +388,11 @@ void RoboRioData::SetUserActive5V(HAL_Bool userActive5V) {
 }
 
 int32_t RoboRioData::RegisterUserVoltage3V3Callback(HAL_NotifyCallback callback,
-                                                    void* param,
+                                                    void *param,
                                                     HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -415,10 +425,11 @@ void RoboRioData::SetUserVoltage3V3(double userVoltage3V3) {
 }
 
 int32_t RoboRioData::RegisterUserCurrent3V3Callback(HAL_NotifyCallback callback,
-                                                    void* param,
+                                                    void *param,
                                                     HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -451,10 +462,11 @@ void RoboRioData::SetUserCurrent3V3(double userCurrent3V3) {
 }
 
 int32_t RoboRioData::RegisterUserActive3V3Callback(HAL_NotifyCallback callback,
-                                                   void* param,
+                                                   void *param,
                                                    HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -487,10 +499,11 @@ void RoboRioData::SetUserActive3V3(HAL_Bool userActive3V3) {
 }
 
 int32_t RoboRioData::RegisterUserFaults6VCallback(HAL_NotifyCallback callback,
-                                                  void* param,
+                                                  void *param,
                                                   HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -523,10 +536,11 @@ void RoboRioData::SetUserFaults6V(int32_t userFaults6V) {
 }
 
 int32_t RoboRioData::RegisterUserFaults5VCallback(HAL_NotifyCallback callback,
-                                                  void* param,
+                                                  void *param,
                                                   HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -559,10 +573,11 @@ void RoboRioData::SetUserFaults5V(int32_t userFaults5V) {
 }
 
 int32_t RoboRioData::RegisterUserFaults3V3Callback(HAL_NotifyCallback callback,
-                                                   void* param,
+                                                   void *param,
                                                    HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -601,7 +616,7 @@ void HALSIM_ResetRoboRioData(int32_t index) {
 
 int32_t HALSIM_RegisterRoboRioFPGAButtonCallback(int32_t index,
                                                  HAL_NotifyCallback callback,
-                                                 void* param,
+                                                 void *param,
                                                  HAL_Bool initialNotify) {
   return SimRoboRioData[index].RegisterFPGAButtonCallback(callback, param,
                                                           initialNotify);
@@ -621,7 +636,7 @@ void HALSIM_SetRoboRioFPGAButton(int32_t index, HAL_Bool fPGAButton) {
 
 int32_t HALSIM_RegisterRoboRioVInVoltageCallback(int32_t index,
                                                  HAL_NotifyCallback callback,
-                                                 void* param,
+                                                 void *param,
                                                  HAL_Bool initialNotify) {
   return SimRoboRioData[index].RegisterVInVoltageCallback(callback, param,
                                                           initialNotify);
@@ -641,7 +656,7 @@ void HALSIM_SetRoboRioVInVoltage(int32_t index, double vInVoltage) {
 
 int32_t HALSIM_RegisterRoboRioVInCurrentCallback(int32_t index,
                                                  HAL_NotifyCallback callback,
-                                                 void* param,
+                                                 void *param,
                                                  HAL_Bool initialNotify) {
   return SimRoboRioData[index].RegisterVInCurrentCallback(callback, param,
                                                           initialNotify);
@@ -661,7 +676,7 @@ void HALSIM_SetRoboRioVInCurrent(int32_t index, double vInCurrent) {
 
 int32_t HALSIM_RegisterRoboRioUserVoltage6VCallback(int32_t index,
                                                     HAL_NotifyCallback callback,
-                                                    void* param,
+                                                    void *param,
                                                     HAL_Bool initialNotify) {
   return SimRoboRioData[index].RegisterUserVoltage6VCallback(callback, param,
                                                              initialNotify);
@@ -681,7 +696,7 @@ void HALSIM_SetRoboRioUserVoltage6V(int32_t index, double userVoltage6V) {
 
 int32_t HALSIM_RegisterRoboRioUserCurrent6VCallback(int32_t index,
                                                     HAL_NotifyCallback callback,
-                                                    void* param,
+                                                    void *param,
                                                     HAL_Bool initialNotify) {
   return SimRoboRioData[index].RegisterUserCurrent6VCallback(callback, param,
                                                              initialNotify);
@@ -701,7 +716,7 @@ void HALSIM_SetRoboRioUserCurrent6V(int32_t index, double userCurrent6V) {
 
 int32_t HALSIM_RegisterRoboRioUserActive6VCallback(int32_t index,
                                                    HAL_NotifyCallback callback,
-                                                   void* param,
+                                                   void *param,
                                                    HAL_Bool initialNotify) {
   return SimRoboRioData[index].RegisterUserActive6VCallback(callback, param,
                                                             initialNotify);
@@ -721,7 +736,7 @@ void HALSIM_SetRoboRioUserActive6V(int32_t index, HAL_Bool userActive6V) {
 
 int32_t HALSIM_RegisterRoboRioUserVoltage5VCallback(int32_t index,
                                                     HAL_NotifyCallback callback,
-                                                    void* param,
+                                                    void *param,
                                                     HAL_Bool initialNotify) {
   return SimRoboRioData[index].RegisterUserVoltage5VCallback(callback, param,
                                                              initialNotify);
@@ -741,7 +756,7 @@ void HALSIM_SetRoboRioUserVoltage5V(int32_t index, double userVoltage5V) {
 
 int32_t HALSIM_RegisterRoboRioUserCurrent5VCallback(int32_t index,
                                                     HAL_NotifyCallback callback,
-                                                    void* param,
+                                                    void *param,
                                                     HAL_Bool initialNotify) {
   return SimRoboRioData[index].RegisterUserCurrent5VCallback(callback, param,
                                                              initialNotify);
@@ -761,7 +776,7 @@ void HALSIM_SetRoboRioUserCurrent5V(int32_t index, double userCurrent5V) {
 
 int32_t HALSIM_RegisterRoboRioUserActive5VCallback(int32_t index,
                                                    HAL_NotifyCallback callback,
-                                                   void* param,
+                                                   void *param,
                                                    HAL_Bool initialNotify) {
   return SimRoboRioData[index].RegisterUserActive5VCallback(callback, param,
                                                             initialNotify);
@@ -780,7 +795,7 @@ void HALSIM_SetRoboRioUserActive5V(int32_t index, HAL_Bool userActive5V) {
 }
 
 int32_t HALSIM_RegisterRoboRioUserVoltage3V3Callback(
-    int32_t index, HAL_NotifyCallback callback, void* param,
+    int32_t index, HAL_NotifyCallback callback, void *param,
     HAL_Bool initialNotify) {
   return SimRoboRioData[index].RegisterUserVoltage3V3Callback(callback, param,
                                                               initialNotify);
@@ -799,7 +814,7 @@ void HALSIM_SetRoboRioUserVoltage3V3(int32_t index, double userVoltage3V3) {
 }
 
 int32_t HALSIM_RegisterRoboRioUserCurrent3V3Callback(
-    int32_t index, HAL_NotifyCallback callback, void* param,
+    int32_t index, HAL_NotifyCallback callback, void *param,
     HAL_Bool initialNotify) {
   return SimRoboRioData[index].RegisterUserCurrent3V3Callback(callback, param,
                                                               initialNotify);
@@ -819,7 +834,7 @@ void HALSIM_SetRoboRioUserCurrent3V3(int32_t index, double userCurrent3V3) {
 
 int32_t HALSIM_RegisterRoboRioUserActive3V3Callback(int32_t index,
                                                     HAL_NotifyCallback callback,
-                                                    void* param,
+                                                    void *param,
                                                     HAL_Bool initialNotify) {
   return SimRoboRioData[index].RegisterUserActive3V3Callback(callback, param,
                                                              initialNotify);
@@ -839,7 +854,7 @@ void HALSIM_SetRoboRioUserActive3V3(int32_t index, HAL_Bool userActive3V3) {
 
 int32_t HALSIM_RegisterRoboRioUserFaults6VCallback(int32_t index,
                                                    HAL_NotifyCallback callback,
-                                                   void* param,
+                                                   void *param,
                                                    HAL_Bool initialNotify) {
   return SimRoboRioData[index].RegisterUserFaults6VCallback(callback, param,
                                                             initialNotify);
@@ -859,7 +874,7 @@ void HALSIM_SetRoboRioUserFaults6V(int32_t index, int32_t userFaults6V) {
 
 int32_t HALSIM_RegisterRoboRioUserFaults5VCallback(int32_t index,
                                                    HAL_NotifyCallback callback,
-                                                   void* param,
+                                                   void *param,
                                                    HAL_Bool initialNotify) {
   return SimRoboRioData[index].RegisterUserFaults5VCallback(callback, param,
                                                             initialNotify);
@@ -879,7 +894,7 @@ void HALSIM_SetRoboRioUserFaults5V(int32_t index, int32_t userFaults5V) {
 
 int32_t HALSIM_RegisterRoboRioUserFaults3V3Callback(int32_t index,
                                                     HAL_NotifyCallback callback,
-                                                    void* param,
+                                                    void *param,
                                                     HAL_Bool initialNotify) {
   return SimRoboRioData[index].RegisterUserFaults3V3Callback(callback, param,
                                                              initialNotify);
@@ -899,7 +914,7 @@ void HALSIM_SetRoboRioUserFaults3V3(int32_t index, int32_t userFaults3V3) {
 
 void HALSIM_RegisterRoboRioAllCallbacks(int32_t index,
                                         HAL_NotifyCallback callback,
-                                        void* param, HAL_Bool initialNotify) {
+                                        void *param, HAL_Bool initialNotify) {
   SimRoboRioData[index].RegisterFPGAButtonCallback(callback, param,
                                                    initialNotify);
   SimRoboRioData[index].RegisterVInVoltageCallback(callback, param,
@@ -931,4 +946,4 @@ void HALSIM_RegisterRoboRioAllCallbacks(int32_t index,
   SimRoboRioData[index].RegisterUserFaults3V3Callback(callback, param,
                                                       initialNotify);
 }
-}  // extern "C"
+} // extern "C"

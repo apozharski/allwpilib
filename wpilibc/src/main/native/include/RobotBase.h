@@ -18,17 +18,17 @@ namespace frc {
 
 class DriverStation;
 
-#define START_ROBOT_CLASS(_ClassName_)                                  \
-  int main() {                                                          \
-    if (!HAL_Initialize(500, 0)) {                                      \
-      llvm::errs() << "FATAL ERROR: HAL could not be initialized\n";    \
-      return -1;                                                        \
-    }                                                                   \
-    HAL_Report(HALUsageReporting::kResourceType_Language,               \
-               HALUsageReporting::kLanguage_CPlusPlus);                 \
-    llvm::outs() << "\n********** Robot program starting **********\n"; \
-    static _ClassName_ robot;                                           \
-    robot.StartCompetition();                                           \
+#define START_ROBOT_CLASS(_ClassName_)                                         \
+  int main() {                                                                 \
+    if (!HAL_Initialize(500, 0)) {                                             \
+      llvm::errs() << "FATAL ERROR: HAL could not be initialized\n";           \
+      return -1;                                                               \
+    }                                                                          \
+    HAL_Report(HALUsageReporting::kResourceType_Language,                      \
+               HALUsageReporting::kLanguage_CPlusPlus);                        \
+    llvm::outs() << "\n********** Robot program starting **********\n";        \
+    static _ClassName_ robot;                                                  \
+    robot.StartCompetition();                                                  \
   }
 
 /**
@@ -42,7 +42,7 @@ class DriverStation;
  * then killed at the end of the Autonomous period.
  */
 class RobotBase {
- public:
+public:
   bool IsEnabled() const;
   bool IsDisabled() const;
   bool IsAutonomous() const;
@@ -62,16 +62,16 @@ class RobotBase {
 
   static constexpr bool IsSimulation() { return !IsReal(); }
 
- protected:
+protected:
   RobotBase();
   virtual ~RobotBase() = default;
 
-  RobotBase(const RobotBase&) = delete;
-  RobotBase& operator=(const RobotBase&) = delete;
+  RobotBase(const RobotBase &) = delete;
+  RobotBase &operator=(const RobotBase &) = delete;
 
-  DriverStation& m_ds;
+  DriverStation &m_ds;
 
   static std::thread::id m_threadId;
 };
 
-}  // namespace frc
+} // namespace frc

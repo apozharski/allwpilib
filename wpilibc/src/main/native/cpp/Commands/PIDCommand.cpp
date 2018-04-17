@@ -11,7 +11,7 @@
 
 using namespace frc;
 
-PIDCommand::PIDCommand(const llvm::Twine& name, double p, double i, double d,
+PIDCommand::PIDCommand(const llvm::Twine &name, double p, double i, double d,
                        double f, double period)
     : Command(name) {
   m_controller = std::make_shared<PIDController>(p, i, d, this, this, period);
@@ -22,12 +22,12 @@ PIDCommand::PIDCommand(double p, double i, double d, double f, double period) {
       std::make_shared<PIDController>(p, i, d, f, this, this, period);
 }
 
-PIDCommand::PIDCommand(const llvm::Twine& name, double p, double i, double d)
+PIDCommand::PIDCommand(const llvm::Twine &name, double p, double i, double d)
     : Command(name) {
   m_controller = std::make_shared<PIDController>(p, i, d, this, this);
 }
 
-PIDCommand::PIDCommand(const llvm::Twine& name, double p, double i, double d,
+PIDCommand::PIDCommand(const llvm::Twine &name, double p, double i, double d,
                        double period)
     : Command(name) {
   m_controller = std::make_shared<PIDController>(p, i, d, this, this, period);
@@ -67,7 +67,7 @@ double PIDCommand::GetSetpoint() const { return m_controller->GetSetpoint(); }
 
 double PIDCommand::GetPosition() { return ReturnPIDInput(); }
 
-void PIDCommand::InitSendable(SendableBuilder& builder) {
+void PIDCommand::InitSendable(SendableBuilder &builder) {
   m_controller->InitSendable(builder);
   Command::InitSendable(builder);
   builder.SetSmartDashboardType("PIDCommand");

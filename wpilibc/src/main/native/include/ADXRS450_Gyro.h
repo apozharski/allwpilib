@@ -27,7 +27,7 @@ namespace frc {
  * This class is for the digital ADXRS450 gyro sensor that connects via SPI.
  */
 class ADXRS450_Gyro : public GyroBase {
- public:
+public:
   ADXRS450_Gyro();
   explicit ADXRS450_Gyro(SPI::Port port);
   virtual ~ADXRS450_Gyro() = default;
@@ -37,10 +37,10 @@ class ADXRS450_Gyro : public GyroBase {
   void Reset() override;
   void Calibrate() override;
 
- private:
+private:
   SPI m_spi;
 
   uint16_t ReadRegister(int reg);
 };
 
-}  // namespace frc
+} // namespace frc

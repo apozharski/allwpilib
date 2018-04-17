@@ -20,16 +20,14 @@ namespace frc {
  * @param listener    A function to call after the pipeline has finished running
  */
 template <typename T>
-VisionRunner<T>::VisionRunner(cs::VideoSource videoSource, T* pipeline,
-                              std::function<void(T&)> listener)
-    : VisionRunnerBase(videoSource),
-      m_pipeline(pipeline),
+VisionRunner<T>::VisionRunner(cs::VideoSource videoSource, T *pipeline,
+                              std::function<void(T &)> listener)
+    : VisionRunnerBase(videoSource), m_pipeline(pipeline),
       m_listener(listener) {}
 
-template <typename T>
-void VisionRunner<T>::DoProcess(cv::Mat& image) {
+template <typename T> void VisionRunner<T>::DoProcess(cv::Mat &image) {
   m_pipeline->Process(image);
   m_listener(*m_pipeline);
 }
 
-}  // namespace frc
+} // namespace frc

@@ -22,7 +22,7 @@ using namespace frc;
 // Automatic round robin mode
 std::atomic<bool> Ultrasonic::m_automaticEnabled{false};
 
-std::vector<Ultrasonic*> Ultrasonic::m_sensors;
+std::vector<Ultrasonic *> Ultrasonic::m_sensors;
 std::thread Ultrasonic::m_thread;
 
 /**
@@ -37,14 +37,15 @@ std::thread Ultrasonic::m_thread;
  */
 void Ultrasonic::UltrasonicChecker() {
   while (m_automaticEnabled) {
-    for (auto& sensor : m_sensors) {
-      if (!m_automaticEnabled) break;
+    for (auto &sensor : m_sensors) {
+      if (!m_automaticEnabled)
+        break;
 
       if (sensor->IsEnabled()) {
-        sensor->m_pingChannel->Pulse(kPingTime);  // do the ping
+        sensor->m_pingChannel->Pulse(kPingTime); // do the ping
       }
 
-      Wait(0.1);  // wait for ping to return
+      Wait(0.1); // wait for ping to return
     }
   }
 }
@@ -59,14 +60,14 @@ void Ultrasonic::UltrasonicChecker() {
  */
 void Ultrasonic::Initialize() {
   bool originalMode = m_automaticEnabled;
-  SetAutomaticMode(false);  // Kill task when adding a new sensor
+  SetAutomaticMode(false); // Kill task when adding a new sensor
   // Link this instance on the list
   m_sensors.emplace_back(this);
 
   m_counter.SetMaxPeriod(1.0);
   m_counter.SetSemiPeriodMode(true);
   m_counter.Reset();
-  m_enabled = true;  // Make it available for round robin scheduling
+  m_enabled = true; // Make it available for round robin scheduling
   SetAutomaticMode(originalMode);
 
   static int instances = 0;
@@ -107,7 +108,7 @@ Ultrasonic::Ultrasonic(int pingChannel, int echoChannel, DistanceUnit units)
  *                    determine the range.
  * @param units       The units returned in either kInches or kMilliMeters
  */
-Ultrasonic::Ultrasonic(DigitalOutput* pingChannel, DigitalInput* echoChannel,
+Ultrasonic::Ultrasonic(DigitalOutput *pingChannel, DigitalInput *echoChannel,
                        DistanceUnit units)
     : m_pingChannel(pingChannel, NullDeleter<DigitalOutput>()),
       m_echoChannel(echoChannel, NullDeleter<DigitalInput>()),
@@ -131,7 +132,7 @@ Ultrasonic::Ultrasonic(DigitalOutput* pingChannel, DigitalInput* echoChannel,
  *                    determine the range.
  * @param units       The units returned in either kInches or kMilliMeters
  */
-Ultrasonic::Ultrasonic(DigitalOutput& pingChannel, DigitalInput& echoChannel,
+Ultrasonic::Ultrasonic(DigitalOutput &pingChannel, DigitalInput &echoChannel,
                        DistanceUnit units)
     : m_pingChannel(&pingChannel, NullDeleter<DigitalOutput>()),
       m_echoChannel(&echoChannel, NullDeleter<DigitalInput>()),
@@ -153,8 +154,7 @@ Ultrasonic::Ultrasonic(DigitalOutput& pingChannel, DigitalInput& echoChannel,
 Ultrasonic::Ultrasonic(std::shared_ptr<DigitalOutput> pingChannel,
                        std::shared_ptr<DigitalInput> echoChannel,
                        DistanceUnit units)
-    : m_pingChannel(pingChannel),
-      m_echoChannel(echoChannel),
+    : m_pingChannel(pingChannel), m_echoChannel(echoChannel),
       m_counter(m_echoChannel) {
   m_units = units;
   Initialize();
@@ -195,7 +195,8 @@ Ultrasonic::~Ultrasonic() {
  *                 manually and waiting for the results to come back.
  */
 void Ultrasonic::SetAutomaticMode(bool enabling) {
-  if (enabling == m_automaticEnabled) return;  // ignore the case of no change
+  if (enabling == m_automaticEnabled)
+    return; // ignore the case of no change
 
   m_automaticEnabled = enabling;
 
@@ -203,7 +204,7 @@ void Ultrasonic::SetAutomaticMode(bool enabling) {
     /* Clear all the counters so no data is valid. No synchronization is needed
      * because the background task is stopped.
      */
-    for (auto& sensor : m_sensors) {
+    for (auto &sensor : m_sensors) {
       sensor->m_counter.Reset();
     }
 
@@ -220,7 +221,7 @@ void Ultrasonic::SetAutomaticMode(bool enabling) {
     // Clear all the counters (data now invalid) since automatic mode is
     // disabled. No synchronization is needed because the background task is
     // stopped.
-    for (auto& sensor : m_sensors) {
+    for (auto &sensor : m_sensors) {
       sensor->m_counter.Reset();
     }
   }
@@ -283,12 +284,12 @@ double Ultrasonic::GetRangeMM() const { return GetRangeInches() * 25.4; }
  */
 double Ultrasonic::PIDGet() {
   switch (m_units) {
-    case Ultrasonic::kInches:
-      return GetRangeInches();
-    case Ultrasonic::kMilliMeters:
-      return GetRangeMM();
-    default:
-      return 0.0;
+  case Ultrasonic::kInches:
+    return GetRangeInches();
+  case Ultrasonic::kMilliMeters:
+    return GetRangeMM();
+  default:
+    return 0.0;
   }
 }
 
@@ -315,7 +316,7 @@ Ultrasonic::DistanceUnit Ultrasonic::GetDistanceUnits() const {
   return m_units;
 }
 
-void Ultrasonic::InitSendable(SendableBuilder& builder) {
+void Ultrasonic::InitSendable(SendableBuilder &builder) {
   builder.SetSmartDashboardType("Ultrasonic");
   builder.AddDoubleProperty("Value", [=]() { return GetRangeInches(); },
                             nullptr);

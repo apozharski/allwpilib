@@ -52,7 +52,7 @@ double ADXL345_I2C::GetZ() { return GetAcceleration(kAxis_Z); }
 double ADXL345_I2C::GetAcceleration(ADXL345_I2C::Axes axis) {
   int16_t rawAccel = 0;
   m_i2c.Read(kDataRegister + static_cast<int>(axis), sizeof(rawAccel),
-             reinterpret_cast<uint8_t*>(&rawAccel));
+             reinterpret_cast<uint8_t *>(&rawAccel));
   return rawAccel * kGsPerLSB;
 }
 
@@ -66,7 +66,7 @@ ADXL345_I2C::AllAxes ADXL345_I2C::GetAccelerations() {
   AllAxes data = AllAxes();
   int16_t rawData[3];
   m_i2c.Read(kDataRegister, sizeof(rawData),
-             reinterpret_cast<uint8_t*>(rawData));
+             reinterpret_cast<uint8_t *>(rawData));
 
   data.XAxis = rawData[0] * kGsPerLSB;
   data.YAxis = rawData[1] * kGsPerLSB;
@@ -74,7 +74,7 @@ ADXL345_I2C::AllAxes ADXL345_I2C::GetAccelerations() {
   return data;
 }
 
-void ADXL345_I2C::InitSendable(SendableBuilder& builder) {
+void ADXL345_I2C::InitSendable(SendableBuilder &builder) {
   builder.SetSmartDashboardType("3AxisAccelerometer");
   auto x = builder.GetEntry("X").GetHandle();
   auto y = builder.GetEntry("Y").GetHandle();

@@ -16,24 +16,24 @@
 
 namespace hal {
 class ADXRS450_SpiGyroWrapper {
- public:
+public:
   explicit ADXRS450_SpiGyroWrapper(int port);
   virtual ~ADXRS450_SpiGyroWrapper();
 
-  void HandleRead(uint8_t* buffer, uint32_t count);
-  void HandleAutoReceiveData(uint8_t* buffer, int32_t numToRead,
-                             int32_t& outputCount);
+  void HandleRead(uint8_t *buffer, uint32_t count);
+  void HandleAutoReceiveData(uint8_t *buffer, int32_t numToRead,
+                             int32_t &outputCount);
 
   virtual void ResetData();
 
-  int32_t RegisterAngleCallback(HAL_NotifyCallback callback, void* param,
+  int32_t RegisterAngleCallback(HAL_NotifyCallback callback, void *param,
                                 HAL_Bool initialNotify);
   void CancelAngleCallback(int32_t uid);
   void InvokeAngleCallback(HAL_Value value);
   double GetAngle();
   void SetAngle(double angle);
 
- private:
+private:
   int m_port;
   int m_readCallbackId;
   int m_autoReceiveReadCallbackId;
@@ -50,4 +50,4 @@ class ADXRS450_SpiGyroWrapper {
   static const double kMaxAngleDeltaPerMessage;
   static const int kPacketSize;
 };
-}  // namespace hal
+} // namespace hal

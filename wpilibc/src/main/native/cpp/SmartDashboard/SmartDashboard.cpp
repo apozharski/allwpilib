@@ -21,34 +21,34 @@ using namespace frc;
 
 namespace {
 class SmartDashboardData {
- public:
+public:
   SmartDashboardData() = default;
-  explicit SmartDashboardData(Sendable* sendable_) : sendable(sendable_) {}
+  explicit SmartDashboardData(Sendable *sendable_) : sendable(sendable_) {}
 
-  Sendable* sendable = nullptr;
+  Sendable *sendable = nullptr;
   SendableBuilderImpl builder;
 };
 
 class Singleton {
- public:
-  static Singleton& GetInstance();
+public:
+  static Singleton &GetInstance();
 
   std::shared_ptr<nt::NetworkTable> table;
   llvm::StringMap<SmartDashboardData> tablesToData;
   wpi::mutex tablesToDataMutex;
 
- private:
+private:
   Singleton() {
     table = nt::NetworkTableInstance::GetDefault().GetTable("SmartDashboard");
     HLUsageReporting::ReportSmartDashboard();
   }
-  Singleton(const Singleton&) = delete;
-  Singleton& operator=(const Singleton&) = delete;
+  Singleton(const Singleton &) = delete;
+  Singleton &operator=(const Singleton &) = delete;
 };
 
-}  // namespace
+} // namespace
 
-Singleton& Singleton::GetInstance() {
+Singleton &Singleton::GetInstance() {
   static Singleton instance;
   return instance;
 }
@@ -152,14 +152,14 @@ void SmartDashboard::Delete(llvm::StringRef key) {
  * @param keyName the key
  * @param value   the value
  */
-void SmartDashboard::PutData(llvm::StringRef key, Sendable* data) {
+void SmartDashboard::PutData(llvm::StringRef key, Sendable *data) {
   if (data == nullptr) {
     wpi_setGlobalWPIErrorWithContext(NullParameter, "value");
     return;
   }
-  auto& inst = Singleton::GetInstance();
+  auto &inst = Singleton::GetInstance();
   std::lock_guard<wpi::mutex> lock(inst.tablesToDataMutex);
-  auto& sddata = inst.tablesToData[key];
+  auto &sddata = inst.tablesToData[key];
   if (!sddata.sendable || sddata.sendable != data) {
     sddata = SmartDashboardData(data);
     auto dataTable = inst.table->GetSubTable(key);
@@ -180,7 +180,7 @@ void SmartDashboard::PutData(llvm::StringRef key, Sendable* data) {
  *
  * @param value the value
  */
-void SmartDashboard::PutData(Sendable* value) {
+void SmartDashboard::PutData(Sendable *value) {
   if (value == nullptr) {
     wpi_setGlobalWPIErrorWithContext(NullParameter, "value");
     return;
@@ -194,8 +194,8 @@ void SmartDashboard::PutData(Sendable* value) {
  * @param keyName the key
  * @return the value
  */
-Sendable* SmartDashboard::GetData(llvm::StringRef key) {
-  auto& inst = Singleton::GetInstance();
+Sendable *SmartDashboard::GetData(llvm::StringRef key) {
+  auto &inst = Singleton::GetInstance();
   std::lock_guard<wpi::mutex> lock(inst.tablesToDataMutex);
   auto data = inst.tablesToData.find(key);
   if (data == inst.tablesToData.end()) {
@@ -410,8 +410,9 @@ bool SmartDashboard::SetDefaultBooleanArray(llvm::StringRef key,
  *       because std::vector<bool> is special-cased in C++. 0 is false, any
  *       non-zero value is true.
  */
-std::vector<int> SmartDashboard::GetBooleanArray(
-    llvm::StringRef key, llvm::ArrayRef<int> defaultValue) {
+std::vector<int>
+SmartDashboard::GetBooleanArray(llvm::StringRef key,
+                                llvm::ArrayRef<int> defaultValue) {
   return Singleton::GetInstance().table->GetEntry(key).GetBooleanArray(
       defaultValue);
 }
@@ -455,8 +456,9 @@ bool SmartDashboard::SetDefaultNumberArray(
  * @note This makes a copy of the array. If the overhead of this is a concern,
  *       use GetValue() instead.
  */
-std::vector<double> SmartDashboard::GetNumberArray(
-    llvm::StringRef key, llvm::ArrayRef<double> defaultValue) {
+std::vector<double>
+SmartDashboard::GetNumberArray(llvm::StringRef key,
+                               llvm::ArrayRef<double> defaultValue) {
   return Singleton::GetInstance().table->GetEntry(key).GetDoubleArray(
       defaultValue);
 }
@@ -500,8 +502,9 @@ bool SmartDashboard::SetDefaultStringArray(
  * @note This makes a copy of the array. If the overhead of this is a concern,
  *       use GetValue() instead.
  */
-std::vector<std::string> SmartDashboard::GetStringArray(
-    llvm::StringRef key, llvm::ArrayRef<std::string> defaultValue) {
+std::vector<std::string>
+SmartDashboard::GetStringArray(llvm::StringRef key,
+                               llvm::ArrayRef<std::string> defaultValue) {
   return Singleton::GetInstance().table->GetEntry(key).GetStringArray(
       defaultValue);
 }
@@ -553,9 +556,9 @@ std::string SmartDashboard::GetRaw(llvm::StringRef key,
  * Puts all sendable data to the dashboard.
  */
 void SmartDashboard::UpdateValues() {
-  auto& inst = Singleton::GetInstance();
+  auto &inst = Singleton::GetInstance();
   std::lock_guard<wpi::mutex> lock(inst.tablesToDataMutex);
-  for (auto& i : inst.tablesToData) {
+  for (auto &i : inst.tablesToData) {
     i.getValue().builder.UpdateTable();
   }
 }

@@ -35,19 +35,19 @@ namespace frc {
  * @see Subsystem
  */
 class CommandGroup : public Command {
- public:
+public:
   CommandGroup() = default;
-  explicit CommandGroup(const llvm::Twine& name);
+  explicit CommandGroup(const llvm::Twine &name);
   virtual ~CommandGroup() = default;
 
-  void AddSequential(Command* command);
-  void AddSequential(Command* command, double timeout);
-  void AddParallel(Command* command);
-  void AddParallel(Command* command, double timeout);
+  void AddSequential(Command *command);
+  void AddSequential(Command *command, double timeout);
+  void AddParallel(Command *command);
+  void AddParallel(Command *command, double timeout);
   bool IsInterruptible() const;
   int GetSize() const;
 
- protected:
+protected:
   virtual void Initialize();
   virtual void Execute();
   virtual bool IsFinished();
@@ -58,8 +58,8 @@ class CommandGroup : public Command {
   virtual void _Execute();
   virtual void _End();
 
- private:
-  void CancelConflicts(Command* command);
+private:
+  void CancelConflicts(Command *command);
 
   // The commands in this group (stored in entries)
   std::vector<CommandGroupEntry> m_commands;
@@ -71,4 +71,4 @@ class CommandGroup : public Command {
   int m_currentCommandIndex = -1;
 };
 
-}  // namespace frc
+} // namespace frc

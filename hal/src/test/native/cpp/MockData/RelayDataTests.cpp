@@ -5,8 +5,8 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "HAL/HAL.h"
 #include "HAL/Relay.h"
+#include "HAL/HAL.h"
 #include "HAL/handles/HandlesInternal.h"
 #include "MockData/RelayData.h"
 #include "gtest/gtest.h"
@@ -16,8 +16,8 @@ namespace hal {
 std::string gTestRelayCallbackName;
 HAL_Value gTestRelayCallbackValue;
 
-void TestRelayInitializationCallback(const char* name, void* param,
-                                     const struct HAL_Value* value) {
+void TestRelayInitializationCallback(const char *name, void *param,
+                                     const struct HAL_Value *value) {
   gTestRelayCallbackName = name;
   gTestRelayCallbackValue = *value;
 }
@@ -76,4 +76,4 @@ TEST(RelaySimTests, TestRelayInitialization) {
   EXPECT_STREQ("InitializedForward", gTestRelayCallbackName.c_str());
 }
 
-}  // namespace hal
+} // namespace hal

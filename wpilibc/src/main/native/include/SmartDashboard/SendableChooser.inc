@@ -74,12 +74,12 @@ auto SendableChooser<T>::GetSelected()
 }
 
 template <class T>
-void SendableChooser<T>::InitSendable(SendableBuilder& builder) {
+void SendableChooser<T>::InitSendable(SendableBuilder &builder) {
   builder.SetSmartDashboardType("String Chooser");
   builder.AddStringArrayProperty(kOptions,
                                  [=]() {
                                    std::vector<std::string> keys;
-                                   for (const auto& choice : m_choices) {
+                                   for (const auto &choice : m_choices) {
                                      keys.push_back(choice.first());
                                    }
 
@@ -92,7 +92,7 @@ void SendableChooser<T>::InitSendable(SendableBuilder& builder) {
                                  nullptr);
   builder.AddSmallStringProperty(
       kDefault,
-      [=](const llvm::SmallVectorImpl<char>&) -> llvm::StringRef {
+      [=](const llvm::SmallVectorImpl<char> &) -> llvm::StringRef {
         return m_defaultChoice;
       },
       nullptr);
@@ -101,21 +101,21 @@ void SendableChooser<T>::InitSendable(SendableBuilder& builder) {
 
 template <class T>
 template <class U>
-U SendableChooser<T>::_unwrap_smart_ptr(const U& value) {
+U SendableChooser<T>::_unwrap_smart_ptr(const U &value) {
   return value;
 }
 
 template <class T>
 template <class U>
-U* SendableChooser<T>::_unwrap_smart_ptr(const std::unique_ptr<U>& value) {
+U *SendableChooser<T>::_unwrap_smart_ptr(const std::unique_ptr<U> &value) {
   return value.get();
 }
 
 template <class T>
 template <class U>
-std::weak_ptr<U> SendableChooser<T>::_unwrap_smart_ptr(
-    const std::shared_ptr<U>& value) {
+std::weak_ptr<U>
+SendableChooser<T>::_unwrap_smart_ptr(const std::shared_ptr<U> &value) {
   return value;
 }
 
-}  // namespace frc
+} // namespace frc

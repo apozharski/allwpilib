@@ -28,7 +28,7 @@ struct HAL_JoystickAxesInt {
 };
 
 static wpi::mutex msgMutex;
-static wpi::condition_variable* newDSDataAvailableCond;
+static wpi::condition_variable *newDSDataAvailableCond;
 static wpi::mutex newDSDataAvailableMutex;
 static int newDSDataAvailableCounter{0};
 
@@ -38,14 +38,14 @@ void InitializeFRCDriverStation() {
   static wpi::condition_variable nddaC;
   newDSDataAvailableCond = &nddaC;
 }
-}  // namespace init
-}  // namespace hal
+} // namespace init
+} // namespace hal
 
 extern "C" {
 
 int32_t HAL_SendError(HAL_Bool isError, int32_t errorCode, HAL_Bool isLVCode,
-                      const char* details, const char* location,
-                      const char* callStack, HAL_Bool printMsg) {
+                      const char *details, const char *location,
+                      const char *callStack, HAL_Bool printMsg) {
   // Avoid flooding console by keeping track of previous 5 error
   // messages and only printing again if they're longer than 1 second old.
   static constexpr int KEEP_MSGS = 5;
@@ -65,7 +65,8 @@ int32_t HAL_SendError(HAL_Bool isError, int32_t errorCode, HAL_Bool isLVCode,
   auto curTime = std::chrono::steady_clock::now();
   int i;
   for (i = 0; i < KEEP_MSGS; ++i) {
-    if (prevMsg[i] == details) break;
+    if (prevMsg[i] == details)
+      break;
   }
   int retval = 0;
   if (i == KEEP_MSGS || (curTime - prevMsgTime[i]) >= std::chrono::seconds(1)) {
@@ -98,24 +99,24 @@ int32_t HAL_SendError(HAL_Bool isError, int32_t errorCode, HAL_Bool isLVCode,
   return retval;
 }
 
-int32_t HAL_GetControlWord(HAL_ControlWord* controlWord) {
+int32_t HAL_GetControlWord(HAL_ControlWord *controlWord) {
   std::memset(controlWord, 0, sizeof(HAL_ControlWord));
   return FRC_NetworkCommunication_getControlWord(
-      reinterpret_cast<ControlWord_t*>(controlWord));
+      reinterpret_cast<ControlWord_t *>(controlWord));
 }
 
-HAL_AllianceStationID HAL_GetAllianceStation(int32_t* status) {
+HAL_AllianceStationID HAL_GetAllianceStation(int32_t *status) {
   HAL_AllianceStationID allianceStation;
   *status = FRC_NetworkCommunication_getAllianceStation(
-      reinterpret_cast<AllianceStationID_t*>(&allianceStation));
+      reinterpret_cast<AllianceStationID_t *>(&allianceStation));
   return allianceStation;
 }
 
-int32_t HAL_GetJoystickAxes(int32_t joystickNum, HAL_JoystickAxes* axes) {
+int32_t HAL_GetJoystickAxes(int32_t joystickNum, HAL_JoystickAxes *axes) {
   HAL_JoystickAxesInt axesInt;
 
   int retVal = FRC_NetworkCommunication_getJoystickAxes(
-      joystickNum, reinterpret_cast<JoystickAxes_t*>(&axesInt),
+      joystickNum, reinterpret_cast<JoystickAxes_t *>(&axesInt),
       HAL_kMaxJoystickAxes);
 
   // copy integer values to double values
@@ -134,14 +135,14 @@ int32_t HAL_GetJoystickAxes(int32_t joystickNum, HAL_JoystickAxes* axes) {
   return retVal;
 }
 
-int32_t HAL_GetJoystickPOVs(int32_t joystickNum, HAL_JoystickPOVs* povs) {
+int32_t HAL_GetJoystickPOVs(int32_t joystickNum, HAL_JoystickPOVs *povs) {
   return FRC_NetworkCommunication_getJoystickPOVs(
-      joystickNum, reinterpret_cast<JoystickPOV_t*>(povs),
+      joystickNum, reinterpret_cast<JoystickPOV_t *>(povs),
       HAL_kMaxJoystickPOVs);
 }
 
 int32_t HAL_GetJoystickButtons(int32_t joystickNum,
-                               HAL_JoystickButtons* buttons) {
+                               HAL_JoystickButtons *buttons) {
   return FRC_NetworkCommunication_getJoystickButtons(
       joystickNum, &buttons->buttons, &buttons->count);
 }
@@ -157,7 +158,7 @@ int32_t HAL_GetJoystickButtons(int32_t joystickNum,
  * nonzero is bad.
  */
 int32_t HAL_GetJoystickDescriptor(int32_t joystickNum,
-                                  HAL_JoystickDescriptor* desc) {
+                                  HAL_JoystickDescriptor *desc) {
   desc->isXbox = 0;
   desc->type = std::numeric_limits<uint8_t>::max();
   desc->name[0] = '\0';
@@ -167,8 +168,8 @@ int32_t HAL_GetJoystickDescriptor(int32_t joystickNum,
   desc->povCount = 0;
   int retval = FRC_NetworkCommunication_getJoystickDesc(
       joystickNum, &desc->isXbox, &desc->type,
-      reinterpret_cast<char*>(&desc->name), &desc->axisCount,
-      reinterpret_cast<uint8_t*>(&desc->axisTypes), &desc->buttonCount,
+      reinterpret_cast<char *>(&desc->name), &desc->axisCount,
+      reinterpret_cast<uint8_t *>(&desc->axisTypes), &desc->buttonCount,
       &desc->povCount);
   /* check the return, if there is an error and the RIOimage predates FRC2017,
    * then axisCount needs to be cleared */
@@ -197,22 +198,22 @@ int32_t HAL_GetJoystickType(int32_t joystickNum) {
   }
 }
 
-char* HAL_GetJoystickName(int32_t joystickNum) {
+char *HAL_GetJoystickName(int32_t joystickNum) {
   HAL_JoystickDescriptor joystickDesc;
   if (HAL_GetJoystickDescriptor(joystickNum, &joystickDesc) < 0) {
-    char* name = static_cast<char*>(std::malloc(1));
+    char *name = static_cast<char *>(std::malloc(1));
     name[0] = '\0';
     return name;
   } else {
     size_t len = std::strlen(joystickDesc.name);
-    char* name = static_cast<char*>(std::malloc(len + 1));
+    char *name = static_cast<char *>(std::malloc(len + 1));
     std::strncpy(name, joystickDesc.name, len);
     name[len] = '\0';
     return name;
   }
 }
 
-void HAL_FreeJoystickName(char* name) { std::free(name); }
+void HAL_FreeJoystickName(char *name) { std::free(name); }
 
 int32_t HAL_GetJoystickAxisType(int32_t joystickNum, int32_t axis) {
   HAL_JoystickDescriptor joystickDesc;
@@ -229,13 +230,13 @@ int32_t HAL_SetJoystickOutputs(int32_t joystickNum, int64_t outputs,
                                                      leftRumble, rightRumble);
 }
 
-double HAL_GetMatchTime(int32_t* status) {
+double HAL_GetMatchTime(int32_t *status) {
   float matchTime;
   *status = FRC_NetworkCommunication_getMatchTime(&matchTime);
   return matchTime;
 }
 
-int HAL_GetMatchInfo(HAL_MatchInfo* info) {
+int HAL_GetMatchInfo(HAL_MatchInfo *info) {
   uint16_t gameSpecificMessageSize = 0;
   int status = FRC_NetworkCommunication_getMatchInfo(
       nullptr, nullptr, nullptr, nullptr, nullptr, &gameSpecificMessageSize);
@@ -244,11 +245,11 @@ int HAL_GetMatchInfo(HAL_MatchInfo* info) {
     info->gameSpecificMessage = nullptr;
     return status;
   }
-  info->eventName = static_cast<char*>(std::malloc(256));
+  info->eventName = static_cast<char *>(std::malloc(256));
   gameSpecificMessageSize = ((gameSpecificMessageSize + 1023) / 1024) * 1024;
   uint16_t originalGameSpecificSize = gameSpecificMessageSize;
-  uint8_t* gameSpecificMessage =
-      static_cast<uint8_t*>(std::malloc(gameSpecificMessageSize));
+  uint8_t *gameSpecificMessage =
+      static_cast<uint8_t *>(std::malloc(gameSpecificMessageSize));
   MatchType_t matchType = MatchType_t::kMatchType_none;
   uint16_t matchNumber = 0;
   uint8_t replayNumber = 0;
@@ -268,7 +269,7 @@ int HAL_GetMatchInfo(HAL_MatchInfo* info) {
     std::free(gameSpecificMessage);
     gameSpecificMessageSize = ((gameSpecificMessageSize + 1023) / 1024) * 1024;
     gameSpecificMessage =
-        static_cast<uint8_t*>(std::malloc(gameSpecificMessageSize));
+        static_cast<uint8_t *>(std::malloc(gameSpecificMessageSize));
     int status = FRC_NetworkCommunication_getMatchInfo(
         nullptr, nullptr, nullptr, nullptr, gameSpecificMessage,
         &gameSpecificMessageSize);
@@ -284,12 +285,12 @@ int HAL_GetMatchInfo(HAL_MatchInfo* info) {
   info->matchType = static_cast<HAL_MatchType>(matchType);
   info->matchNumber = matchNumber;
   info->replayNumber = replayNumber;
-  info->gameSpecificMessage = reinterpret_cast<char*>(gameSpecificMessage);
+  info->gameSpecificMessage = reinterpret_cast<char *>(gameSpecificMessage);
   info->gameSpecificMessage[gameSpecificMessageSize] = '\0';
   return status;
 }
 
-void HAL_FreeMatchInfo(HAL_MatchInfo* info) {
+void HAL_FreeMatchInfo(HAL_MatchInfo *info) {
   std::free(info->eventName);
   std::free(info->gameSpecificMessage);
   info->eventName = nullptr;
@@ -327,7 +328,8 @@ bool HAL_IsNewControlData(void) {
     std::unique_lock<wpi::mutex> lock(newDSDataAvailableMutex);
     currentCount = newDSDataAvailableCounter;
   }
-  if (lastCount == currentCount) return false;
+  if (lastCount == currentCount)
+    return false;
   lastCount = currentCount;
   return true;
 }
@@ -367,7 +369,8 @@ constexpr int32_t refNumber = 42;
 static void newDataOccur(uint32_t refNum) {
   // Since we could get other values, require our specific handle
   // to signal our threads
-  if (refNum != refNumber) return;
+  if (refNum != refNumber)
+    return;
   std::lock_guard<wpi::mutex> lock(newDSDataAvailableMutex);
   // Nofify all threads
   newDSDataAvailableCounter++;
@@ -383,11 +386,13 @@ void HAL_InitializeDriverStation(void) {
   static std::atomic_bool initialized{false};
   static wpi::mutex initializeMutex;
   // Initial check, as if it's true initialization has finished
-  if (initialized) return;
+  if (initialized)
+    return;
 
   std::lock_guard<wpi::mutex> lock(initializeMutex);
   // Second check in case another thread was waiting
-  if (initialized) return;
+  if (initialized)
+    return;
 
   // Set up the occur function internally with NetComm
   NetCommRPCProxy_SetOccurFuncPointer(newDataOccur);
@@ -403,4 +408,4 @@ void HAL_InitializeDriverStation(void) {
  */
 void HAL_ReleaseDSMutex(void) { newDataOccur(refNumber); }
 
-}  // extern "C"
+} // extern "C"

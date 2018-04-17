@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "PowerDistributionPanel.h"  // NOLINT(build/include_order)
+#include "PowerDistributionPanel.h" // NOLINT(build/include_order)
 
 #include "Jaguar.h"
 #include "Talon.h"
@@ -19,11 +19,11 @@ using namespace frc;
 static const double kMotorTime = 0.25;
 
 class PowerDistributionPanelTest : public testing::Test {
- protected:
-  PowerDistributionPanel* m_pdp;
-  Talon* m_talon;
-  Victor* m_victor;
-  Jaguar* m_jaguar;
+protected:
+  PowerDistributionPanel *m_pdp;
+  Talon *m_talon;
+  Victor *m_victor;
+  Jaguar *m_jaguar;
 
   void SetUp() override {
     m_pdp = new PowerDistributionPanel();

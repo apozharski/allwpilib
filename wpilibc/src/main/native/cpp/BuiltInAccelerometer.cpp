@@ -54,7 +54,7 @@ double BuiltInAccelerometer::GetY() { return HAL_GetAccelerometerY(); }
  */
 double BuiltInAccelerometer::GetZ() { return HAL_GetAccelerometerZ(); }
 
-void BuiltInAccelerometer::InitSendable(SendableBuilder& builder) {
+void BuiltInAccelerometer::InitSendable(SendableBuilder &builder) {
   builder.SetSmartDashboardType("3AxisAccelerometer");
   builder.AddDoubleProperty("X", [=]() { return GetX(); }, nullptr);
   builder.AddDoubleProperty("Y", [=]() { return GetY(); }, nullptr);

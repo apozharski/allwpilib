@@ -9,9 +9,9 @@
 
 using namespace frc;
 
-const char* SendableChooserBase::kDefault = "default";
-const char* SendableChooserBase::kOptions = "options";
-const char* SendableChooserBase::kSelected = "selected";
+const char *SendableChooserBase::kDefault = "default";
+const char *SendableChooserBase::kOptions = "options";
+const char *SendableChooserBase::kSelected = "selected";
 
 /**
  * Instantiates a SendableChooser.

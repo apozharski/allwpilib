@@ -17,7 +17,8 @@ using namespace frc;
  * @param addLiveWindow if true, add this Sendable to LiveWindow
  */
 SendableBase::SendableBase(bool addLiveWindow) {
-  if (addLiveWindow) LiveWindow::GetInstance()->Add(this);
+  if (addLiveWindow)
+    LiveWindow::GetInstance()->Add(this);
 }
 
 /**
@@ -30,7 +31,7 @@ std::string SendableBase::GetName() const {
   return m_name;
 }
 
-void SendableBase::SetName(const llvm::Twine& name) {
+void SendableBase::SetName(const llvm::Twine &name) {
   std::lock_guard<wpi::mutex> lock(m_mutex);
   m_name = name.str();
 }
@@ -40,7 +41,7 @@ std::string SendableBase::GetSubsystem() const {
   return m_subsystem;
 }
 
-void SendableBase::SetSubsystem(const llvm::Twine& subsystem) {
+void SendableBase::SetSubsystem(const llvm::Twine &subsystem) {
   std::lock_guard<wpi::mutex> lock(m_mutex);
   m_subsystem = subsystem.str();
 }
@@ -59,7 +60,7 @@ void SendableBase::AddChild(std::shared_ptr<Sendable> child) {
  *
  * @param child child component
  */
-void SendableBase::AddChild(void* child) {
+void SendableBase::AddChild(void *child) {
   LiveWindow::GetInstance()->AddChild(this, child);
 }
 
@@ -70,7 +71,7 @@ void SendableBase::AddChild(void* child) {
  *                   value
  * @param channel    The channel number the device is plugged into
  */
-void SendableBase::SetName(const llvm::Twine& moduleType, int channel) {
+void SendableBase::SetName(const llvm::Twine &moduleType, int channel) {
   SetName(moduleType + llvm::Twine('[') + llvm::Twine(channel) +
           llvm::Twine(']'));
 }
@@ -84,7 +85,7 @@ void SendableBase::SetName(const llvm::Twine& moduleType, int channel) {
  * @param channel      The channel number the device is plugged into (usually
  * PWM)
  */
-void SendableBase::SetName(const llvm::Twine& moduleType, int moduleNumber,
+void SendableBase::SetName(const llvm::Twine &moduleType, int moduleNumber,
                            int channel) {
   SetName(moduleType + llvm::Twine('[') + llvm::Twine(moduleNumber) +
           llvm::Twine(',') + llvm::Twine(channel) + llvm::Twine(']'));

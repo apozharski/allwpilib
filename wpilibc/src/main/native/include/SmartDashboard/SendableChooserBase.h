@@ -22,17 +22,17 @@ namespace frc {
  * template class.
  */
 class SendableChooserBase : public SendableBase {
- public:
+public:
   SendableChooserBase();
   ~SendableChooserBase() override = default;
 
- protected:
-  static const char* kDefault;
-  static const char* kOptions;
-  static const char* kSelected;
+protected:
+  static const char *kDefault;
+  static const char *kOptions;
+  static const char *kSelected;
 
   std::string m_defaultChoice;
   nt::NetworkTableEntry m_selectedEntry;
 };
 
-}  // namespace frc
+} // namespace frc

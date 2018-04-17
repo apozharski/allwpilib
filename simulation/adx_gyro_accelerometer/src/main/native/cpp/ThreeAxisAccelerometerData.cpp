@@ -24,9 +24,10 @@ void ThreeAxisAccelerometerData::ResetData() {
 }
 
 int32_t ThreeAxisAccelerometerData::RegisterXCallback(
-    HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify) {
+    HAL_NotifyCallback callback, void *param, HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -59,9 +60,10 @@ void ThreeAxisAccelerometerData::SetX(double x) {
 }
 
 int32_t ThreeAxisAccelerometerData::RegisterYCallback(
-    HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify) {
+    HAL_NotifyCallback callback, void *param, HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -94,9 +96,10 @@ void ThreeAxisAccelerometerData::SetY(double y) {
 }
 
 int32_t ThreeAxisAccelerometerData::RegisterZCallback(
-    HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify) {
+    HAL_NotifyCallback callback, void *param, HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);

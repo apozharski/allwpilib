@@ -12,8 +12,8 @@
 
 namespace hal {
 IndexedHandleResource<HAL_AnalogInputHandle, hal::AnalogPort, kNumAnalogInputs,
-                      HAL_HandleEnum::AnalogInput>* analogInputHandles;
-}  // namespace hal
+                      HAL_HandleEnum::AnalogInput> *analogInputHandles;
+} // namespace hal
 
 namespace hal {
 namespace init {
@@ -23,5 +23,5 @@ void InitializeAnalogInternal() {
       aiH;
   analogInputHandles = &aiH;
 }
-}  // namespace init
-}  // namespace hal
+} // namespace init
+} // namespace hal

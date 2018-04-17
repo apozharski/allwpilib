@@ -15,7 +15,7 @@ namespace frc {
  * Interface for potentiometers.
  */
 class Potentiometer : public PIDSource {
- public:
+public:
   virtual ~Potentiometer() = default;
 
   /**
@@ -28,4 +28,4 @@ class Potentiometer : public PIDSource {
   void SetPIDSourceType(PIDSourceType pidSource) override;
 };
 
-}  // namespace frc
+} // namespace frc

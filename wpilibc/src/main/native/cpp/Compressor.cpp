@@ -41,7 +41,8 @@ Compressor::Compressor(int pcmID) : m_module(pcmID) {
  * default.
  */
 void Compressor::Start() {
-  if (StatusIsFatal()) return;
+  if (StatusIsFatal())
+    return;
   SetClosedLoopControl(true);
 }
 
@@ -50,7 +51,8 @@ void Compressor::Start() {
  * default.
  */
 void Compressor::Stop() {
-  if (StatusIsFatal()) return;
+  if (StatusIsFatal())
+    return;
   SetClosedLoopControl(false);
 }
 
@@ -60,7 +62,8 @@ void Compressor::Stop() {
  * @return true if the compressor is on
  */
 bool Compressor::Enabled() const {
-  if (StatusIsFatal()) return false;
+  if (StatusIsFatal())
+    return false;
   int32_t status = 0;
   bool value;
 
@@ -79,7 +82,8 @@ bool Compressor::Enabled() const {
  * @return true if pressure is low
  */
 bool Compressor::GetPressureSwitchValue() const {
-  if (StatusIsFatal()) return false;
+  if (StatusIsFatal())
+    return false;
   int32_t status = 0;
   bool value;
 
@@ -98,7 +102,8 @@ bool Compressor::GetPressureSwitchValue() const {
  * @return The current through the compressor, in amps
  */
 double Compressor::GetCompressorCurrent() const {
-  if (StatusIsFatal()) return 0;
+  if (StatusIsFatal())
+    return 0;
   int32_t status = 0;
   double value;
 
@@ -119,7 +124,8 @@ double Compressor::GetCompressorCurrent() const {
  *           to disable.
  */
 void Compressor::SetClosedLoopControl(bool on) {
-  if (StatusIsFatal()) return;
+  if (StatusIsFatal())
+    return;
   int32_t status = 0;
 
   HAL_SetCompressorClosedLoopControl(m_compressorHandle, on, &status);
@@ -137,7 +143,8 @@ void Compressor::SetClosedLoopControl(bool on) {
  *         disabled.
  */
 bool Compressor::GetClosedLoopControl() const {
-  if (StatusIsFatal()) return false;
+  if (StatusIsFatal())
+    return false;
   int32_t status = 0;
   bool value;
 
@@ -157,7 +164,8 @@ bool Compressor::GetClosedLoopControl() const {
  *         disabled due to compressor current being too high.
  */
 bool Compressor::GetCompressorCurrentTooHighFault() const {
-  if (StatusIsFatal()) return false;
+  if (StatusIsFatal())
+    return false;
   int32_t status = 0;
   bool value;
 
@@ -181,7 +189,8 @@ bool Compressor::GetCompressorCurrentTooHighFault() const {
  *         disabled due to compressor current being too high.
  */
 bool Compressor::GetCompressorCurrentTooHighStickyFault() const {
-  if (StatusIsFatal()) return false;
+  if (StatusIsFatal())
+    return false;
   int32_t status = 0;
   bool value;
 
@@ -206,7 +215,8 @@ bool Compressor::GetCompressorCurrentTooHighStickyFault() const {
  *         appears to be shorted.
  */
 bool Compressor::GetCompressorShortedStickyFault() const {
-  if (StatusIsFatal()) return false;
+  if (StatusIsFatal())
+    return false;
   int32_t status = 0;
   bool value;
 
@@ -226,7 +236,8 @@ bool Compressor::GetCompressorShortedStickyFault() const {
  *         appears to be shorted.
  */
 bool Compressor::GetCompressorShortedFault() const {
-  if (StatusIsFatal()) return false;
+  if (StatusIsFatal())
+    return false;
   int32_t status = 0;
   bool value;
 
@@ -249,7 +260,8 @@ bool Compressor::GetCompressorShortedFault() const {
  *         appear to be wired, i.e. compressor is not drawing enough current.
  */
 bool Compressor::GetCompressorNotConnectedStickyFault() const {
-  if (StatusIsFatal()) return false;
+  if (StatusIsFatal())
+    return false;
   int32_t status = 0;
   bool value;
 
@@ -269,7 +281,8 @@ bool Compressor::GetCompressorNotConnectedStickyFault() const {
  *         appear to be wired, i.e. compressor is not drawing enough current.
  */
 bool Compressor::GetCompressorNotConnectedFault() const {
-  if (StatusIsFatal()) return false;
+  if (StatusIsFatal())
+    return false;
   int32_t status = 0;
   bool value;
 
@@ -293,7 +306,8 @@ bool Compressor::GetCompressorNotConnectedFault() const {
  * If no sticky faults are set then this call will have no effect.
  */
 void Compressor::ClearAllPCMStickyFaults() {
-  if (StatusIsFatal()) return;
+  if (StatusIsFatal())
+    return;
   int32_t status = 0;
 
   HAL_ClearAllPCMStickyFaults(m_module, &status);
@@ -303,7 +317,7 @@ void Compressor::ClearAllPCMStickyFaults() {
   }
 }
 
-void Compressor::InitSendable(SendableBuilder& builder) {
+void Compressor::InitSendable(SendableBuilder &builder) {
   builder.SetSmartDashboardType("Compressor");
   builder.AddBooleanProperty("Enabled", [=]() { return Enabled(); },
                              [=](bool value) {

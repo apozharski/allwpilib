@@ -15,10 +15,10 @@ class Trigger;
 class Command;
 
 class PressedButtonScheduler : public ButtonScheduler {
- public:
-  PressedButtonScheduler(bool last, Trigger* button, Command* orders);
+public:
+  PressedButtonScheduler(bool last, Trigger *button, Command *orders);
   virtual ~PressedButtonScheduler() = default;
   virtual void Execute();
 };
 
-}  // namespace frc
+} // namespace frc

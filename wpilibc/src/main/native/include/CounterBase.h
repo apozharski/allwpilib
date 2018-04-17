@@ -19,7 +19,7 @@ namespace frc {
  * to be zeroed before use.
  */
 class CounterBase {
- public:
+public:
   enum EncodingType { k1X, k2X, k4X };
 
   virtual ~CounterBase() = default;
@@ -31,4 +31,4 @@ class CounterBase {
   virtual bool GetDirection() const = 0;
 };
 
-}  // namespace frc
+} // namespace frc

@@ -37,7 +37,7 @@ class DigitalGlitchFilter;
  * to be zeroed before use.
  */
 class Encoder : public SensorBase, public CounterBase, public PIDSource {
- public:
+public:
   enum IndexingType {
     kResetWhileHigh,
     kResetWhileLow,
@@ -50,9 +50,9 @@ class Encoder : public SensorBase, public CounterBase, public PIDSource {
   Encoder(std::shared_ptr<DigitalSource> aSource,
           std::shared_ptr<DigitalSource> bSource, bool reverseDirection = false,
           EncodingType encodingType = k4X);
-  Encoder(DigitalSource* aSource, DigitalSource* bSource,
+  Encoder(DigitalSource *aSource, DigitalSource *bSource,
           bool reverseDirection = false, EncodingType encodingType = k4X);
-  Encoder(DigitalSource& aSource, DigitalSource& bSource,
+  Encoder(DigitalSource &aSource, DigitalSource &bSource,
           bool reverseDirection = false, EncodingType encodingType = k4X);
   ~Encoder() override;
 
@@ -77,24 +77,24 @@ class Encoder : public SensorBase, public CounterBase, public PIDSource {
   double PIDGet() override;
 
   void SetIndexSource(int channel, IndexingType type = kResetOnRisingEdge);
-  void SetIndexSource(const DigitalSource& source,
+  void SetIndexSource(const DigitalSource &source,
                       IndexingType type = kResetOnRisingEdge);
 
-  void InitSendable(SendableBuilder& builder) override;
+  void InitSendable(SendableBuilder &builder) override;
 
   int GetFPGAIndex() const;
 
- private:
+private:
   void InitEncoder(bool reverseDirection, EncodingType encodingType);
 
   double DecodingScaleFactor() const;
 
-  std::shared_ptr<DigitalSource> m_aSource;  // The A phase of the quad encoder
-  std::shared_ptr<DigitalSource> m_bSource;  // The B phase of the quad encoder
+  std::shared_ptr<DigitalSource> m_aSource; // The A phase of the quad encoder
+  std::shared_ptr<DigitalSource> m_bSource; // The B phase of the quad encoder
   std::shared_ptr<DigitalSource> m_indexSource = nullptr;
   HAL_EncoderHandle m_encoder = HAL_kInvalidHandle;
 
   friend class DigitalGlitchFilter;
 };
 
-}  // namespace frc
+} // namespace frc

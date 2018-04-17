@@ -21,7 +21,7 @@
 namespace frc {
 
 class SendableBuilder {
- public:
+public:
   virtual ~SendableBuilder() = default;
 
   /**
@@ -30,7 +30,7 @@ class SendableBuilder {
    *
    * @param type    data type
    */
-  virtual void SetSmartDashboardType(const llvm::Twine& type) = 0;
+  virtual void SetSmartDashboardType(const llvm::Twine &type) = 0;
 
   /**
    * Set the function that should be called to set the Sendable into a safe
@@ -57,7 +57,7 @@ class SendableBuilder {
    * @param key   property name
    * @return Network table entry
    */
-  virtual nt::NetworkTableEntry GetEntry(const llvm::Twine& key) = 0;
+  virtual nt::NetworkTableEntry GetEntry(const llvm::Twine &key) = 0;
 
   /**
    * Add a boolean property.
@@ -66,7 +66,7 @@ class SendableBuilder {
    * @param getter  getter function (returns current value)
    * @param setter  setter function (sets new value)
    */
-  virtual void AddBooleanProperty(const llvm::Twine& key,
+  virtual void AddBooleanProperty(const llvm::Twine &key,
                                   std::function<bool()> getter,
                                   std::function<void(bool)> setter) = 0;
 
@@ -77,7 +77,7 @@ class SendableBuilder {
    * @param getter  getter function (returns current value)
    * @param setter  setter function (sets new value)
    */
-  virtual void AddDoubleProperty(const llvm::Twine& key,
+  virtual void AddDoubleProperty(const llvm::Twine &key,
                                  std::function<double()> getter,
                                  std::function<void(double)> setter) = 0;
 
@@ -88,9 +88,9 @@ class SendableBuilder {
    * @param getter  getter function (returns current value)
    * @param setter  setter function (sets new value)
    */
-  virtual void AddStringProperty(
-      const llvm::Twine& key, std::function<std::string()> getter,
-      std::function<void(llvm::StringRef)> setter) = 0;
+  virtual void
+  AddStringProperty(const llvm::Twine &key, std::function<std::string()> getter,
+                    std::function<void(llvm::StringRef)> setter) = 0;
 
   /**
    * Add a boolean array property.
@@ -99,9 +99,10 @@ class SendableBuilder {
    * @param getter  getter function (returns current value)
    * @param setter  setter function (sets new value)
    */
-  virtual void AddBooleanArrayProperty(
-      const llvm::Twine& key, std::function<std::vector<int>()> getter,
-      std::function<void(llvm::ArrayRef<int>)> setter) = 0;
+  virtual void
+  AddBooleanArrayProperty(const llvm::Twine &key,
+                          std::function<std::vector<int>()> getter,
+                          std::function<void(llvm::ArrayRef<int>)> setter) = 0;
 
   /**
    * Add a double array property.
@@ -111,7 +112,7 @@ class SendableBuilder {
    * @param setter  setter function (sets new value)
    */
   virtual void AddDoubleArrayProperty(
-      const llvm::Twine& key, std::function<std::vector<double>()> getter,
+      const llvm::Twine &key, std::function<std::vector<double>()> getter,
       std::function<void(llvm::ArrayRef<double>)> setter) = 0;
 
   /**
@@ -122,7 +123,7 @@ class SendableBuilder {
    * @param setter  setter function (sets new value)
    */
   virtual void AddStringArrayProperty(
-      const llvm::Twine& key, std::function<std::vector<std::string>()> getter,
+      const llvm::Twine &key, std::function<std::vector<std::string>()> getter,
       std::function<void(llvm::ArrayRef<std::string>)> setter) = 0;
 
   /**
@@ -132,7 +133,7 @@ class SendableBuilder {
    * @param getter  getter function (returns current value)
    * @param setter  setter function (sets new value)
    */
-  virtual void AddRawProperty(const llvm::Twine& key,
+  virtual void AddRawProperty(const llvm::Twine &key,
                               std::function<std::string()> getter,
                               std::function<void(llvm::StringRef)> setter) = 0;
 
@@ -143,10 +144,10 @@ class SendableBuilder {
    * @param getter  getter function (returns current value)
    * @param setter  setter function (sets new value)
    */
-  virtual void AddValueProperty(
-      const llvm::Twine& key,
-      std::function<std::shared_ptr<nt::Value>()> getter,
-      std::function<void(std::shared_ptr<nt::Value>)> setter) = 0;
+  virtual void
+  AddValueProperty(const llvm::Twine &key,
+                   std::function<std::shared_ptr<nt::Value>()> getter,
+                   std::function<void(std::shared_ptr<nt::Value>)> setter) = 0;
 
   /**
    * Add a string property (SmallString form).
@@ -156,8 +157,8 @@ class SendableBuilder {
    * @param setter  setter function (sets new value)
    */
   virtual void AddSmallStringProperty(
-      const llvm::Twine& key,
-      std::function<llvm::StringRef(llvm::SmallVectorImpl<char>& buf)> getter,
+      const llvm::Twine &key,
+      std::function<llvm::StringRef(llvm::SmallVectorImpl<char> &buf)> getter,
       std::function<void(llvm::StringRef)> setter) = 0;
 
   /**
@@ -168,8 +169,8 @@ class SendableBuilder {
    * @param setter  setter function (sets new value)
    */
   virtual void AddSmallBooleanArrayProperty(
-      const llvm::Twine& key,
-      std::function<llvm::ArrayRef<int>(llvm::SmallVectorImpl<int>& buf)>
+      const llvm::Twine &key,
+      std::function<llvm::ArrayRef<int>(llvm::SmallVectorImpl<int> &buf)>
           getter,
       std::function<void(llvm::ArrayRef<int>)> setter) = 0;
 
@@ -181,8 +182,8 @@ class SendableBuilder {
    * @param setter  setter function (sets new value)
    */
   virtual void AddSmallDoubleArrayProperty(
-      const llvm::Twine& key,
-      std::function<llvm::ArrayRef<double>(llvm::SmallVectorImpl<double>& buf)>
+      const llvm::Twine &key,
+      std::function<llvm::ArrayRef<double>(llvm::SmallVectorImpl<double> &buf)>
           getter,
       std::function<void(llvm::ArrayRef<double>)> setter) = 0;
 
@@ -194,10 +195,9 @@ class SendableBuilder {
    * @param setter  setter function (sets new value)
    */
   virtual void AddSmallStringArrayProperty(
-      const llvm::Twine& key,
-      std::function<
-          llvm::ArrayRef<std::string>(llvm::SmallVectorImpl<std::string>& buf)>
-          getter,
+      const llvm::Twine &key, std::function<llvm::ArrayRef<std::string>(
+                                  llvm::SmallVectorImpl<std::string> &buf)>
+                                  getter,
       std::function<void(llvm::ArrayRef<std::string>)> setter) = 0;
 
   /**
@@ -208,9 +208,9 @@ class SendableBuilder {
    * @param setter  setter function (sets new value)
    */
   virtual void AddSmallRawProperty(
-      const llvm::Twine& key,
-      std::function<llvm::StringRef(llvm::SmallVectorImpl<char>& buf)> getter,
+      const llvm::Twine &key,
+      std::function<llvm::StringRef(llvm::SmallVectorImpl<char> &buf)> getter,
       std::function<void(llvm::StringRef)> setter) = 0;
 };
 
-}  // namespace frc
+} // namespace frc

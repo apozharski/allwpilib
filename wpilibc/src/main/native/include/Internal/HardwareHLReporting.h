@@ -12,9 +12,9 @@
 namespace frc {
 
 class HardwareHLReporting : public HLUsageReportingInterface {
- public:
+public:
   virtual void ReportScheduler();
   virtual void ReportSmartDashboard();
 };
 
-}  // namespace frc
+} // namespace frc

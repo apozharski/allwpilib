@@ -15,8 +15,8 @@ namespace frc {
  * Mindsensors SD540 Speed Controller.
  */
 class SD540 : public PWMSpeedController {
- public:
+public:
   explicit SD540(int channel);
 };
 
-}  // namespace frc
+} // namespace frc

@@ -17,10 +17,10 @@ void InitializeDigitalPWMData() {
   static DigitalPWMData sdpd[kNumDigitalPWMOutputs];
   ::hal::SimDigitalPWMData = sdpd;
 }
-}  // namespace init
-}  // namespace hal
+} // namespace init
+} // namespace hal
 
-DigitalPWMData* hal::SimDigitalPWMData;
+DigitalPWMData *hal::SimDigitalPWMData;
 void DigitalPWMData::ResetData() {
   m_initialized = false;
   m_initializedCallbacks = nullptr;
@@ -31,10 +31,11 @@ void DigitalPWMData::ResetData() {
 }
 
 int32_t DigitalPWMData::RegisterInitializedCallback(HAL_NotifyCallback callback,
-                                                    void* param,
+                                                    void *param,
                                                     HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -67,10 +68,11 @@ void DigitalPWMData::SetInitialized(HAL_Bool initialized) {
 }
 
 int32_t DigitalPWMData::RegisterDutyCycleCallback(HAL_NotifyCallback callback,
-                                                  void* param,
+                                                  void *param,
                                                   HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -103,10 +105,11 @@ void DigitalPWMData::SetDutyCycle(double dutyCycle) {
 }
 
 int32_t DigitalPWMData::RegisterPinCallback(HAL_NotifyCallback callback,
-                                            void* param,
+                                            void *param,
                                             HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -144,7 +147,7 @@ void HALSIM_ResetDigitalPWMData(int32_t index) {
 }
 
 int32_t HALSIM_RegisterDigitalPWMInitializedCallback(
-    int32_t index, HAL_NotifyCallback callback, void* param,
+    int32_t index, HAL_NotifyCallback callback, void *param,
     HAL_Bool initialNotify) {
   return SimDigitalPWMData[index].RegisterInitializedCallback(callback, param,
                                                               initialNotify);
@@ -164,7 +167,7 @@ void HALSIM_SetDigitalPWMInitialized(int32_t index, HAL_Bool initialized) {
 
 int32_t HALSIM_RegisterDigitalPWMDutyCycleCallback(int32_t index,
                                                    HAL_NotifyCallback callback,
-                                                   void* param,
+                                                   void *param,
                                                    HAL_Bool initialNotify) {
   return SimDigitalPWMData[index].RegisterDutyCycleCallback(callback, param,
                                                             initialNotify);
@@ -184,7 +187,7 @@ void HALSIM_SetDigitalPWMDutyCycle(int32_t index, double dutyCycle) {
 
 int32_t HALSIM_RegisterDigitalPWMPinCallback(int32_t index,
                                              HAL_NotifyCallback callback,
-                                             void* param,
+                                             void *param,
                                              HAL_Bool initialNotify) {
   return SimDigitalPWMData[index].RegisterPinCallback(callback, param,
                                                       initialNotify);
@@ -204,7 +207,7 @@ void HALSIM_SetDigitalPWMPin(int32_t index, int32_t pin) {
 
 void HALSIM_RegisterDigitalPWMAllCallbacks(int32_t index,
                                            HAL_NotifyCallback callback,
-                                           void* param,
+                                           void *param,
                                            HAL_Bool initialNotify) {
   SimDigitalPWMData[index].RegisterInitializedCallback(callback, param,
                                                        initialNotify);
@@ -212,4 +215,4 @@ void HALSIM_RegisterDigitalPWMAllCallbacks(int32_t index,
                                                      initialNotify);
   SimDigitalPWMData[index].RegisterPinCallback(callback, param, initialNotify);
 }
-}  // extern "C"
+} // extern "C"

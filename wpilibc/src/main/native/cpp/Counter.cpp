@@ -52,7 +52,7 @@ Counter::Counter(Mode mode) {
  * @param source A pointer to the existing DigitalSource object. It will be set
  *               as the Up Source.
  */
-Counter::Counter(DigitalSource* source) : Counter(kTwoPulse) {
+Counter::Counter(DigitalSource *source) : Counter(kTwoPulse) {
   SetUpSource(source);
   ClearDownSource();
 }
@@ -100,7 +100,7 @@ Counter::Counter(int channel) : Counter(kTwoPulse) {
  *
  * @param trigger The reference to the existing AnalogTrigger object.
  */
-Counter::Counter(const AnalogTrigger& trigger) : Counter(kTwoPulse) {
+Counter::Counter(const AnalogTrigger &trigger) : Counter(kTwoPulse) {
   SetUpSource(trigger.CreateOutput(AnalogTriggerType::kState));
   ClearDownSource();
 }
@@ -116,11 +116,10 @@ Counter::Counter(const AnalogTrigger& trigger) : Counter(kTwoPulse) {
  *                     source
  * @param inverted     True to invert the output (reverse the direction)
  */
-Counter::Counter(EncodingType encodingType, DigitalSource* upSource,
-                 DigitalSource* downSource, bool inverted)
-    : Counter(encodingType,
-              std::shared_ptr<DigitalSource>(upSource,
-                                             NullDeleter<DigitalSource>()),
+Counter::Counter(EncodingType encodingType, DigitalSource *upSource,
+                 DigitalSource *downSource, bool inverted)
+    : Counter(encodingType, std::shared_ptr<DigitalSource>(
+                                upSource, NullDeleter<DigitalSource>()),
               std::shared_ptr<DigitalSource>(downSource,
                                              NullDeleter<DigitalSource>()),
               inverted) {}
@@ -181,7 +180,8 @@ Counter::~Counter() {
  *                10-25 are on the MXP
  */
 void Counter::SetUpSource(int channel) {
-  if (StatusIsFatal()) return;
+  if (StatusIsFatal())
+    return;
   SetUpSource(std::make_shared<DigitalInput>(channel));
   AddChild(m_upSource);
 }
@@ -192,7 +192,7 @@ void Counter::SetUpSource(int channel) {
  * @param analogTrigger The analog trigger object that is used for the Up Source
  * @param triggerType   The analog trigger output that will trigger the counter.
  */
-void Counter::SetUpSource(AnalogTrigger* analogTrigger,
+void Counter::SetUpSource(AnalogTrigger *analogTrigger,
                           AnalogTriggerType triggerType) {
   SetUpSource(std::shared_ptr<AnalogTrigger>(analogTrigger,
                                              NullDeleter<AnalogTrigger>()),
@@ -207,7 +207,8 @@ void Counter::SetUpSource(AnalogTrigger* analogTrigger,
  */
 void Counter::SetUpSource(std::shared_ptr<AnalogTrigger> analogTrigger,
                           AnalogTriggerType triggerType) {
-  if (StatusIsFatal()) return;
+  if (StatusIsFatal())
+    return;
   SetUpSource(analogTrigger->CreateOutput(triggerType));
 }
 
@@ -219,7 +220,8 @@ void Counter::SetUpSource(std::shared_ptr<AnalogTrigger> analogTrigger,
  * @param source Pointer to the DigitalSource object to set as the up source
  */
 void Counter::SetUpSource(std::shared_ptr<DigitalSource> source) {
-  if (StatusIsFatal()) return;
+  if (StatusIsFatal())
+    return;
   m_upSource = source;
   if (m_upSource->StatusIsFatal()) {
     CloneError(*m_upSource);
@@ -233,7 +235,7 @@ void Counter::SetUpSource(std::shared_ptr<DigitalSource> source) {
   }
 }
 
-void Counter::SetUpSource(DigitalSource* source) {
+void Counter::SetUpSource(DigitalSource *source) {
   SetUpSource(
       std::shared_ptr<DigitalSource>(source, NullDeleter<DigitalSource>()));
 }
@@ -245,7 +247,7 @@ void Counter::SetUpSource(DigitalSource* source) {
  *
  * @param source Reference to the DigitalSource object to set as the up source
  */
-void Counter::SetUpSource(DigitalSource& source) {
+void Counter::SetUpSource(DigitalSource &source) {
   SetUpSource(
       std::shared_ptr<DigitalSource>(&source, NullDeleter<DigitalSource>()));
 }
@@ -259,7 +261,8 @@ void Counter::SetUpSource(DigitalSource& source) {
  * @param fallingEdge True to trigger on falling edges
  */
 void Counter::SetUpSourceEdge(bool risingEdge, bool fallingEdge) {
-  if (StatusIsFatal()) return;
+  if (StatusIsFatal())
+    return;
   if (m_upSource == nullptr) {
     wpi_setWPIErrorWithContext(
         NullParameter,
@@ -274,7 +277,8 @@ void Counter::SetUpSourceEdge(bool risingEdge, bool fallingEdge) {
  * Disable the up counting source to the counter.
  */
 void Counter::ClearUpSource() {
-  if (StatusIsFatal()) return;
+  if (StatusIsFatal())
+    return;
   m_upSource.reset();
   int32_t status = 0;
   HAL_ClearCounterUpSource(m_counter, &status);
@@ -288,7 +292,8 @@ void Counter::ClearUpSource() {
  *                10-25 are on the MXP
  */
 void Counter::SetDownSource(int channel) {
-  if (StatusIsFatal()) return;
+  if (StatusIsFatal())
+    return;
   SetDownSource(std::make_shared<DigitalInput>(channel));
   AddChild(m_downSource);
 }
@@ -300,7 +305,7 @@ void Counter::SetDownSource(int channel) {
  *                      Source
  * @param triggerType   The analog trigger output that will trigger the counter.
  */
-void Counter::SetDownSource(AnalogTrigger* analogTrigger,
+void Counter::SetDownSource(AnalogTrigger *analogTrigger,
                             AnalogTriggerType triggerType) {
   SetDownSource(std::shared_ptr<AnalogTrigger>(analogTrigger,
                                                NullDeleter<AnalogTrigger>()),
@@ -316,7 +321,8 @@ void Counter::SetDownSource(AnalogTrigger* analogTrigger,
  */
 void Counter::SetDownSource(std::shared_ptr<AnalogTrigger> analogTrigger,
                             AnalogTriggerType triggerType) {
-  if (StatusIsFatal()) return;
+  if (StatusIsFatal())
+    return;
   SetDownSource(analogTrigger->CreateOutput(triggerType));
 }
 
@@ -328,7 +334,8 @@ void Counter::SetDownSource(std::shared_ptr<AnalogTrigger> analogTrigger,
  * @param source Pointer to the DigitalSource object to set as the down source
  */
 void Counter::SetDownSource(std::shared_ptr<DigitalSource> source) {
-  if (StatusIsFatal()) return;
+  if (StatusIsFatal())
+    return;
   m_downSource = source;
   if (m_downSource->StatusIsFatal()) {
     CloneError(*m_downSource);
@@ -342,7 +349,7 @@ void Counter::SetDownSource(std::shared_ptr<DigitalSource> source) {
   }
 }
 
-void Counter::SetDownSource(DigitalSource* source) {
+void Counter::SetDownSource(DigitalSource *source) {
   SetDownSource(
       std::shared_ptr<DigitalSource>(source, NullDeleter<DigitalSource>()));
 }
@@ -354,7 +361,7 @@ void Counter::SetDownSource(DigitalSource* source) {
  *
  * @param source Reference to the DigitalSource object to set as the down source
  */
-void Counter::SetDownSource(DigitalSource& source) {
+void Counter::SetDownSource(DigitalSource &source) {
   SetDownSource(
       std::shared_ptr<DigitalSource>(&source, NullDeleter<DigitalSource>()));
 }
@@ -368,7 +375,8 @@ void Counter::SetDownSource(DigitalSource& source) {
  * @param fallingEdge True to trigger on falling edges
  */
 void Counter::SetDownSourceEdge(bool risingEdge, bool fallingEdge) {
-  if (StatusIsFatal()) return;
+  if (StatusIsFatal())
+    return;
   if (m_downSource == nullptr) {
     wpi_setWPIErrorWithContext(
         NullParameter,
@@ -383,7 +391,8 @@ void Counter::SetDownSourceEdge(bool risingEdge, bool fallingEdge) {
  * Disable the down counting source to the counter.
  */
 void Counter::ClearDownSource() {
-  if (StatusIsFatal()) return;
+  if (StatusIsFatal())
+    return;
   m_downSource.reset();
   int32_t status = 0;
   HAL_ClearCounterDownSource(m_counter, &status);
@@ -396,7 +405,8 @@ void Counter::ClearDownSource() {
  * Up and down counts are sourced independently from two inputs.
  */
 void Counter::SetUpDownCounterMode() {
-  if (StatusIsFatal()) return;
+  if (StatusIsFatal())
+    return;
   int32_t status = 0;
   HAL_SetCounterUpDownMode(m_counter, &status);
   wpi_setErrorWithContext(status, HAL_GetErrorMessage(status));
@@ -409,7 +419,8 @@ void Counter::SetUpDownCounterMode() {
  * The Down counter input represents the direction to count.
  */
 void Counter::SetExternalDirectionMode() {
-  if (StatusIsFatal()) return;
+  if (StatusIsFatal())
+    return;
   int32_t status = 0;
   HAL_SetCounterExternalDirectionMode(m_counter, &status);
   wpi_setErrorWithContext(status, HAL_GetErrorMessage(status));
@@ -421,7 +432,8 @@ void Counter::SetExternalDirectionMode() {
  * Counts up on both rising and falling edges.
  */
 void Counter::SetSemiPeriodMode(bool highSemiPeriod) {
-  if (StatusIsFatal()) return;
+  if (StatusIsFatal())
+    return;
   int32_t status = 0;
   HAL_SetCounterSemiPeriodMode(m_counter, highSemiPeriod, &status);
   wpi_setErrorWithContext(status, HAL_GetErrorMessage(status));
@@ -437,7 +449,8 @@ void Counter::SetSemiPeriodMode(bool highSemiPeriod) {
  *                  opposite direction.  Units are seconds.
  */
 void Counter::SetPulseLengthMode(double threshold) {
-  if (StatusIsFatal()) return;
+  if (StatusIsFatal())
+    return;
   int32_t status = 0;
   HAL_SetCounterPulseLengthMode(m_counter, threshold, &status);
   wpi_setErrorWithContext(status, HAL_GetErrorMessage(status));
@@ -484,7 +497,8 @@ void Counter::SetSamplesToAverage(int samplesToAverage) {
  * current value. Next time it is read, it might have a different value.
  */
 int Counter::Get() const {
-  if (StatusIsFatal()) return 0;
+  if (StatusIsFatal())
+    return 0;
   int32_t status = 0;
   int value = HAL_GetCounter(m_counter, &status);
   wpi_setErrorWithContext(status, HAL_GetErrorMessage(status));
@@ -498,7 +512,8 @@ int Counter::Get() const {
  * counter, just sets the current value to zero.
  */
 void Counter::Reset() {
-  if (StatusIsFatal()) return;
+  if (StatusIsFatal())
+    return;
   int32_t status = 0;
   HAL_ResetCounter(m_counter, &status);
   wpi_setErrorWithContext(status, HAL_GetErrorMessage(status));
@@ -513,7 +528,8 @@ void Counter::Reset() {
  * @returns The period between the last two pulses in units of seconds.
  */
 double Counter::GetPeriod() const {
-  if (StatusIsFatal()) return 0.0;
+  if (StatusIsFatal())
+    return 0.0;
   int32_t status = 0;
   double value = HAL_GetCounterPeriod(m_counter, &status);
   wpi_setErrorWithContext(status, HAL_GetErrorMessage(status));
@@ -531,7 +547,8 @@ double Counter::GetPeriod() const {
  *                  moving in seconds.
  */
 void Counter::SetMaxPeriod(double maxPeriod) {
-  if (StatusIsFatal()) return;
+  if (StatusIsFatal())
+    return;
   int32_t status = 0;
   HAL_SetCounterMaxPeriod(m_counter, maxPeriod, &status);
   wpi_setErrorWithContext(status, HAL_GetErrorMessage(status));
@@ -555,7 +572,8 @@ void Counter::SetMaxPeriod(double maxPeriod) {
  * @param enabled True to enable update when empty
  */
 void Counter::SetUpdateWhenEmpty(bool enabled) {
-  if (StatusIsFatal()) return;
+  if (StatusIsFatal())
+    return;
   int32_t status = 0;
   HAL_SetCounterUpdateWhenEmpty(m_counter, enabled, &status);
   wpi_setErrorWithContext(status, HAL_GetErrorMessage(status));
@@ -572,7 +590,8 @@ void Counter::SetUpdateWhenEmpty(bool enabled) {
  *         value set by SetMaxPeriod.
  */
 bool Counter::GetStopped() const {
-  if (StatusIsFatal()) return false;
+  if (StatusIsFatal())
+    return false;
   int32_t status = 0;
   bool value = HAL_GetCounterStopped(m_counter, &status);
   wpi_setErrorWithContext(status, HAL_GetErrorMessage(status));
@@ -585,7 +604,8 @@ bool Counter::GetStopped() const {
  * @return The last direction the counter value changed.
  */
 bool Counter::GetDirection() const {
-  if (StatusIsFatal()) return false;
+  if (StatusIsFatal())
+    return false;
   int32_t status = 0;
   bool value = HAL_GetCounterDirection(m_counter, &status);
   wpi_setErrorWithContext(status, HAL_GetErrorMessage(status));
@@ -601,13 +621,14 @@ bool Counter::GetDirection() const {
  * @param reverseDirection true if the value counted should be negated.
  */
 void Counter::SetReverseDirection(bool reverseDirection) {
-  if (StatusIsFatal()) return;
+  if (StatusIsFatal())
+    return;
   int32_t status = 0;
   HAL_SetCounterReverseDirection(m_counter, reverseDirection, &status);
   wpi_setErrorWithContext(status, HAL_GetErrorMessage(status));
 }
 
-void Counter::InitSendable(SendableBuilder& builder) {
+void Counter::InitSendable(SendableBuilder &builder) {
   builder.SetSmartDashboardType("Counter");
   builder.AddDoubleProperty("Value", [=]() { return Get(); }, nullptr);
 }

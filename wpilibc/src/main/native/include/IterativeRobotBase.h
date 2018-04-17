@@ -41,7 +41,7 @@ namespace frc {
  *   - TestPeriodic()
  */
 class IterativeRobotBase : public RobotBase {
- public:
+public:
   virtual void RobotInit();
   virtual void DisabledInit();
   virtual void AutonomousInit();
@@ -54,15 +54,15 @@ class IterativeRobotBase : public RobotBase {
   virtual void TeleopPeriodic();
   virtual void TestPeriodic();
 
- protected:
+protected:
   virtual ~IterativeRobotBase() = default;
 
   void LoopFunc();
 
- private:
+private:
   enum class Mode { kNone, kDisabled, kAutonomous, kTeleop, kTest };
 
   Mode m_lastMode = Mode::kNone;
 };
 
-}  // namespace frc
+} // namespace frc

@@ -12,7 +12,7 @@
 #include <HALSimLowFi.h>
 
 class HALSimNTProviderAnalogIn : public HALSimNTProvider {
- public:
+public:
   void Initialize() override;
   void OnCallback(uint32_t channel,
                   std::shared_ptr<nt::NetworkTable> table) override;
@@ -21,7 +21,7 @@ class HALSimNTProviderAnalogIn : public HALSimNTProvider {
 };
 
 class HALSimNTProviderAnalogOut : public HALSimNTProvider {
- public:
+public:
   void Initialize() override;
   void OnCallback(uint32_t channel,
                   std::shared_ptr<nt::NetworkTable> table) override;

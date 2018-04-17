@@ -31,7 +31,7 @@ class DigitalGlitchFilter;
  * to be zeroed before use.
  */
 class Counter : public SensorBase, public CounterBase {
- public:
+public:
   enum Mode {
     kTwoPulse = 0,
     kSemiperiod = 1,
@@ -41,33 +41,33 @@ class Counter : public SensorBase, public CounterBase {
 
   explicit Counter(Mode mode = kTwoPulse);
   explicit Counter(int channel);
-  explicit Counter(DigitalSource* source);
+  explicit Counter(DigitalSource *source);
   explicit Counter(std::shared_ptr<DigitalSource> source);
-  explicit Counter(const AnalogTrigger& trigger);
-  Counter(EncodingType encodingType, DigitalSource* upSource,
-          DigitalSource* downSource, bool inverted);
+  explicit Counter(const AnalogTrigger &trigger);
+  Counter(EncodingType encodingType, DigitalSource *upSource,
+          DigitalSource *downSource, bool inverted);
   Counter(EncodingType encodingType, std::shared_ptr<DigitalSource> upSource,
           std::shared_ptr<DigitalSource> downSource, bool inverted);
   ~Counter() override;
 
   void SetUpSource(int channel);
-  void SetUpSource(AnalogTrigger* analogTrigger, AnalogTriggerType triggerType);
+  void SetUpSource(AnalogTrigger *analogTrigger, AnalogTriggerType triggerType);
   void SetUpSource(std::shared_ptr<AnalogTrigger> analogTrigger,
                    AnalogTriggerType triggerType);
-  void SetUpSource(DigitalSource* source);
+  void SetUpSource(DigitalSource *source);
   void SetUpSource(std::shared_ptr<DigitalSource> source);
-  void SetUpSource(DigitalSource& source);
+  void SetUpSource(DigitalSource &source);
   void SetUpSourceEdge(bool risingEdge, bool fallingEdge);
   void ClearUpSource();
 
   void SetDownSource(int channel);
-  void SetDownSource(AnalogTrigger* analogTrigger,
+  void SetDownSource(AnalogTrigger *analogTrigger,
                      AnalogTriggerType triggerType);
   void SetDownSource(std::shared_ptr<AnalogTrigger> analogTrigger,
                      AnalogTriggerType triggerType);
-  void SetDownSource(DigitalSource* source);
+  void SetDownSource(DigitalSource *source);
   void SetDownSource(std::shared_ptr<DigitalSource> source);
-  void SetDownSource(DigitalSource& source);
+  void SetDownSource(DigitalSource &source);
   void SetDownSourceEdge(bool risingEdge, bool fallingEdge);
   void ClearDownSource();
 
@@ -91,9 +91,9 @@ class Counter : public SensorBase, public CounterBase {
   int GetSamplesToAverage() const;
   int GetFPGAIndex() const { return m_index; }
 
-  void InitSendable(SendableBuilder& builder) override;
+  void InitSendable(SendableBuilder &builder) override;
 
- protected:
+protected:
   // Makes the counter count up.
   std::shared_ptr<DigitalSource> m_upSource;
 
@@ -103,10 +103,10 @@ class Counter : public SensorBase, public CounterBase {
   // The FPGA counter object
   HAL_CounterHandle m_counter = HAL_kInvalidHandle;
 
- private:
-  int m_index = 0;  // The index of this counter.
+private:
+  int m_index = 0; // The index of this counter.
 
   friend class DigitalGlitchFilter;
 };
 
-}  // namespace frc
+} // namespace frc

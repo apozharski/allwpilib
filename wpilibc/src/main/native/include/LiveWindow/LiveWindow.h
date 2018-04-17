@@ -21,50 +21,50 @@ namespace frc {
  * actuators on the LiveWindow.
  */
 class LiveWindow {
- public:
-  LiveWindow(const LiveWindow&) = delete;
-  LiveWindow& operator=(const LiveWindow&) = delete;
+public:
+  LiveWindow(const LiveWindow &) = delete;
+  LiveWindow &operator=(const LiveWindow &) = delete;
 
-  static LiveWindow* GetInstance();
+  static LiveWindow *GetInstance();
 
   WPI_DEPRECATED("no longer required")
   void Run() { UpdateValues(); }
 
   WPI_DEPRECATED("use Sendable::SetName() instead")
-  void AddSensor(const llvm::Twine& subsystem, const llvm::Twine& name,
-                 Sendable* component);
+  void AddSensor(const llvm::Twine &subsystem, const llvm::Twine &name,
+                 Sendable *component);
   WPI_DEPRECATED("use Sendable::SetName() instead")
-  void AddSensor(const llvm::Twine& subsystem, const llvm::Twine& name,
-                 Sendable& component);
+  void AddSensor(const llvm::Twine &subsystem, const llvm::Twine &name,
+                 Sendable &component);
   WPI_DEPRECATED("use Sendable::SetName() instead")
-  void AddSensor(const llvm::Twine& subsystem, const llvm::Twine& name,
+  void AddSensor(const llvm::Twine &subsystem, const llvm::Twine &name,
                  std::shared_ptr<Sendable> component);
   WPI_DEPRECATED("use Sendable::SetName() instead")
-  void AddActuator(const llvm::Twine& subsystem, const llvm::Twine& name,
-                   Sendable* component);
+  void AddActuator(const llvm::Twine &subsystem, const llvm::Twine &name,
+                   Sendable *component);
   WPI_DEPRECATED("use Sendable::SetName() instead")
-  void AddActuator(const llvm::Twine& subsystem, const llvm::Twine& name,
-                   Sendable& component);
+  void AddActuator(const llvm::Twine &subsystem, const llvm::Twine &name,
+                   Sendable &component);
   WPI_DEPRECATED("use Sendable::SetName() instead")
-  void AddActuator(const llvm::Twine& subsystem, const llvm::Twine& name,
+  void AddActuator(const llvm::Twine &subsystem, const llvm::Twine &name,
                    std::shared_ptr<Sendable> component);
 
   WPI_DEPRECATED("use SensorBase::SetName() instead")
-  void AddSensor(const llvm::Twine& type, int channel, Sendable* component);
+  void AddSensor(const llvm::Twine &type, int channel, Sendable *component);
   WPI_DEPRECATED("use SensorBase::SetName() instead")
-  void AddActuator(const llvm::Twine& type, int channel, Sendable* component);
+  void AddActuator(const llvm::Twine &type, int channel, Sendable *component);
   WPI_DEPRECATED("use SensorBase::SetName() instead")
-  void AddActuator(const llvm::Twine& type, int module, int channel,
-                   Sendable* component);
+  void AddActuator(const llvm::Twine &type, int module, int channel,
+                   Sendable *component);
 
   void Add(std::shared_ptr<Sendable> component);
-  void Add(Sendable* component);
-  void AddChild(Sendable* parent, std::shared_ptr<Sendable> component);
-  void AddChild(Sendable* parent, void* component);
-  void Remove(Sendable* component);
+  void Add(Sendable *component);
+  void AddChild(Sendable *parent, std::shared_ptr<Sendable> component);
+  void AddChild(Sendable *parent, void *component);
+  void Remove(Sendable *component);
 
-  void EnableTelemetry(Sendable* component);
-  void DisableTelemetry(Sendable* component);
+  void EnableTelemetry(Sendable *component);
+  void DisableTelemetry(Sendable *component);
   void DisableAllTelemetry();
 
   bool IsEnabled() const;
@@ -72,11 +72,11 @@ class LiveWindow {
 
   void UpdateValues();
 
- private:
+private:
   LiveWindow();
 
   struct Impl;
   std::unique_ptr<Impl> m_impl;
 };
 
-}  // namespace frc
+} // namespace frc

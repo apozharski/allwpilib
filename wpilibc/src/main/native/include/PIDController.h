@@ -37,19 +37,19 @@ class PIDOutput;
  * affects the controller's behavior for a given set of PID constants.
  */
 class PIDController : public SendableBase, public PIDInterface {
- public:
-  PIDController(double p, double i, double d, PIDSource* source,
-                PIDOutput* output, double period = 0.05);
-  PIDController(double p, double i, double d, double f, PIDSource* source,
-                PIDOutput* output, double period = 0.05);
-  PIDController(double p, double i, double d, PIDSource& source,
-                PIDOutput& output, double period = 0.05);
-  PIDController(double p, double i, double d, double f, PIDSource& source,
-                PIDOutput& output, double period = 0.05);
+public:
+  PIDController(double p, double i, double d, PIDSource *source,
+                PIDOutput *output, double period = 0.05);
+  PIDController(double p, double i, double d, double f, PIDSource *source,
+                PIDOutput *output, double period = 0.05);
+  PIDController(double p, double i, double d, PIDSource &source,
+                PIDOutput &output, double period = 0.05);
+  PIDController(double p, double i, double d, double f, PIDSource &source,
+                PIDOutput &output, double period = 0.05);
   ~PIDController() override;
 
-  PIDController(const PIDController&) = delete;
-  PIDController& operator=(const PIDController) = delete;
+  PIDController(const PIDController &) = delete;
+  PIDController &operator=(const PIDController) = delete;
 
   virtual double Get() const;
   virtual void SetContinuous(bool continuous = true);
@@ -95,17 +95,17 @@ class PIDController : public SendableBase, public PIDInterface {
 
   void Reset() override;
 
-  void InitSendable(SendableBuilder& builder) override;
+  void InitSendable(SendableBuilder &builder) override;
 
- protected:
-  PIDSource* m_pidInput;
-  PIDOutput* m_pidOutput;
+protected:
+  PIDSource *m_pidInput;
+  PIDOutput *m_pidOutput;
 
   virtual void Calculate();
   virtual double CalculateFeedForward();
   double GetContinuousError(double error) const;
 
- private:
+private:
   // Factor for "proportional" control
   double m_P;
 
@@ -173,4 +173,4 @@ class PIDController : public SendableBase, public PIDInterface {
   Timer m_setpointTimer;
 };
 
-}  // namespace frc
+} // namespace frc

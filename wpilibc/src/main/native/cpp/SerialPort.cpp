@@ -36,7 +36,8 @@ SerialPort::SerialPort(int baudRate, Port port, int dataBits,
   HAL_InitializeSerialPort(static_cast<HAL_SerialPort>(port), &status);
   wpi_setErrorWithContext(status, HAL_GetErrorMessage(status));
   // Don't continue if initialization failed
-  if (status < 0) return;
+  if (status < 0)
+    return;
   HAL_SetSerialBaudRate(static_cast<HAL_SerialPort>(port), baudRate, &status);
   wpi_setErrorWithContext(status, HAL_GetErrorMessage(status));
   HAL_SetSerialDataBits(static_cast<HAL_SerialPort>(port), dataBits, &status);
@@ -81,13 +82,14 @@ SerialPort::SerialPort(int baudRate, llvm::StringRef portName, Port port,
   m_port = port;
 
   llvm::SmallVector<char, 64> buf;
-  const char* portNameC = portName.c_str(buf);
+  const char *portNameC = portName.c_str(buf);
 
   HAL_InitializeSerialPortDirect(static_cast<HAL_SerialPort>(port), portNameC,
                                  &status);
   wpi_setErrorWithContext(status, HAL_GetErrorMessage(status));
   // Don't continue if initialization failed
-  if (status < 0) return;
+  if (status < 0)
+    return;
   HAL_SetSerialBaudRate(static_cast<HAL_SerialPort>(port), baudRate, &status);
   wpi_setErrorWithContext(status, HAL_GetErrorMessage(status));
   HAL_SetSerialDataBits(static_cast<HAL_SerialPort>(port), dataBits, &status);
@@ -178,7 +180,7 @@ int SerialPort::GetBytesReceived() {
  * @param count  The maximum number of bytes to read.
  * @return The number of bytes actually read into the buffer.
  */
-int SerialPort::Read(char* buffer, int count) {
+int SerialPort::Read(char *buffer, int count) {
   int32_t status = 0;
   int retVal = HAL_ReadSerial(static_cast<HAL_SerialPort>(m_port), buffer,
                               count, &status);
@@ -193,7 +195,7 @@ int SerialPort::Read(char* buffer, int count) {
  * @param count  The maximum number of bytes to write.
  * @return The number of bytes actually written into the port.
  */
-int SerialPort::Write(const char* buffer, int count) {
+int SerialPort::Write(const char *buffer, int count) {
   return Write(llvm::StringRef(buffer, static_cast<size_t>(count)));
 }
 

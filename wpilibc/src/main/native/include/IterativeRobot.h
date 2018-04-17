@@ -21,11 +21,11 @@ namespace frc {
  * received from the driver station.
  */
 class IterativeRobot : public IterativeRobotBase {
- public:
+public:
   IterativeRobot();
   virtual ~IterativeRobot() = default;
 
   void StartCompetition() override;
 };
 
-}  // namespace frc
+} // namespace frc

@@ -81,7 +81,8 @@ PWM::~PWM() {
  *                          any values.
  */
 void PWM::EnableDeadbandElimination(bool eliminateDeadband) {
-  if (StatusIsFatal()) return;
+  if (StatusIsFatal())
+    return;
   int32_t status = 0;
   HAL_SetPWMEliminateDeadband(m_handle, eliminateDeadband, &status);
   wpi_setErrorWithContext(status, HAL_GetErrorMessage(status));
@@ -102,7 +103,8 @@ void PWM::EnableDeadbandElimination(bool eliminateDeadband) {
  */
 void PWM::SetBounds(double max, double deadbandMax, double center,
                     double deadbandMin, double min) {
-  if (StatusIsFatal()) return;
+  if (StatusIsFatal())
+    return;
   int32_t status = 0;
   HAL_SetPWMConfig(m_handle, max, deadbandMax, center, deadbandMin, min,
                    &status);
@@ -124,7 +126,8 @@ void PWM::SetBounds(double max, double deadbandMax, double center,
  */
 void PWM::SetRawBounds(int max, int deadbandMax, int center, int deadbandMin,
                        int min) {
-  if (StatusIsFatal()) return;
+  if (StatusIsFatal())
+    return;
   int32_t status = 0;
   HAL_SetPWMConfigRaw(m_handle, max, deadbandMax, center, deadbandMin, min,
                       &status);
@@ -144,8 +147,8 @@ void PWM::SetRawBounds(int max, int deadbandMax, int center, int deadbandMin,
  * @param deadbandMin The low end of the deadband range
  * @param min         The minimum pwm value
  */
-void PWM::GetRawBounds(int* max, int* deadbandMax, int* center,
-                       int* deadbandMin, int* min) {
+void PWM::GetRawBounds(int *max, int *deadbandMax, int *center,
+                       int *deadbandMin, int *min) {
   int32_t status = 0;
   HAL_GetPWMConfigRaw(m_handle, max, deadbandMax, center, deadbandMin, min,
                       &status);
@@ -163,7 +166,8 @@ void PWM::GetRawBounds(int* max, int* deadbandMax, int* center,
  * @param pos The position to set the servo between 0.0 and 1.0.
  */
 void PWM::SetPosition(double pos) {
-  if (StatusIsFatal()) return;
+  if (StatusIsFatal())
+    return;
   int32_t status = 0;
   HAL_SetPWMPosition(m_handle, pos, &status);
   wpi_setErrorWithContext(status, HAL_GetErrorMessage(status));
@@ -180,7 +184,8 @@ void PWM::SetPosition(double pos) {
  * @return The position the servo is set to between 0.0 and 1.0.
  */
 double PWM::GetPosition() const {
-  if (StatusIsFatal()) return 0.0;
+  if (StatusIsFatal())
+    return 0.0;
   int32_t status = 0;
   double position = HAL_GetPWMPosition(m_handle, &status);
   wpi_setErrorWithContext(status, HAL_GetErrorMessage(status));
@@ -201,7 +206,8 @@ double PWM::GetPosition() const {
  * @param speed The speed to set the speed controller between -1.0 and 1.0.
  */
 void PWM::SetSpeed(double speed) {
-  if (StatusIsFatal()) return;
+  if (StatusIsFatal())
+    return;
   int32_t status = 0;
   HAL_SetPWMSpeed(m_handle, speed, &status);
   wpi_setErrorWithContext(status, HAL_GetErrorMessage(status));
@@ -220,7 +226,8 @@ void PWM::SetSpeed(double speed) {
  * @return The most recently set speed between -1.0 and 1.0.
  */
 double PWM::GetSpeed() const {
-  if (StatusIsFatal()) return 0.0;
+  if (StatusIsFatal())
+    return 0.0;
   int32_t status = 0;
   double speed = HAL_GetPWMSpeed(m_handle, &status);
   wpi_setErrorWithContext(status, HAL_GetErrorMessage(status));
@@ -235,7 +242,8 @@ double PWM::GetSpeed() const {
  * @param value Raw PWM value.
  */
 void PWM::SetRaw(uint16_t value) {
-  if (StatusIsFatal()) return;
+  if (StatusIsFatal())
+    return;
 
   int32_t status = 0;
   HAL_SetPWMRaw(m_handle, value, &status);
@@ -250,7 +258,8 @@ void PWM::SetRaw(uint16_t value) {
  * @return Raw PWM control value.
  */
 uint16_t PWM::GetRaw() const {
-  if (StatusIsFatal()) return 0;
+  if (StatusIsFatal())
+    return 0;
 
   int32_t status = 0;
   uint16_t value = HAL_GetPWMRaw(m_handle, &status);
@@ -265,24 +274,23 @@ uint16_t PWM::GetRaw() const {
  * @param mult The period multiplier to apply to this channel
  */
 void PWM::SetPeriodMultiplier(PeriodMultiplier mult) {
-  if (StatusIsFatal()) return;
+  if (StatusIsFatal())
+    return;
 
   int32_t status = 0;
 
   switch (mult) {
-    case kPeriodMultiplier_4X:
-      HAL_SetPWMPeriodScale(m_handle, 3,
-                            &status);  // Squelch 3 out of 4 outputs
-      break;
-    case kPeriodMultiplier_2X:
-      HAL_SetPWMPeriodScale(m_handle, 1,
-                            &status);  // Squelch 1 out of 2 outputs
-      break;
-    case kPeriodMultiplier_1X:
-      HAL_SetPWMPeriodScale(m_handle, 0, &status);  // Don't squelch any outputs
-      break;
-    default:
-      wpi_assert(false);
+  case kPeriodMultiplier_4X:
+    HAL_SetPWMPeriodScale(m_handle, 3, &status); // Squelch 3 out of 4 outputs
+    break;
+  case kPeriodMultiplier_2X:
+    HAL_SetPWMPeriodScale(m_handle, 1, &status); // Squelch 1 out of 2 outputs
+    break;
+  case kPeriodMultiplier_1X:
+    HAL_SetPWMPeriodScale(m_handle, 0, &status); // Don't squelch any outputs
+    break;
+  default:
+    wpi_assert(false);
   }
 
   wpi_setErrorWithContext(status, HAL_GetErrorMessage(status));
@@ -293,7 +301,8 @@ void PWM::SetPeriodMultiplier(PeriodMultiplier mult) {
  * the output.
  */
 void PWM::SetDisabled() {
-  if (StatusIsFatal()) return;
+  if (StatusIsFatal())
+    return;
 
   int32_t status = 0;
 
@@ -302,7 +311,8 @@ void PWM::SetDisabled() {
 }
 
 void PWM::SetZeroLatch() {
-  if (StatusIsFatal()) return;
+  if (StatusIsFatal())
+    return;
 
   int32_t status = 0;
 
@@ -310,7 +320,7 @@ void PWM::SetZeroLatch() {
   wpi_setErrorWithContext(status, HAL_GetErrorMessage(status));
 }
 
-void PWM::InitSendable(SendableBuilder& builder) {
+void PWM::InitSendable(SendableBuilder &builder) {
   builder.SetSmartDashboardType("PWM");
   builder.SetSafeState([=]() { SetDisabled(); });
   builder.AddDoubleProperty("Value", [=]() { return GetRaw(); },

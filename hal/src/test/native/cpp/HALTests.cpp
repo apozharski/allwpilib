@@ -19,4 +19,4 @@ TEST(HALSOLENOID, SolenoidTest) {
   HAL_InitializeSolenoidPort(0, &status);
   EXPECT_NE(status, 0);
 }
-}  // namespace hal
+} // namespace hal

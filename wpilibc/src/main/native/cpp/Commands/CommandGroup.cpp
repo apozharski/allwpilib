@@ -16,7 +16,7 @@ using namespace frc;
  *
  * @param name The name for this command group
  */
-CommandGroup::CommandGroup(const llvm::Twine& name) : Command(name) {}
+CommandGroup::CommandGroup(const llvm::Twine &name) : Command(name) {}
 
 /**
  * Adds a new Command to the group. The Command will be started after all the
@@ -30,12 +30,13 @@ CommandGroup::CommandGroup(const llvm::Twine& name) : Command(name) {}
  *
  * @param command The Command to be added
  */
-void CommandGroup::AddSequential(Command* command) {
+void CommandGroup::AddSequential(Command *command) {
   if (command == nullptr) {
     wpi_setWPIErrorWithContext(NullParameter, "command");
     return;
   }
-  if (!AssertUnlocked("Cannot add new command to command group")) return;
+  if (!AssertUnlocked("Cannot add new command to command group"))
+    return;
 
   command->SetParent(this);
 
@@ -65,12 +66,13 @@ void CommandGroup::AddSequential(Command* command) {
  * @param command The Command to be added
  * @param timeout The timeout (in seconds)
  */
-void CommandGroup::AddSequential(Command* command, double timeout) {
+void CommandGroup::AddSequential(Command *command, double timeout) {
   if (command == nullptr) {
     wpi_setWPIErrorWithContext(NullParameter, "command");
     return;
   }
-  if (!AssertUnlocked("Cannot add new command to command group")) return;
+  if (!AssertUnlocked("Cannot add new command to command group"))
+    return;
   if (timeout < 0.0) {
     wpi_setWPIErrorWithContext(ParameterOutOfRange, "timeout < 0.0");
     return;
@@ -105,12 +107,13 @@ void CommandGroup::AddSequential(Command* command, double timeout) {
  *
  * @param command The command to be added
  */
-void CommandGroup::AddParallel(Command* command) {
+void CommandGroup::AddParallel(Command *command) {
   if (command == nullptr) {
     wpi_setWPIErrorWithContext(NullParameter, "command");
     return;
   }
-  if (!AssertUnlocked("Cannot add new command to command group")) return;
+  if (!AssertUnlocked("Cannot add new command to command group"))
+    return;
 
   command->SetParent(this);
 
@@ -147,12 +150,13 @@ void CommandGroup::AddParallel(Command* command) {
  * @param command The command to be added
  * @param timeout The timeout (in seconds)
  */
-void CommandGroup::AddParallel(Command* command, double timeout) {
+void CommandGroup::AddParallel(Command *command, double timeout) {
   if (command == nullptr) {
     wpi_setWPIErrorWithContext(NullParameter, "command");
     return;
   }
-  if (!AssertUnlocked("Cannot add new command to command group")) return;
+  if (!AssertUnlocked("Cannot add new command to command group"))
+    return;
   if (timeout < 0.0) {
     wpi_setWPIErrorWithContext(ParameterOutOfRange, "timeout < 0.0");
     return;
@@ -173,7 +177,7 @@ void CommandGroup::_Initialize() { m_currentCommandIndex = -1; }
 
 void CommandGroup::_Execute() {
   CommandGroupEntry entry;
-  Command* cmd = nullptr;
+  Command *cmd = nullptr;
   bool firstRun = false;
 
   if (m_currentCommandIndex == -1) {
@@ -183,7 +187,8 @@ void CommandGroup::_Execute() {
 
   while (static_cast<size_t>(m_currentCommandIndex) < m_commands.size()) {
     if (cmd != nullptr) {
-      if (entry.IsTimedOut()) cmd->_Cancel();
+      if (entry.IsTimedOut())
+        cmd->_Cancel();
 
       if (cmd->Run()) {
         break;
@@ -200,34 +205,35 @@ void CommandGroup::_Execute() {
     cmd = nullptr;
 
     switch (entry.m_state) {
-      case CommandGroupEntry::kSequence_InSequence:
-        cmd = entry.m_command;
-        if (firstRun) {
-          cmd->StartRunning();
-          CancelConflicts(cmd);
-          firstRun = false;
-        }
-        break;
+    case CommandGroupEntry::kSequence_InSequence:
+      cmd = entry.m_command;
+      if (firstRun) {
+        cmd->StartRunning();
+        CancelConflicts(cmd);
+        firstRun = false;
+      }
+      break;
 
-      case CommandGroupEntry::kSequence_BranchPeer:
-        m_currentCommandIndex++;
-        entry.m_command->Start();
-        break;
+    case CommandGroupEntry::kSequence_BranchPeer:
+      m_currentCommandIndex++;
+      entry.m_command->Start();
+      break;
 
-      case CommandGroupEntry::kSequence_BranchChild:
-        m_currentCommandIndex++;
-        CancelConflicts(entry.m_command);
-        entry.m_command->StartRunning();
-        m_children.push_back(entry);
-        break;
+    case CommandGroupEntry::kSequence_BranchChild:
+      m_currentCommandIndex++;
+      CancelConflicts(entry.m_command);
+      entry.m_command->StartRunning();
+      m_children.push_back(entry);
+      break;
     }
   }
 
   // Run Children
   for (auto iter = m_children.begin(); iter != m_children.end();) {
     entry = *iter;
-    Command* child = entry.m_command;
-    if (entry.IsTimedOut()) child->_Cancel();
+    Command *child = entry.m_command;
+    if (entry.IsTimedOut())
+      child->_Cancel();
 
     if (!child->Run()) {
       child->Removed();
@@ -243,13 +249,13 @@ void CommandGroup::_End() {
   // IsFinished method
   if (m_currentCommandIndex != -1 &&
       static_cast<size_t>(m_currentCommandIndex) < m_commands.size()) {
-    Command* cmd = m_commands[m_currentCommandIndex].m_command;
+    Command *cmd = m_commands[m_currentCommandIndex].m_command;
     cmd->_Cancel();
     cmd->Removed();
   }
 
   for (auto iter = m_children.begin(); iter != m_children.end(); iter++) {
-    Command* cmd = iter->m_command;
+    Command *cmd = iter->m_command;
     cmd->_Cancel();
     cmd->Removed();
   }
@@ -276,24 +282,27 @@ bool CommandGroup::IsFinished() {
 }
 
 bool CommandGroup::IsInterruptible() const {
-  if (!Command::IsInterruptible()) return false;
+  if (!Command::IsInterruptible())
+    return false;
 
   if (m_currentCommandIndex != -1 &&
       static_cast<size_t>(m_currentCommandIndex) < m_commands.size()) {
-    Command* cmd = m_commands[m_currentCommandIndex].m_command;
-    if (!cmd->IsInterruptible()) return false;
+    Command *cmd = m_commands[m_currentCommandIndex].m_command;
+    if (!cmd->IsInterruptible())
+      return false;
   }
 
   for (auto iter = m_children.cbegin(); iter != m_children.cend(); iter++) {
-    if (!iter->m_command->IsInterruptible()) return false;
+    if (!iter->m_command->IsInterruptible())
+      return false;
   }
 
   return true;
 }
 
-void CommandGroup::CancelConflicts(Command* command) {
+void CommandGroup::CancelConflicts(Command *command) {
   for (auto childIter = m_children.begin(); childIter != m_children.end();) {
-    Command* child = childIter->m_command;
+    Command *child = childIter->m_command;
     bool erased = false;
 
     Command::SubsystemSet requirements = command->GetRequirements();
@@ -307,7 +316,8 @@ void CommandGroup::CancelConflicts(Command* command) {
         break;
       }
     }
-    if (!erased) childIter++;
+    if (!erased)
+      childIter++;
   }
 }
 

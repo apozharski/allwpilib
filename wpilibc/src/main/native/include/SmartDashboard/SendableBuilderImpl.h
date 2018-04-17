@@ -25,12 +25,12 @@
 namespace frc {
 
 class SendableBuilderImpl : public SendableBuilder {
- public:
+public:
   SendableBuilderImpl() = default;
-  SendableBuilderImpl(const SendableBuilderImpl&) = delete;
-  SendableBuilderImpl(SendableBuilderImpl&& other) = default;
-  SendableBuilderImpl& operator=(const SendableBuilderImpl&) = delete;
-  SendableBuilderImpl& operator=(SendableBuilderImpl&& other) = default;
+  SendableBuilderImpl(const SendableBuilderImpl &) = delete;
+  SendableBuilderImpl(SendableBuilderImpl &&other) = default;
+  SendableBuilderImpl &operator=(const SendableBuilderImpl &) = delete;
+  SendableBuilderImpl &operator=(SendableBuilderImpl &&other) = default;
   ~SendableBuilderImpl() override = default;
 
   /**
@@ -73,80 +73,79 @@ class SendableBuilderImpl : public SendableBuilder {
    */
   void StopLiveWindowMode();
 
-  void SetSmartDashboardType(const llvm::Twine& type) override;
+  void SetSmartDashboardType(const llvm::Twine &type) override;
   void SetSafeState(std::function<void()> func) override;
   void SetUpdateTable(std::function<void()> func) override;
-  nt::NetworkTableEntry GetEntry(const llvm::Twine& key) override;
+  nt::NetworkTableEntry GetEntry(const llvm::Twine &key) override;
 
-  void AddBooleanProperty(const llvm::Twine& key, std::function<bool()> getter,
+  void AddBooleanProperty(const llvm::Twine &key, std::function<bool()> getter,
                           std::function<void(bool)> setter) override;
 
-  void AddDoubleProperty(const llvm::Twine& key, std::function<double()> getter,
+  void AddDoubleProperty(const llvm::Twine &key, std::function<double()> getter,
                          std::function<void(double)> setter) override;
 
-  void AddStringProperty(const llvm::Twine& key,
+  void AddStringProperty(const llvm::Twine &key,
                          std::function<std::string()> getter,
                          std::function<void(llvm::StringRef)> setter) override;
 
   void AddBooleanArrayProperty(
-      const llvm::Twine& key, std::function<std::vector<int>()> getter,
+      const llvm::Twine &key, std::function<std::vector<int>()> getter,
       std::function<void(llvm::ArrayRef<int>)> setter) override;
 
   void AddDoubleArrayProperty(
-      const llvm::Twine& key, std::function<std::vector<double>()> getter,
+      const llvm::Twine &key, std::function<std::vector<double>()> getter,
       std::function<void(llvm::ArrayRef<double>)> setter) override;
 
   void AddStringArrayProperty(
-      const llvm::Twine& key, std::function<std::vector<std::string>()> getter,
+      const llvm::Twine &key, std::function<std::vector<std::string>()> getter,
       std::function<void(llvm::ArrayRef<std::string>)> setter) override;
 
-  void AddRawProperty(const llvm::Twine& key,
+  void AddRawProperty(const llvm::Twine &key,
                       std::function<std::string()> getter,
                       std::function<void(llvm::StringRef)> setter) override;
 
   void AddValueProperty(
-      const llvm::Twine& key,
+      const llvm::Twine &key,
       std::function<std::shared_ptr<nt::Value>()> getter,
       std::function<void(std::shared_ptr<nt::Value>)> setter) override;
 
   void AddSmallStringProperty(
-      const llvm::Twine& key,
-      std::function<llvm::StringRef(llvm::SmallVectorImpl<char>& buf)> getter,
+      const llvm::Twine &key,
+      std::function<llvm::StringRef(llvm::SmallVectorImpl<char> &buf)> getter,
       std::function<void(llvm::StringRef)> setter) override;
 
   void AddSmallBooleanArrayProperty(
-      const llvm::Twine& key,
-      std::function<llvm::ArrayRef<int>(llvm::SmallVectorImpl<int>& buf)>
+      const llvm::Twine &key,
+      std::function<llvm::ArrayRef<int>(llvm::SmallVectorImpl<int> &buf)>
           getter,
       std::function<void(llvm::ArrayRef<int>)> setter) override;
 
   void AddSmallDoubleArrayProperty(
-      const llvm::Twine& key,
-      std::function<llvm::ArrayRef<double>(llvm::SmallVectorImpl<double>& buf)>
+      const llvm::Twine &key,
+      std::function<llvm::ArrayRef<double>(llvm::SmallVectorImpl<double> &buf)>
           getter,
       std::function<void(llvm::ArrayRef<double>)> setter) override;
 
   void AddSmallStringArrayProperty(
-      const llvm::Twine& key,
-      std::function<
-          llvm::ArrayRef<std::string>(llvm::SmallVectorImpl<std::string>& buf)>
-          getter,
+      const llvm::Twine &key, std::function<llvm::ArrayRef<std::string>(
+                                  llvm::SmallVectorImpl<std::string> &buf)>
+                                  getter,
       std::function<void(llvm::ArrayRef<std::string>)> setter) override;
 
   void AddSmallRawProperty(
-      const llvm::Twine& key,
-      std::function<llvm::StringRef(llvm::SmallVectorImpl<char>& buf)> getter,
+      const llvm::Twine &key,
+      std::function<llvm::StringRef(llvm::SmallVectorImpl<char> &buf)> getter,
       std::function<void(llvm::StringRef)> setter) override;
 
- private:
+private:
   struct Property {
-    Property(nt::NetworkTable& table, const llvm::Twine& key)
+    Property(nt::NetworkTable &table, const llvm::Twine &key)
         : entry(table.GetEntry(key)) {}
 
-    Property(const Property&) = delete;
-    Property& operator=(const Property&) = delete;
+    Property(const Property &) = delete;
+    Property &operator=(const Property &) = delete;
 
-    Property(Property&& other) noexcept
+    Property(Property &&other) noexcept
         : entry(other.entry),
           listener(other.listener),
           update(std::move(other.update)),
@@ -155,7 +154,7 @@ class SendableBuilderImpl : public SendableBuilder {
       other.listener = 0;
     }
 
-    Property& operator=(Property&& other) noexcept {
+    Property &operator=(Property &&other) noexcept {
       entry = other.entry;
       listener = other.listener;
       other.entry = nt::NetworkTableEntry();
@@ -191,4 +190,4 @@ class SendableBuilderImpl : public SendableBuilder {
   std::shared_ptr<nt::NetworkTable> m_table;
 };
 
-}  // namespace frc
+} // namespace frc

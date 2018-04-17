@@ -22,7 +22,7 @@ namespace frc {
  * constructor.
  */
 class AnalogPotentiometer : public SensorBase, public Potentiometer {
- public:
+public:
   /**
    * AnalogPotentiometer constructor.
    *
@@ -44,7 +44,7 @@ class AnalogPotentiometer : public SensorBase, public Potentiometer {
   explicit AnalogPotentiometer(int channel, double fullRange = 1.0,
                                double offset = 0.0);
 
-  explicit AnalogPotentiometer(AnalogInput* input, double fullRange = 1.0,
+  explicit AnalogPotentiometer(AnalogInput *input, double fullRange = 1.0,
                                double offset = 0.0);
 
   explicit AnalogPotentiometer(std::shared_ptr<AnalogInput> input,
@@ -66,11 +66,11 @@ class AnalogPotentiometer : public SensorBase, public Potentiometer {
    */
   double PIDGet() override;
 
-  void InitSendable(SendableBuilder& builder) override;
+  void InitSendable(SendableBuilder &builder) override;
 
- private:
+private:
   std::shared_ptr<AnalogInput> m_analog_input;
   double m_fullRange, m_offset;
 };
 
-}  // namespace frc
+} // namespace frc

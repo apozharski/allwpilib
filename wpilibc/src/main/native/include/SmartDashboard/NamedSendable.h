@@ -22,11 +22,11 @@ namespace frc {
  */
 class WPI_DEPRECATED("use Sendable directly instead") NamedSendable
     : public Sendable {
- public:
-  void SetName(const llvm::Twine& name) override;
+public:
+  void SetName(const llvm::Twine &name) override;
   std::string GetSubsystem() const override;
-  void SetSubsystem(const llvm::Twine& subsystem) override;
-  void InitSendable(SendableBuilder& builder) override;
+  void SetSubsystem(const llvm::Twine &subsystem) override;
+  void InitSendable(SendableBuilder &builder) override;
 };
 
-}  // namespace frc
+} // namespace frc

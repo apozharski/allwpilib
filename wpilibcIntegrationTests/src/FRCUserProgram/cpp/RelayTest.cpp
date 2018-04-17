@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "Relay.h"  // NOLINT(build/include_order)
+#include "Relay.h" // NOLINT(build/include_order)
 
 #include "DigitalInput.h"
 #include "TestBench.h"
@@ -17,10 +17,10 @@ using namespace frc;
 static const double kDelayTime = 0.01;
 
 class RelayTest : public testing::Test {
- protected:
-  Relay* m_relay;
-  DigitalInput* m_forward;
-  DigitalInput* m_reverse;
+protected:
+  Relay *m_relay;
+  DigitalInput *m_forward;
+  DigitalInput *m_reverse;
 
   void SetUp() override {
     m_relay = new Relay(TestBench::kRelayChannel);

@@ -92,7 +92,7 @@ static bool CalcParity(int v) {
   return parity;
 }
 
-static inline int BytesToIntBE(uint8_t* buf) {
+static inline int BytesToIntBE(uint8_t *buf) {
   int result = static_cast<int>(buf[0]) << 24;
   result |= static_cast<int>(buf[1]) << 16;
   result |= static_cast<int>(buf[2]) << 8;
@@ -102,7 +102,8 @@ static inline int BytesToIntBE(uint8_t* buf) {
 
 uint16_t ADXRS450_Gyro::ReadRegister(int reg) {
   int cmd = 0x80000000 | static_cast<int>(reg) << 17;
-  if (!CalcParity(cmd)) cmd |= 1u;
+  if (!CalcParity(cmd))
+    cmd |= 1u;
 
   // big endian
   uint8_t buf[4] = {static_cast<uint8_t>((cmd >> 24) & 0xff),
@@ -112,7 +113,8 @@ uint16_t ADXRS450_Gyro::ReadRegister(int reg) {
 
   m_spi.Write(buf, 4);
   m_spi.Read(false, buf, 4);
-  if ((buf[0] & 0xe0) == 0) return 0;  // error, return 0
+  if ((buf[0] & 0xe0) == 0)
+    return 0; // error, return 0
   return static_cast<uint16_t>((BytesToIntBE(buf) >> 5) & 0xffff);
 }
 

@@ -40,19 +40,19 @@ template <typename THandle, typename TStruct, int16_t size,
 class IndexedClassedHandleResource : public HandleBase {
   friend class IndexedClassedHandleResourceTest;
 
- public:
+public:
   IndexedClassedHandleResource() = default;
-  IndexedClassedHandleResource(const IndexedClassedHandleResource&) = delete;
-  IndexedClassedHandleResource& operator=(const IndexedClassedHandleResource&) =
-      delete;
+  IndexedClassedHandleResource(const IndexedClassedHandleResource &) = delete;
+  IndexedClassedHandleResource &
+  operator=(const IndexedClassedHandleResource &) = delete;
 
   THandle Allocate(int16_t index, std::shared_ptr<TStruct> toSet,
-                   int32_t* status);
+                   int32_t *status);
   std::shared_ptr<TStruct> Get(THandle handle);
   void Free(THandle handle);
   void ResetHandles();
 
- private:
+private:
   std::array<std::shared_ptr<TStruct>, size> m_structures;
   std::array<wpi::mutex, size> m_handleMutexes;
 };
@@ -61,7 +61,7 @@ template <typename THandle, typename TStruct, int16_t size,
           HAL_HandleEnum enumValue>
 THandle
 IndexedClassedHandleResource<THandle, TStruct, size, enumValue>::Allocate(
-    int16_t index, std::shared_ptr<TStruct> toSet, int32_t* status) {
+    int16_t index, std::shared_ptr<TStruct> toSet, int32_t *status) {
   // don't aquire the lock if we can fail early.
   if (index < 0 || index >= size) {
     *status = RESOURCE_OUT_OF_RANGE;
@@ -99,7 +99,8 @@ void IndexedClassedHandleResource<THandle, TStruct, size, enumValue>::Free(
     THandle handle) {
   // get handle index, and fail early if index out of range or wrong handle
   int16_t index = getHandleTypedIndex(handle, enumValue, m_version);
-  if (index < 0 || index >= size) return;
+  if (index < 0 || index >= size)
+    return;
   // lock and deallocated handle
   std::lock_guard<wpi::mutex> lock(m_handleMutexes[index]);
   m_structures[index].reset();
@@ -115,4 +116,4 @@ void IndexedClassedHandleResource<THandle, TStruct, size,
   }
   HandleBase::ResetHandles();
 }
-}  // namespace hal
+} // namespace hal

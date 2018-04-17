@@ -17,12 +17,12 @@ using namespace hal;
 namespace hal {
 namespace init {
 void InitializeAnalogInput() {}
-}  // namespace init
-}  // namespace hal
+} // namespace init
+} // namespace hal
 
 extern "C" {
 HAL_AnalogInputHandle HAL_InitializeAnalogInputPort(HAL_PortHandle portHandle,
-                                                    int32_t* status) {
+                                                    int32_t *status) {
   int16_t channel = getPortHandleChannel(portHandle);
   if (channel == InvalidHandleIndex) {
     *status = PARAMETER_OUT_OF_RANGE;
@@ -32,11 +32,11 @@ HAL_AnalogInputHandle HAL_InitializeAnalogInputPort(HAL_PortHandle portHandle,
   HAL_AnalogInputHandle handle = analogInputHandles->Allocate(channel, status);
 
   if (*status != 0)
-    return HAL_kInvalidHandle;  // failed to allocate. Pass error back.
+    return HAL_kInvalidHandle; // failed to allocate. Pass error back.
 
   // Initialize port structure
   auto analog_port = analogInputHandles->Get(handle);
-  if (analog_port == nullptr) {  // would only error on thread issue
+  if (analog_port == nullptr) { // would only error on thread issue
     *status = HAL_HANDLE_ERROR;
     return HAL_kInvalidHandle;
   }
@@ -57,7 +57,8 @@ void HAL_FreeAnalogInputPort(HAL_AnalogInputHandle analogPortHandle) {
   auto port = analogInputHandles->Get(analogPortHandle);
   // no status, so no need to check for a proper free.
   analogInputHandles->Free(analogPortHandle);
-  if (port == nullptr) return;
+  if (port == nullptr)
+    return;
   SimAnalogInData[port->channel].SetInitialized(false);
   SimAnalogInData[port->channel].SetAccumulatorInitialized(false);
 }
@@ -68,12 +69,12 @@ HAL_Bool HAL_CheckAnalogInputChannel(int32_t channel) {
   return channel < kNumAnalogInputs && channel >= 0;
 }
 
-void HAL_SetAnalogSampleRate(double samplesPerSecond, int32_t* status) {
+void HAL_SetAnalogSampleRate(double samplesPerSecond, int32_t *status) {
   // No op
 }
-double HAL_GetAnalogSampleRate(int32_t* status) { return kDefaultSampleRate; }
+double HAL_GetAnalogSampleRate(int32_t *status) { return kDefaultSampleRate; }
 void HAL_SetAnalogAverageBits(HAL_AnalogInputHandle analogPortHandle,
-                              int32_t bits, int32_t* status) {
+                              int32_t bits, int32_t *status) {
   auto port = analogInputHandles->Get(analogPortHandle);
   if (port == nullptr) {
     *status = HAL_HANDLE_ERROR;
@@ -83,7 +84,7 @@ void HAL_SetAnalogAverageBits(HAL_AnalogInputHandle analogPortHandle,
   SimAnalogInData[port->channel].SetAverageBits(bits);
 }
 int32_t HAL_GetAnalogAverageBits(HAL_AnalogInputHandle analogPortHandle,
-                                 int32_t* status) {
+                                 int32_t *status) {
   auto port = analogInputHandles->Get(analogPortHandle);
   if (port == nullptr) {
     *status = HAL_HANDLE_ERROR;
@@ -93,7 +94,7 @@ int32_t HAL_GetAnalogAverageBits(HAL_AnalogInputHandle analogPortHandle,
   return SimAnalogInData[port->channel].GetAverageBits();
 }
 void HAL_SetAnalogOversampleBits(HAL_AnalogInputHandle analogPortHandle,
-                                 int32_t bits, int32_t* status) {
+                                 int32_t bits, int32_t *status) {
   auto port = analogInputHandles->Get(analogPortHandle);
   if (port == nullptr) {
     *status = HAL_HANDLE_ERROR;
@@ -103,7 +104,7 @@ void HAL_SetAnalogOversampleBits(HAL_AnalogInputHandle analogPortHandle,
   SimAnalogInData[port->channel].SetOversampleBits(bits);
 }
 int32_t HAL_GetAnalogOversampleBits(HAL_AnalogInputHandle analogPortHandle,
-                                    int32_t* status) {
+                                    int32_t *status) {
   auto port = analogInputHandles->Get(analogPortHandle);
   if (port == nullptr) {
     *status = HAL_HANDLE_ERROR;
@@ -113,7 +114,7 @@ int32_t HAL_GetAnalogOversampleBits(HAL_AnalogInputHandle analogPortHandle,
   return SimAnalogInData[port->channel].GetOversampleBits();
 }
 int32_t HAL_GetAnalogValue(HAL_AnalogInputHandle analogPortHandle,
-                           int32_t* status) {
+                           int32_t *status) {
   auto port = analogInputHandles->Get(analogPortHandle);
   if (port == nullptr) {
     *status = HAL_HANDLE_ERROR;
@@ -124,12 +125,12 @@ int32_t HAL_GetAnalogValue(HAL_AnalogInputHandle analogPortHandle,
   return HAL_GetAnalogVoltsToValue(analogPortHandle, voltage, status);
 }
 int32_t HAL_GetAnalogAverageValue(HAL_AnalogInputHandle analogPortHandle,
-                                  int32_t* status) {
+                                  int32_t *status) {
   // No averaging supported
   return HAL_GetAnalogValue(analogPortHandle, status);
 }
 int32_t HAL_GetAnalogVoltsToValue(HAL_AnalogInputHandle analogPortHandle,
-                                  double voltage, int32_t* status) {
+                                  double voltage, int32_t *status) {
   if (voltage > 5.0) {
     voltage = 5.0;
     *status = VOLTAGE_OUT_OF_RANGE;
@@ -145,7 +146,7 @@ int32_t HAL_GetAnalogVoltsToValue(HAL_AnalogInputHandle analogPortHandle,
   return value;
 }
 double HAL_GetAnalogVoltage(HAL_AnalogInputHandle analogPortHandle,
-                            int32_t* status) {
+                            int32_t *status) {
   auto port = analogInputHandles->Get(analogPortHandle);
   if (port == nullptr) {
     *status = HAL_HANDLE_ERROR;
@@ -155,7 +156,7 @@ double HAL_GetAnalogVoltage(HAL_AnalogInputHandle analogPortHandle,
   return SimAnalogInData[port->channel].GetVoltage();
 }
 double HAL_GetAnalogAverageVoltage(HAL_AnalogInputHandle analogPortHandle,
-                                   int32_t* status) {
+                                   int32_t *status) {
   auto port = analogInputHandles->Get(analogPortHandle);
   if (port == nullptr) {
     *status = HAL_HANDLE_ERROR;
@@ -167,11 +168,11 @@ double HAL_GetAnalogAverageVoltage(HAL_AnalogInputHandle analogPortHandle,
   return voltage;
 }
 int32_t HAL_GetAnalogLSBWeight(HAL_AnalogInputHandle analogPortHandle,
-                               int32_t* status) {
+                               int32_t *status) {
   return 1220703;
 }
 int32_t HAL_GetAnalogOffset(HAL_AnalogInputHandle analogPortHandle,
-                            int32_t* status) {
+                            int32_t *status) {
   return 0;
 }
-}  // extern "C"
+} // extern "C"

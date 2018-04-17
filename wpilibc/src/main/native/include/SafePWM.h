@@ -26,7 +26,7 @@ namespace frc {
  * object that is used for all objects that implement MotorSafety.
  */
 class SafePWM : public PWM, public MotorSafety {
- public:
+public:
   explicit SafePWM(int channel);
   virtual ~SafePWM() = default;
 
@@ -36,12 +36,12 @@ class SafePWM : public PWM, public MotorSafety {
   void StopMotor();
   bool IsSafetyEnabled() const;
   void SetSafetyEnabled(bool enabled);
-  void GetDescription(llvm::raw_ostream& desc) const;
+  void GetDescription(llvm::raw_ostream &desc) const;
 
   virtual void SetSpeed(double speed);
 
- private:
+private:
   std::unique_ptr<MotorSafetyHelper> m_safetyHelper;
 };
 
-}  // namespace frc
+} // namespace frc

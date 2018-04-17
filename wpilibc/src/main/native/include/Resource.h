@@ -30,24 +30,24 @@ namespace frc {
  * not yet freed by Free.
  */
 class Resource : public ErrorBase {
- public:
+public:
   virtual ~Resource() = default;
 
-  Resource(const Resource&) = delete;
-  Resource& operator=(const Resource&) = delete;
+  Resource(const Resource &) = delete;
+  Resource &operator=(const Resource &) = delete;
 
-  static void CreateResourceObject(std::unique_ptr<Resource>& r,
+  static void CreateResourceObject(std::unique_ptr<Resource> &r,
                                    uint32_t elements);
   explicit Resource(uint32_t size);
-  uint32_t Allocate(const std::string& resourceDesc);
-  uint32_t Allocate(uint32_t index, const std::string& resourceDesc);
+  uint32_t Allocate(const std::string &resourceDesc);
+  uint32_t Allocate(uint32_t index, const std::string &resourceDesc);
   void Free(uint32_t index);
 
- private:
+private:
   std::vector<bool> m_isAllocated;
   wpi::mutex m_allocateMutex;
 
   static wpi::mutex m_createMutex;
 };
 
-}  // namespace frc
+} // namespace frc

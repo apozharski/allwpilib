@@ -21,7 +21,7 @@ namespace frc {
  * 0x1D (7-bit address).
  */
 class ADXL345_I2C : public SensorBase, public Accelerometer {
- public:
+public:
   enum Axes { kAxis_X = 0x00, kAxis_Y = 0x02, kAxis_Z = 0x04 };
 
   struct AllAxes {
@@ -34,8 +34,8 @@ class ADXL345_I2C : public SensorBase, public Accelerometer {
                        int deviceAddress = kAddress);
   ~ADXL345_I2C() override = default;
 
-  ADXL345_I2C(const ADXL345_I2C&) = delete;
-  ADXL345_I2C& operator=(const ADXL345_I2C&) = delete;
+  ADXL345_I2C(const ADXL345_I2C &) = delete;
+  ADXL345_I2C &operator=(const ADXL345_I2C &) = delete;
 
   // Accelerometer interface
   void SetRange(Range range) override;
@@ -46,9 +46,9 @@ class ADXL345_I2C : public SensorBase, public Accelerometer {
   virtual double GetAcceleration(Axes axis);
   virtual AllAxes GetAccelerations();
 
-  void InitSendable(SendableBuilder& builder) override;
+  void InitSendable(SendableBuilder &builder) override;
 
- protected:
+protected:
   I2C m_i2c;
 
   static constexpr int kAddress = 0x1D;
@@ -73,4 +73,4 @@ class ADXL345_I2C : public SensorBase, public Accelerometer {
   };
 };
 
-}  // namespace frc
+} // namespace frc

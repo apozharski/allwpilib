@@ -32,7 +32,7 @@ class AnalogInput : public SensorBase, public PIDSource {
   friend class AnalogTrigger;
   friend class AnalogGyro;
 
- public:
+public:
   static constexpr int kAccumulatorModuleNumber = 1;
   static constexpr int kAccumulatorNumChannels = 2;
   static constexpr int kAccumulatorChannels[kAccumulatorNumChannels] = {0, 1};
@@ -64,20 +64,20 @@ class AnalogInput : public SensorBase, public PIDSource {
   void SetAccumulatorDeadband(int deadband);
   int64_t GetAccumulatorValue() const;
   int64_t GetAccumulatorCount() const;
-  void GetAccumulatorOutput(int64_t& value, int64_t& count) const;
+  void GetAccumulatorOutput(int64_t &value, int64_t &count) const;
 
   static void SetSampleRate(double samplesPerSecond);
   static double GetSampleRate();
 
   double PIDGet() override;
 
-  void InitSendable(SendableBuilder& builder) override;
+  void InitSendable(SendableBuilder &builder) override;
 
- private:
+private:
   int m_channel;
   // TODO: Adjust HAL to avoid use of raw pointers.
   HAL_AnalogInputHandle m_port;
   int64_t m_accumulatorOffset;
 };
 
-}  // namespace frc
+} // namespace frc

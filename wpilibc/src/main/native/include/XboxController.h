@@ -21,12 +21,12 @@ namespace frc {
  * depends on the code in the Driver Station.
  */
 class XboxController : public GenericHID {
- public:
+public:
   explicit XboxController(int port);
   virtual ~XboxController() = default;
 
-  XboxController(const XboxController&) = delete;
-  XboxController& operator=(const XboxController&) = delete;
+  XboxController(const XboxController &) = delete;
+  XboxController &operator=(const XboxController &) = delete;
 
   double GetX(JoystickHand hand) const override;
   double GetY(JoystickHand hand) const override;
@@ -64,7 +64,7 @@ class XboxController : public GenericHID {
   bool GetStartButtonPressed();
   bool GetStartButtonReleased();
 
- private:
+private:
   enum class Button {
     kBumperLeft = 5,
     kBumperRight = 6,
@@ -79,4 +79,4 @@ class XboxController : public GenericHID {
   };
 };
 
-}  // namespace frc
+} // namespace frc

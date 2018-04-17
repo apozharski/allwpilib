@@ -20,7 +20,7 @@ public class AnalogPotentiometer extends SensorBase implements Potentiometer, Se
   private boolean m_initAnalogInput;
   private double m_fullRange;
   private double m_offset;
-  
+
   /**
    * AnalogPotentiometer constructor.
    *
@@ -123,7 +123,7 @@ public class AnalogPotentiometer extends SensorBase implements Potentiometer, Se
     return (m_analogInput.getVoltage() / RobotController.getVoltage5V()) * m_fullRange + m_offset;
   }
 
- 
+
   /**
    * Implement the PIDSource interface.
    *

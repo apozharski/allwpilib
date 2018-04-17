@@ -14,10 +14,10 @@
 namespace frc {
 
 class WaitCommand : public TimedCommand {
- public:
+public:
   explicit WaitCommand(double timeout);
-  WaitCommand(const llvm::Twine& name, double timeout);
+  WaitCommand(const llvm::Twine &name, double timeout);
   virtual ~WaitCommand() = default;
 };
 
-}  // namespace frc
+} // namespace frc

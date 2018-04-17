@@ -21,9 +21,9 @@ static const double kDelayTime = 0.01;
  * A fixture with an analog input and an analog output wired together
  */
 class AnalogLoopTest : public testing::Test {
- protected:
-  AnalogInput* m_input;
-  AnalogOutput* m_output;
+protected:
+  AnalogInput *m_input;
+  AnalogOutput *m_output;
 
   void SetUp() override {
     m_input = new AnalogInput(TestBench::kFakeAnalogOutputChannel);
@@ -104,8 +104,8 @@ TEST_F(AnalogLoopTest, AnalogTriggerCounterWorks) {
       << "Analog trigger counter did not count 50 ticks";
 }
 
-static void InterruptHandler(uint32_t interruptAssertedMask, void* param) {
-  *reinterpret_cast<int32_t*>(param) = 12345;
+static void InterruptHandler(uint32_t interruptAssertedMask, void *param) {
+  *reinterpret_cast<int32_t *>(param) = 12345;
 }
 
 TEST_F(AnalogLoopTest, AsynchronusInterruptWorks) {

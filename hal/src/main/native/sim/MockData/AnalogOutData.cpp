@@ -17,10 +17,10 @@ void InitializeAnalogOutData() {
   static AnalogOutData siod[kNumAnalogOutputs];
   ::hal::SimAnalogOutData = siod;
 }
-}  // namespace init
-}  // namespace hal
+} // namespace init
+} // namespace hal
 
-AnalogOutData* hal::SimAnalogOutData;
+AnalogOutData *hal::SimAnalogOutData;
 void AnalogOutData::ResetData() {
   m_voltage = 0.0;
   m_voltageCallbacks = nullptr;
@@ -29,10 +29,11 @@ void AnalogOutData::ResetData() {
 }
 
 int32_t AnalogOutData::RegisterVoltageCallback(HAL_NotifyCallback callback,
-                                               void* param,
+                                               void *param,
                                                HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -65,10 +66,11 @@ void AnalogOutData::SetVoltage(double voltage) {
 }
 
 int32_t AnalogOutData::RegisterInitializedCallback(HAL_NotifyCallback callback,
-                                                   void* param,
+                                                   void *param,
                                                    HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -107,7 +109,7 @@ void HALSIM_ResetAnalogOutData(int32_t index) {
 
 int32_t HALSIM_RegisterAnalogOutVoltageCallback(int32_t index,
                                                 HAL_NotifyCallback callback,
-                                                void* param,
+                                                void *param,
                                                 HAL_Bool initialNotify) {
   return SimAnalogOutData[index].RegisterVoltageCallback(callback, param,
                                                          initialNotify);
@@ -127,7 +129,7 @@ void HALSIM_SetAnalogOutVoltage(int32_t index, double voltage) {
 
 int32_t HALSIM_RegisterAnalogOutInitializedCallback(int32_t index,
                                                     HAL_NotifyCallback callback,
-                                                    void* param,
+                                                    void *param,
                                                     HAL_Bool initialNotify) {
   return SimAnalogOutData[index].RegisterInitializedCallback(callback, param,
                                                              initialNotify);
@@ -147,10 +149,10 @@ void HALSIM_SetAnalogOutInitialized(int32_t index, HAL_Bool initialized) {
 
 void HALSIM_RegisterAnalogOutAllCallbacks(int32_t index,
                                           HAL_NotifyCallback callback,
-                                          void* param, HAL_Bool initialNotify) {
+                                          void *param, HAL_Bool initialNotify) {
   SimAnalogOutData[index].RegisterVoltageCallback(callback, param,
                                                   initialNotify);
   SimAnalogOutData[index].RegisterInitializedCallback(callback, param,
                                                       initialNotify);
 }
-}  // extern "C"
+} // extern "C"

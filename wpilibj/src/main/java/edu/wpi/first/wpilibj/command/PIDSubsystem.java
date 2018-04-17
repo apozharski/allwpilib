@@ -36,14 +36,8 @@ public abstract class PIDSubsystem extends Subsystem implements Sendable {
    * A source which calls {@link PIDCommand#returnPIDInput()}.
    */
   private final PIDSource m_source = new PIDSource() {
-    public void setPIDSourceType(PIDSourceType pidSource) {
-    }
 
-    public PIDSourceType getPIDSourceType() {
-      return PIDSourceType.kDisplacement;
-    }
-
-    public double pidGet() {
+    public double pidGet(PIDSourceType pidSource) {
       return returnPIDInput();
     }
   };

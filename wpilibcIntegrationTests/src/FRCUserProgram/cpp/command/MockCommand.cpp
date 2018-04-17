@@ -9,7 +9,7 @@
 
 using namespace frc;
 
-MockCommand::MockCommand(Subsystem* subsys) : MockCommand() {
+MockCommand::MockCommand(Subsystem *subsys) : MockCommand() {
   Requires(subsys);
 }
 

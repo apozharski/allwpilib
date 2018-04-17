@@ -13,7 +13,7 @@
 
 namespace {
 class MyTestClass {};
-}  // namespace
+} // namespace
 
 namespace hal {
 TEST(HandleTests, ClassedHandleTest) {
@@ -25,4 +25,4 @@ TEST(HandleTests, ClassedHandleTest) {
   EXPECT_EQ(0, status);
 }
 
-}  // namespace hal
+} // namespace hal

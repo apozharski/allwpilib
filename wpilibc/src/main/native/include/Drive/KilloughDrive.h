@@ -45,34 +45,34 @@ class SpeedController;
  * clockwise rotation around the Z axis is positive.
  */
 class KilloughDrive : public RobotDriveBase {
- public:
+public:
   static constexpr double kDefaultLeftMotorAngle = 60.0;
   static constexpr double kDefaultRightMotorAngle = 120.0;
   static constexpr double kDefaultBackMotorAngle = 270.0;
 
-  KilloughDrive(SpeedController& leftMotor, SpeedController& rightMotor,
-                SpeedController& backMotor);
-  KilloughDrive(SpeedController& leftMotor, SpeedController& rightMotor,
-                SpeedController& backMotor, double leftMotorAngle,
+  KilloughDrive(SpeedController &leftMotor, SpeedController &rightMotor,
+                SpeedController &backMotor);
+  KilloughDrive(SpeedController &leftMotor, SpeedController &rightMotor,
+                SpeedController &backMotor, double leftMotorAngle,
                 double rightMotorAngle, double backMotorAngle);
   ~KilloughDrive() override = default;
 
-  KilloughDrive(const KilloughDrive&) = delete;
-  KilloughDrive& operator=(const KilloughDrive&) = delete;
+  KilloughDrive(const KilloughDrive &) = delete;
+  KilloughDrive &operator=(const KilloughDrive &) = delete;
 
   void DriveCartesian(double ySpeed, double xSpeed, double zRotation,
                       double gyroAngle = 0.0);
   void DrivePolar(double magnitude, double angle, double zRotation);
 
   void StopMotor() override;
-  void GetDescription(llvm::raw_ostream& desc) const override;
+  void GetDescription(llvm::raw_ostream &desc) const override;
 
-  void InitSendable(SendableBuilder& builder) override;
+  void InitSendable(SendableBuilder &builder) override;
 
- private:
-  SpeedController& m_leftMotor;
-  SpeedController& m_rightMotor;
-  SpeedController& m_backMotor;
+private:
+  SpeedController &m_leftMotor;
+  SpeedController &m_rightMotor;
+  SpeedController &m_backMotor;
 
   Vector2d m_leftVec;
   Vector2d m_rightVec;
@@ -81,4 +81,4 @@ class KilloughDrive : public RobotDriveBase {
   bool reported = false;
 };
 
-}  // namespace frc
+} // namespace frc

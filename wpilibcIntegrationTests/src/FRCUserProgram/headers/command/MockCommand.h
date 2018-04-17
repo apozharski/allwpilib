@@ -12,8 +12,8 @@
 namespace frc {
 
 class MockCommand : public Command {
- public:
-  explicit MockCommand(Subsystem*);
+public:
+  explicit MockCommand(Subsystem *);
   MockCommand();
   int32_t GetInitializeCount() { return m_initializeCount; }
   bool HasInitialized();
@@ -29,14 +29,14 @@ class MockCommand : public Command {
   bool HasInterrupted();
   void ResetCounters();
 
- protected:
+protected:
   void Initialize() override;
   void Execute() override;
   bool IsFinished() override;
   void End() override;
   void Interrupted() override;
 
- private:
+private:
   int32_t m_initializeCount;
   int32_t m_executeCount;
   int32_t m_isFinishedCount;
@@ -45,4 +45,4 @@ class MockCommand : public Command {
   int32_t m_interruptedCount;
 };
 
-}  // namespace frc
+} // namespace frc

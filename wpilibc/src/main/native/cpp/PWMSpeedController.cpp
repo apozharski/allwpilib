@@ -55,7 +55,7 @@ void PWMSpeedController::StopMotor() { SafePWM::StopMotor(); }
  */
 void PWMSpeedController::PIDWrite(double output) { Set(output); }
 
-void PWMSpeedController::InitSendable(SendableBuilder& builder) {
+void PWMSpeedController::InitSendable(SendableBuilder &builder) {
   builder.SetSmartDashboardType("Speed Controller");
   builder.SetSafeState([=]() { SetDisabled(); });
   builder.AddDoubleProperty("Value", [=]() { return GetSpeed(); },

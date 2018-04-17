@@ -52,7 +52,8 @@ DigitalInput::DigitalInput(int channel) {
  * Free resources associated with the Digital Input class.
  */
 DigitalInput::~DigitalInput() {
-  if (StatusIsFatal()) return;
+  if (StatusIsFatal())
+    return;
   if (m_interrupt != HAL_kInvalidHandle) {
     int32_t status = 0;
     HAL_CleanInterrupts(m_interrupt, &status);
@@ -69,7 +70,8 @@ DigitalInput::~DigitalInput() {
  * Retrieve the value of a single digital input channel from the FPGA.
  */
 bool DigitalInput::Get() const {
-  if (StatusIsFatal()) return false;
+  if (StatusIsFatal())
+    return false;
   int32_t status = 0;
   bool value = HAL_GetDIO(m_handle, &status);
   wpi_setErrorWithContext(status, HAL_GetErrorMessage(status));
@@ -98,7 +100,7 @@ AnalogTriggerType DigitalInput::GetAnalogTriggerTypeForRouting() const {
   return (AnalogTriggerType)0;
 }
 
-void DigitalInput::InitSendable(SendableBuilder& builder) {
+void DigitalInput::InitSendable(SendableBuilder &builder) {
   builder.SetSmartDashboardType("Digital Input");
   builder.AddBooleanProperty("Value", [=]() { return Get(); }, nullptr);
 }

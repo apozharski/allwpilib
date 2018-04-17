@@ -17,36 +17,36 @@
 
 namespace hal {
 class DIOData {
- public:
-  int32_t RegisterInitializedCallback(HAL_NotifyCallback callback, void* param,
+public:
+  int32_t RegisterInitializedCallback(HAL_NotifyCallback callback, void *param,
                                       HAL_Bool initialNotify);
   void CancelInitializedCallback(int32_t uid);
   void InvokeInitializedCallback(HAL_Value value);
   HAL_Bool GetInitialized();
   void SetInitialized(HAL_Bool initialized);
 
-  int32_t RegisterValueCallback(HAL_NotifyCallback callback, void* param,
+  int32_t RegisterValueCallback(HAL_NotifyCallback callback, void *param,
                                 HAL_Bool initialNotify);
   void CancelValueCallback(int32_t uid);
   void InvokeValueCallback(HAL_Value value);
   HAL_Bool GetValue();
   void SetValue(HAL_Bool value);
 
-  int32_t RegisterPulseLengthCallback(HAL_NotifyCallback callback, void* param,
+  int32_t RegisterPulseLengthCallback(HAL_NotifyCallback callback, void *param,
                                       HAL_Bool initialNotify);
   void CancelPulseLengthCallback(int32_t uid);
   void InvokePulseLengthCallback(HAL_Value value);
   double GetPulseLength();
   void SetPulseLength(double pulseLength);
 
-  int32_t RegisterIsInputCallback(HAL_NotifyCallback callback, void* param,
+  int32_t RegisterIsInputCallback(HAL_NotifyCallback callback, void *param,
                                   HAL_Bool initialNotify);
   void CancelIsInputCallback(int32_t uid);
   void InvokeIsInputCallback(HAL_Value value);
   HAL_Bool GetIsInput();
   void SetIsInput(HAL_Bool isInput);
 
-  int32_t RegisterFilterIndexCallback(HAL_NotifyCallback callback, void* param,
+  int32_t RegisterFilterIndexCallback(HAL_NotifyCallback callback, void *param,
                                       HAL_Bool initialNotify);
   void CancelFilterIndexCallback(int32_t uid);
   void InvokeFilterIndexCallback(HAL_Value value);
@@ -55,7 +55,7 @@ class DIOData {
 
   virtual void ResetData();
 
- private:
+private:
   wpi::mutex m_registerMutex;
   std::atomic<HAL_Bool> m_initialized{false};
   std::shared_ptr<NotifyListenerVector> m_initializedCallbacks = nullptr;
@@ -68,5 +68,5 @@ class DIOData {
   std::atomic<int32_t> m_filterIndex{-1};
   std::shared_ptr<NotifyListenerVector> m_filterIndexCallbacks = nullptr;
 };
-extern DIOData* SimDIOData;
-}  // namespace hal
+extern DIOData *SimDIOData;
+} // namespace hal

@@ -20,8 +20,8 @@ using namespace hal;
 static wpi::mutex digitalPwmMutex;
 
 static LimitedHandleResource<HAL_DigitalPWMHandle, uint8_t,
-                             kNumDigitalPWMOutputs, HAL_HandleEnum::DigitalPWM>*
-    digitalPWMHandles;
+                             kNumDigitalPWMOutputs,
+                             HAL_HandleEnum::DigitalPWM> *digitalPWMHandles;
 
 namespace hal {
 namespace init {
@@ -32,8 +32,8 @@ void InitializeDIO() {
       dpH;
   digitalPWMHandles = &dpH;
 }
-}  // namespace init
-}  // namespace hal
+} // namespace init
+} // namespace hal
 
 extern "C" {
 
@@ -41,10 +41,11 @@ extern "C" {
  * Create a new instance of a digital port.
  */
 HAL_DigitalHandle HAL_InitializeDIOPort(HAL_PortHandle portHandle,
-                                        HAL_Bool input, int32_t* status) {
+                                        HAL_Bool input, int32_t *status) {
   initializeDigital(status);
 
-  if (*status != 0) return HAL_kInvalidHandle;
+  if (*status != 0)
+    return HAL_kInvalidHandle;
 
   int16_t channel = getPortHandleChannel(portHandle);
   if (channel == InvalidHandleIndex || channel >= kNumDigitalChannels) {
@@ -56,10 +57,10 @@ HAL_DigitalHandle HAL_InitializeDIOPort(HAL_PortHandle portHandle,
       digitalChannelHandles->Allocate(channel, HAL_HandleEnum::DIO, status);
 
   if (*status != 0)
-    return HAL_kInvalidHandle;  // failed to allocate. Pass error back.
+    return HAL_kInvalidHandle; // failed to allocate. Pass error back.
 
   auto port = digitalChannelHandles->Get(handle, HAL_HandleEnum::DIO);
-  if (port == nullptr) {  // would only occur on thread issue.
+  if (port == nullptr) { // would only occur on thread issue.
     *status = HAL_HANDLE_ERROR;
     return HAL_kInvalidHandle;
   }
@@ -81,20 +82,20 @@ HAL_DigitalHandle HAL_InitializeDIOPort(HAL_PortHandle portHandle,
 
       if (input) {
         outputEnable.SPIPort =
-            outputEnable.SPIPort & (~bitToSet);  // clear the field for read
+            outputEnable.SPIPort & (~bitToSet); // clear the field for read
       } else {
         outputEnable.SPIPort =
-            outputEnable.SPIPort | bitToSet;  // set the bits for write
+            outputEnable.SPIPort | bitToSet; // set the bits for write
       }
     }
   } else if (port->channel < kNumDigitalHeaders) {
     uint32_t bitToSet = 1u << port->channel;
     if (input) {
       outputEnable.Headers =
-          outputEnable.Headers & (~bitToSet);  // clear the bit for read
+          outputEnable.Headers & (~bitToSet); // clear the bit for read
     } else {
       outputEnable.Headers =
-          outputEnable.Headers | bitToSet;  // set the bit for write
+          outputEnable.Headers | bitToSet; // set the bit for write
     }
   } else {
     uint32_t bitToSet = 1u << remapMXPChannel(port->channel);
@@ -106,9 +107,9 @@ HAL_DigitalHandle HAL_InitializeDIOPort(HAL_PortHandle portHandle,
 
     if (input) {
       outputEnable.MXP =
-          outputEnable.MXP & (~bitToSet);  // clear the bit for read
+          outputEnable.MXP & (~bitToSet); // clear the bit for read
     } else {
-      outputEnable.MXP = outputEnable.MXP | bitToSet;  // set the bit for write
+      outputEnable.MXP = outputEnable.MXP | bitToSet; // set the bit for write
     }
   }
 
@@ -125,7 +126,8 @@ void HAL_FreeDIOPort(HAL_DigitalHandle dioPortHandle) {
   auto port = digitalChannelHandles->Get(dioPortHandle, HAL_HandleEnum::DIO);
   // no status, so no need to check for a proper free.
   digitalChannelHandles->Free(dioPortHandle, HAL_HandleEnum::DIO);
-  if (port == nullptr) return;
+  if (port == nullptr)
+    return;
   int32_t status = 0;
   std::lock_guard<wpi::mutex> lock(digitalDIOMutex);
   if (port->channel >= kNumDigitalHeaders + kNumDigitalMXPChannels) {
@@ -150,7 +152,7 @@ void HAL_FreeDIOPort(HAL_DigitalHandle dioPortHandle) {
  *
  * @return PWM Generator handle
  */
-HAL_DigitalPWMHandle HAL_AllocateDigitalPWM(int32_t* status) {
+HAL_DigitalPWMHandle HAL_AllocateDigitalPWM(int32_t *status) {
   auto handle = digitalPWMHandles->Allocate();
   if (handle == HAL_kInvalidHandle) {
     *status = NO_AVAILABLE_RESOURCES;
@@ -158,7 +160,7 @@ HAL_DigitalPWMHandle HAL_AllocateDigitalPWM(int32_t* status) {
   }
 
   auto id = digitalPWMHandles->Get(handle);
-  if (id == nullptr) {  // would only occur on thread issue.
+  if (id == nullptr) { // would only occur on thread issue.
     *status = HAL_HANDLE_ERROR;
     return HAL_kInvalidHandle;
   }
@@ -173,7 +175,7 @@ HAL_DigitalPWMHandle HAL_AllocateDigitalPWM(int32_t* status) {
  * @param pwmGenerator The pwmGen to free that was allocated with
  * allocateDigitalPWM()
  */
-void HAL_FreeDigitalPWM(HAL_DigitalPWMHandle pwmGenerator, int32_t* status) {
+void HAL_FreeDigitalPWM(HAL_DigitalPWMHandle pwmGenerator, int32_t *status) {
   digitalPWMHandles->Free(pwmGenerator);
 }
 
@@ -185,12 +187,13 @@ void HAL_FreeDigitalPWM(HAL_DigitalPWMHandle pwmGenerator, int32_t* status) {
  *
  * @param rate The frequency to output all digital output PWM signals.
  */
-void HAL_SetDigitalPWMRate(double rate, int32_t* status) {
+void HAL_SetDigitalPWMRate(double rate, int32_t *status) {
   // Currently rounding in the log rate domain... heavy weight toward picking a
   // higher freq.
   // TODO: Round in the linear rate domain.
   initializeDigital(status);
-  if (*status != 0) return;
+  if (*status != 0)
+    return;
   uint16_t pwmPeriodPower = static_cast<uint16_t>(
       std::log(1.0 / (16 * 1.0E-6 * rate)) / std::log(2.0) + 0.5);
   digitalSystem->writePWMPeriodPower(pwmPeriodPower, status);
@@ -203,17 +206,20 @@ void HAL_SetDigitalPWMRate(double rate, int32_t* status) {
  * @param dutyCycle The percent duty cycle to output [0..1].
  */
 void HAL_SetDigitalPWMDutyCycle(HAL_DigitalPWMHandle pwmGenerator,
-                                double dutyCycle, int32_t* status) {
+                                double dutyCycle, int32_t *status) {
   auto port = digitalPWMHandles->Get(pwmGenerator);
   if (port == nullptr) {
     *status = HAL_HANDLE_ERROR;
     return;
   }
   int32_t id = *port;
-  if (dutyCycle > 1.0) dutyCycle = 1.0;
-  if (dutyCycle < 0.0) dutyCycle = 0.0;
+  if (dutyCycle > 1.0)
+    dutyCycle = 1.0;
+  if (dutyCycle < 0.0)
+    dutyCycle = 0.0;
   double rawDutyCycle = 256.0 * dutyCycle;
-  if (rawDutyCycle > 255.5) rawDutyCycle = 255.5;
+  if (rawDutyCycle > 255.5)
+    rawDutyCycle = 255.5;
   {
     std::lock_guard<wpi::mutex> lock(digitalPwmMutex);
     uint16_t pwmPeriodPower = digitalSystem->readPWMPeriodPower(status);
@@ -238,7 +244,7 @@ void HAL_SetDigitalPWMDutyCycle(HAL_DigitalPWMHandle pwmGenerator,
  * @param channel The Digital Output channel to output on
  */
 void HAL_SetDigitalPWMOutputChannel(HAL_DigitalPWMHandle pwmGenerator,
-                                    int32_t channel, int32_t* status) {
+                                    int32_t channel, int32_t *status) {
   auto port = digitalPWMHandles->Get(pwmGenerator);
   if (port == nullptr) {
     *status = HAL_HANDLE_ERROR;
@@ -247,7 +253,7 @@ void HAL_SetDigitalPWMOutputChannel(HAL_DigitalPWMHandle pwmGenerator,
   int32_t id = *port;
   if (channel >= kNumDigitalHeaders &&
       channel <
-          kNumDigitalHeaders + kNumDigitalMXPChannels) {  // If it is on the MXP
+          kNumDigitalHeaders + kNumDigitalMXPChannels) { // If it is on the MXP
     /* Then to write as a digital PWM channel an offset is needed to write on
      * the correct channel
      */
@@ -265,14 +271,15 @@ void HAL_SetDigitalPWMOutputChannel(HAL_DigitalPWMHandle pwmGenerator,
  * output)
  */
 void HAL_SetDIO(HAL_DigitalHandle dioPortHandle, HAL_Bool value,
-                int32_t* status) {
+                int32_t *status) {
   auto port = digitalChannelHandles->Get(dioPortHandle, HAL_HandleEnum::DIO);
   if (port == nullptr) {
     *status = HAL_HANDLE_ERROR;
     return;
   }
   if (value != 0 && value != 1) {
-    if (value != 0) value = 1;
+    if (value != 0)
+      value = 1;
   }
   {
     std::lock_guard<wpi::mutex> lock(digitalDIOMutex);
@@ -312,7 +319,7 @@ void HAL_SetDIO(HAL_DigitalHandle dioPortHandle, HAL_Bool value,
  * @param input true to set input, false for output
  */
 void HAL_SetDIODirection(HAL_DigitalHandle dioPortHandle, HAL_Bool input,
-                         int32_t* status) {
+                         int32_t *status) {
   auto port = digitalChannelHandles->Get(dioPortHandle, HAL_HandleEnum::DIO);
   if (port == nullptr) {
     *status = HAL_HANDLE_ERROR;
@@ -356,7 +363,7 @@ void HAL_SetDIODirection(HAL_DigitalHandle dioPortHandle, HAL_Bool input,
  * @param channel The digital I/O channel
  * @return The state of the specified channel
  */
-HAL_Bool HAL_GetDIO(HAL_DigitalHandle dioPortHandle, int32_t* status) {
+HAL_Bool HAL_GetDIO(HAL_DigitalHandle dioPortHandle, int32_t *status) {
   auto port = digitalChannelHandles->Get(dioPortHandle, HAL_HandleEnum::DIO);
   if (port == nullptr) {
     *status = HAL_HANDLE_ERROR;
@@ -384,7 +391,7 @@ HAL_Bool HAL_GetDIO(HAL_DigitalHandle dioPortHandle, int32_t* status) {
  * @param channel The digital I/O channel
  * @return The direction of the specified channel
  */
-HAL_Bool HAL_GetDIODirection(HAL_DigitalHandle dioPortHandle, int32_t* status) {
+HAL_Bool HAL_GetDIODirection(HAL_DigitalHandle dioPortHandle, int32_t *status) {
   auto port = digitalChannelHandles->Get(dioPortHandle, HAL_HandleEnum::DIO);
   if (port == nullptr) {
     *status = HAL_HANDLE_ERROR;
@@ -417,7 +424,7 @@ HAL_Bool HAL_GetDIODirection(HAL_DigitalHandle dioPortHandle, int32_t* status) {
  * @param pulseLength The active length of the pulse (in seconds)
  */
 void HAL_Pulse(HAL_DigitalHandle dioPortHandle, double pulseLength,
-               int32_t* status) {
+               int32_t *status) {
   auto port = digitalChannelHandles->Get(dioPortHandle, HAL_HandleEnum::DIO);
   if (port == nullptr) {
     *status = HAL_HANDLE_ERROR;
@@ -445,7 +452,7 @@ void HAL_Pulse(HAL_DigitalHandle dioPortHandle, double pulseLength,
  *
  * @return A pulse is in progress
  */
-HAL_Bool HAL_IsPulsing(HAL_DigitalHandle dioPortHandle, int32_t* status) {
+HAL_Bool HAL_IsPulsing(HAL_DigitalHandle dioPortHandle, int32_t *status) {
   auto port = digitalChannelHandles->Get(dioPortHandle, HAL_HandleEnum::DIO);
   if (port == nullptr) {
     *status = HAL_HANDLE_ERROR;
@@ -467,9 +474,10 @@ HAL_Bool HAL_IsPulsing(HAL_DigitalHandle dioPortHandle, int32_t* status) {
  *
  * @return A pulse on some line is in progress
  */
-HAL_Bool HAL_IsAnyPulsing(int32_t* status) {
+HAL_Bool HAL_IsAnyPulsing(int32_t *status) {
   initializeDigital(status);
-  if (*status != 0) return false;
+  if (*status != 0)
+    return false;
   tDIO::tPulse pulseRegister = digitalSystem->readPulse(status);
   return pulseRegister.Headers != 0 && pulseRegister.MXP != 0 &&
          pulseRegister.SPIPort != 0;
@@ -484,7 +492,7 @@ HAL_Bool HAL_IsAnyPulsing(int32_t* status) {
  *                    means "none" and 1 - 3 means filter # filterIndex - 1.
  */
 void HAL_SetFilterSelect(HAL_DigitalHandle dioPortHandle, int32_t filterIndex,
-                         int32_t* status) {
+                         int32_t *status) {
   auto port = digitalChannelHandles->Get(dioPortHandle, HAL_HandleEnum::DIO);
   if (port == nullptr) {
     *status = HAL_HANDLE_ERROR;
@@ -512,7 +520,7 @@ void HAL_SetFilterSelect(HAL_DigitalHandle dioPortHandle, int32_t filterIndex,
  * @return filterIndex The filter index.  Must be in the range 0 - 3,
  * where 0 means "none" and 1 - 3 means filter # filterIndex - 1.
  */
-int32_t HAL_GetFilterSelect(HAL_DigitalHandle dioPortHandle, int32_t* status) {
+int32_t HAL_GetFilterSelect(HAL_DigitalHandle dioPortHandle, int32_t *status) {
   auto port = digitalChannelHandles->Get(dioPortHandle, HAL_HandleEnum::DIO);
   if (port == nullptr) {
     *status = HAL_HANDLE_ERROR;
@@ -543,9 +551,10 @@ int32_t HAL_GetFilterSelect(HAL_DigitalHandle dioPortHandle, int32_t* status) {
  * @param value The number of cycles that the signal must not transition to be
  * counted as a transition.
  */
-void HAL_SetFilterPeriod(int32_t filterIndex, int64_t value, int32_t* status) {
+void HAL_SetFilterPeriod(int32_t filterIndex, int64_t value, int32_t *status) {
   initializeDigital(status);
-  if (*status != 0) return;
+  if (*status != 0)
+    return;
   std::lock_guard<wpi::mutex> lock(digitalDIOMutex);
   digitalSystem->writeFilterPeriodHdr(filterIndex, value, status);
   if (*status == 0) {
@@ -565,9 +574,10 @@ void HAL_SetFilterPeriod(int32_t filterIndex, int64_t value, int32_t* status) {
  * @param value The number of cycles that the signal must not transition to be
  * counted as a transition.
  */
-int64_t HAL_GetFilterPeriod(int32_t filterIndex, int32_t* status) {
+int64_t HAL_GetFilterPeriod(int32_t filterIndex, int32_t *status) {
   initializeDigital(status);
-  if (*status != 0) return 0;
+  if (*status != 0)
+    return 0;
   uint32_t hdrPeriod = 0;
   uint32_t mxpPeriod = 0;
   {
@@ -584,4 +594,4 @@ int64_t HAL_GetFilterPeriod(int32_t filterIndex, int32_t* status) {
   return hdrPeriod;
 }
 
-}  // extern "C"
+} // extern "C"

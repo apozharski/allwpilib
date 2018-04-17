@@ -19,17 +19,17 @@ using namespace frc;
 
 enum MotorEncoderTestType { TEST_VICTOR, TEST_JAGUAR, TEST_TALON };
 
-std::ostream& operator<<(std::ostream& os, MotorEncoderTestType const& type) {
+std::ostream &operator<<(std::ostream &os, MotorEncoderTestType const &type) {
   switch (type) {
-    case TEST_VICTOR:
-      os << "Victor";
-      break;
-    case TEST_JAGUAR:
-      os << "Jaguar";
-      break;
-    case TEST_TALON:
-      os << "Talon";
-      break;
+  case TEST_VICTOR:
+    os << "Victor";
+    break;
+  case TEST_JAGUAR:
+    os << "Jaguar";
+    break;
+  case TEST_TALON:
+    os << "Talon";
+    break;
   }
 
   return os;
@@ -42,30 +42,30 @@ static constexpr double kMotorTime = 0.5;
  * the same motor.
  */
 class MotorEncoderTest : public testing::TestWithParam<MotorEncoderTestType> {
- protected:
-  SpeedController* m_speedController;
-  Encoder* m_encoder;
-  LinearDigitalFilter* m_filter;
+protected:
+  SpeedController *m_speedController;
+  Encoder *m_encoder;
+  LinearDigitalFilter *m_filter;
 
   void SetUp() override {
     switch (GetParam()) {
-      case TEST_VICTOR:
-        m_speedController = new Victor(TestBench::kVictorChannel);
-        m_encoder = new Encoder(TestBench::kVictorEncoderChannelA,
-                                TestBench::kVictorEncoderChannelB);
-        break;
+    case TEST_VICTOR:
+      m_speedController = new Victor(TestBench::kVictorChannel);
+      m_encoder = new Encoder(TestBench::kVictorEncoderChannelA,
+                              TestBench::kVictorEncoderChannelB);
+      break;
 
-      case TEST_JAGUAR:
-        m_speedController = new Jaguar(TestBench::kJaguarChannel);
-        m_encoder = new Encoder(TestBench::kJaguarEncoderChannelA,
-                                TestBench::kJaguarEncoderChannelB);
-        break;
+    case TEST_JAGUAR:
+      m_speedController = new Jaguar(TestBench::kJaguarChannel);
+      m_encoder = new Encoder(TestBench::kJaguarEncoderChannelA,
+                              TestBench::kJaguarEncoderChannelB);
+      break;
 
-      case TEST_TALON:
-        m_speedController = new Talon(TestBench::kTalonChannel);
-        m_encoder = new Encoder(TestBench::kTalonEncoderChannelA,
-                                TestBench::kTalonEncoderChannelB);
-        break;
+    case TEST_TALON:
+      m_speedController = new Talon(TestBench::kTalonChannel);
+      m_encoder = new Encoder(TestBench::kTalonEncoderChannelA,
+                              TestBench::kTalonEncoderChannelB);
+      break;
     }
     m_filter = new LinearDigitalFilter(
         LinearDigitalFilter::MovingAverage(*m_encoder, 50));

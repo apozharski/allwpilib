@@ -13,7 +13,7 @@ namespace frc {
  * Interface for yaw rate gyros.
  */
 class Gyro {
- public:
+public:
   virtual ~Gyro() = default;
 
   /**
@@ -57,4 +57,4 @@ class Gyro {
   virtual double GetRate() const = 0;
 };
 
-}  // namespace frc
+} // namespace frc

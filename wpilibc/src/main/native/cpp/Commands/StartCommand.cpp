@@ -9,7 +9,7 @@
 
 using namespace frc;
 
-StartCommand::StartCommand(Command* commandToStart)
+StartCommand::StartCommand(Command *commandToStart)
     : InstantCommand("StartCommand") {
   m_commandToFork = commandToStart;
 }

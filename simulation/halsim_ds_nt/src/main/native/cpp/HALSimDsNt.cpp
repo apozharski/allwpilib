@@ -10,15 +10,15 @@
 void HALSimDSNT::Initialize() {
   rootTable =
       nt::NetworkTableInstance::GetDefault().GetTable("sim")->GetSubTable(
-          "DS_CONTROL");  // Not to be confused with sim::DriverStation from
-                          // HALSim LowFi
+          "DS_CONTROL"); // Not to be confused with sim::DriverStation from
+                         // HALSim LowFi
 
   // LOOP TIMING //
 
   auto timinghz = rootTable->GetEntry("timing_hz");
   timinghz.ForceSetDouble(50);
   timinghz.AddListener(
-      [this](const nt::EntryNotification& ev) -> void {
+      [this](const nt::EntryNotification &ev) -> void {
         double valIn = ev.value->GetDouble();
         double val = 0;
         val = (valIn < 1 ? 1 : valIn > 100 ? 100 : valIn);
@@ -48,25 +48,25 @@ void HALSimDSNT::Initialize() {
   estop.ForceSetBoolean(false);
 
   mtele.AddListener(
-      [this](const nt::EntryNotification& ev) -> void {
+      [this](const nt::EntryNotification &ev) -> void {
         this->HandleModePress(HALSimDSNT_Mode::teleop, ev.value->GetBoolean());
       },
       NT_NotifyKind::NT_NOTIFY_UPDATE);
 
   mauto.AddListener(
-      [this](const nt::EntryNotification& ev) -> void {
+      [this](const nt::EntryNotification &ev) -> void {
         this->HandleModePress(HALSimDSNT_Mode::auton, ev.value->GetBoolean());
       },
       NT_NotifyKind::NT_NOTIFY_UPDATE);
 
   mtest.AddListener(
-      [this](const nt::EntryNotification& ev) -> void {
+      [this](const nt::EntryNotification &ev) -> void {
         this->HandleModePress(HALSimDSNT_Mode::test, ev.value->GetBoolean());
       },
       NT_NotifyKind::NT_NOTIFY_UPDATE);
 
   enabled.AddListener(
-      [this](const nt::EntryNotification& ev) -> void {
+      [this](const nt::EntryNotification &ev) -> void {
         std::lock_guard<wpi::mutex> lock(modeMutex);
         if (!this->isEstop) {
           this->isEnabled = ev.value->GetBoolean();
@@ -79,7 +79,7 @@ void HALSimDSNT::Initialize() {
       NT_NotifyKind::NT_NOTIFY_UPDATE);
 
   estop.AddListener(
-      [this](const nt::EntryNotification& ev) -> void {
+      [this](const nt::EntryNotification &ev) -> void {
         std::lock_guard<wpi::mutex> lock(modeMutex);
         this->isEstop = ev.value->GetBoolean();
         if (this->isEstop) {
@@ -100,7 +100,7 @@ void HALSimDSNT::Initialize() {
   allianceColorRed.ForceSetBoolean(true);
 
   allianceStation.AddListener(
-      [this](const nt::EntryNotification& ev) -> void {
+      [this](const nt::EntryNotification &ev) -> void {
         double stnIn = ev.value->GetDouble();
         double stn = 0;
         stn = (stnIn > 3 ? 3 : stnIn < 1 ? 1 : stnIn);
@@ -116,7 +116,7 @@ void HALSimDSNT::Initialize() {
       NT_NotifyKind::NT_NOTIFY_UPDATE);
 
   allianceColorRed.AddListener(
-      [this](const nt::EntryNotification& ev) -> void {
+      [this](const nt::EntryNotification &ev) -> void {
         this->isAllianceRed = ev.value->GetBoolean();
         this->DoAllianceUpdate();
       },

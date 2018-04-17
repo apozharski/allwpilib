@@ -5,8 +5,8 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "HAL/HAL.h"
 #include "HAL/SPI.h"
+#include "HAL/HAL.h"
 #include "HAL/handles/HandlesInternal.h"
 #include "MockData/SPIData.h"
 #include "gtest/gtest.h"
@@ -16,8 +16,8 @@ namespace hal {
 std::string gTestSpiCallbackName;
 HAL_Value gTestSpiCallbackValue;
 
-void TestSpiInitializationCallback(const char* name, void* param,
-                                   const struct HAL_Value* value) {
+void TestSpiInitializationCallback(const char *name, void *param,
+                                   const struct HAL_Value *value) {
   gTestSpiCallbackName = name;
   gTestSpiCallbackValue = *value;
 }
@@ -40,4 +40,4 @@ TEST(SpiSimTests, TestSpiInitialization) {
   EXPECT_STREQ("Initialized", gTestSpiCallbackName.c_str());
 }
 
-}  // namespace hal
+} // namespace hal

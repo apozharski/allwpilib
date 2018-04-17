@@ -48,7 +48,7 @@ RobotBase::RobotBase() : m_ds(DriverStation::GetInstance()) {
 
   SmartDashboard::init();
 
-  std::FILE* file = nullptr;
+  std::FILE *file = nullptr;
   file = std::fopen("/tmp/frc_versions/FRC_Lib_Version.ini", "w");
 
   if (file != nullptr) {

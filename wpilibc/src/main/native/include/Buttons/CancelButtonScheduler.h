@@ -15,13 +15,13 @@ class Trigger;
 class Command;
 
 class CancelButtonScheduler : public ButtonScheduler {
- public:
-  CancelButtonScheduler(bool last, Trigger* button, Command* orders);
+public:
+  CancelButtonScheduler(bool last, Trigger *button, Command *orders);
   virtual ~CancelButtonScheduler() = default;
   virtual void Execute();
 
- private:
+private:
   bool pressedLast;
 };
 
-}  // namespace frc
+} // namespace frc

@@ -34,8 +34,8 @@ namespace frc {
  * "Preferences" with all the key-value pairs.
  */
 class Preferences : public ErrorBase {
- public:
-  static Preferences* GetInstance();
+public:
+  static Preferences *GetInstance();
 
   std::vector<std::string> GetKeys();
   std::string GetString(llvm::StringRef key, llvm::StringRef defaultValue = "");
@@ -53,13 +53,13 @@ class Preferences : public ErrorBase {
   bool ContainsKey(llvm::StringRef key);
   void Remove(llvm::StringRef key);
 
- protected:
+protected:
   Preferences();
   virtual ~Preferences() = default;
 
- private:
+private:
   std::shared_ptr<nt::NetworkTable> m_table;
   NT_EntryListener m_listener;
 };
 
-}  // namespace frc
+} // namespace frc

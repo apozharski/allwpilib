@@ -12,15 +12,15 @@
 namespace frc {
 
 class StartCommand : public InstantCommand {
- public:
-  explicit StartCommand(Command* commandToStart);
+public:
+  explicit StartCommand(Command *commandToStart);
   virtual ~StartCommand() = default;
 
- protected:
+protected:
   virtual void Initialize();
 
- private:
-  Command* m_commandToFork;
+private:
+  Command *m_commandToFork;
 };
 
-}  // namespace frc
+} // namespace frc

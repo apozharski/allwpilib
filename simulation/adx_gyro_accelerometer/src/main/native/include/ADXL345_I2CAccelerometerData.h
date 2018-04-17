@@ -11,14 +11,14 @@
 
 namespace hal {
 class ADXL345_I2CData : public ThreeAxisAccelerometerData {
- public:
+public:
   explicit ADXL345_I2CData(int port);
   virtual ~ADXL345_I2CData();
 
-  void HandleWrite(const uint8_t* buffer, uint32_t count);
-  void HandleRead(uint8_t* buffer, uint32_t count);
+  void HandleWrite(const uint8_t *buffer, uint32_t count);
+  void HandleRead(uint8_t *buffer, uint32_t count);
 
- private:
+private:
   int m_port;
   int m_writeCallbackId;
   int m_readCallbackId;
@@ -27,4 +27,4 @@ class ADXL345_I2CData : public ThreeAxisAccelerometerData {
 
   static const double LSB;
 };
-}  // namespace hal
+} // namespace hal

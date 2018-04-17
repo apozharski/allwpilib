@@ -21,7 +21,7 @@ class DriverStation;
  * GenericHID Interface.
  */
 class GenericHID : public ErrorBase {
- public:
+public:
   enum RumbleType { kLeftRumble, kRightRumble };
 
   enum HIDType {
@@ -73,12 +73,12 @@ class GenericHID : public ErrorBase {
   void SetOutputs(int value);
   void SetRumble(RumbleType type, double value);
 
- private:
-  DriverStation& m_ds;
+private:
+  DriverStation &m_ds;
   int m_port;
   int m_outputs = 0;
   uint16_t m_leftRumble = 0;
   uint16_t m_rightRumble = 0;
 };
 
-}  // namespace frc
+} // namespace frc

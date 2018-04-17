@@ -29,7 +29,7 @@ namespace frc {
  *   http://www.ni.com/pdf/manuals/370132c.pdf
  */
 class SerialPort : public ErrorBase {
- public:
+public:
   enum Parity {
     kParity_None = 0,
     kParity_Odd = 1,
@@ -63,15 +63,15 @@ class SerialPort : public ErrorBase {
              StopBits stopBits = kStopBits_One);
   ~SerialPort();
 
-  SerialPort(const SerialPort&) = delete;
-  SerialPort& operator=(const SerialPort&) = delete;
+  SerialPort(const SerialPort &) = delete;
+  SerialPort &operator=(const SerialPort &) = delete;
 
   void SetFlowControl(FlowControl flowControl);
   void EnableTermination(char terminator = '\n');
   void DisableTermination();
   int GetBytesReceived();
-  int Read(char* buffer, int count);
-  int Write(const char* buffer, int count);
+  int Read(char *buffer, int count);
+  int Write(const char *buffer, int count);
   int Write(llvm::StringRef buffer);
   void SetTimeout(double timeout);
   void SetReadBufferSize(int size);
@@ -80,11 +80,11 @@ class SerialPort : public ErrorBase {
   void Flush();
   void Reset();
 
- private:
+private:
   int m_resourceManagerHandle = 0;
   int m_portHandle = 0;
   bool m_consoleModeEnabled = false;
   int m_port;
 };
 
-}  // namespace frc
+} // namespace frc

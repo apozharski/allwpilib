@@ -33,13 +33,13 @@ namespace frc {
  * @see Scheduler
  */
 class ConditionalCommand : public Command {
- public:
-  explicit ConditionalCommand(Command* onTrue, Command* onFalse = nullptr);
-  ConditionalCommand(const llvm::Twine& name, Command* onTrue,
-                     Command* onFalse = nullptr);
+public:
+  explicit ConditionalCommand(Command *onTrue, Command *onFalse = nullptr);
+  ConditionalCommand(const llvm::Twine &name, Command *onTrue,
+                     Command *onFalse = nullptr);
   virtual ~ConditionalCommand() = default;
 
- protected:
+protected:
   /**
    * The Condition to test to determine which Command to run.
    *
@@ -52,15 +52,15 @@ class ConditionalCommand : public Command {
   bool IsFinished() override;
   void _Interrupted() override;
 
- private:
+private:
   // The Command to execute if Condition() returns true
-  Command* m_onTrue;
+  Command *m_onTrue;
 
   // The Command to execute if Condition() returns false
-  Command* m_onFalse;
+  Command *m_onFalse;
 
   // Stores command chosen by condition
-  Command* m_chosenCommand = nullptr;
+  Command *m_chosenCommand = nullptr;
 };
 
-}  // namespace frc
+} // namespace frc

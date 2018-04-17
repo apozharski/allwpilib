@@ -19,18 +19,17 @@ static_assert(0, "Visual Studio 2015 or greater required.");
 
 #include <HAL/cpp/make_unique.h>
 
-#define DEFAULT_MOVE_CONSTRUCTOR(ClassName) ClassName(ClassName&&) = default
+#define DEFAULT_MOVE_CONSTRUCTOR(ClassName) ClassName(ClassName &&) = default
 
 namespace frc {
 
 // A struct to use as a deleter when a std::shared_ptr must wrap a raw pointer
 // that is being deleted by someone else.
-template <class T>
-struct NullDeleter {
-  void operator()(T*) const noexcept {};
+template <class T> struct NullDeleter {
+  void operator()(T *) const noexcept {};
 };
 
-}  // namespace frc
+} // namespace frc
 
 #include <atomic>
 
@@ -42,7 +41,7 @@ namespace frc {
 // while being able to use this to, for instance, chose not to de-allocate
 // a PWM port in a destructor.
 struct HasBeenMoved {
-  HasBeenMoved(HasBeenMoved&& other) {
+  HasBeenMoved(HasBeenMoved &&other) {
     other.moved = true;
     moved = false;
   }
@@ -51,9 +50,9 @@ struct HasBeenMoved {
   operator bool() const { return moved; }
 };
 
-}  // namespace frc
+} // namespace frc
 
 // For backwards compatibility
 #ifndef NAMESPACED_WPILIB
-using namespace frc;  // NOLINT
+using namespace frc; // NOLINT
 #endif

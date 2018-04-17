@@ -32,17 +32,17 @@ class MatchDataSender;
  * Station.
  */
 class DriverStation : public ErrorBase, public RobotStateInterface {
- public:
+public:
   enum Alliance { kRed, kBlue, kInvalid };
   enum MatchType { kNone, kPractice, kQualification, kElimination };
 
   ~DriverStation() override;
-  static DriverStation& GetInstance();
-  static void ReportError(const llvm::Twine& error);
-  static void ReportWarning(const llvm::Twine& error);
-  static void ReportError(bool isError, int code, const llvm::Twine& error,
-                          const llvm::Twine& location,
-                          const llvm::Twine& stack);
+  static DriverStation &GetInstance();
+  static void ReportError(const llvm::Twine &error);
+  static void ReportWarning(const llvm::Twine &error);
+  static void ReportError(bool isError, int code, const llvm::Twine &error,
+                          const llvm::Twine &location,
+                          const llvm::Twine &stack);
 
   static constexpr int kJoystickPorts = 6;
 
@@ -124,16 +124,16 @@ class DriverStation : public ErrorBase, public RobotStateInterface {
    */
   void InTest(bool entering) { m_userInTest = entering; }
 
- protected:
+protected:
   void GetData();
 
- private:
+private:
   DriverStation();
 
-  void ReportJoystickUnpluggedError(const llvm::Twine& message);
-  void ReportJoystickUnpluggedWarning(const llvm::Twine& message);
+  void ReportJoystickUnpluggedError(const llvm::Twine &message);
+  void ReportJoystickUnpluggedWarning(const llvm::Twine &message);
   void Run();
-  void UpdateControlWord(bool force, HAL_ControlWord& controlWord) const;
+  void UpdateControlWord(bool force, HAL_ControlWord &controlWord) const;
   void SendMatchData();
 
   // Joystick User Data
@@ -180,4 +180,4 @@ class DriverStation : public ErrorBase, public RobotStateInterface {
   double m_nextMessageTime = 0;
 };
 
-}  // namespace frc
+} // namespace frc

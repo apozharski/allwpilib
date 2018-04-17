@@ -13,7 +13,7 @@
 
 using namespace frc;
 
-static void RequireAll(Command& command, Command* onTrue, Command* onFalse) {
+static void RequireAll(Command &command, Command *onTrue, Command *onFalse) {
   if (onTrue != nullptr) {
     for (auto requirement : onTrue->GetRequirements())
       command.Requires(requirement);
@@ -30,7 +30,7 @@ static void RequireAll(Command& command, Command* onTrue, Command* onFalse) {
  * @param onTrue  The Command to execute if Condition() returns true
  * @param onFalse The Command to execute if Condition() returns false
  */
-ConditionalCommand::ConditionalCommand(Command* onTrue, Command* onFalse) {
+ConditionalCommand::ConditionalCommand(Command *onTrue, Command *onFalse) {
   m_onTrue = onTrue;
   m_onFalse = onFalse;
 
@@ -44,8 +44,8 @@ ConditionalCommand::ConditionalCommand(Command* onTrue, Command* onFalse) {
  * @param onTrue  The Command to execute if Condition() returns true
  * @param onFalse The Command to execute if Condition() returns false
  */
-ConditionalCommand::ConditionalCommand(const llvm::Twine& name, Command* onTrue,
-                                       Command* onFalse)
+ConditionalCommand::ConditionalCommand(const llvm::Twine &name, Command *onTrue,
+                                       Command *onFalse)
     : Command(name) {
   m_onTrue = onTrue;
   m_onFalse = onFalse;

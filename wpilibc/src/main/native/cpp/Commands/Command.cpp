@@ -33,7 +33,7 @@ Command::Command() : Command("", -1.0) {}
  *
  * @param name the name for this command
  */
-Command::Command(const llvm::Twine& name) : Command(name, -1.0) {}
+Command::Command(const llvm::Twine &name) : Command(name, -1.0) {}
 
 /**
  * Creates a new command with the given timeout and a default name.
@@ -50,7 +50,7 @@ Command::Command(double timeout) : Command("", timeout) {}
  * @param timeout the time (in seconds) before this command "times out"
  * @see IsTimedOut()
  */
-Command::Command(const llvm::Twine& name, double timeout)
+Command::Command(const llvm::Twine &name, double timeout)
     : SendableBase(false) {
   // We use -1.0 to indicate no timeout.
   if (timeout < 0.0 && timeout != -1.0)
@@ -113,8 +113,9 @@ double Command::TimeSinceInitialized() const {
  * @param subsystem The Subsystem required
  * @see Subsystem
  */
-void Command::Requires(Subsystem* subsystem) {
-  if (!AssertUnlocked("Can not add new requirement to command")) return;
+void Command::Requires(Subsystem *subsystem) {
+  if (!AssertUnlocked("Can not add new requirement to command"))
+    return;
 
   if (subsystem != nullptr)
     m_requirements.insert(subsystem);
@@ -170,7 +171,8 @@ bool Command::Run() {
   if (!m_runWhenDisabled && m_parent == nullptr && RobotState::IsDisabled())
     Cancel();
 
-  if (IsCanceled()) return false;
+  if (IsCanceled())
+    return false;
 
   if (!m_initialized) {
     m_initialized = true;
@@ -263,7 +265,7 @@ void Command::LockChanges() { m_locked = true; }
  *                message)
  * @return True if assert passed, false if assert failed.
  */
-bool Command::AssertUnlocked(const std::string& message) {
+bool Command::AssertUnlocked(const std::string &message) {
   if (m_locked) {
     std::string buf =
         message + " after being started or being added to a command group";
@@ -278,7 +280,7 @@ bool Command::AssertUnlocked(const std::string& message) {
  *
  * @param parent the parent
  */
-void Command::SetParent(CommandGroup* parent) {
+void Command::SetParent(CommandGroup *parent) {
   if (parent == nullptr) {
     wpi_setWPIErrorWithContext(NullParameter, "parent");
   } else if (m_parent != nullptr) {
@@ -374,7 +376,8 @@ void Command::Cancel() {
  * Should only be called by the parent command group.
  */
 void Command::_Cancel() {
-  if (IsRunning()) m_canceled = true;
+  if (IsRunning())
+    m_canceled = true;
 }
 
 /**
@@ -406,7 +409,7 @@ void Command::SetInterruptible(bool interruptible) {
  * @param system the system
  * @return whether or not the subsystem is required (false if given nullptr)
  */
-bool Command::DoesRequire(Subsystem* system) const {
+bool Command::DoesRequire(Subsystem *system) const {
   return m_requirements.count(system) > 0;
 }
 
@@ -418,7 +421,7 @@ bool Command::DoesRequire(Subsystem* system) const {
  * @return The CommandGroup that this command is a part of (or null if not in
  *         group)
  */
-CommandGroup* Command::GetGroup() const { return m_parent; }
+CommandGroup *Command::GetGroup() const { return m_parent; }
 
 /**
  * Sets whether or not this Command should run when the robot is disabled.
@@ -439,15 +442,17 @@ void Command::SetRunWhenDisabled(bool run) { m_runWhenDisabled = run; }
  */
 bool Command::WillRunWhenDisabled() const { return m_runWhenDisabled; }
 
-void Command::InitSendable(SendableBuilder& builder) {
+void Command::InitSendable(SendableBuilder &builder) {
   builder.SetSmartDashboardType("Command");
   builder.AddStringProperty(".name", [=]() { return GetName(); }, nullptr);
   builder.AddBooleanProperty("running", [=]() { return IsRunning(); },
                              [=](bool value) {
                                if (value) {
-                                 if (!IsRunning()) Start();
+                                 if (!IsRunning())
+                                   Start();
                                } else {
-                                 if (IsRunning()) Cancel();
+                                 if (IsRunning())
+                                   Cancel();
                                }
                              });
   builder.AddBooleanProperty(".isParented", [=]() { return IsParented(); },

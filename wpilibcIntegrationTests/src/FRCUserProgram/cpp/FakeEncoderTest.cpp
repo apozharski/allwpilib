@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "Encoder.h"  // NOLINT(build/include_order)
+#include "Encoder.h" // NOLINT(build/include_order)
 
 #include "AnalogOutput.h"
 #include "AnalogTrigger.h"
@@ -19,13 +19,13 @@ using namespace frc;
 static const double kDelayTime = 0.001;
 
 class FakeEncoderTest : public testing::Test {
- protected:
-  DigitalOutput* m_outputA;
-  DigitalOutput* m_outputB;
-  AnalogOutput* m_indexOutput;
+protected:
+  DigitalOutput *m_outputA;
+  DigitalOutput *m_outputB;
+  AnalogOutput *m_indexOutput;
 
-  Encoder* m_encoder;
-  AnalogTrigger* m_indexAnalogTrigger;
+  Encoder *m_encoder;
+  AnalogTrigger *m_indexAnalogTrigger;
   std::shared_ptr<AnalogTriggerOutput> m_indexAnalogTriggerOutput;
 
   void SetUp() override {

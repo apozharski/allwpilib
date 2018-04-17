@@ -27,8 +27,9 @@ __declspec(dllexport)
 
   int pwmCount = HAL_GetNumPWMChannels();
   halsim.m_pwms.reserve(pwmCount);
-  for (int i = 0; i < pwmCount; i++) halsim.m_pwms.emplace_back(i);
+  for (int i = 0; i < pwmCount; i++)
+    halsim.m_pwms.emplace_back(i);
 
   return 0;
 }
-}  // extern "C"
+} // extern "C"

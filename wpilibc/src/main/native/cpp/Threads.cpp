@@ -20,7 +20,7 @@ namespace frc {
  * @param isRealTime Set to true if thread is realtime, otherwise false.
  * @return The current thread priority. Scaled 1-99, with 1 being highest.
  */
-int GetThreadPriority(std::thread& thread, bool* isRealTime) {
+int GetThreadPriority(std::thread &thread, bool *isRealTime) {
   int32_t status = 0;
   HAL_Bool rt = false;
   auto native = thread.native_handle();
@@ -36,7 +36,7 @@ int GetThreadPriority(std::thread& thread, bool* isRealTime) {
  * @param isRealTime Set to true if thread is realtime, otherwise false.
  * @return The current thread priority. Scaled 1-99.
  */
-int GetCurrentThreadPriority(bool* isRealTime) {
+int GetCurrentThreadPriority(bool *isRealTime) {
   int32_t status = 0;
   HAL_Bool rt = false;
   auto ret = HAL_GetCurrentThreadPriority(&rt, &status);
@@ -57,7 +57,7 @@ int GetCurrentThreadPriority(bool* isRealTime) {
  *
  * @return The success state of setting the priority
  */
-bool SetThreadPriority(std::thread& thread, bool realTime, int priority) {
+bool SetThreadPriority(std::thread &thread, bool realTime, int priority) {
   int32_t status = 0;
   auto native = thread.native_handle();
   auto ret = HAL_SetThreadPriority(&native, realTime, priority, &status);
@@ -82,4 +82,4 @@ bool SetCurrentThreadPriority(bool realTime, int priority) {
   wpi_setGlobalErrorWithContext(status, HAL_GetErrorMessage(status));
   return ret;
 }
-}  // namespace frc
+} // namespace frc

@@ -9,9 +9,9 @@
 
 using namespace frc;
 
-HLUsageReportingInterface* HLUsageReporting::impl = nullptr;
+HLUsageReportingInterface *HLUsageReporting::impl = nullptr;
 
-void HLUsageReporting::SetImplementation(HLUsageReportingInterface* i) {
+void HLUsageReporting::SetImplementation(HLUsageReportingInterface *i) {
   impl = i;
 }
 

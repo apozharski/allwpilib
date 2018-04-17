@@ -14,24 +14,24 @@
 
 namespace hal {
 struct DIOSetProxy {
-  DIOSetProxy(const DIOSetProxy&) = delete;
-  DIOSetProxy(DIOSetProxy&&) = delete;
-  DIOSetProxy& operator=(const DIOSetProxy&) = delete;
-  DIOSetProxy& operator=(DIOSetProxy&&) = delete;
+  DIOSetProxy(const DIOSetProxy &) = delete;
+  DIOSetProxy(DIOSetProxy &&) = delete;
+  DIOSetProxy &operator=(const DIOSetProxy &) = delete;
+  DIOSetProxy &operator=(DIOSetProxy &&) = delete;
 
-  void SetOutputMode(int32_t* status) {
+  void SetOutputMode(int32_t *status) {
     m_dio->writeOutputEnable(m_setOutputDirReg, status);
   }
 
-  void SetInputMode(int32_t* status) {
+  void SetInputMode(int32_t *status) {
     m_dio->writeOutputEnable(m_unsetOutputDirReg, status);
   }
 
-  void SetOutputTrue(int32_t* status) {
+  void SetOutputTrue(int32_t *status) {
     m_dio->writeDO(m_setOutputStateReg, status);
   }
 
-  void SetOutputFalse(int32_t* status) {
+  void SetOutputFalse(int32_t *status) {
     m_dio->writeDO(m_unsetOutputStateReg, status);
   }
 
@@ -39,13 +39,13 @@ struct DIOSetProxy {
   tDIO::tOutputEnable m_unsetOutputDirReg;
   tDIO::tDO m_setOutputStateReg;
   tDIO::tDO m_unsetOutputStateReg;
-  tDIO* m_dio;
+  tDIO *m_dio;
 };
 namespace detail {
-wpi::mutex& UnsafeGetDIOMutex();
-tDIO* UnsafeGetDigialSystem();
-int32_t ComputeDigitalMask(HAL_DigitalHandle handle, int32_t* status);
-}  // namespace detail
+wpi::mutex &UnsafeGetDIOMutex();
+tDIO *UnsafeGetDigialSystem();
+int32_t ComputeDigitalMask(HAL_DigitalHandle handle, int32_t *status);
+} // namespace detail
 
 /**
  * Unsafe digital output set function
@@ -56,17 +56,18 @@ int32_t ComputeDigitalMask(HAL_DigitalHandle handle, int32_t* status);
  *
  */
 template <typename Functor>
-void UnsafeManipulateDIO(HAL_DigitalHandle handle, int32_t* status,
+void UnsafeManipulateDIO(HAL_DigitalHandle handle, int32_t *status,
                          Functor func) {
   auto port = digitalChannelHandles->Get(handle, HAL_HandleEnum::DIO);
   if (port == nullptr) {
     *status = HAL_HANDLE_ERROR;
     return;
   }
-  wpi::mutex& dioMutex = detail::UnsafeGetDIOMutex();
-  tDIO* dSys = detail::UnsafeGetDigialSystem();
+  wpi::mutex &dioMutex = detail::UnsafeGetDIOMutex();
+  tDIO *dSys = detail::UnsafeGetDigialSystem();
   auto mask = detail::ComputeDigitalMask(handle, status);
-  if (status != 0) return;
+  if (status != 0)
+    return;
   std::lock_guard<wpi::mutex> lock(dioMutex);
 
   tDIO::tOutputEnable enableOE = dSys->readOutputEnable(status);
@@ -82,4 +83,4 @@ void UnsafeManipulateDIO(HAL_DigitalHandle handle, int32_t* status,
   func(dioData);
 }
 
-}  // namespace hal
+} // namespace hal

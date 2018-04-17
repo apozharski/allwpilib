@@ -25,34 +25,34 @@ class ButtonScheduler;
 class Subsystem;
 
 class Scheduler : public ErrorBase, public SendableBase {
- public:
-  static Scheduler* GetInstance();
+public:
+  static Scheduler *GetInstance();
 
-  void AddCommand(Command* command);
-  void AddButton(ButtonScheduler* button);
-  void RegisterSubsystem(Subsystem* subsystem);
+  void AddCommand(Command *command);
+  void AddButton(ButtonScheduler *button);
+  void RegisterSubsystem(Subsystem *subsystem);
   void Run();
-  void Remove(Command* command);
+  void Remove(Command *command);
   void RemoveAll();
   void ResetAll();
   void SetEnabled(bool enabled);
 
-  void InitSendable(SendableBuilder& builder) override;
+  void InitSendable(SendableBuilder &builder) override;
 
- private:
+private:
   Scheduler();
   ~Scheduler() override = default;
 
-  void ProcessCommandAddition(Command* command);
+  void ProcessCommandAddition(Command *command);
 
   Command::SubsystemSet m_subsystems;
   wpi::mutex m_buttonsMutex;
-  typedef std::vector<ButtonScheduler*> ButtonVector;
+  typedef std::vector<ButtonScheduler *> ButtonVector;
   ButtonVector m_buttons;
-  typedef std::vector<Command*> CommandVector;
+  typedef std::vector<Command *> CommandVector;
   wpi::mutex m_additionsMutex;
   CommandVector m_additions;
-  typedef std::set<Command*> CommandSet;
+  typedef std::set<Command *> CommandSet;
   CommandSet m_commands;
   bool m_adding = false;
   bool m_enabled = true;
@@ -65,4 +65,4 @@ class Scheduler : public ErrorBase, public SendableBase {
   bool m_runningCommandsChanged = false;
 };
 
-}  // namespace frc
+} // namespace frc

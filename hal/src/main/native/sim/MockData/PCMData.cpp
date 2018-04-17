@@ -17,10 +17,10 @@ void InitializePCMData() {
   static PCMData spd[kNumPCMModules];
   ::hal::SimPCMData = spd;
 }
-}  // namespace init
-}  // namespace hal
+} // namespace init
+} // namespace hal
 
-PCMData* hal::SimPCMData;
+PCMData *hal::SimPCMData;
 void PCMData::ResetData() {
   for (int i = 0; i < kNumSolenoidChannels; i++) {
     m_solenoidInitialized[i] = false;
@@ -41,10 +41,11 @@ void PCMData::ResetData() {
 }
 
 int32_t PCMData::RegisterSolenoidInitializedCallback(
-    int32_t channel, HAL_NotifyCallback callback, void* param,
+    int32_t channel, HAL_NotifyCallback callback, void *param,
     HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -87,10 +88,11 @@ void PCMData::SetSolenoidInitialized(int32_t channel,
 
 int32_t PCMData::RegisterSolenoidOutputCallback(int32_t channel,
                                                 HAL_NotifyCallback callback,
-                                                void* param,
+                                                void *param,
                                                 HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -127,9 +129,10 @@ void PCMData::SetSolenoidOutput(int32_t channel, HAL_Bool solenoidOutput) {
 }
 
 int32_t PCMData::RegisterCompressorInitializedCallback(
-    HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify) {
+    HAL_NotifyCallback callback, void *param, HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -165,10 +168,11 @@ void PCMData::SetCompressorInitialized(HAL_Bool compressorInitialized) {
 }
 
 int32_t PCMData::RegisterCompressorOnCallback(HAL_NotifyCallback callback,
-                                              void* param,
+                                              void *param,
                                               HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -201,10 +205,11 @@ void PCMData::SetCompressorOn(HAL_Bool compressorOn) {
 }
 
 int32_t PCMData::RegisterClosedLoopEnabledCallback(HAL_NotifyCallback callback,
-                                                   void* param,
+                                                   void *param,
                                                    HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -239,10 +244,11 @@ void PCMData::SetClosedLoopEnabled(HAL_Bool closedLoopEnabled) {
 }
 
 int32_t PCMData::RegisterPressureSwitchCallback(HAL_NotifyCallback callback,
-                                                void* param,
+                                                void *param,
                                                 HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -275,10 +281,11 @@ void PCMData::SetPressureSwitch(HAL_Bool pressureSwitch) {
 }
 
 int32_t PCMData::RegisterCompressorCurrentCallback(HAL_NotifyCallback callback,
-                                                   void* param,
+                                                   void *param,
                                                    HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -316,7 +323,7 @@ extern "C" {
 void HALSIM_ResetPCMData(int32_t index) { SimPCMData[index].ResetData(); }
 
 int32_t HALSIM_RegisterPCMSolenoidInitializedCallback(
-    int32_t index, int32_t channel, HAL_NotifyCallback callback, void* param,
+    int32_t index, int32_t channel, HAL_NotifyCallback callback, void *param,
     HAL_Bool initialNotify) {
   return SimPCMData[index].RegisterSolenoidInitializedCallback(
       channel, callback, param, initialNotify);
@@ -338,7 +345,7 @@ void HALSIM_SetPCMSolenoidInitialized(int32_t index, int32_t channel,
 
 int32_t HALSIM_RegisterPCMSolenoidOutputCallback(int32_t index, int32_t channel,
                                                  HAL_NotifyCallback callback,
-                                                 void* param,
+                                                 void *param,
                                                  HAL_Bool initialNotify) {
   return SimPCMData[index].RegisterSolenoidOutputCallback(channel, callback,
                                                           param, initialNotify);
@@ -359,7 +366,7 @@ void HALSIM_SetPCMSolenoidOutput(int32_t index, int32_t channel,
 }
 
 int32_t HALSIM_RegisterPCMCompressorInitializedCallback(
-    int32_t index, HAL_NotifyCallback callback, void* param,
+    int32_t index, HAL_NotifyCallback callback, void *param,
     HAL_Bool initialNotify) {
   return SimPCMData[index].RegisterCompressorInitializedCallback(
       callback, param, initialNotify);
@@ -380,7 +387,7 @@ void HALSIM_SetPCMCompressorInitialized(int32_t index,
 
 int32_t HALSIM_RegisterPCMCompressorOnCallback(int32_t index,
                                                HAL_NotifyCallback callback,
-                                               void* param,
+                                               void *param,
                                                HAL_Bool initialNotify) {
   return SimPCMData[index].RegisterCompressorOnCallback(callback, param,
                                                         initialNotify);
@@ -400,7 +407,7 @@ void HALSIM_SetPCMCompressorOn(int32_t index, HAL_Bool compressorOn) {
 
 int32_t HALSIM_RegisterPCMClosedLoopEnabledCallback(int32_t index,
                                                     HAL_NotifyCallback callback,
-                                                    void* param,
+                                                    void *param,
                                                     HAL_Bool initialNotify) {
   return SimPCMData[index].RegisterClosedLoopEnabledCallback(callback, param,
                                                              initialNotify);
@@ -420,7 +427,7 @@ void HALSIM_SetPCMClosedLoopEnabled(int32_t index, HAL_Bool closedLoopEnabled) {
 
 int32_t HALSIM_RegisterPCMPressureSwitchCallback(int32_t index,
                                                  HAL_NotifyCallback callback,
-                                                 void* param,
+                                                 void *param,
                                                  HAL_Bool initialNotify) {
   return SimPCMData[index].RegisterPressureSwitchCallback(callback, param,
                                                           initialNotify);
@@ -440,7 +447,7 @@ void HALSIM_SetPCMPressureSwitch(int32_t index, HAL_Bool pressureSwitch) {
 
 int32_t HALSIM_RegisterPCMCompressorCurrentCallback(int32_t index,
                                                     HAL_NotifyCallback callback,
-                                                    void* param,
+                                                    void *param,
                                                     HAL_Bool initialNotify) {
   return SimPCMData[index].RegisterCompressorCurrentCallback(callback, param,
                                                              initialNotify);
@@ -460,7 +467,7 @@ void HALSIM_SetPCMCompressorCurrent(int32_t index, double compressorCurrent) {
 
 void HALSIM_RegisterPCMAllNonSolenoidCallbacks(int32_t index,
                                                HAL_NotifyCallback callback,
-                                               void* param,
+                                               void *param,
                                                HAL_Bool initialNotify) {
   SimPCMData[index].RegisterCompressorInitializedCallback(callback, param,
                                                           initialNotify);
@@ -476,11 +483,11 @@ void HALSIM_RegisterPCMAllNonSolenoidCallbacks(int32_t index,
 
 void HALSIM_RegisterPCMAllSolenoidCallbacks(int32_t index, int32_t channel,
                                             HAL_NotifyCallback callback,
-                                            void* param,
+                                            void *param,
                                             HAL_Bool initialNotify) {
   SimPCMData[index].RegisterSolenoidInitializedCallback(channel, callback,
                                                         param, initialNotify);
   SimPCMData[index].RegisterSolenoidOutputCallback(channel, callback, param,
                                                    initialNotify);
 }
-}  // extern "C"
+} // extern "C"

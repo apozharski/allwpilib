@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "Timer.h"  // NOLINT(build/include_order)
+#include "Timer.h" // NOLINT(build/include_order)
 
 #include "TestBench.h"
 #include "gtest/gtest.h"
@@ -15,8 +15,8 @@ using namespace frc;
 static const double kWaitTime = 0.5;
 
 class TimerTest : public testing::Test {
- protected:
-  Timer* m_timer;
+protected:
+  Timer *m_timer;
 
   void SetUp() override { m_timer = new Timer; }
 

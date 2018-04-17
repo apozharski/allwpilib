@@ -76,17 +76,17 @@ struct DigitalPort {
 };
 
 extern DigitalHandleResource<HAL_DigitalHandle, DigitalPort,
-                             kNumDigitalChannels + kNumPWMHeaders>*
-    digitalChannelHandles;
+                             kNumDigitalChannels + kNumPWMHeaders>
+    *digitalChannelHandles;
 
 extern wpi::mutex digitalDIOMutex;
 
-void initializeDigital(int32_t* status);
+void initializeDigital(int32_t *status);
 bool remapDigitalSource(HAL_Handle digitalSourceHandle,
                         HAL_AnalogTriggerType analogTriggerType,
-                        uint8_t& channel, uint8_t& module, bool& analogTrigger);
+                        uint8_t &channel, uint8_t &module, bool &analogTrigger);
 int32_t remapSPIChannel(int32_t channel);
 int32_t remapMXPPWMChannel(int32_t channel);
 int32_t remapMXPChannel(int32_t channel);
 
-}  // namespace hal
+} // namespace hal

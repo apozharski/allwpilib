@@ -16,15 +16,15 @@
 namespace frc {
 
 class PrintCommand : public InstantCommand {
- public:
-  explicit PrintCommand(const llvm::Twine& message);
+public:
+  explicit PrintCommand(const llvm::Twine &message);
   virtual ~PrintCommand() = default;
 
- protected:
+protected:
   virtual void Initialize();
 
- private:
+private:
   std::string m_message;
 };
 
-}  // namespace frc
+} // namespace frc

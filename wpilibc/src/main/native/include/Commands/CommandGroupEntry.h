@@ -12,7 +12,7 @@ namespace frc {
 class Command;
 
 class CommandGroupEntry {
- public:
+public:
   typedef enum {
     kSequence_InSequence,
     kSequence_BranchPeer,
@@ -20,12 +20,12 @@ class CommandGroupEntry {
   } Sequence;
 
   CommandGroupEntry() = default;
-  CommandGroupEntry(Command* command, Sequence state, double timeout = -1.0);
+  CommandGroupEntry(Command *command, Sequence state, double timeout = -1.0);
   bool IsTimedOut() const;
 
   double m_timeout = -1.0;
-  Command* m_command = nullptr;
+  Command *m_command = nullptr;
   Sequence m_state = kSequence_InSequence;
 };
 
-}  // namespace frc
+} // namespace frc

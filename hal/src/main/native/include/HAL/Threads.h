@@ -9,20 +9,20 @@
 
 #ifdef _WIN32
 #include <windows.h>
-#define NativeThreadHandle const HANDLE*
+#define NativeThreadHandle const HANDLE *
 #else
 #include <pthread.h>
-#define NativeThreadHandle const pthread_t*
+#define NativeThreadHandle const pthread_t *
 #endif
 
 #include "HAL/Types.h"
 
 extern "C" {
-int32_t HAL_GetThreadPriority(NativeThreadHandle handle, HAL_Bool* isRealTime,
-                              int32_t* status);
-int32_t HAL_GetCurrentThreadPriority(HAL_Bool* isRealTime, int32_t* status);
+int32_t HAL_GetThreadPriority(NativeThreadHandle handle, HAL_Bool *isRealTime,
+                              int32_t *status);
+int32_t HAL_GetCurrentThreadPriority(HAL_Bool *isRealTime, int32_t *status);
 HAL_Bool HAL_SetThreadPriority(NativeThreadHandle handle, HAL_Bool realTime,
-                               int32_t priority, int32_t* status);
+                               int32_t priority, int32_t *status);
 HAL_Bool HAL_SetCurrentThreadPriority(HAL_Bool realTime, int32_t priority,
-                                      int32_t* status);
-}  // extern "C"
+                                      int32_t *status);
+} // extern "C"

@@ -34,9 +34,9 @@ Solenoid::Solenoid(int channel)
 Solenoid::Solenoid(int moduleNumber, int channel)
     : SolenoidBase(moduleNumber), m_channel(channel) {
   if (!SensorBase::CheckSolenoidModule(m_moduleNumber)) {
-    wpi_setWPIErrorWithContext(
-        ModuleIndexOutOfRange,
-        "Solenoid Module " + llvm::Twine(m_moduleNumber));
+    wpi_setWPIErrorWithContext(ModuleIndexOutOfRange,
+                               "Solenoid Module " +
+                                   llvm::Twine(m_moduleNumber));
     return;
   }
   if (!SensorBase::CheckSolenoidChannel(m_channel)) {
@@ -71,7 +71,8 @@ Solenoid::~Solenoid() { HAL_FreeSolenoidPort(m_solenoidHandle); }
  * @param on Turn the solenoid output off or on.
  */
 void Solenoid::Set(bool on) {
-  if (StatusIsFatal()) return;
+  if (StatusIsFatal())
+    return;
   int32_t status = 0;
   HAL_SetSolenoid(m_solenoidHandle, on, &status);
   wpi_setErrorWithContext(status, HAL_GetErrorMessage(status));
@@ -83,7 +84,8 @@ void Solenoid::Set(bool on) {
  * @return The current value of the solenoid.
  */
 bool Solenoid::Get() const {
-  if (StatusIsFatal()) return false;
+  if (StatusIsFatal())
+    return false;
   int32_t status = 0;
   bool value = HAL_GetSolenoid(m_solenoidHandle, &status);
   wpi_setErrorWithContext(status, HAL_GetErrorMessage(status));
@@ -116,7 +118,8 @@ bool Solenoid::IsBlackListed() const {
  */
 void Solenoid::SetPulseDuration(double durationSeconds) {
   int32_t durationMS = durationSeconds * 1000;
-  if (StatusIsFatal()) return;
+  if (StatusIsFatal())
+    return;
   int32_t status = 0;
   HAL_SetOneShotDuration(m_solenoidHandle, durationMS, &status);
   wpi_setErrorWithContext(status, HAL_GetErrorMessage(status));
@@ -129,13 +132,14 @@ void Solenoid::SetPulseDuration(double durationSeconds) {
  * @see setPulseDuration()
  */
 void Solenoid::StartPulse() {
-  if (StatusIsFatal()) return;
+  if (StatusIsFatal())
+    return;
   int32_t status = 0;
   HAL_FireOneShot(m_solenoidHandle, &status);
   wpi_setErrorWithContext(status, HAL_GetErrorMessage(status));
 }
 
-void Solenoid::InitSendable(SendableBuilder& builder) {
+void Solenoid::InitSendable(SendableBuilder &builder) {
   builder.SetSmartDashboardType("Solenoid");
   builder.SetSafeState([=]() { Set(false); });
   builder.AddBooleanProperty("Value", [=]() { return Get(); },

@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "Filters/LinearDigitalFilter.h"  // NOLINT(build/include_order)
+#include "Filters/LinearDigitalFilter.h" // NOLINT(build/include_order)
 
 #include <cmath>
 #include <functional>
@@ -21,14 +21,14 @@ using namespace frc;
 
 enum FilterNoiseTestType { TEST_SINGLE_POLE_IIR, TEST_MOVAVG };
 
-std::ostream& operator<<(std::ostream& os, const FilterNoiseTestType& type) {
+std::ostream &operator<<(std::ostream &os, const FilterNoiseTestType &type) {
   switch (type) {
-    case TEST_SINGLE_POLE_IIR:
-      os << "LinearDigitalFilter SinglePoleIIR";
-      break;
-    case TEST_MOVAVG:
-      os << "LinearDigitalFilter MovingAverage";
-      break;
+  case TEST_SINGLE_POLE_IIR:
+    os << "LinearDigitalFilter SinglePoleIIR";
+    break;
+  case TEST_MOVAVG:
+    os << "LinearDigitalFilter MovingAverage";
+    break;
   }
 
   return os;
@@ -41,7 +41,7 @@ constexpr double kStdDev = 10.0;
  * the standard deviation provided in the constructor.
  */
 class NoiseGenerator : public PIDSource {
- public:
+public:
   NoiseGenerator(double (*dataFunc)(double), double stdDev)
       : m_distr(0.0, stdDev) {
     m_dataFunc = dataFunc;
@@ -59,7 +59,7 @@ class NoiseGenerator : public PIDSource {
 
   void Reset() { m_count = -TestBench::kFilterStep; }
 
- private:
+private:
   std::function<double(double)> m_dataFunc;
   double m_noise = 0.0;
 
@@ -75,7 +75,7 @@ class NoiseGenerator : public PIDSource {
  * A fixture that includes a noise generator wrapped in a filter
  */
 class FilterNoiseTest : public testing::TestWithParam<FilterNoiseTestType> {
- protected:
+protected:
   std::unique_ptr<PIDSource> m_filter;
   std::shared_ptr<NoiseGenerator> m_noise;
 
@@ -85,20 +85,19 @@ class FilterNoiseTest : public testing::TestWithParam<FilterNoiseTestType> {
     m_noise = std::make_shared<NoiseGenerator>(GetData, kStdDev);
 
     switch (GetParam()) {
-      case TEST_SINGLE_POLE_IIR: {
-        m_filter = std::make_unique<LinearDigitalFilter>(
-            LinearDigitalFilter::SinglePoleIIR(
-                m_noise, TestBench::kSinglePoleIIRTimeConstant,
-                TestBench::kFilterStep));
-        break;
-      }
+    case TEST_SINGLE_POLE_IIR: {
+      m_filter = std::make_unique<LinearDigitalFilter>(
+          LinearDigitalFilter::SinglePoleIIR(
+              m_noise, TestBench::kSinglePoleIIRTimeConstant,
+              TestBench::kFilterStep));
+      break;
+    }
 
-      case TEST_MOVAVG: {
-        m_filter = std::make_unique<LinearDigitalFilter>(
-            LinearDigitalFilter::MovingAverage(m_noise,
-                                               TestBench::kMovAvgTaps));
-        break;
-      }
+    case TEST_MOVAVG: {
+      m_filter = std::make_unique<LinearDigitalFilter>(
+          LinearDigitalFilter::MovingAverage(m_noise, TestBench::kMovAvgTaps));
+      break;
+    }
     }
   }
 };

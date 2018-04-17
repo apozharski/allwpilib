@@ -24,7 +24,7 @@ Preferences::Preferences()
     : m_table(nt::NetworkTableInstance::GetDefault().GetTable(kTableName)) {
   m_table->GetEntry(".type").SetString("RobotPreferences");
   m_listener = m_table->AddEntryListener(
-      [=](nt::NetworkTable* table, llvm::StringRef name,
+      [=](nt::NetworkTable *table, llvm::StringRef name,
           nt::NetworkTableEntry entry, std::shared_ptr<nt::Value> value,
           int flags) { entry.SetPersistent(); },
       NT_NOTIFY_NEW | NT_NOTIFY_IMMEDIATE);
@@ -36,7 +36,7 @@ Preferences::Preferences()
  *
  * @return pointer to the {@link Preferences}
  */
-Preferences* Preferences::GetInstance() {
+Preferences *Preferences::GetInstance() {
   static Preferences instance;
   return &instance;
 }

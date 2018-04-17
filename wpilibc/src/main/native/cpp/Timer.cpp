@@ -54,7 +54,7 @@ double GetTime() {
       .count();
 }
 
-}  // namespace frc
+} // namespace frc
 
 using namespace frc;
 

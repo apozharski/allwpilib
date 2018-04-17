@@ -13,7 +13,7 @@ using namespace frc;
 
 std::shared_ptr<RobotStateInterface> RobotState::impl;
 
-void RobotState::SetImplementation(RobotStateInterface& i) {
+void RobotState::SetImplementation(RobotStateInterface &i) {
   impl = std::shared_ptr<RobotStateInterface>(
       &i, NullDeleter<RobotStateInterface>());
 }

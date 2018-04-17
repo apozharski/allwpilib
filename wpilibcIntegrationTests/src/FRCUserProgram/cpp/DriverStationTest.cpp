@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "DriverStation.h"  // NOLINT(build/include_order)
+#include "DriverStation.h" // NOLINT(build/include_order)
 
 #include "RobotController.h"
 #include "TestBench.h"
@@ -14,7 +14,7 @@
 using namespace frc;
 
 constexpr double TIMER_TOLERANCE = 0.2;
-constexpr int64_t TIMER_RUNTIME = 1000000;  // 1 second
+constexpr int64_t TIMER_RUNTIME = 1000000; // 1 second
 
 class DriverStationTest : public testing::Test {};
 

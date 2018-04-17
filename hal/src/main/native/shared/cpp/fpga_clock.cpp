@@ -28,4 +28,4 @@ fpga_clock::time_point fpga_clock::now() noexcept {
   }
   return time_point(std::chrono::microseconds(currentTime));
 }
-}  // namespace hal
+} // namespace hal

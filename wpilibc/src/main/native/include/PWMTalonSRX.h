@@ -16,8 +16,8 @@ namespace frc {
  * control.
  */
 class PWMTalonSRX : public PWMSpeedController {
- public:
+public:
   explicit PWMTalonSRX(int channel);
 };
 
-}  // namespace frc
+} // namespace frc

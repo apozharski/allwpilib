@@ -29,14 +29,14 @@ class DigitalSource;
  *
  */
 class SPI : public ErrorBase {
- public:
+public:
   enum Port { kOnboardCS0 = 0, kOnboardCS1, kOnboardCS2, kOnboardCS3, kMXP };
 
   explicit SPI(Port port);
   ~SPI() override;
 
-  SPI(const SPI&) = delete;
-  SPI& operator=(const SPI&) = delete;
+  SPI(const SPI &) = delete;
+  SPI &operator=(const SPI &) = delete;
 
   void SetClockRate(double hz);
 
@@ -52,18 +52,18 @@ class SPI : public ErrorBase {
   void SetChipSelectActiveHigh();
   void SetChipSelectActiveLow();
 
-  virtual int Write(uint8_t* data, int size);
-  virtual int Read(bool initiate, uint8_t* dataReceived, int size);
-  virtual int Transaction(uint8_t* dataToSend, uint8_t* dataReceived, int size);
+  virtual int Write(uint8_t *data, int size);
+  virtual int Read(bool initiate, uint8_t *dataReceived, int size);
+  virtual int Transaction(uint8_t *dataToSend, uint8_t *dataReceived, int size);
 
   void InitAuto(int bufferSize);
   void FreeAuto();
   void SetAutoTransmitData(llvm::ArrayRef<uint8_t> dataToSend, int zeroSize);
   void StartAutoRate(double period);
-  void StartAutoTrigger(DigitalSource& source, bool rising, bool falling);
+  void StartAutoTrigger(DigitalSource &source, bool rising, bool falling);
   void StopAuto();
   void ForceAutoRead();
-  int ReadAutoReceivedData(uint8_t* buffer, int numToRead, double timeout);
+  int ReadAutoReceivedData(uint8_t *buffer, int numToRead, double timeout);
   int GetAutoDroppedCount();
 
   void InitAccumulator(double period, int cmd, int xferSize, int validMask,
@@ -77,19 +77,19 @@ class SPI : public ErrorBase {
   int64_t GetAccumulatorValue() const;
   int64_t GetAccumulatorCount() const;
   double GetAccumulatorAverage() const;
-  void GetAccumulatorOutput(int64_t& value, int64_t& count) const;
+  void GetAccumulatorOutput(int64_t &value, int64_t &count) const;
 
- protected:
+protected:
   HAL_SPIPort m_port;
-  bool m_msbFirst = false;          // Default little-endian
-  bool m_sampleOnTrailing = false;  // Default data updated on falling edge
-  bool m_clk_idle_high = false;     // Default clock active high
+  bool m_msbFirst = false;         // Default little-endian
+  bool m_sampleOnTrailing = false; // Default data updated on falling edge
+  bool m_clk_idle_high = false;    // Default clock active high
 
- private:
+private:
   void Init();
 
   class Accumulator;
   std::unique_ptr<Accumulator> m_accum;
 };
 
-}  // namespace frc
+} // namespace frc

@@ -19,11 +19,11 @@ namespace {
 struct AnalogOutput {
   uint8_t channel;
 };
-}  // namespace
+} // namespace
 
 static IndexedHandleResource<HAL_AnalogOutputHandle, AnalogOutput,
-                             kNumAnalogOutputs, HAL_HandleEnum::AnalogOutput>*
-    analogOutputHandles;
+                             kNumAnalogOutputs,
+                             HAL_HandleEnum::AnalogOutput> *analogOutputHandles;
 
 namespace hal {
 namespace init {
@@ -33,12 +33,12 @@ void InitializeAnalogOutput() {
       aoH;
   analogOutputHandles = &aoH;
 }
-}  // namespace init
-}  // namespace hal
+} // namespace init
+} // namespace hal
 
 extern "C" {
 HAL_AnalogOutputHandle HAL_InitializeAnalogOutputPort(HAL_PortHandle portHandle,
-                                                      int32_t* status) {
+                                                      int32_t *status) {
   int16_t channel = getPortHandleChannel(portHandle);
   if (channel == InvalidHandleIndex) {
     *status = PARAMETER_OUT_OF_RANGE;
@@ -49,10 +49,10 @@ HAL_AnalogOutputHandle HAL_InitializeAnalogOutputPort(HAL_PortHandle portHandle,
       analogOutputHandles->Allocate(channel, status);
 
   if (*status != 0)
-    return HAL_kInvalidHandle;  // failed to allocate. Pass error back.
+    return HAL_kInvalidHandle; // failed to allocate. Pass error back.
 
   auto port = analogOutputHandles->Get(handle);
-  if (port == nullptr) {  // would only error on thread issue
+  if (port == nullptr) { // would only error on thread issue
     *status = HAL_HANDLE_ERROR;
     return HAL_kInvalidHandle;
   }
@@ -67,7 +67,8 @@ HAL_AnalogOutputHandle HAL_InitializeAnalogOutputPort(HAL_PortHandle portHandle,
 void HAL_FreeAnalogOutputPort(HAL_AnalogOutputHandle analogOutputHandle) {
   // no status, so no need to check for a proper free.
   auto port = analogOutputHandles->Get(analogOutputHandle);
-  if (port == nullptr) return;
+  if (port == nullptr)
+    return;
   analogOutputHandles->Free(analogOutputHandle);
   SimAnalogOutData[port->channel].SetInitialized(false);
 }
@@ -77,7 +78,7 @@ HAL_Bool HAL_CheckAnalogOutputChannel(int32_t channel) {
 }
 
 void HAL_SetAnalogOutput(HAL_AnalogOutputHandle analogOutputHandle,
-                         double voltage, int32_t* status) {
+                         double voltage, int32_t *status) {
   auto port = analogOutputHandles->Get(analogOutputHandle);
   if (port == nullptr) {
     *status = HAL_HANDLE_ERROR;
@@ -88,7 +89,7 @@ void HAL_SetAnalogOutput(HAL_AnalogOutputHandle analogOutputHandle,
 }
 
 double HAL_GetAnalogOutput(HAL_AnalogOutputHandle analogOutputHandle,
-                           int32_t* status) {
+                           int32_t *status) {
   auto port = analogOutputHandles->Get(analogOutputHandle);
   if (port == nullptr) {
     *status = HAL_HANDLE_ERROR;
@@ -97,4 +98,4 @@ double HAL_GetAnalogOutput(HAL_AnalogOutputHandle analogOutputHandle,
 
   return SimAnalogOutData[port->channel].GetVoltage();
 }
-}  // extern "C"
+} // extern "C"

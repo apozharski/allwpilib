@@ -9,6 +9,7 @@ package edu.wpi.first.wpilibj.filters;
 
 import edu.wpi.first.wpilibj.CircularBuffer;
 import edu.wpi.first.wpilibj.PIDSource;
+import edu.wpi.first.wpilibj.PIDSourceType;
 
 /**
  * This class implements a linear, digital filter. All types of FIR and IIR filters are supported.
@@ -161,11 +162,11 @@ public class LinearDigitalFilter extends Filter {
    * @return The filtered value at this step
    */
   @Override
-  public double pidGet() {
+  public double pidGet(PIDSourceType pidSource) {
     double retVal = 0.0;
 
     // Rotate the inputs
-    m_inputs.addFirst(pidGetSource());
+    m_inputs.addFirst(pidGetSource(pidSource));
 
     // Calculate the new value
     for (int i = 0; i < m_inputGains.length; i++) {

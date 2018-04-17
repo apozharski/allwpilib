@@ -10,10 +10,10 @@
 #include "HALSimPrint.h"
 
 class PrintPWM {
- public:
+public:
   explicit PrintPWM(int port);
   void Publish(double value);
 
- private:
+private:
   int m_port;
 };

@@ -23,4 +23,4 @@ __declspec(dllexport)
   std::cout << "DriverStationNT Initialized!" << std::endl;
   return 0;
 }
-}  // extern "C"
+} // extern "C"

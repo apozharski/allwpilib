@@ -23,8 +23,8 @@ using namespace frc;
  * To pass multiple motors per side, use a SpeedControllerGroup. If a motor
  * needs to be inverted, do so before passing it in.
  */
-DifferentialDrive::DifferentialDrive(SpeedController& leftMotor,
-                                     SpeedController& rightMotor)
+DifferentialDrive::DifferentialDrive(SpeedController &leftMotor,
+                                     SpeedController &rightMotor)
     : m_leftMotor(leftMotor), m_rightMotor(rightMotor) {
   AddChild(&m_leftMotor);
   AddChild(&m_rightMotor);
@@ -262,11 +262,11 @@ void DifferentialDrive::StopMotor() {
   m_safetyHelper.Feed();
 }
 
-void DifferentialDrive::GetDescription(llvm::raw_ostream& desc) const {
+void DifferentialDrive::GetDescription(llvm::raw_ostream &desc) const {
   desc << "DifferentialDrive";
 }
 
-void DifferentialDrive::InitSendable(SendableBuilder& builder) {
+void DifferentialDrive::InitSendable(SendableBuilder &builder) {
   builder.SetSmartDashboardType("DifferentialDrive");
   builder.AddDoubleProperty("Left Motor Speed",
                             [=]() { return m_leftMotor.Get(); },

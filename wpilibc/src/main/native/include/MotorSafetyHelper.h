@@ -18,8 +18,8 @@ namespace frc {
 class MotorSafety;
 
 class MotorSafetyHelper : public ErrorBase {
- public:
-  explicit MotorSafetyHelper(MotorSafety* safeObject);
+public:
+  explicit MotorSafetyHelper(MotorSafety *safeObject);
   ~MotorSafetyHelper();
   void Feed();
   void SetExpiration(double expirationTime);
@@ -30,7 +30,7 @@ class MotorSafetyHelper : public ErrorBase {
   bool IsSafetyEnabled() const;
   static void CheckMotors();
 
- private:
+private:
   // The expiration time for this object
   double m_expiration;
 
@@ -44,13 +44,13 @@ class MotorSafetyHelper : public ErrorBase {
   mutable wpi::mutex m_thisMutex;
 
   // The object that is using the helper
-  MotorSafety* m_safeObject;
+  MotorSafety *m_safeObject;
 
   // List of all existing MotorSafetyHelper objects.
-  static std::set<MotorSafetyHelper*> m_helperList;
+  static std::set<MotorSafetyHelper *> m_helperList;
 
   // Protect accesses to the list of helpers
   static wpi::mutex m_listMutex;
 };
 
-}  // namespace frc
+} // namespace frc

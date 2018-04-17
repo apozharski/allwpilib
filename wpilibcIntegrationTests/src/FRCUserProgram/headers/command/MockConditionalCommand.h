@@ -13,8 +13,8 @@
 namespace frc {
 
 class MockConditionalCommand : public ConditionalCommand {
- public:
-  MockConditionalCommand(MockCommand* onTrue, MockCommand* onFalse);
+public:
+  MockConditionalCommand(MockCommand *onTrue, MockCommand *onFalse);
   void SetCondition(bool condition);
   int32_t GetInitializeCount() { return m_initializeCount; }
   bool HasInitialized();
@@ -28,7 +28,7 @@ class MockConditionalCommand : public ConditionalCommand {
   bool HasInterrupted();
   void ResetCounters();
 
- protected:
+protected:
   bool Condition() override;
   void Initialize() override;
   void Execute() override;
@@ -36,7 +36,7 @@ class MockConditionalCommand : public ConditionalCommand {
   void End() override;
   void Interrupted() override;
 
- private:
+private:
   bool m_condition = false;
   int32_t m_initializeCount;
   int32_t m_executeCount;
@@ -45,4 +45,4 @@ class MockConditionalCommand : public ConditionalCommand {
   int32_t m_interruptedCount;
 };
 
-}  // namespace frc
+} // namespace frc

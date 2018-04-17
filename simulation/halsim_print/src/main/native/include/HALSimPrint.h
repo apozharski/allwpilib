@@ -12,6 +12,6 @@
 class PrintPWM;
 
 class HALSimPrint {
- public:
+public:
   std::vector<PrintPWM> m_pwms;
 };

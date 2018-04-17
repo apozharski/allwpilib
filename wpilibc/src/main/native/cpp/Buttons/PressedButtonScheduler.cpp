@@ -12,8 +12,8 @@
 
 using namespace frc;
 
-PressedButtonScheduler::PressedButtonScheduler(bool last, Trigger* button,
-                                               Command* orders)
+PressedButtonScheduler::PressedButtonScheduler(bool last, Trigger *button,
+                                               Command *orders)
     : ButtonScheduler(last, button, orders) {}
 
 void PressedButtonScheduler::Execute() {

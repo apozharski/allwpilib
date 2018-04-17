@@ -18,11 +18,11 @@ namespace frc {
  * AnalogGyro.
  */
 class GyroBase : public Gyro, public SensorBase, public PIDSource {
- public:
+public:
   // PIDSource interface
   double PIDGet() override;
 
-  void InitSendable(SendableBuilder& builder) override;
+  void InitSendable(SendableBuilder &builder) override;
 };
 
-}  // namespace frc
+} // namespace frc

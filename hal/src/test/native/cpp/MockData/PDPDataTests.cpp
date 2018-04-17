@@ -5,8 +5,8 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "HAL/HAL.h"
 #include "HAL/PDP.h"
+#include "HAL/HAL.h"
 #include "HAL/handles/HandlesInternal.h"
 #include "MockData/PDPData.h"
 #include "gtest/gtest.h"
@@ -16,8 +16,8 @@ namespace hal {
 std::string gTestPdpCallbackName;
 HAL_Value gTestPdpCallbackValue;
 
-void TestPdpInitializationCallback(const char* name, void* param,
-                                   const struct HAL_Value* value) {
+void TestPdpInitializationCallback(const char *name, void *param,
+                                   const struct HAL_Value *value) {
   gTestPdpCallbackName = name;
   gTestPdpCallbackValue = *value;
 }
@@ -40,4 +40,4 @@ TEST(PdpSimTests, TestPdpInitialization) {
   EXPECT_STREQ("Initialized", gTestPdpCallbackName.c_str());
 }
 
-}  // namespace hal
+} // namespace hal

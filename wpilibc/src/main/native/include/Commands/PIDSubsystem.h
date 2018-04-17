@@ -28,10 +28,10 @@ namespace frc {
  * control to the programmer.
  */
 class PIDSubsystem : public Subsystem, public PIDOutput, public PIDSource {
- public:
-  PIDSubsystem(const llvm::Twine& name, double p, double i, double d);
-  PIDSubsystem(const llvm::Twine& name, double p, double i, double d, double f);
-  PIDSubsystem(const llvm::Twine& name, double p, double i, double d, double f,
+public:
+  PIDSubsystem(const llvm::Twine &name, double p, double i, double d);
+  PIDSubsystem(const llvm::Twine &name, double p, double i, double d, double f);
+  PIDSubsystem(const llvm::Twine &name, double p, double i, double d, double f,
                double period);
   PIDSubsystem(double p, double i, double d);
   PIDSubsystem(double p, double i, double d, double f);
@@ -58,15 +58,15 @@ class PIDSubsystem : public Subsystem, public PIDOutput, public PIDSource {
   virtual void SetPercentTolerance(double percent);
   virtual bool OnTarget() const;
 
- protected:
+protected:
   std::shared_ptr<PIDController> GetPIDController();
 
   virtual double ReturnPIDInput() = 0;
   virtual void UsePIDOutput(double output) = 0;
 
- private:
+private:
   // The internal PIDController
   std::shared_ptr<PIDController> m_controller;
 };
 
-}  // namespace frc
+} // namespace frc

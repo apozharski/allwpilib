@@ -16,24 +16,23 @@ namespace frc {
  * This is a simple circular buffer so we don't need to "bucket brigade" copy
  * old values.
  */
-template <class T>
-class circular_buffer {
- public:
+template <class T> class circular_buffer {
+public:
   explicit circular_buffer(size_t size);
 
   typedef T value_type;
-  typedef value_type& reference;
-  typedef const value_type& const_reference;
-  typedef value_type* pointer;
+  typedef value_type &reference;
+  typedef const value_type &const_reference;
+  typedef value_type *pointer;
   typedef size_t size_type;
   typedef std::forward_iterator_tag iterator_category;
   typedef std::ptrdiff_t difference_type;
 
   size_type size() const;
-  T& front();
-  const T& front() const;
-  T& back();
-  const T& back() const;
+  T &front();
+  const T &front() const;
+  T &back();
+  const T &back() const;
   void push_front(T value);
   void push_back(T value);
   T pop_front();
@@ -41,10 +40,10 @@ class circular_buffer {
   void resize(size_t size);
   void reset();
 
-  T& operator[](size_t index);
-  const T& operator[](size_t index) const;
+  T &operator[](size_t index);
+  const T &operator[](size_t index) const;
 
- private:
+private:
   std::vector<T> m_data;
 
   // Index of element at front of buffer
@@ -57,6 +56,6 @@ class circular_buffer {
   size_t ModuloDec(size_t index);
 };
 
-}  // namespace frc
+} // namespace frc
 
 #include "circular_buffer.inc"

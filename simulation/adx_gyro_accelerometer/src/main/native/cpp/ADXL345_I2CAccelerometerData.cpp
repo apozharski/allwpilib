@@ -15,16 +15,16 @@ using namespace hal;
 
 const double ADXL345_I2CData::LSB = 1 / 0.00390625;
 
-static void ADXL345I2C_ReadBufferCallback(const char* name, void* param,
-                                          uint8_t* buffer, uint32_t count) {
-  ADXL345_I2CData* sim = static_cast<ADXL345_I2CData*>(param);
+static void ADXL345I2C_ReadBufferCallback(const char *name, void *param,
+                                          uint8_t *buffer, uint32_t count) {
+  ADXL345_I2CData *sim = static_cast<ADXL345_I2CData *>(param);
   sim->HandleRead(buffer, count);
 }
 
-static void ADXL345I2C_WriteBufferCallback(const char* name, void* param,
-                                           const uint8_t* buffer,
+static void ADXL345I2C_WriteBufferCallback(const char *name, void *param,
+                                           const uint8_t *buffer,
                                            uint32_t count) {
-  ADXL345_I2CData* sim = static_cast<ADXL345_I2CData*>(param);
+  ADXL345_I2CData *sim = static_cast<ADXL345_I2CData *>(param);
   sim->HandleWrite(buffer, count);
 }
 
@@ -40,12 +40,12 @@ ADXL345_I2CData::~ADXL345_I2CData() {
   HALSIM_CancelI2CWriteCallback(m_port, m_writeCallbackId);
 }
 
-void ADXL345_I2CData::ADXL345_I2CData::HandleWrite(const uint8_t* buffer,
+void ADXL345_I2CData::ADXL345_I2CData::HandleWrite(const uint8_t *buffer,
                                                    uint32_t count) {
   m_lastWriteAddress = buffer[0];
 }
 
-void ADXL345_I2CData::HandleRead(uint8_t* buffer, uint32_t count) {
+void ADXL345_I2CData::HandleRead(uint8_t *buffer, uint32_t count) {
   bool writeAll = count == 6;
   int byteIndex = 0;
 

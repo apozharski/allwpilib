@@ -18,10 +18,10 @@
 
 namespace hal {
 class PCMData {
- public:
+public:
   int32_t RegisterSolenoidInitializedCallback(int32_t channel,
                                               HAL_NotifyCallback callback,
-                                              void* param,
+                                              void *param,
                                               HAL_Bool initialNotify);
   void CancelSolenoidInitializedCallback(int32_t channel, int32_t uid);
   void InvokeSolenoidInitializedCallback(int32_t channel, HAL_Value value);
@@ -30,21 +30,21 @@ class PCMData {
 
   int32_t RegisterSolenoidOutputCallback(int32_t channel,
                                          HAL_NotifyCallback callback,
-                                         void* param, HAL_Bool initialNotify);
+                                         void *param, HAL_Bool initialNotify);
   void CancelSolenoidOutputCallback(int32_t channel, int32_t uid);
   void InvokeSolenoidOutputCallback(int32_t channel, HAL_Value value);
   HAL_Bool GetSolenoidOutput(int32_t channel);
   void SetSolenoidOutput(int32_t channel, HAL_Bool solenoidOutput);
 
   int32_t RegisterCompressorInitializedCallback(HAL_NotifyCallback callback,
-                                                void* param,
+                                                void *param,
                                                 HAL_Bool initialNotify);
   void CancelCompressorInitializedCallback(int32_t uid);
   void InvokeCompressorInitializedCallback(HAL_Value value);
   HAL_Bool GetCompressorInitialized();
   void SetCompressorInitialized(HAL_Bool compressorInitialized);
 
-  int32_t RegisterCompressorOnCallback(HAL_NotifyCallback callback, void* param,
+  int32_t RegisterCompressorOnCallback(HAL_NotifyCallback callback, void *param,
                                        HAL_Bool initialNotify);
   void CancelCompressorOnCallback(int32_t uid);
   void InvokeCompressorOnCallback(HAL_Value value);
@@ -52,7 +52,7 @@ class PCMData {
   void SetCompressorOn(HAL_Bool compressorOn);
 
   int32_t RegisterClosedLoopEnabledCallback(HAL_NotifyCallback callback,
-                                            void* param,
+                                            void *param,
                                             HAL_Bool initialNotify);
   void CancelClosedLoopEnabledCallback(int32_t uid);
   void InvokeClosedLoopEnabledCallback(HAL_Value value);
@@ -60,14 +60,14 @@ class PCMData {
   void SetClosedLoopEnabled(HAL_Bool closedLoopEnabled);
 
   int32_t RegisterPressureSwitchCallback(HAL_NotifyCallback callback,
-                                         void* param, HAL_Bool initialNotify);
+                                         void *param, HAL_Bool initialNotify);
   void CancelPressureSwitchCallback(int32_t uid);
   void InvokePressureSwitchCallback(HAL_Value value);
   HAL_Bool GetPressureSwitch();
   void SetPressureSwitch(HAL_Bool pressureSwitch);
 
   int32_t RegisterCompressorCurrentCallback(HAL_NotifyCallback callback,
-                                            void* param,
+                                            void *param,
                                             HAL_Bool initialNotify);
   void CancelCompressorCurrentCallback(int32_t uid);
   void InvokeCompressorCurrentCallback(HAL_Value value);
@@ -76,7 +76,7 @@ class PCMData {
 
   virtual void ResetData();
 
- private:
+private:
   wpi::mutex m_registerMutex;
   std::atomic<HAL_Bool> m_solenoidInitialized[kNumSolenoidChannels];
   std::shared_ptr<NotifyListenerVector>
@@ -96,5 +96,5 @@ class PCMData {
   std::atomic<double> m_compressorCurrent{0.0};
   std::shared_ptr<NotifyListenerVector> m_compressorCurrentCallbacks = nullptr;
 };
-extern PCMData* SimPCMData;
-}  // namespace hal
+extern PCMData *SimPCMData;
+} // namespace hal

@@ -23,12 +23,14 @@ using namespace frc;
  * thread. The default is interrupt on rising edges only.
  */
 void InterruptableSensorBase::RequestInterrupts(
-    HAL_InterruptHandlerFunction handler, void* param) {
-  if (StatusIsFatal()) return;
+    HAL_InterruptHandlerFunction handler, void *param) {
+  if (StatusIsFatal())
+    return;
 
   wpi_assert(m_interrupt == HAL_kInvalidHandle);
   AllocateInterrupts(false);
-  if (StatusIsFatal()) return;  // if allocate failed, out of interrupts
+  if (StatusIsFatal())
+    return; // if allocate failed, out of interrupts
 
   int32_t status = 0;
   HAL_RequestInterrupts(
@@ -48,11 +50,13 @@ void InterruptableSensorBase::RequestInterrupts(
  * The default is interrupt on rising edges only.
  */
 void InterruptableSensorBase::RequestInterrupts() {
-  if (StatusIsFatal()) return;
+  if (StatusIsFatal())
+    return;
 
   wpi_assert(m_interrupt == HAL_kInvalidHandle);
   AllocateInterrupts(true);
-  if (StatusIsFatal()) return;  // if allocate failed, out of interrupts
+  if (StatusIsFatal())
+    return; // if allocate failed, out of interrupts
 
   int32_t status = 0;
   HAL_RequestInterrupts(
@@ -77,7 +81,8 @@ void InterruptableSensorBase::AllocateInterrupts(bool watcher) {
  * This deallocates all the chipobject structures and disables any interrupts.
  */
 void InterruptableSensorBase::CancelInterrupts() {
-  if (StatusIsFatal()) return;
+  if (StatusIsFatal())
+    return;
   wpi_assert(m_interrupt != HAL_kInvalidHandle);
   int32_t status = 0;
   HAL_CleanInterrupts(m_interrupt, &status);
@@ -97,9 +102,10 @@ void InterruptableSensorBase::CancelInterrupts() {
  *                       WaitForInterrupt was called.
  * @return What interrupts fired
  */
-InterruptableSensorBase::WaitResult InterruptableSensorBase::WaitForInterrupt(
-    double timeout, bool ignorePrevious) {
-  if (StatusIsFatal()) return InterruptableSensorBase::kTimeout;
+InterruptableSensorBase::WaitResult
+InterruptableSensorBase::WaitForInterrupt(double timeout, bool ignorePrevious) {
+  if (StatusIsFatal())
+    return InterruptableSensorBase::kTimeout;
   wpi_assert(m_interrupt != HAL_kInvalidHandle);
   int32_t status = 0;
   int result;
@@ -124,7 +130,8 @@ InterruptableSensorBase::WaitResult InterruptableSensorBase::WaitForInterrupt(
  * interrupts.
  */
 void InterruptableSensorBase::EnableInterrupts() {
-  if (StatusIsFatal()) return;
+  if (StatusIsFatal())
+    return;
   wpi_assert(m_interrupt != HAL_kInvalidHandle);
   int32_t status = 0;
   HAL_EnableInterrupts(m_interrupt, &status);
@@ -135,7 +142,8 @@ void InterruptableSensorBase::EnableInterrupts() {
  * Disable Interrupts without without deallocating structures.
  */
 void InterruptableSensorBase::DisableInterrupts() {
-  if (StatusIsFatal()) return;
+  if (StatusIsFatal())
+    return;
   wpi_assert(m_interrupt != HAL_kInvalidHandle);
   int32_t status = 0;
   HAL_DisableInterrupts(m_interrupt, &status);
@@ -152,7 +160,8 @@ void InterruptableSensorBase::DisableInterrupts() {
  * @return Timestamp in seconds since boot.
  */
 double InterruptableSensorBase::ReadRisingTimestamp() {
-  if (StatusIsFatal()) return 0.0;
+  if (StatusIsFatal())
+    return 0.0;
   wpi_assert(m_interrupt != HAL_kInvalidHandle);
   int32_t status = 0;
   double timestamp = HAL_ReadInterruptRisingTimestamp(m_interrupt, &status);
@@ -170,7 +179,8 @@ double InterruptableSensorBase::ReadRisingTimestamp() {
  * @return Timestamp in seconds since boot.
  */
 double InterruptableSensorBase::ReadFallingTimestamp() {
-  if (StatusIsFatal()) return 0.0;
+  if (StatusIsFatal())
+    return 0.0;
   wpi_assert(m_interrupt != HAL_kInvalidHandle);
   int32_t status = 0;
   double timestamp = HAL_ReadInterruptFallingTimestamp(m_interrupt, &status);
@@ -186,7 +196,8 @@ double InterruptableSensorBase::ReadFallingTimestamp() {
  */
 void InterruptableSensorBase::SetUpSourceEdge(bool risingEdge,
                                               bool fallingEdge) {
-  if (StatusIsFatal()) return;
+  if (StatusIsFatal())
+    return;
   if (m_interrupt == HAL_kInvalidHandle) {
     wpi_setWPIErrorWithContext(
         NullParameter,

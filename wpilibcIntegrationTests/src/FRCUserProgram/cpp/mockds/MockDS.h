@@ -12,17 +12,17 @@
 
 namespace frc {
 class MockDS {
- public:
+public:
   MockDS() = default;
   ~MockDS() { stop(); }
-  MockDS(const MockDS& other) = delete;
-  MockDS& operator=(const MockDS& other) = delete;
+  MockDS(const MockDS &other) = delete;
+  MockDS &operator=(const MockDS &other) = delete;
 
   void start();
   void stop();
 
- private:
+private:
   std::thread m_thread;
   std::atomic_bool m_active{false};
 };
-}  // namespace frc
+} // namespace frc

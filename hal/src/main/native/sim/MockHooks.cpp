@@ -21,8 +21,8 @@ static std::atomic<uint64_t> programStartTime{0};
 namespace hal {
 namespace init {
 void InitializeMockHooks() {}
-}  // namespace init
-}  // namespace hal
+} // namespace init
+} // namespace hal
 
 namespace hal {
 void RestartTiming() { programStartTime = wpi::Now(); }
@@ -36,7 +36,7 @@ int64_t GetFPGATime() {
 double GetFPGATimestamp() { return GetFPGATime() * 1.0e-6; }
 
 void SetProgramStarted() { programStarted = true; }
-}  // namespace hal
+} // namespace hal
 
 using namespace hal;
 
@@ -53,4 +53,4 @@ void HALSIM_WaitForProgramStart(void) {
 void HALSIM_SetProgramStarted(void) { SetProgramStarted(); }
 
 void HALSIM_RestartTiming(void) { RestartTiming(); }
-}  // extern "C"
+} // extern "C"

@@ -27,27 +27,27 @@ struct Notifier {
   wpi::mutex mutex;
   wpi::condition_variable cond;
 };
-}  // namespace
+} // namespace
 
 using namespace hal;
 
 class NotifierHandleContainer
     : public UnlimitedHandleResource<HAL_NotifierHandle, Notifier,
                                      HAL_HandleEnum::Notifier> {
- public:
+public:
   ~NotifierHandleContainer() {
-    ForEach([](HAL_NotifierHandle handle, Notifier* notifier) {
+    ForEach([](HAL_NotifierHandle handle, Notifier *notifier) {
       {
         std::lock_guard<wpi::mutex> lock(notifier->mutex);
         notifier->active = false;
         notifier->running = false;
       }
-      notifier->cond.notify_all();  // wake up any waiting threads
+      notifier->cond.notify_all(); // wake up any waiting threads
     });
   }
 };
 
-static NotifierHandleContainer* notifierHandles;
+static NotifierHandleContainer *notifierHandles;
 
 namespace hal {
 namespace init {
@@ -55,12 +55,12 @@ void InitializeNotifier() {
   static NotifierHandleContainer nH;
   notifierHandles = &nH;
 }
-}  // namespace init
-}  // namespace hal
+} // namespace init
+} // namespace hal
 
 extern "C" {
 
-HAL_NotifierHandle HAL_InitializeNotifier(int32_t* status) {
+HAL_NotifierHandle HAL_InitializeNotifier(int32_t *status) {
   std::shared_ptr<Notifier> notifier = std::make_shared<Notifier>();
   HAL_NotifierHandle handle = notifierHandles->Allocate(notifier);
   if (handle == HAL_kInvalidHandle) {
@@ -70,9 +70,10 @@ HAL_NotifierHandle HAL_InitializeNotifier(int32_t* status) {
   return handle;
 }
 
-void HAL_StopNotifier(HAL_NotifierHandle notifierHandle, int32_t* status) {
+void HAL_StopNotifier(HAL_NotifierHandle notifierHandle, int32_t *status) {
   auto notifier = notifierHandles->Get(notifierHandle);
-  if (!notifier) return;
+  if (!notifier)
+    return;
 
   {
     std::lock_guard<wpi::mutex> lock(notifier->mutex);
@@ -82,9 +83,10 @@ void HAL_StopNotifier(HAL_NotifierHandle notifierHandle, int32_t* status) {
   notifier->cond.notify_all();
 }
 
-void HAL_CleanNotifier(HAL_NotifierHandle notifierHandle, int32_t* status) {
+void HAL_CleanNotifier(HAL_NotifierHandle notifierHandle, int32_t *status) {
   auto notifier = notifierHandles->Free(notifierHandle);
-  if (!notifier) return;
+  if (!notifier)
+    return;
 
   // Just in case HAL_StopNotifier() wasn't called...
   {
@@ -96,9 +98,10 @@ void HAL_CleanNotifier(HAL_NotifierHandle notifierHandle, int32_t* status) {
 }
 
 void HAL_UpdateNotifierAlarm(HAL_NotifierHandle notifierHandle,
-                             uint64_t triggerTime, int32_t* status) {
+                             uint64_t triggerTime, int32_t *status) {
   auto notifier = notifierHandles->Get(notifierHandle);
-  if (!notifier) return;
+  if (!notifier)
+    return;
 
   {
     std::lock_guard<wpi::mutex> lock(notifier->mutex);
@@ -112,9 +115,10 @@ void HAL_UpdateNotifierAlarm(HAL_NotifierHandle notifierHandle,
 }
 
 void HAL_CancelNotifierAlarm(HAL_NotifierHandle notifierHandle,
-                             int32_t* status) {
+                             int32_t *status) {
   auto notifier = notifierHandles->Get(notifierHandle);
-  if (!notifier) return;
+  if (!notifier)
+    return;
 
   {
     std::lock_guard<wpi::mutex> lock(notifier->mutex);
@@ -123,9 +127,10 @@ void HAL_CancelNotifierAlarm(HAL_NotifierHandle notifierHandle,
 }
 
 uint64_t HAL_WaitForNotifierAlarm(HAL_NotifierHandle notifierHandle,
-                                  int32_t* status) {
+                                  int32_t *status) {
   auto notifier = notifierHandles->Get(notifierHandle);
-  if (!notifier) return 0;
+  if (!notifier)
+    return 0;
 
   std::unique_lock<wpi::mutex> lock(notifier->mutex);
   while (notifier->active) {
@@ -144,12 +149,14 @@ uint64_t HAL_WaitForNotifierAlarm(HAL_NotifierHandle notifierHandle,
       notifier->updatedAlarm = false;
       continue;
     }
-    if (!notifier->running) continue;
-    if (!notifier->active) break;
+    if (!notifier->running)
+      continue;
+    if (!notifier->active)
+      break;
     notifier->running = false;
     return HAL_GetFPGATime(status);
   }
   return 0;
 }
 
-}  // extern "C"
+} // extern "C"

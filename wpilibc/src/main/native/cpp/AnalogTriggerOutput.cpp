@@ -25,7 +25,7 @@ using namespace frc;
  * @param outputType An enum that specifies the output on the trigger to
  *                   represent.
  */
-AnalogTriggerOutput::AnalogTriggerOutput(const AnalogTrigger& trigger,
+AnalogTriggerOutput::AnalogTriggerOutput(const AnalogTrigger &trigger,
                                          AnalogTriggerType outputType)
     : m_trigger(trigger), m_outputType(outputType) {
   HAL_Report(HALUsageReporting::kResourceType_AnalogTriggerOutput,
@@ -79,4 +79,4 @@ AnalogTriggerType AnalogTriggerOutput::GetAnalogTriggerTypeForRouting() const {
  */
 int AnalogTriggerOutput::GetChannel() const { return m_trigger.m_index; }
 
-void AnalogTriggerOutput::InitSendable(SendableBuilder&) {}
+void AnalogTriggerOutput::InitSendable(SendableBuilder &) {}

@@ -33,57 +33,60 @@ typedef HalCallbackListenerVectorImpl<HAL_CAN_GetCANStatusCallback>
     CanGetCANStatusListenerVector;
 
 class CanData {
- public:
+public:
   void ResetData();
 
-  void SendMessage(uint32_t messageID, const uint8_t* data, uint8_t dataSize,
-                   int32_t periodMs, int32_t* status);
-  void ReceiveMessage(uint32_t* messageID, uint32_t messageIDMask,
-                      uint8_t* data, uint8_t* dataSize, uint32_t* timeStamp,
-                      int32_t* status);
-  void OpenStreamSession(uint32_t* sessionHandle, uint32_t messageID,
+  void SendMessage(uint32_t messageID, const uint8_t *data, uint8_t dataSize,
+                   int32_t periodMs, int32_t *status);
+  void ReceiveMessage(uint32_t *messageID, uint32_t messageIDMask,
+                      uint8_t *data, uint8_t *dataSize, uint32_t *timeStamp,
+                      int32_t *status);
+  void OpenStreamSession(uint32_t *sessionHandle, uint32_t messageID,
                          uint32_t messageIDMask, uint32_t maxMessages,
-                         int32_t* status);
+                         int32_t *status);
   void CloseStreamSession(uint32_t sessionHandle);
   void ReadStreamSession(uint32_t sessionHandle,
-                         struct HAL_CANStreamMessage* messages,
-                         uint32_t messagesToRead, uint32_t* messagesRead,
-                         int32_t* status);
-  void GetCANStatus(float* percentBusUtilization, uint32_t* busOffCount,
-                    uint32_t* txFullCount, uint32_t* receiveErrorCount,
-                    uint32_t* transmitErrorCount, int32_t* status);
+                         struct HAL_CANStreamMessage *messages,
+                         uint32_t messagesToRead, uint32_t *messagesRead,
+                         int32_t *status);
+  void GetCANStatus(float *percentBusUtilization, uint32_t *busOffCount,
+                    uint32_t *txFullCount, uint32_t *receiveErrorCount,
+                    uint32_t *transmitErrorCount, int32_t *status);
 
   int32_t RegisterSendMessageCallback(HAL_CAN_SendMessageCallback callback,
-                                      void* param);
+                                      void *param);
   void CancelSendMessageCallback(int32_t uid);
 
-  int32_t RegisterReceiveMessageCallback(
-      HAL_CAN_ReceiveMessageCallback callback, void* param);
+  int32_t
+  RegisterReceiveMessageCallback(HAL_CAN_ReceiveMessageCallback callback,
+                                 void *param);
   void CancelReceiveMessageCallback(int32_t uid);
 
   int32_t RegisterOpenStreamCallback(HAL_CAN_OpenStreamSessionCallback callback,
-                                     void* param);
+                                     void *param);
   void CancelOpenStreamCallback(int32_t uid);
 
-  int32_t RegisterCloseStreamCallback(
-      HAL_CAN_CloseStreamSessionCallback callback, void* param);
+  int32_t
+  RegisterCloseStreamCallback(HAL_CAN_CloseStreamSessionCallback callback,
+                              void *param);
   void CancelCloseStreamCallback(int32_t uid);
 
   int32_t RegisterReadStreamCallback(HAL_CAN_ReadStreamSessionCallback callback,
-                                     void* param);
+                                     void *param);
   void CancelReadStreamCallback(int32_t uid);
 
   int32_t RegisterGetCANStatusCallback(HAL_CAN_GetCANStatusCallback callback,
-                                       void* param);
+                                       void *param);
   void CancelGetCANStatusCallback(int32_t uid);
 
- protected:
+protected:
   template <typename VectorType, typename CallbackType>
-  int32_t RegisterCanCallback(CallbackType& callback,
-                              std::shared_ptr<VectorType>& callbackVector,
-                              const char* callbackName, void* param) {
+  int32_t RegisterCanCallback(CallbackType &callback,
+                              std::shared_ptr<VectorType> &callbackVector,
+                              const char *callbackName, void *param) {
     // Must return -1 on a null callback for error handling
-    if (callback == nullptr) return -1;
+    if (callback == nullptr)
+      return -1;
     int32_t newUid = 0;
     {
       std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -106,6 +109,6 @@ class CanData {
   std::shared_ptr<CanGetCANStatusListenerVector> m_getCanStatusCallback;
 };
 
-extern CanData* SimCanData;
+extern CanData *SimCanData;
 
-}  // namespace hal
+} // namespace hal

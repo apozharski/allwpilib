@@ -22,18 +22,18 @@ namespace frc {
  * implement the necessary timing in the FPGA to sense direction.
  */
 class GearTooth : public Counter {
- public:
+public:
   // 55 uSec for threshold
   static constexpr double kGearToothThreshold = 55e-6;
 
   explicit GearTooth(int channel, bool directionSensitive = false);
-  explicit GearTooth(DigitalSource* source, bool directionSensitive = false);
+  explicit GearTooth(DigitalSource *source, bool directionSensitive = false);
   explicit GearTooth(std::shared_ptr<DigitalSource> source,
                      bool directionSensitive = false);
 
   void EnableDirectionSensing(bool directionSensitive);
 
-  void InitSendable(SendableBuilder& builder) override;
+  void InitSendable(SendableBuilder &builder) override;
 };
 
-}  // namespace frc
+} // namespace frc

@@ -13,15 +13,15 @@
 namespace frc {
 
 class JoystickButton : public Button {
- public:
-  JoystickButton(GenericHID* joystick, int buttonNumber);
+public:
+  JoystickButton(GenericHID *joystick, int buttonNumber);
   virtual ~JoystickButton() = default;
 
   virtual bool Get();
 
- private:
-  GenericHID* m_joystick;
+private:
+  GenericHID *m_joystick;
   int m_buttonNumber;
 };
 
-}  // namespace frc
+} // namespace frc

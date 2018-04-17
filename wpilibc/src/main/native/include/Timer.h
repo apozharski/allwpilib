@@ -14,7 +14,7 @@
 
 namespace frc {
 
-typedef void (*TimerInterruptHandler)(void* param);
+typedef void (*TimerInterruptHandler)(void *param);
 
 void Wait(double seconds);
 WPI_DEPRECATED("Use Timer::GetFPGATimestamp() instead.")
@@ -31,12 +31,12 @@ double GetTime();
  * requested.
  */
 class Timer {
- public:
+public:
   Timer();
   virtual ~Timer() = default;
 
-  Timer(const Timer&) = delete;
-  Timer& operator=(const Timer&) = delete;
+  Timer(const Timer &) = delete;
+  Timer &operator=(const Timer &) = delete;
 
   double Get() const;
   void Reset();
@@ -50,11 +50,11 @@ class Timer {
   // The time, in seconds, at which the 32-bit FPGA timestamp rolls over to 0
   static const double kRolloverTime;
 
- private:
+private:
   double m_startTime = 0.0;
   double m_accumulatedTime = 0.0;
   bool m_running = false;
   mutable wpi::mutex m_mutex;
 };
 
-}  // namespace frc
+} // namespace frc

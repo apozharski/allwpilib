@@ -28,4 +28,4 @@ class PIDInterface : public Controller {
   virtual void Reset() = 0;
 };
 
-}  // namespace frc
+} // namespace frc

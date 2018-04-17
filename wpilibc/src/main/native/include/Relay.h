@@ -33,7 +33,7 @@ class MotorSafetyHelper;
  * a solenoid).
  */
 class Relay : public MotorSafety, public ErrorBase, public SendableBase {
- public:
+public:
   enum Value { kOff, kOn, kForward, kReverse };
   enum Direction { kBothDirections, kForwardOnly, kReverseOnly };
 
@@ -50,11 +50,11 @@ class Relay : public MotorSafety, public ErrorBase, public SendableBase {
   void StopMotor() override;
   bool IsSafetyEnabled() const override;
   void SetSafetyEnabled(bool enabled) override;
-  void GetDescription(llvm::raw_ostream& desc) const override;
+  void GetDescription(llvm::raw_ostream &desc) const override;
 
-  void InitSendable(SendableBuilder& builder) override;
+  void InitSendable(SendableBuilder &builder) override;
 
- private:
+private:
   int m_channel;
   Direction m_direction;
 
@@ -64,4 +64,4 @@ class Relay : public MotorSafety, public ErrorBase, public SendableBase {
   std::unique_ptr<MotorSafetyHelper> m_safetyHelper;
 };
 
-}  // namespace frc
+} // namespace frc

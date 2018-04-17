@@ -20,18 +20,9 @@ public abstract class Filter implements PIDSource {
     m_source = source;
   }
 
-  @Override
-  public void setPIDSourceType(PIDSourceType pidSource) {
-    m_source.setPIDSourceType(pidSource);
-  }
 
   @Override
-  public PIDSourceType getPIDSourceType() {
-    return m_source.getPIDSourceType();
-  }
-
-  @Override
-  public abstract double pidGet();
+  public abstract double pidGet(PIDSourceType pidSource);
 
   /**
    * Returns the current filter estimate without also inserting new data as pidGet() would do.
@@ -50,7 +41,7 @@ public abstract class Filter implements PIDSource {
    *
    * @return Current value of source
    */
-  protected double pidGetSource() {
-    return m_source.pidGet();
+  protected double pidGetSource(PIDSourceType pidSource) {
+    return m_source.pidGet(pidSource);
   }
 }

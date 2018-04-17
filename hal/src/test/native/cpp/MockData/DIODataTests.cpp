@@ -16,8 +16,8 @@ namespace hal {
 std::string gTestDigitalIoCallbackName;
 HAL_Value gTestDigitalIoCallbackValue;
 
-void TestDigitalIoInitializationCallback(const char* name, void* param,
-                                         const struct HAL_Value* value) {
+void TestDigitalIoInitializationCallback(const char *name, void *param,
+                                         const struct HAL_Value *value) {
   gTestDigitalIoCallbackName = name;
   gTestDigitalIoCallbackValue = *value;
 }
@@ -78,4 +78,4 @@ TEST(DigitalIoSimTests, TestDigitalIoInitialization) {
   EXPECT_STREQ("Initialized", gTestDigitalIoCallbackName.c_str());
 }
 
-}  // namespace hal
+} // namespace hal

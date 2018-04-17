@@ -17,10 +17,10 @@ void InitializePDPData() {
   static PDPData spd[kNumPDPModules];
   ::hal::SimPDPData = spd;
 }
-}  // namespace init
-}  // namespace hal
+} // namespace init
+} // namespace hal
 
-PDPData* hal::SimPDPData;
+PDPData *hal::SimPDPData;
 void PDPData::ResetData() {
   m_initialized = false;
   m_initializedCallbacks = nullptr;
@@ -35,10 +35,11 @@ void PDPData::ResetData() {
 }
 
 int32_t PDPData::RegisterInitializedCallback(HAL_NotifyCallback callback,
-                                             void* param,
+                                             void *param,
                                              HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -71,10 +72,11 @@ void PDPData::SetInitialized(HAL_Bool initialized) {
 }
 
 int32_t PDPData::RegisterTemperatureCallback(HAL_NotifyCallback callback,
-                                             void* param,
+                                             void *param,
                                              HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -107,9 +109,10 @@ void PDPData::SetTemperature(double temperature) {
 }
 
 int32_t PDPData::RegisterVoltageCallback(HAL_NotifyCallback callback,
-                                         void* param, HAL_Bool initialNotify) {
+                                         void *param, HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -143,9 +146,10 @@ void PDPData::SetVoltage(double voltage) {
 
 int32_t PDPData::RegisterCurrentCallback(int32_t channel,
                                          HAL_NotifyCallback callback,
-                                         void* param, HAL_Bool initialNotify) {
+                                         void *param, HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -183,7 +187,7 @@ void HALSIM_ResetPDPData(int32_t index) { SimPDPData[index].ResetData(); }
 
 int32_t HALSIM_RegisterPDPInitializedCallback(int32_t index,
                                               HAL_NotifyCallback callback,
-                                              void* param,
+                                              void *param,
                                               HAL_Bool initialNotify) {
   return SimPDPData[index].RegisterInitializedCallback(callback, param,
                                                        initialNotify);
@@ -203,7 +207,7 @@ void HALSIM_SetPDPInitialized(int32_t index, HAL_Bool initialized) {
 
 int32_t HALSIM_RegisterPDPTemperatureCallback(int32_t index,
                                               HAL_NotifyCallback callback,
-                                              void* param,
+                                              void *param,
                                               HAL_Bool initialNotify) {
   return SimPDPData[index].RegisterTemperatureCallback(callback, param,
                                                        initialNotify);
@@ -223,7 +227,7 @@ void HALSIM_SetPDPTemperature(int32_t index, double temperature) {
 
 int32_t HALSIM_RegisterPDPVoltageCallback(int32_t index,
                                           HAL_NotifyCallback callback,
-                                          void* param, HAL_Bool initialNotify) {
+                                          void *param, HAL_Bool initialNotify) {
   return SimPDPData[index].RegisterVoltageCallback(callback, param,
                                                    initialNotify);
 }
@@ -242,7 +246,7 @@ void HALSIM_SetPDPVoltage(int32_t index, double voltage) {
 
 int32_t HALSIM_RegisterPDPCurrentCallback(int32_t index, int32_t channel,
                                           HAL_NotifyCallback callback,
-                                          void* param, HAL_Bool initialNotify) {
+                                          void *param, HAL_Bool initialNotify) {
   return SimPDPData[index].RegisterCurrentCallback(channel, callback, param,
                                                    initialNotify);
 }
@@ -262,10 +266,10 @@ void HALSIM_SetPDPCurrent(int32_t index, int32_t channel, double current) {
 
 void HALSIM_RegisterPDPAllNonCurrentCallbacks(int32_t index, int32_t channel,
                                               HAL_NotifyCallback callback,
-                                              void* param,
+                                              void *param,
                                               HAL_Bool initialNotify) {
   SimPDPData[index].RegisterInitializedCallback(callback, param, initialNotify);
   SimPDPData[index].RegisterTemperatureCallback(callback, param, initialNotify);
   SimPDPData[index].RegisterVoltageCallback(callback, param, initialNotify);
 }
-}  // extern "C"
+} // extern "C"

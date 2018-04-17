@@ -23,11 +23,11 @@ namespace frc {
  * for checking channels and error processing.
  */
 class SensorBase : public ErrorBase, public SendableBase {
- public:
+public:
   SensorBase() = default;
 
-  SensorBase(const SensorBase&) = delete;
-  SensorBase& operator=(const SensorBase&) = delete;
+  SensorBase(const SensorBase &) = delete;
+  SensorBase &operator=(const SensorBase &) = delete;
 
   static int GetDefaultSolenoidModule() { return 0; }
 
@@ -50,4 +50,4 @@ class SensorBase : public ErrorBase, public SendableBase {
   static const int kPDPChannels;
 };
 
-}  // namespace frc
+} // namespace frc

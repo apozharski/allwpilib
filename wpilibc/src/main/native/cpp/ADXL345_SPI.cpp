@@ -101,7 +101,7 @@ ADXL345_SPI::AllAxes ADXL345_SPI::GetAccelerations() {
   return data;
 }
 
-void ADXL345_SPI::InitSendable(SendableBuilder& builder) {
+void ADXL345_SPI::InitSendable(SendableBuilder &builder) {
   builder.SetSmartDashboardType("3AxisAccelerometer");
   auto x = builder.GetEntry("X").GetHandle();
   auto y = builder.GetEntry("Y").GetHandle();

@@ -11,7 +11,7 @@
 
 using namespace frc;
 
-ButtonScheduler::ButtonScheduler(bool last, Trigger* button, Command* orders)
+ButtonScheduler::ButtonScheduler(bool last, Trigger *button, Command *orders)
     : m_pressedLast(last), m_button(button), m_command(orders) {}
 
 void ButtonScheduler::Start() { Scheduler::GetInstance()->AddButton(this); }

@@ -21,12 +21,12 @@ namespace frc {
  * Non-template base class for VisionRunner.
  */
 class VisionRunnerBase : public ErrorBase {
- public:
+public:
   explicit VisionRunnerBase(cs::VideoSource videoSource);
   ~VisionRunnerBase() override;
 
-  VisionRunnerBase(const VisionRunnerBase&) = delete;
-  VisionRunnerBase& operator=(const VisionRunnerBase&) = delete;
+  VisionRunnerBase(const VisionRunnerBase &) = delete;
+  VisionRunnerBase &operator=(const VisionRunnerBase &) = delete;
 
   void RunOnce();
 
@@ -34,10 +34,10 @@ class VisionRunnerBase : public ErrorBase {
 
   void Stop();
 
- protected:
-  virtual void DoProcess(cv::Mat& image) = 0;
+protected:
+  virtual void DoProcess(cv::Mat &image) = 0;
 
- private:
+private:
   std::unique_ptr<cv::Mat> m_image;
   cs::CvSink m_cvSink;
   std::atomic_bool m_enabled;
@@ -50,20 +50,19 @@ class VisionRunnerBase : public ErrorBase {
  *
  * @see VisionPipeline
  */
-template <typename T>
-class VisionRunner : public VisionRunnerBase {
- public:
-  VisionRunner(cs::VideoSource videoSource, T* pipeline,
-               std::function<void(T&)> listener);
+template <typename T> class VisionRunner : public VisionRunnerBase {
+public:
+  VisionRunner(cs::VideoSource videoSource, T *pipeline,
+               std::function<void(T &)> listener);
   virtual ~VisionRunner() = default;
 
- protected:
-  void DoProcess(cv::Mat& image) override;
+protected:
+  void DoProcess(cv::Mat &image) override;
 
- private:
-  T* m_pipeline;
-  std::function<void(T&)> m_listener;
+private:
+  T *m_pipeline;
+  std::function<void(T &)> m_listener;
 };
-}  // namespace frc
+} // namespace frc
 
 #include "VisionRunner.inc"

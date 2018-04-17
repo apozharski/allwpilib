@@ -18,43 +18,43 @@
 
 namespace hal {
 class EncoderData {
- public:
-  int32_t RegisterInitializedCallback(HAL_NotifyCallback callback, void* param,
+public:
+  int32_t RegisterInitializedCallback(HAL_NotifyCallback callback, void *param,
                                       HAL_Bool initialNotify);
   void CancelInitializedCallback(int32_t uid);
   void InvokeInitializedCallback(HAL_Value value);
   HAL_Bool GetInitialized();
   void SetInitialized(HAL_Bool initialized);
 
-  int32_t RegisterCountCallback(HAL_NotifyCallback callback, void* param,
+  int32_t RegisterCountCallback(HAL_NotifyCallback callback, void *param,
                                 HAL_Bool initialNotify);
   void CancelCountCallback(int32_t uid);
   void InvokeCountCallback(HAL_Value value);
   int32_t GetCount();
   void SetCount(int32_t count);
 
-  int32_t RegisterPeriodCallback(HAL_NotifyCallback callback, void* param,
+  int32_t RegisterPeriodCallback(HAL_NotifyCallback callback, void *param,
                                  HAL_Bool initialNotify);
   void CancelPeriodCallback(int32_t uid);
   void InvokePeriodCallback(HAL_Value value);
   double GetPeriod();
   void SetPeriod(double period);
 
-  int32_t RegisterResetCallback(HAL_NotifyCallback callback, void* param,
+  int32_t RegisterResetCallback(HAL_NotifyCallback callback, void *param,
                                 HAL_Bool initialNotify);
   void CancelResetCallback(int32_t uid);
   void InvokeResetCallback(HAL_Value value);
   HAL_Bool GetReset();
   void SetReset(HAL_Bool reset);
 
-  int32_t RegisterMaxPeriodCallback(HAL_NotifyCallback callback, void* param,
+  int32_t RegisterMaxPeriodCallback(HAL_NotifyCallback callback, void *param,
                                     HAL_Bool initialNotify);
   void CancelMaxPeriodCallback(int32_t uid);
   void InvokeMaxPeriodCallback(HAL_Value value);
   double GetMaxPeriod();
   void SetMaxPeriod(double maxPeriod);
 
-  int32_t RegisterDirectionCallback(HAL_NotifyCallback callback, void* param,
+  int32_t RegisterDirectionCallback(HAL_NotifyCallback callback, void *param,
                                     HAL_Bool initialNotify);
   void CancelDirectionCallback(int32_t uid);
   void InvokeDirectionCallback(HAL_Value value);
@@ -62,21 +62,21 @@ class EncoderData {
   void SetDirection(HAL_Bool direction);
 
   int32_t RegisterReverseDirectionCallback(HAL_NotifyCallback callback,
-                                           void* param, HAL_Bool initialNotify);
+                                           void *param, HAL_Bool initialNotify);
   void CancelReverseDirectionCallback(int32_t uid);
   void InvokeReverseDirectionCallback(HAL_Value value);
   HAL_Bool GetReverseDirection();
   void SetReverseDirection(HAL_Bool reverseDirection);
 
   int32_t RegisterSamplesToAverageCallback(HAL_NotifyCallback callback,
-                                           void* param, HAL_Bool initialNotify);
+                                           void *param, HAL_Bool initialNotify);
   void CancelSamplesToAverageCallback(int32_t uid);
   void InvokeSamplesToAverageCallback(HAL_Value value);
   int32_t GetSamplesToAverage();
   void SetSamplesToAverage(int32_t samplesToAverage);
 
   int32_t RegisterDistancePerPulseCallback(HAL_NotifyCallback callback,
-                                           void* param, HAL_Bool initialNotify);
+                                           void *param, HAL_Bool initialNotify);
   void CancelDistancePerPulseCallback(int32_t uid);
   void InvokeDistancePerPulseCallback(HAL_Value value);
   double GetDistancePerPulse();
@@ -84,7 +84,7 @@ class EncoderData {
 
   virtual void ResetData();
 
- private:
+private:
   wpi::mutex m_registerMutex;
   std::atomic<HAL_Bool> m_initialized{false};
   std::shared_ptr<NotifyListenerVector> m_initializedCallbacks = nullptr;
@@ -105,5 +105,5 @@ class EncoderData {
   std::atomic<double> m_distancePerPulse{0};
   std::shared_ptr<NotifyListenerVector> m_distancePerPulseCallbacks = nullptr;
 };
-extern EncoderData* SimEncoderData;
-}  // namespace hal
+extern EncoderData *SimEncoderData;
+} // namespace hal

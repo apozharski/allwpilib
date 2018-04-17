@@ -26,7 +26,7 @@ struct MatchInfoDataStore {
   int32_t matchNumber = 0;
   HAL_MatchType matchType = HAL_MatchType::HAL_kMatchType_none;
 };
-}  // namespace hal
+} // namespace hal
 
 using namespace hal;
 
@@ -36,10 +36,10 @@ void InitializeDriverStationData() {
   static DriverStationData dsd;
   ::hal::SimDriverStationData = &dsd;
 }
-}  // namespace init
-}  // namespace hal
+} // namespace init
+} // namespace hal
 
-DriverStationData* hal::SimDriverStationData;
+DriverStationData *hal::SimDriverStationData;
 
 DriverStationData::DriverStationData() { ResetData(); }
 
@@ -82,10 +82,11 @@ void DriverStationData::ResetData() {
 }
 
 int32_t DriverStationData::RegisterEnabledCallback(HAL_NotifyCallback callback,
-                                                   void* param,
+                                                   void *param,
                                                    HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -118,9 +119,10 @@ void DriverStationData::SetEnabled(HAL_Bool enabled) {
 }
 
 int32_t DriverStationData::RegisterAutonomousCallback(
-    HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify) {
+    HAL_NotifyCallback callback, void *param, HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -153,10 +155,11 @@ void DriverStationData::SetAutonomous(HAL_Bool autonomous) {
 }
 
 int32_t DriverStationData::RegisterTestCallback(HAL_NotifyCallback callback,
-                                                void* param,
+                                                void *param,
                                                 HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -189,10 +192,11 @@ void DriverStationData::SetTest(HAL_Bool test) {
 }
 
 int32_t DriverStationData::RegisterEStopCallback(HAL_NotifyCallback callback,
-                                                 void* param,
+                                                 void *param,
                                                  HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -225,9 +229,10 @@ void DriverStationData::SetEStop(HAL_Bool eStop) {
 }
 
 int32_t DriverStationData::RegisterFmsAttachedCallback(
-    HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify) {
+    HAL_NotifyCallback callback, void *param, HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -260,9 +265,10 @@ void DriverStationData::SetFmsAttached(HAL_Bool fmsAttached) {
 }
 
 int32_t DriverStationData::RegisterDsAttachedCallback(
-    HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify) {
+    HAL_NotifyCallback callback, void *param, HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -295,9 +301,10 @@ void DriverStationData::SetDsAttached(HAL_Bool dsAttached) {
 }
 
 int32_t DriverStationData::RegisterAllianceStationIdCallback(
-    HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify) {
+    HAL_NotifyCallback callback, void *param, HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -336,9 +343,10 @@ void DriverStationData::SetAllianceStationId(
 }
 
 int32_t DriverStationData::RegisterMatchTimeCallback(
-    HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify) {
+    HAL_NotifyCallback callback, void *param, HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -371,43 +379,43 @@ void DriverStationData::SetMatchTime(double matchTime) {
 }
 
 void DriverStationData::GetJoystickAxes(int32_t joystickNum,
-                                        HAL_JoystickAxes* axes) {
+                                        HAL_JoystickAxes *axes) {
   std::lock_guard<wpi::mutex> lock(m_joystickDataMutex);
   *axes = m_joystickAxes[joystickNum];
 }
 void DriverStationData::GetJoystickPOVs(int32_t joystickNum,
-                                        HAL_JoystickPOVs* povs) {
+                                        HAL_JoystickPOVs *povs) {
   std::lock_guard<wpi::mutex> lock(m_joystickDataMutex);
   *povs = m_joystickPOVs[joystickNum];
 }
 void DriverStationData::GetJoystickButtons(int32_t joystickNum,
-                                           HAL_JoystickButtons* buttons) {
+                                           HAL_JoystickButtons *buttons) {
   std::lock_guard<wpi::mutex> lock(m_joystickDataMutex);
   *buttons = m_joystickButtons[joystickNum];
 }
 void DriverStationData::GetJoystickDescriptor(
-    int32_t joystickNum, HAL_JoystickDescriptor* descriptor) {
+    int32_t joystickNum, HAL_JoystickDescriptor *descriptor) {
   std::lock_guard<wpi::mutex> lock(m_joystickDataMutex);
   *descriptor = m_joystickDescriptor[joystickNum];
   // Always ensure name is null terminated
   descriptor->name[255] = '\0';
 }
 void DriverStationData::GetJoystickOutputs(int32_t joystickNum,
-                                           int64_t* outputs,
-                                           int32_t* leftRumble,
-                                           int32_t* rightRumble) {
+                                           int64_t *outputs,
+                                           int32_t *leftRumble,
+                                           int32_t *rightRumble) {
   std::lock_guard<wpi::mutex> lock(m_joystickDataMutex);
   *leftRumble = m_joystickOutputs[joystickNum].leftRumble;
   *outputs = m_joystickOutputs[joystickNum].outputs;
   *rightRumble = m_joystickOutputs[joystickNum].rightRumble;
 }
-void DriverStationData::GetMatchInfo(HAL_MatchInfo* info) {
+void DriverStationData::GetMatchInfo(HAL_MatchInfo *info) {
   std::lock_guard<wpi::mutex> lock(m_matchInfoMutex);
   auto eventLen = m_matchInfo->eventName.size();
-  info->eventName = static_cast<char*>(std::malloc(eventLen + 1));
+  info->eventName = static_cast<char *>(std::malloc(eventLen + 1));
   std::memcpy(info->eventName, m_matchInfo->eventName.c_str(), eventLen);
   auto gameLen = m_matchInfo->gameSpecificMessage.size();
-  info->gameSpecificMessage = static_cast<char*>(std::malloc(gameLen + 1));
+  info->gameSpecificMessage = static_cast<char *>(std::malloc(gameLen + 1));
   std::memcpy(info->gameSpecificMessage,
               m_matchInfo->gameSpecificMessage.c_str(), gameLen);
   info->gameSpecificMessage[gameLen] = '\0';
@@ -416,29 +424,29 @@ void DriverStationData::GetMatchInfo(HAL_MatchInfo* info) {
   info->replayNumber = m_matchInfo->replayNumber;
   info->matchType = m_matchInfo->matchType;
 }
-void DriverStationData::FreeMatchInfo(const HAL_MatchInfo* info) {
+void DriverStationData::FreeMatchInfo(const HAL_MatchInfo *info) {
   std::free(info->eventName);
   std::free(info->gameSpecificMessage);
 }
 
 void DriverStationData::SetJoystickAxes(int32_t joystickNum,
-                                        const HAL_JoystickAxes* axes) {
+                                        const HAL_JoystickAxes *axes) {
   std::lock_guard<wpi::mutex> lock(m_joystickDataMutex);
   m_joystickAxes[joystickNum] = *axes;
 }
 void DriverStationData::SetJoystickPOVs(int32_t joystickNum,
-                                        const HAL_JoystickPOVs* povs) {
+                                        const HAL_JoystickPOVs *povs) {
   std::lock_guard<wpi::mutex> lock(m_joystickDataMutex);
   m_joystickPOVs[joystickNum] = *povs;
 }
 void DriverStationData::SetJoystickButtons(int32_t joystickNum,
-                                           const HAL_JoystickButtons* buttons) {
+                                           const HAL_JoystickButtons *buttons) {
   std::lock_guard<wpi::mutex> lock(m_joystickDataMutex);
   m_joystickButtons[joystickNum] = *buttons;
 }
 
 void DriverStationData::SetJoystickDescriptor(
-    int32_t joystickNum, const HAL_JoystickDescriptor* descriptor) {
+    int32_t joystickNum, const HAL_JoystickDescriptor *descriptor) {
   std::lock_guard<wpi::mutex> lock(m_joystickDataMutex);
   m_joystickDescriptor[joystickNum] = *descriptor;
 }
@@ -452,7 +460,7 @@ void DriverStationData::SetJoystickOutputs(int32_t joystickNum, int64_t outputs,
   m_joystickOutputs[joystickNum].rightRumble = rightRumble;
 }
 
-void DriverStationData::SetMatchInfo(const HAL_MatchInfo* info) {
+void DriverStationData::SetMatchInfo(const HAL_MatchInfo *info) {
   std::lock_guard<wpi::mutex> lock(m_matchInfoMutex);
   m_matchInfo->eventName = info->eventName;
   m_matchInfo->gameSpecificMessage = info->gameSpecificMessage;
@@ -467,7 +475,7 @@ extern "C" {
 void HALSIM_ResetDriverStationData(void) { SimDriverStationData->ResetData(); }
 
 int32_t HALSIM_RegisterDriverStationEnabledCallback(HAL_NotifyCallback callback,
-                                                    void* param,
+                                                    void *param,
                                                     HAL_Bool initialNotify) {
   return SimDriverStationData->RegisterEnabledCallback(callback, param,
                                                        initialNotify);
@@ -483,7 +491,7 @@ void HALSIM_SetDriverStationEnabled(HAL_Bool enabled) {
 }
 
 int32_t HALSIM_RegisterDriverStationAutonomousCallback(
-    HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify) {
+    HAL_NotifyCallback callback, void *param, HAL_Bool initialNotify) {
   return SimDriverStationData->RegisterAutonomousCallback(callback, param,
                                                           initialNotify);
 }
@@ -498,7 +506,7 @@ void HALSIM_SetDriverStationAutonomous(HAL_Bool autonomous) {
 }
 
 int32_t HALSIM_RegisterDriverStationTestCallback(HAL_NotifyCallback callback,
-                                                 void* param,
+                                                 void *param,
                                                  HAL_Bool initialNotify) {
   return SimDriverStationData->RegisterTestCallback(callback, param,
                                                     initialNotify);
@@ -514,7 +522,7 @@ void HALSIM_SetDriverStationTest(HAL_Bool test) {
 }
 
 int32_t HALSIM_RegisterDriverStationEStopCallback(HAL_NotifyCallback callback,
-                                                  void* param,
+                                                  void *param,
                                                   HAL_Bool initialNotify) {
   return SimDriverStationData->RegisterEStopCallback(callback, param,
                                                      initialNotify);
@@ -530,7 +538,7 @@ void HALSIM_SetDriverStationEStop(HAL_Bool eStop) {
 }
 
 int32_t HALSIM_RegisterDriverStationFmsAttachedCallback(
-    HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify) {
+    HAL_NotifyCallback callback, void *param, HAL_Bool initialNotify) {
   return SimDriverStationData->RegisterFmsAttachedCallback(callback, param,
                                                            initialNotify);
 }
@@ -545,7 +553,7 @@ void HALSIM_SetDriverStationFmsAttached(HAL_Bool fmsAttached) {
 }
 
 int32_t HALSIM_RegisterDriverStationDsAttachedCallback(
-    HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify) {
+    HAL_NotifyCallback callback, void *param, HAL_Bool initialNotify) {
   return SimDriverStationData->RegisterDsAttachedCallback(callback, param,
                                                           initialNotify);
 }
@@ -560,7 +568,7 @@ void HALSIM_SetDriverStationDsAttached(HAL_Bool dsAttached) {
 }
 
 int32_t HALSIM_RegisterDriverStationAllianceStationIdCallback(
-    HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify) {
+    HAL_NotifyCallback callback, void *param, HAL_Bool initialNotify) {
   return SimDriverStationData->RegisterAllianceStationIdCallback(
       callback, param, initialNotify);
 }
@@ -576,7 +584,7 @@ void HALSIM_SetDriverStationAllianceStationId(
 }
 
 int32_t HALSIM_RegisterDriverStationMatchTimeCallback(
-    HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify) {
+    HAL_NotifyCallback callback, void *param, HAL_Bool initialNotify) {
   return SimDriverStationData->RegisterMatchTimeCallback(callback, param,
                                                          initialNotify);
 }
@@ -590,30 +598,30 @@ void HALSIM_SetDriverStationMatchTime(double matchTime) {
   SimDriverStationData->SetMatchTime(matchTime);
 }
 
-void HALSIM_SetJoystickAxes(int32_t joystickNum, const HAL_JoystickAxes* axes) {
+void HALSIM_SetJoystickAxes(int32_t joystickNum, const HAL_JoystickAxes *axes) {
   SimDriverStationData->SetJoystickAxes(joystickNum, axes);
 }
 
-void HALSIM_SetJoystickPOVs(int32_t joystickNum, const HAL_JoystickPOVs* povs) {
+void HALSIM_SetJoystickPOVs(int32_t joystickNum, const HAL_JoystickPOVs *povs) {
   SimDriverStationData->SetJoystickPOVs(joystickNum, povs);
 }
 
 void HALSIM_SetJoystickButtons(int32_t joystickNum,
-                               const HAL_JoystickButtons* buttons) {
+                               const HAL_JoystickButtons *buttons) {
   SimDriverStationData->SetJoystickButtons(joystickNum, buttons);
 }
 void HALSIM_SetJoystickDescriptor(int32_t joystickNum,
-                                  const HAL_JoystickDescriptor* descriptor) {
+                                  const HAL_JoystickDescriptor *descriptor) {
   SimDriverStationData->SetJoystickDescriptor(joystickNum, descriptor);
 }
 
-void HALSIM_GetJoystickOutputs(int32_t joystickNum, int64_t* outputs,
-                               int32_t* leftRumble, int32_t* rightRumble) {
+void HALSIM_GetJoystickOutputs(int32_t joystickNum, int64_t *outputs,
+                               int32_t *leftRumble, int32_t *rightRumble) {
   SimDriverStationData->GetJoystickOutputs(joystickNum, outputs, leftRumble,
                                            rightRumble);
 }
 
-void HALSIM_SetMatchInfo(const HAL_MatchInfo* info) {
+void HALSIM_SetMatchInfo(const HAL_MatchInfo *info) {
   SimDriverStationData->SetMatchInfo(info);
 }
 
@@ -622,7 +630,7 @@ void HALSIM_NotifyDriverStationNewData(void) {
 }
 
 void HALSIM_RegisterDriverStationAllCallbacks(HAL_NotifyCallback callback,
-                                              void* param,
+                                              void *param,
                                               HAL_Bool initialNotify) {
   SimDriverStationData->RegisterEnabledCallback(callback, param, initialNotify);
   SimDriverStationData->RegisterAutonomousCallback(callback, param,
@@ -638,4 +646,4 @@ void HALSIM_RegisterDriverStationAllCallbacks(HAL_NotifyCallback callback,
   SimDriverStationData->RegisterMatchTimeCallback(callback, param,
                                                   initialNotify);
 }
-}  // extern "C"
+} // extern "C"

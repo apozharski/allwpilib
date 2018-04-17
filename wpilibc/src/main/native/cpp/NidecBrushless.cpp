@@ -120,7 +120,7 @@ void NidecBrushless::SetSafetyEnabled(bool enabled) {
   m_safetyHelper.SetSafetyEnabled(enabled);
 }
 
-void NidecBrushless::GetDescription(llvm::raw_ostream& desc) const {
+void NidecBrushless::GetDescription(llvm::raw_ostream &desc) const {
   desc << "Nidec " << GetChannel();
 }
 
@@ -147,7 +147,7 @@ void NidecBrushless::Enable() { m_disabled = false; }
  */
 int NidecBrushless::GetChannel() const { return m_pwm.GetChannel(); }
 
-void NidecBrushless::InitSendable(SendableBuilder& builder) {
+void NidecBrushless::InitSendable(SendableBuilder &builder) {
   builder.SetSmartDashboardType("Nidec Brushless");
   builder.SetSafeState([=]() { StopMotor(); });
   builder.AddDoubleProperty("Value", [=]() { return Get(); },

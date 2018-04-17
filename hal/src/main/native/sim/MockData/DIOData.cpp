@@ -17,10 +17,10 @@ void InitializeDIOData() {
   static DIOData sdd[kNumDigitalChannels];
   ::hal::SimDIOData = sdd;
 }
-}  // namespace init
-}  // namespace hal
+} // namespace init
+} // namespace hal
 
-DIOData* hal::SimDIOData;
+DIOData *hal::SimDIOData;
 void DIOData::ResetData() {
   m_initialized = false;
   m_initializedCallbacks = nullptr;
@@ -35,10 +35,11 @@ void DIOData::ResetData() {
 }
 
 int32_t DIOData::RegisterInitializedCallback(HAL_NotifyCallback callback,
-                                             void* param,
+                                             void *param,
                                              HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -70,10 +71,11 @@ void DIOData::SetInitialized(HAL_Bool initialized) {
   }
 }
 
-int32_t DIOData::RegisterValueCallback(HAL_NotifyCallback callback, void* param,
+int32_t DIOData::RegisterValueCallback(HAL_NotifyCallback callback, void *param,
                                        HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -106,10 +108,11 @@ void DIOData::SetValue(HAL_Bool value) {
 }
 
 int32_t DIOData::RegisterPulseLengthCallback(HAL_NotifyCallback callback,
-                                             void* param,
+                                             void *param,
                                              HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -142,9 +145,10 @@ void DIOData::SetPulseLength(double pulseLength) {
 }
 
 int32_t DIOData::RegisterIsInputCallback(HAL_NotifyCallback callback,
-                                         void* param, HAL_Bool initialNotify) {
+                                         void *param, HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -177,10 +181,11 @@ void DIOData::SetIsInput(HAL_Bool isInput) {
 }
 
 int32_t DIOData::RegisterFilterIndexCallback(HAL_NotifyCallback callback,
-                                             void* param,
+                                             void *param,
                                              HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -217,7 +222,7 @@ void HALSIM_ResetDIOData(int32_t index) { SimDIOData[index].ResetData(); }
 
 int32_t HALSIM_RegisterDIOInitializedCallback(int32_t index,
                                               HAL_NotifyCallback callback,
-                                              void* param,
+                                              void *param,
                                               HAL_Bool initialNotify) {
   return SimDIOData[index].RegisterInitializedCallback(callback, param,
                                                        initialNotify);
@@ -237,7 +242,7 @@ void HALSIM_SetDIOInitialized(int32_t index, HAL_Bool initialized) {
 
 int32_t HALSIM_RegisterDIOValueCallback(int32_t index,
                                         HAL_NotifyCallback callback,
-                                        void* param, HAL_Bool initialNotify) {
+                                        void *param, HAL_Bool initialNotify) {
   return SimDIOData[index].RegisterValueCallback(callback, param,
                                                  initialNotify);
 }
@@ -256,7 +261,7 @@ void HALSIM_SetDIOValue(int32_t index, HAL_Bool value) {
 
 int32_t HALSIM_RegisterDIOPulseLengthCallback(int32_t index,
                                               HAL_NotifyCallback callback,
-                                              void* param,
+                                              void *param,
                                               HAL_Bool initialNotify) {
   return SimDIOData[index].RegisterPulseLengthCallback(callback, param,
                                                        initialNotify);
@@ -276,7 +281,7 @@ void HALSIM_SetDIOPulseLength(int32_t index, double pulseLength) {
 
 int32_t HALSIM_RegisterDIOIsInputCallback(int32_t index,
                                           HAL_NotifyCallback callback,
-                                          void* param, HAL_Bool initialNotify) {
+                                          void *param, HAL_Bool initialNotify) {
   return SimDIOData[index].RegisterIsInputCallback(callback, param,
                                                    initialNotify);
 }
@@ -295,7 +300,7 @@ void HALSIM_SetDIOIsInput(int32_t index, HAL_Bool isInput) {
 
 int32_t HALSIM_RegisterDIOFilterIndexCallback(int32_t index,
                                               HAL_NotifyCallback callback,
-                                              void* param,
+                                              void *param,
                                               HAL_Bool initialNotify) {
   return SimDIOData[index].RegisterFilterIndexCallback(callback, param,
                                                        initialNotify);
@@ -314,11 +319,11 @@ void HALSIM_SetDIOFilterIndex(int32_t index, int32_t filterIndex) {
 }
 
 void HALSIM_RegisterDIOAllCallbacks(int32_t index, HAL_NotifyCallback callback,
-                                    void* param, HAL_Bool initialNotify) {
+                                    void *param, HAL_Bool initialNotify) {
   SimDIOData[index].RegisterInitializedCallback(callback, param, initialNotify);
   SimDIOData[index].RegisterValueCallback(callback, param, initialNotify);
   SimDIOData[index].RegisterPulseLengthCallback(callback, param, initialNotify);
   SimDIOData[index].RegisterIsInputCallback(callback, param, initialNotify);
   SimDIOData[index].RegisterFilterIndexCallback(callback, param, initialNotify);
 }
-}  // extern "C"
+} // extern "C"

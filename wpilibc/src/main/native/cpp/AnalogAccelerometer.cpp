@@ -46,7 +46,7 @@ AnalogAccelerometer::AnalogAccelerometer(int channel)
  * @param channel The existing AnalogInput object for the analog input the
  *                accelerometer is connected to
  */
-AnalogAccelerometer::AnalogAccelerometer(AnalogInput* channel)
+AnalogAccelerometer::AnalogAccelerometer(AnalogInput *channel)
     : m_analogInput(channel, NullDeleter<AnalogInput>()) {
   if (channel == nullptr) {
     wpi_setWPIError(NullParameter);
@@ -115,7 +115,7 @@ void AnalogAccelerometer::SetZero(double zero) { m_zeroGVoltage = zero; }
  */
 double AnalogAccelerometer::PIDGet() { return GetAcceleration(); }
 
-void AnalogAccelerometer::InitSendable(SendableBuilder& builder) {
+void AnalogAccelerometer::InitSendable(SendableBuilder &builder) {
   builder.SetSmartDashboardType("Accelerometer");
   builder.AddDoubleProperty("Value", [=]() { return GetAcceleration(); },
                             nullptr);

@@ -31,7 +31,7 @@ namespace frc {
  * the compressor from operating.
  */
 class Compressor : public ErrorBase, public SendableBase {
- public:
+public:
   // Default PCM ID is 0
   explicit Compressor(int pcmID = SensorBase::GetDefaultSolenoidModule());
   ~Compressor() override = default;
@@ -55,14 +55,14 @@ class Compressor : public ErrorBase, public SendableBase {
   bool GetCompressorNotConnectedFault() const;
   void ClearAllPCMStickyFaults();
 
-  void InitSendable(SendableBuilder& builder) override;
+  void InitSendable(SendableBuilder &builder) override;
 
- protected:
+protected:
   HAL_CompressorHandle m_compressorHandle;
 
- private:
+private:
   void SetCompressor(bool on);
   int m_module;
 };
 
-}  // namespace frc
+} // namespace frc

@@ -77,21 +77,22 @@ ADXL362::ADXL362(SPI::Port port, Range range) : m_spi(port) {
 }
 
 void ADXL362::SetRange(Range range) {
-  if (m_gsPerLSB == 0.0) return;
+  if (m_gsPerLSB == 0.0)
+    return;
 
   uint8_t commands[3];
 
   switch (range) {
-    case kRange_2G:
-      m_gsPerLSB = 0.001;
-      break;
-    case kRange_4G:
-      m_gsPerLSB = 0.002;
-      break;
-    case kRange_8G:
-    case kRange_16G:  // 16G not supported; treat as 8G
-      m_gsPerLSB = 0.004;
-      break;
+  case kRange_2G:
+    m_gsPerLSB = 0.001;
+    break;
+  case kRange_4G:
+    m_gsPerLSB = 0.002;
+    break;
+  case kRange_8G:
+  case kRange_16G: // 16G not supported; treat as 8G
+    m_gsPerLSB = 0.004;
+    break;
   }
 
   // Specify the data format to read
@@ -115,7 +116,8 @@ double ADXL362::GetZ() { return GetAcceleration(kAxis_Z); }
  * @return Acceleration of the ADXL362 in Gs.
  */
 double ADXL362::GetAcceleration(ADXL362::Axes axis) {
-  if (m_gsPerLSB == 0.0) return 0.0;
+  if (m_gsPerLSB == 0.0)
+    return 0.0;
 
   uint8_t buffer[4];
   uint8_t command[4] = {0, 0, 0, 0};
@@ -161,7 +163,7 @@ ADXL362::AllAxes ADXL362::GetAccelerations() {
   return data;
 }
 
-void ADXL362::InitSendable(SendableBuilder& builder) {
+void ADXL362::InitSendable(SendableBuilder &builder) {
   builder.SetSmartDashboardType("3AxisAccelerometer");
   auto x = builder.GetEntry("X").GetHandle();
   auto y = builder.GetEntry("Y").GetHandle();

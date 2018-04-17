@@ -42,7 +42,7 @@ AnalogGyro::AnalogGyro(int channel)
  * @param channel A pointer to the AnalogInput object that the gyro is
  *                connected to.
  */
-AnalogGyro::AnalogGyro(AnalogInput* channel)
+AnalogGyro::AnalogGyro(AnalogInput *channel)
     : AnalogGyro(
           std::shared_ptr<AnalogInput>(channel, NullDeleter<AnalogInput>())) {}
 
@@ -125,7 +125,8 @@ AnalogGyro::~AnalogGyro() { HAL_FreeAnalogGyro(m_gyroHandle); }
  * been running.
  */
 void AnalogGyro::Reset() {
-  if (StatusIsFatal()) return;
+  if (StatusIsFatal())
+    return;
   int32_t status = 0;
   HAL_ResetAnalogGyro(m_gyroHandle, &status);
   wpi_setErrorWithContext(status, HAL_GetErrorMessage(status));
@@ -135,7 +136,8 @@ void AnalogGyro::Reset() {
  * Initialize the gyro.  Calibration is handled by Calibrate().
  */
 void AnalogGyro::InitGyro() {
-  if (StatusIsFatal()) return;
+  if (StatusIsFatal())
+    return;
   if (m_gyroHandle == HAL_kInvalidHandle) {
     int32_t status = 0;
     m_gyroHandle = HAL_InitializeAnalogGyro(m_analog->m_port, &status);
@@ -168,7 +170,8 @@ void AnalogGyro::InitGyro() {
 }
 
 void AnalogGyro::Calibrate() {
-  if (StatusIsFatal()) return;
+  if (StatusIsFatal())
+    return;
   int32_t status = 0;
   HAL_CalibrateAnalogGyro(m_gyroHandle, &status);
   wpi_setErrorWithContext(status, HAL_GetErrorMessage(status));
@@ -187,7 +190,8 @@ void AnalogGyro::Calibrate() {
  *         integration of the returned rate from the gyro.
  */
 double AnalogGyro::GetAngle() const {
-  if (StatusIsFatal()) return 0.0;
+  if (StatusIsFatal())
+    return 0.0;
   int32_t status = 0;
   double value = HAL_GetAnalogGyroAngle(m_gyroHandle, &status);
   wpi_setErrorWithContext(status, HAL_GetErrorMessage(status));
@@ -202,7 +206,8 @@ double AnalogGyro::GetAngle() const {
  * @return the current rate in degrees per second
  */
 double AnalogGyro::GetRate() const {
-  if (StatusIsFatal()) return 0.0;
+  if (StatusIsFatal())
+    return 0.0;
   int32_t status = 0;
   double value = HAL_GetAnalogGyroRate(m_gyroHandle, &status);
   wpi_setErrorWithContext(status, HAL_GetErrorMessage(status));
@@ -216,7 +221,8 @@ double AnalogGyro::GetRate() const {
  * @return the current offset value
  */
 double AnalogGyro::GetOffset() const {
-  if (StatusIsFatal()) return 0.0;
+  if (StatusIsFatal())
+    return 0.0;
   int32_t status = 0;
   double value = HAL_GetAnalogGyroOffset(m_gyroHandle, &status);
   wpi_setErrorWithContext(status, HAL_GetErrorMessage(status));
@@ -230,7 +236,8 @@ double AnalogGyro::GetOffset() const {
  * @return the current center value
  */
 int AnalogGyro::GetCenter() const {
-  if (StatusIsFatal()) return 0;
+  if (StatusIsFatal())
+    return 0;
   int32_t status = 0;
   int value = HAL_GetAnalogGyroCenter(m_gyroHandle, &status);
   wpi_setErrorWithContext(status, HAL_GetErrorMessage(status));
@@ -263,7 +270,8 @@ void AnalogGyro::SetSensitivity(double voltsPerDegreePerSecond) {
  * @param volts The size of the deadband in volts
  */
 void AnalogGyro::SetDeadband(double volts) {
-  if (StatusIsFatal()) return;
+  if (StatusIsFatal())
+    return;
   int32_t status = 0;
   HAL_SetAnalogGyroDeadband(m_gyroHandle, volts, &status);
   wpi_setErrorWithContext(status, HAL_GetErrorMessage(status));

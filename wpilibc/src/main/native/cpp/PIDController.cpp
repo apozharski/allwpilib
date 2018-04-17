@@ -21,7 +21,7 @@
 using namespace frc;
 
 template <class T>
-constexpr const T& clamp(const T& value, const T& low, const T& high) {
+constexpr const T &clamp(const T &value, const T &low, const T &high) {
   return std::max(low, std::min(value, high));
 }
 
@@ -37,8 +37,8 @@ constexpr const T& clamp(const T& value, const T& low, const T& high) {
  *               effects calculations of the integral and differental terms.
  *               The default is 50ms.
  */
-PIDController::PIDController(double Kp, double Ki, double Kd, PIDSource* source,
-                             PIDOutput* output, double period)
+PIDController::PIDController(double Kp, double Ki, double Kd, PIDSource *source,
+                             PIDOutput *output, double period)
     : PIDController(Kp, Ki, Kd, 0.0, source, output, period) {}
 
 /**
@@ -54,7 +54,7 @@ PIDController::PIDController(double Kp, double Ki, double Kd, PIDSource* source,
  *               The default is 50ms.
  */
 PIDController::PIDController(double Kp, double Ki, double Kd, double Kf,
-                             PIDSource* source, PIDOutput* output,
+                             PIDSource *source, PIDOutput *output,
                              double period)
     : SendableBase(false) {
   m_controlLoop = std::make_unique<Notifier>(&PIDController::Calculate, this);
@@ -95,8 +95,8 @@ PIDController::PIDController(double Kp, double Ki, double Kd, double Kf,
  *               effects calculations of the integral and differental terms.
  *               The default is 50ms.
  */
-PIDController::PIDController(double Kp, double Ki, double Kd, PIDSource& source,
-                             PIDOutput& output, double period)
+PIDController::PIDController(double Kp, double Ki, double Kd, PIDSource &source,
+                             PIDOutput &output, double period)
     : PIDController(Kp, Ki, Kd, 0.0, &source, &output, period) {}
 
 /**
@@ -112,7 +112,7 @@ PIDController::PIDController(double Kp, double Ki, double Kd, PIDSource& source,
  *               The default is 50ms.
  */
 PIDController::PIDController(double Kp, double Ki, double Kd, double Kf,
-                             PIDSource& source, PIDOutput& output,
+                             PIDSource &source, PIDOutput &output,
                              double period)
     : PIDController(Kp, Ki, Kd, Kf, &source, &output, period) {}
 
@@ -126,7 +126,8 @@ PIDController::~PIDController() {
  * This should only be called by the Notifier.
  */
 void PIDController::Calculate() {
-  if (m_origSource == nullptr || m_pidOutput == nullptr) return;
+  if (m_origSource == nullptr || m_pidOutput == nullptr)
+    return;
 
   bool enabled;
   {
@@ -557,15 +558,15 @@ bool PIDController::OnTarget() const {
 
   std::lock_guard<wpi::mutex> lock(m_thisMutex);
   switch (m_toleranceType) {
-    case kPercentTolerance:
-      return std::fabs(error) < m_tolerance / 100 * m_inputRange;
-      break;
-    case kAbsoluteTolerance:
-      return std::fabs(error) < m_tolerance;
-      break;
-    case kNoTolerance:
-      // TODO: this case needs an error
-      return false;
+  case kPercentTolerance:
+    return std::fabs(error) < m_tolerance / 100 * m_inputRange;
+    break;
+  case kAbsoluteTolerance:
+    return std::fabs(error) < m_tolerance;
+    break;
+  case kNoTolerance:
+    // TODO: this case needs an error
+    return false;
   }
   return false;
 }
@@ -627,7 +628,7 @@ void PIDController::Reset() {
   m_result = 0;
 }
 
-void PIDController::InitSendable(SendableBuilder& builder) {
+void PIDController::InitSendable(SendableBuilder &builder) {
   builder.SetSmartDashboardType("PIDController");
   builder.SetSafeState([=]() { Reset(); });
   builder.AddDoubleProperty("p", [=]() { return GetP(); },

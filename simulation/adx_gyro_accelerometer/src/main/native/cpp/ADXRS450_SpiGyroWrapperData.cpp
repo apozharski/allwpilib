@@ -28,20 +28,20 @@ const double ADXRS450_SpiGyroWrapper::kMaxAngleDeltaPerMessage = 0.1875;
 const int ADXRS450_SpiGyroWrapper::kPacketSize = 4;
 
 template <class T>
-constexpr const T& clamp(const T& value, const T& low, const T& high) {
+constexpr const T &clamp(const T &value, const T &low, const T &high) {
   return std::max(low, std::min(value, high));
 }
 
-static void ADXRS450SPI_ReadBufferCallback(const char* name, void* param,
-                                           uint8_t* buffer, uint32_t count) {
-  auto sim = static_cast<ADXRS450_SpiGyroWrapper*>(param);
+static void ADXRS450SPI_ReadBufferCallback(const char *name, void *param,
+                                           uint8_t *buffer, uint32_t count) {
+  auto sim = static_cast<ADXRS450_SpiGyroWrapper *>(param);
   sim->HandleRead(buffer, count);
 }
 
-static void ADXRS450SPI_ReadAutoReceivedData(const char* name, void* param,
-                                             uint8_t* buffer, int32_t numToRead,
-                                             int32_t* outputCount) {
-  auto sim = static_cast<ADXRS450_SpiGyroWrapper*>(param);
+static void ADXRS450SPI_ReadAutoReceivedData(const char *name, void *param,
+                                             uint8_t *buffer, int32_t numToRead,
+                                             int32_t *outputCount) {
+  auto sim = static_cast<ADXRS450_SpiGyroWrapper *>(param);
   sim->HandleAutoReceiveData(buffer, numToRead, *outputCount);
 }
 
@@ -65,14 +65,14 @@ void ADXRS450_SpiGyroWrapper::ResetData() {
   m_angleCallbacks = nullptr;
 }
 
-void ADXRS450_SpiGyroWrapper::HandleRead(uint8_t* buffer, uint32_t count) {
+void ADXRS450_SpiGyroWrapper::HandleRead(uint8_t *buffer, uint32_t count) {
   int returnCode = 0x00400AE0;
   std::memcpy(&buffer[0], &returnCode, sizeof(returnCode));
 }
 
-void ADXRS450_SpiGyroWrapper::HandleAutoReceiveData(uint8_t* buffer,
+void ADXRS450_SpiGyroWrapper::HandleAutoReceiveData(uint8_t *buffer,
                                                     int32_t numToRead,
-                                                    int32_t& outputCount) {
+                                                    int32_t &outputCount) {
   std::lock_guard<wpi::mutex> lock(m_dataMutex);
   int32_t messagesToSend = std::abs(
       m_angleDiff > 0 ? std::ceil(m_angleDiff / kMaxAngleDeltaPerMessage)
@@ -108,9 +108,10 @@ void ADXRS450_SpiGyroWrapper::HandleAutoReceiveData(uint8_t* buffer,
 }
 
 int32_t ADXRS450_SpiGyroWrapper::RegisterAngleCallback(
-    HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify) {
+    HAL_NotifyCallback callback, void *param, HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);

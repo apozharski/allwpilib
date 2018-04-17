@@ -9,7 +9,7 @@
 
 using namespace frc;
 
-JoystickButton::JoystickButton(GenericHID* joystick, int buttonNumber)
+JoystickButton::JoystickButton(GenericHID *joystick, int buttonNumber)
     : m_joystick(joystick), m_buttonNumber(buttonNumber) {}
 
 bool JoystickButton::Get() { return m_joystick->GetRawButton(m_buttonNumber); }

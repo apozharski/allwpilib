@@ -20,7 +20,7 @@ struct CANStatus {
 };
 
 class RobotController {
- public:
+public:
   RobotController() = delete;
   static int GetFPGAVersion();
   static int64_t GetFPGARevision();
@@ -44,4 +44,4 @@ class RobotController {
   static int GetFaultCount6V();
   static CANStatus GetCANStatus();
 };
-}  // namespace frc
+} // namespace frc

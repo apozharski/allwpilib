@@ -20,21 +20,21 @@
 
 namespace hal {
 class SerialHelper {
- public:
+public:
   SerialHelper();
 
-  std::string GetVISASerialPortName(HAL_SerialPort port, int32_t* status);
-  std::string GetOSSerialPortName(HAL_SerialPort port, int32_t* status);
+  std::string GetVISASerialPortName(HAL_SerialPort port, int32_t *status);
+  std::string GetOSSerialPortName(HAL_SerialPort port, int32_t *status);
 
-  std::vector<std::string> GetVISASerialPortList(int32_t* status);
-  std::vector<std::string> GetOSSerialPortList(int32_t* status);
+  std::vector<std::string> GetVISASerialPortList(int32_t *status);
+  std::vector<std::string> GetOSSerialPortList(int32_t *status);
 
- private:
+private:
   void SortHubPathVector();
-  void CoiteratedSort(llvm::SmallVectorImpl<llvm::SmallString<16>>& vec);
-  void QueryHubPaths(int32_t* status);
+  void CoiteratedSort(llvm::SmallVectorImpl<llvm::SmallString<16>> &vec);
+  void QueryHubPaths(int32_t *status);
 
-  int32_t GetIndexForPort(HAL_SerialPort port, int32_t* status);
+  int32_t GetIndexForPort(HAL_SerialPort port, int32_t *status);
 
   // Vectors to hold data before sorting.
   // Note we will most likely have at max 2 instances, and the longest string
@@ -49,4 +49,4 @@ class SerialHelper {
   static wpi::mutex m_nameMutex;
   static std::string m_usbNames[2];
 };
-}  // namespace hal
+} // namespace hal

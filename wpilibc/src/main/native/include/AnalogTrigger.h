@@ -21,9 +21,9 @@ class AnalogInput;
 class AnalogTrigger : public SensorBase {
   friend class AnalogTriggerOutput;
 
- public:
+public:
   explicit AnalogTrigger(int channel);
-  explicit AnalogTrigger(AnalogInput* channel);
+  explicit AnalogTrigger(AnalogInput *channel);
   ~AnalogTrigger() override;
 
   void SetLimitsVoltage(double lower, double upper);
@@ -33,16 +33,16 @@ class AnalogTrigger : public SensorBase {
   int GetIndex() const;
   bool GetInWindow();
   bool GetTriggerState();
-  std::shared_ptr<AnalogTriggerOutput> CreateOutput(
-      AnalogTriggerType type) const;
+  std::shared_ptr<AnalogTriggerOutput>
+  CreateOutput(AnalogTriggerType type) const;
 
-  void InitSendable(SendableBuilder& builder) override;
+  void InitSendable(SendableBuilder &builder) override;
 
- private:
+private:
   int m_index;
   HAL_AnalogTriggerHandle m_trigger;
-  AnalogInput* m_analogInput = nullptr;
+  AnalogInput *m_analogInput = nullptr;
   bool m_ownsAnalog = false;
 };
 
-}  // namespace frc
+} // namespace frc

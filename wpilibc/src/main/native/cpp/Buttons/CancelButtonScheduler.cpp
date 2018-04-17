@@ -12,8 +12,8 @@
 
 using namespace frc;
 
-CancelButtonScheduler::CancelButtonScheduler(bool last, Trigger* button,
-                                             Command* orders)
+CancelButtonScheduler::CancelButtonScheduler(bool last, Trigger *button,
+                                             Command *orders)
     : ButtonScheduler(last, button, orders) {
   pressedLast = m_button->Grab();
 }

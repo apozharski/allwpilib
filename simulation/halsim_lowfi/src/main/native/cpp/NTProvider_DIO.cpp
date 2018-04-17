@@ -26,7 +26,7 @@ void HALSimNTProviderDIO::OnCallback(uint32_t chan,
 void HALSimNTProviderDIO::OnInitializedChannel(
     uint32_t chan, std::shared_ptr<nt::NetworkTable> table) {
   table->GetEntry("value").AddListener(
-      [=](const nt::EntryNotification& ev) -> void {
+      [=](const nt::EntryNotification &ev) -> void {
         if (HALSIM_GetDIOIsInput(chan)) {
           HALSIM_SetDIOValue(chan, ev.value->GetBoolean());
         }

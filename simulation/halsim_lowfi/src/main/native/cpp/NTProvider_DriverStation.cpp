@@ -44,18 +44,18 @@ void HALSimNTProviderDriverStation::OnCallback(
   int station = 0;
 
   switch (allianceValue) {
-    case HAL_AllianceStationID_kRed1:
-    case HAL_AllianceStationID_kBlue1:
-      station = 1;
-      break;
-    case HAL_AllianceStationID_kRed2:
-    case HAL_AllianceStationID_kBlue2:
-      station = 2;
-      break;
-    case HAL_AllianceStationID_kRed3:
-    case HAL_AllianceStationID_kBlue3:
-      station = 3;
-      break;
+  case HAL_AllianceStationID_kRed1:
+  case HAL_AllianceStationID_kBlue1:
+    station = 1;
+    break;
+  case HAL_AllianceStationID_kRed2:
+  case HAL_AllianceStationID_kBlue2:
+    station = 2;
+    break;
+  case HAL_AllianceStationID_kRed3:
+  case HAL_AllianceStationID_kBlue3:
+    station = 3;
+    break;
   }
   alliance->GetEntry("station").SetDouble(station);
 }

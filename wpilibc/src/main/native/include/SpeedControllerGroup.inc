@@ -11,13 +11,13 @@ namespace frc {
 
 template <class... SpeedControllers>
 SpeedControllerGroup::SpeedControllerGroup(
-    SpeedController& speedController, SpeedControllers&... speedControllers)
+    SpeedController &speedController, SpeedControllers &... speedControllers)
     : m_speedControllers{speedController, speedControllers...} {
-  for (auto& speedController : m_speedControllers)
+  for (auto &speedController : m_speedControllers)
     AddChild(&speedController.get());
   static int instances = 0;
   ++instances;
   SetName("SpeedControllerGroup", instances);
 }
 
-}  // namespace frc
+} // namespace frc

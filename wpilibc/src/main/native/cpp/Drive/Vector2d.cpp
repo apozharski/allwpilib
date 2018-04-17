@@ -38,7 +38,7 @@ void Vector2d::Rotate(double angle) {
  *
  * @param vec Vector with which to perform dot product.
  */
-double Vector2d::Dot(const Vector2d& vec) const {
+double Vector2d::Dot(const Vector2d &vec) const {
   return x * vec.x + y * vec.y;
 }
 
@@ -52,6 +52,6 @@ double Vector2d::Magnitude() const { return std::sqrt(x * x + y * y); }
  *
  * @param vec Vector onto which to project this vector.
  */
-double Vector2d::ScalarProject(const Vector2d& vec) const {
+double Vector2d::ScalarProject(const Vector2d &vec) const {
   return Dot(vec) / vec.Magnitude();
 }

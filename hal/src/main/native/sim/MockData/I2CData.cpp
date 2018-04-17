@@ -19,10 +19,10 @@ void InitializeI2CData() {
   static I2CData sid[2];
   ::hal::SimI2CData = sid;
 }
-}  // namespace init
-}  // namespace hal
+} // namespace init
+} // namespace hal
 
-I2CData* hal::SimI2CData;
+I2CData *hal::SimI2CData;
 
 void I2CData::ResetData() {
   m_initialized = false;
@@ -37,10 +37,11 @@ I2CData::~I2CData() {}
 // Initialize
 ///////////////////////////////////////////
 int32_t I2CData::RegisterInitializedCallback(HAL_NotifyCallback callback,
-                                             void* param,
+                                             void *param,
                                              HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -73,9 +74,10 @@ void I2CData::SetInitialized(HAL_Bool initialized) {
 }
 
 int32_t I2CData::RegisterReadCallback(HAL_BufferCallback callback,
-                                      void* param) {
+                                      void *param) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -90,9 +92,10 @@ void I2CData::CancelReadCallback(int32_t uid) {
 }
 
 int32_t I2CData::RegisterWriteCallback(HAL_ConstBufferCallback callback,
-                                       void* param) {
+                                       void *param) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -106,13 +109,13 @@ void I2CData::CancelWriteCallback(int32_t uid) {
   m_writeCallbacks = CancelCallback(m_writeCallbacks, uid);
 }
 
-void I2CData::Write(int32_t deviceAddress, const uint8_t* dataToSend,
+void I2CData::Write(int32_t deviceAddress, const uint8_t *dataToSend,
                     int32_t sendSize) {
   std::lock_guard<wpi::mutex> lock(m_dataMutex);
-  InvokeCallback(m_writeCallbacks, "Write", const_cast<uint8_t*>(dataToSend),
+  InvokeCallback(m_writeCallbacks, "Write", const_cast<uint8_t *>(dataToSend),
                  sendSize);
 }
-void I2CData::Read(int32_t deviceAddress, uint8_t* buffer, int32_t count) {
+void I2CData::Read(int32_t deviceAddress, uint8_t *buffer, int32_t count) {
   std::lock_guard<wpi::mutex> lock(m_dataMutex);
   InvokeCallback(m_readCallbacks, "Read", buffer, count);
 }
@@ -122,7 +125,7 @@ void HALSIM_ResetI2CData(int32_t index) { SimI2CData[index].ResetData(); }
 
 int32_t HALSIM_RegisterI2CInitializedCallback(int32_t index,
                                               HAL_NotifyCallback callback,
-                                              void* param,
+                                              void *param,
                                               HAL_Bool initialNotify) {
   return SimI2CData[index].RegisterInitializedCallback(callback, param,
                                                        initialNotify);
@@ -142,7 +145,7 @@ void HALSIM_SetI2CInitialized(int32_t index, HAL_Bool initialized) {
 
 int32_t HALSIM_RegisterI2CReadCallback(int32_t index,
                                        HAL_BufferCallback callback,
-                                       void* param) {
+                                       void *param) {
   return SimI2CData[index].RegisterReadCallback(callback, param);
 }
 void HALSIM_CancelI2CReadCallback(int32_t index, int32_t uid) {
@@ -151,11 +154,11 @@ void HALSIM_CancelI2CReadCallback(int32_t index, int32_t uid) {
 
 int32_t HALSIM_RegisterI2CWriteCallback(int32_t index,
                                         HAL_ConstBufferCallback callback,
-                                        void* param) {
+                                        void *param) {
   return SimI2CData[index].RegisterWriteCallback(callback, param);
 }
 void HALSIM_CancelI2CWriteCallback(int32_t index, int32_t uid) {
   SimI2CData[index].CancelWriteCallback(uid);
 }
 
-}  // extern "C"
+} // extern "C"

@@ -24,25 +24,25 @@ namespace frc {
 typedef std::function<void()> TimerEventHandler;
 
 class Notifier : public ErrorBase {
- public:
+public:
   explicit Notifier(TimerEventHandler handler);
 
   template <typename Callable, typename Arg, typename... Args>
-  Notifier(Callable&& f, Arg&& arg, Args&&... args)
+  Notifier(Callable &&f, Arg &&arg, Args &&... args)
       : Notifier(std::bind(std::forward<Callable>(f), std::forward<Arg>(arg),
                            std::forward<Args>(args)...)) {}
 
   virtual ~Notifier();
 
-  Notifier(const Notifier&) = delete;
-  Notifier& operator=(const Notifier&) = delete;
+  Notifier(const Notifier &) = delete;
+  Notifier &operator=(const Notifier &) = delete;
 
   void SetHandler(TimerEventHandler handler);
   void StartSingle(double delay);
   void StartPeriodic(double period);
   void Stop();
 
- private:
+private:
   // update the HAL alarm
   void UpdateAlarm();
   // the thread waiting on the HAL alarm
@@ -65,4 +65,4 @@ class Notifier : public ErrorBase {
   bool m_periodic = false;
 };
 
-}  // namespace frc
+} // namespace frc

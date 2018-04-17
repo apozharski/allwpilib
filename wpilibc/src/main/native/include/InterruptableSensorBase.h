@@ -15,7 +15,7 @@
 namespace frc {
 
 class InterruptableSensorBase : public SensorBase {
- public:
+public:
   enum WaitResult {
     kTimeout = 0x0,
     kRisingEdge = 0x1,
@@ -30,7 +30,7 @@ class InterruptableSensorBase : public SensorBase {
 
   // Asynchronous handler version.
   virtual void RequestInterrupts(HAL_InterruptHandlerFunction handler,
-                                 void* param);
+                                 void *param);
 
   // Synchronous wait version.
   virtual void RequestInterrupts();
@@ -56,9 +56,9 @@ class InterruptableSensorBase : public SensorBase {
 
   virtual void SetUpSourceEdge(bool risingEdge, bool fallingEdge);
 
- protected:
+protected:
   HAL_InterruptHandle m_interrupt = HAL_kInvalidHandle;
   void AllocateInterrupts(bool watcher);
 };
 
-}  // namespace frc
+} // namespace frc

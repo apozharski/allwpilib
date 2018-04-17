@@ -57,7 +57,7 @@ public class PIDController extends SendableBase implements PIDInterface, Sendabl
   private double m_error = 0.0;
   private double m_result = 0.0;
   private double m_period = kDefaultPeriod;
-  private PIDSourceType m_pidSourceType = PIDSourceType.kdisplacement;
+  private PIDSourceType m_pidSourceType = PIDSourceType.kDisplacement;
 
   PIDSource m_origSource;
   LinearDigitalFilter m_filter;
@@ -281,7 +281,7 @@ public class PIDController extends SendableBase implements PIDInterface, Sendabl
 
       m_thisMutex.lock();
       try {
-	input = m_pidInput.pidGet(m_pidSourceType);
+        input = m_pidInput.pidGet(m_pidSourceType);
         P = m_P;
         I = m_I;
         D = m_D;
@@ -363,7 +363,7 @@ public class PIDController extends SendableBase implements PIDInterface, Sendabl
    * update period (see the default period in this class's constructor).
    */
   protected double calculateFeedForward() {
-    if (m_pidInput.getPIDSourceType().equals(PIDSourceType.kRate)) {
+    if (m_pidSourceType.equals(PIDSourceType.kRate)) {
       return m_F * getSetpoint();
     } else {
       double temp = m_F * getDeltaSetpoint();
@@ -675,7 +675,7 @@ public class PIDController extends SendableBase implements PIDInterface, Sendabl
   public double getError() {
     m_thisMutex.lock();
     try {
-      return getContinuousError(getSetpoint() - m_pidInput.pidGet());
+      return getContinuousError(getSetpoint() - m_pidInput.pidGet(m_pidSourceType));
     } finally {
       m_thisMutex.unlock();
     }

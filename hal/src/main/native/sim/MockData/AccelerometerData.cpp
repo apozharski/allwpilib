@@ -17,10 +17,10 @@ void InitializeAccelerometerData() {
   static AccelerometerData sad[1];
   ::hal::SimAccelerometerData = sad;
 }
-}  // namespace init
-}  // namespace hal
+} // namespace init
+} // namespace hal
 
-AccelerometerData* hal::SimAccelerometerData;
+AccelerometerData *hal::SimAccelerometerData;
 void AccelerometerData::ResetData() {
   m_active = false;
   m_activeCallbacks = nullptr;
@@ -35,10 +35,11 @@ void AccelerometerData::ResetData() {
 }
 
 int32_t AccelerometerData::RegisterActiveCallback(HAL_NotifyCallback callback,
-                                                  void* param,
+                                                  void *param,
                                                   HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -71,10 +72,11 @@ void AccelerometerData::SetActive(HAL_Bool active) {
 }
 
 int32_t AccelerometerData::RegisterRangeCallback(HAL_NotifyCallback callback,
-                                                 void* param,
+                                                 void *param,
                                                  HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -107,10 +109,11 @@ void AccelerometerData::SetRange(HAL_AccelerometerRange range) {
 }
 
 int32_t AccelerometerData::RegisterXCallback(HAL_NotifyCallback callback,
-                                             void* param,
+                                             void *param,
                                              HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -143,10 +146,11 @@ void AccelerometerData::SetX(double x) {
 }
 
 int32_t AccelerometerData::RegisterYCallback(HAL_NotifyCallback callback,
-                                             void* param,
+                                             void *param,
                                              HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -179,10 +183,11 @@ void AccelerometerData::SetY(double y) {
 }
 
 int32_t AccelerometerData::RegisterZCallback(HAL_NotifyCallback callback,
-                                             void* param,
+                                             void *param,
                                              HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -221,7 +226,7 @@ void HALSIM_ResetAccelerometerData(int32_t index) {
 
 int32_t HALSIM_RegisterAccelerometerActiveCallback(int32_t index,
                                                    HAL_NotifyCallback callback,
-                                                   void* param,
+                                                   void *param,
                                                    HAL_Bool initialNotify) {
   return SimAccelerometerData[index].RegisterActiveCallback(callback, param,
                                                             initialNotify);
@@ -241,7 +246,7 @@ void HALSIM_SetAccelerometerActive(int32_t index, HAL_Bool active) {
 
 int32_t HALSIM_RegisterAccelerometerRangeCallback(int32_t index,
                                                   HAL_NotifyCallback callback,
-                                                  void* param,
+                                                  void *param,
                                                   HAL_Bool initialNotify) {
   return SimAccelerometerData[index].RegisterRangeCallback(callback, param,
                                                            initialNotify);
@@ -261,7 +266,7 @@ void HALSIM_SetAccelerometerRange(int32_t index, HAL_AccelerometerRange range) {
 
 int32_t HALSIM_RegisterAccelerometerXCallback(int32_t index,
                                               HAL_NotifyCallback callback,
-                                              void* param,
+                                              void *param,
                                               HAL_Bool initialNotify) {
   return SimAccelerometerData[index].RegisterXCallback(callback, param,
                                                        initialNotify);
@@ -281,7 +286,7 @@ void HALSIM_SetAccelerometerX(int32_t index, double x) {
 
 int32_t HALSIM_RegisterAccelerometerYCallback(int32_t index,
                                               HAL_NotifyCallback callback,
-                                              void* param,
+                                              void *param,
                                               HAL_Bool initialNotify) {
   return SimAccelerometerData[index].RegisterYCallback(callback, param,
                                                        initialNotify);
@@ -301,7 +306,7 @@ void HALSIM_SetAccelerometerY(int32_t index, double y) {
 
 int32_t HALSIM_RegisterAccelerometerZCallback(int32_t index,
                                               HAL_NotifyCallback callback,
-                                              void* param,
+                                              void *param,
                                               HAL_Bool initialNotify) {
   return SimAccelerometerData[index].RegisterZCallback(callback, param,
                                                        initialNotify);
@@ -321,7 +326,7 @@ void HALSIM_SetAccelerometerZ(int32_t index, double z) {
 
 void HALSIM_RegisterAccelerometerAllCallbacks(int32_t index,
                                               HAL_NotifyCallback callback,
-                                              void* param,
+                                              void *param,
                                               HAL_Bool initialNotify) {
   SimAccelerometerData[index].RegisterActiveCallback(callback, param,
                                                      initialNotify);
@@ -331,4 +336,4 @@ void HALSIM_RegisterAccelerometerAllCallbacks(int32_t index,
   SimAccelerometerData[index].RegisterYCallback(callback, param, initialNotify);
   SimAccelerometerData[index].RegisterZCallback(callback, param, initialNotify);
 }
-}  // extern "C"
+} // extern "C"

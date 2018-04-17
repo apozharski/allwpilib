@@ -31,7 +31,7 @@ namespace frc {
  * Also publishes camera information to NetworkTables.
  */
 class CameraServer : public ErrorBase {
- public:
+public:
   static constexpr uint16_t kBasePort = 1181;
   static constexpr int kSize640x480 = 0;
   static constexpr int kSize320x240 = 1;
@@ -40,7 +40,7 @@ class CameraServer : public ErrorBase {
   /**
    * Get the CameraServer instance.
    */
-  static CameraServer* GetInstance();
+  static CameraServer *GetInstance();
 
 #ifdef __linux__
   // USBCamera does not work on anything except Linux.
@@ -91,7 +91,7 @@ class CameraServer : public ErrorBase {
    *
    * @param camera Camera
    */
-  void StartAutomaticCapture(const cs::VideoSource& camera);
+  void StartAutomaticCapture(const cs::VideoSource &camera);
 
   /**
    * Adds an Axis IP camera.
@@ -109,7 +109,7 @@ class CameraServer : public ErrorBase {
    *
    * @param host Camera host IP or DNS name (e.g. "10.x.y.11")
    */
-  cs::AxisCamera AddAxisCamera(const char* host);
+  cs::AxisCamera AddAxisCamera(const char *host);
 
   /**
    * Adds an Axis IP camera.
@@ -118,7 +118,7 @@ class CameraServer : public ErrorBase {
    *
    * @param host Camera host IP or DNS name (e.g. "10.x.y.11")
    */
-  cs::AxisCamera AddAxisCamera(const std::string& host);
+  cs::AxisCamera AddAxisCamera(const std::string &host);
 
   /**
    * Adds an Axis IP camera.
@@ -153,7 +153,7 @@ class CameraServer : public ErrorBase {
    * @param name The name to give the camera
    * @param host Camera host IP or DNS name (e.g. "10.x.y.11")
    */
-  cs::AxisCamera AddAxisCamera(llvm::StringRef name, const char* host);
+  cs::AxisCamera AddAxisCamera(llvm::StringRef name, const char *host);
 
   /**
    * Adds an Axis IP camera.
@@ -161,7 +161,7 @@ class CameraServer : public ErrorBase {
    * @param name The name to give the camera
    * @param host Camera host IP or DNS name (e.g. "10.x.y.11")
    */
-  cs::AxisCamera AddAxisCamera(llvm::StringRef name, const std::string& host);
+  cs::AxisCamera AddAxisCamera(llvm::StringRef name, const std::string &host);
 
   /**
    * Adds an Axis IP camera.
@@ -197,7 +197,7 @@ class CameraServer : public ErrorBase {
    *
    * @param camera Camera (e.g. as returned by startAutomaticCapture).
    */
-  cs::CvSink GetVideo(const cs::VideoSource& camera);
+  cs::CvSink GetVideo(const cs::VideoSource &camera);
 
   /**
    * Get OpenCV access to the specified camera.  This allows you to get
@@ -236,7 +236,7 @@ class CameraServer : public ErrorBase {
    *
    * @param server Server
    */
-  void AddServer(const cs::VideoSink& server);
+  void AddServer(const cs::VideoSink &server);
 
   /**
    * Removes a server by name.
@@ -265,7 +265,7 @@ class CameraServer : public ErrorBase {
    *
    * @param camera Camera
    */
-  void AddCamera(const cs::VideoSource& camera);
+  void AddCamera(const cs::VideoSource &camera);
 
   /**
    * Removes a camera by name.
@@ -285,7 +285,7 @@ class CameraServer : public ErrorBase {
    */
   void SetSize(int size);
 
- private:
+private:
   CameraServer();
 
   std::shared_ptr<nt::NetworkTable> GetSourceTable(CS_Source source);
@@ -293,7 +293,7 @@ class CameraServer : public ErrorBase {
   std::vector<std::string> GetSourceStreamValues(CS_Source source);
   void UpdateStreamValues();
 
-  static constexpr char const* kPublishName = "/CameraPublisher";
+  static constexpr char const *kPublishName = "/CameraPublisher";
 
   wpi::mutex m_mutex;
   std::atomic<int> m_defaultUsbDevice;
@@ -308,6 +308,6 @@ class CameraServer : public ErrorBase {
   std::vector<std::string> m_addresses;
 };
 
-}  // namespace frc
+} // namespace frc
 
 #include "CameraServer.inc"

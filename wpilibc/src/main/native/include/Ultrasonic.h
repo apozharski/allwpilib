@@ -34,12 +34,12 @@ class DigitalOutput;
  * (time of flight).
  */
 class Ultrasonic : public SensorBase, public PIDSource {
- public:
+public:
   enum DistanceUnit { kInches = 0, kMilliMeters = 1 };
 
-  Ultrasonic(DigitalOutput* pingChannel, DigitalInput* echoChannel,
+  Ultrasonic(DigitalOutput *pingChannel, DigitalInput *echoChannel,
              DistanceUnit units = kInches);
-  Ultrasonic(DigitalOutput& pingChannel, DigitalInput& echoChannel,
+  Ultrasonic(DigitalOutput &pingChannel, DigitalInput &echoChannel,
              DistanceUnit units = kInches);
   Ultrasonic(std::shared_ptr<DigitalOutput> pingChannel,
              std::shared_ptr<DigitalInput> echoChannel,
@@ -60,9 +60,9 @@ class Ultrasonic : public SensorBase, public PIDSource {
   void SetDistanceUnits(DistanceUnit units);
   DistanceUnit GetDistanceUnits() const;
 
-  void InitSendable(SendableBuilder& builder) override;
+  void InitSendable(SendableBuilder &builder) override;
 
- private:
+private:
   void Initialize();
 
   static void UltrasonicChecker();
@@ -81,7 +81,7 @@ class Ultrasonic : public SensorBase, public PIDSource {
   static std::thread m_thread;
 
   // Ultrasonic sensors
-  static std::vector<Ultrasonic*> m_sensors;
+  static std::vector<Ultrasonic *> m_sensors;
 
   // Automatic round-robin mode
   static std::atomic<bool> m_automaticEnabled;
@@ -93,4 +93,4 @@ class Ultrasonic : public SensorBase, public PIDSource {
   DistanceUnit m_units;
 };
 
-}  // namespace frc
+} // namespace frc

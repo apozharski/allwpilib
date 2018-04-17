@@ -30,28 +30,28 @@ class ErrorBase;
  * Error object represents a library error.
  */
 class Error {
- public:
+public:
   typedef int Code;
 
   Error() = default;
 
-  Error(const Error&) = delete;
-  Error& operator=(const Error&) = delete;
+  Error(const Error &) = delete;
+  Error &operator=(const Error &) = delete;
 
-  void Clone(const Error& error);
+  void Clone(const Error &error);
   Code GetCode() const;
   std::string GetMessage() const;
   std::string GetFilename() const;
   std::string GetFunction() const;
   int GetLineNumber() const;
-  const ErrorBase* GetOriginatingObject() const;
+  const ErrorBase *GetOriginatingObject() const;
   double GetTimestamp() const;
   void Clear();
-  void Set(Code code, const llvm::Twine& contextMessage,
+  void Set(Code code, const llvm::Twine &contextMessage,
            llvm::StringRef filename, llvm::StringRef function, int lineNumber,
-           const ErrorBase* originatingObject);
+           const ErrorBase *originatingObject);
 
- private:
+private:
   void Report();
 
   Code m_code = 0;
@@ -59,8 +59,8 @@ class Error {
   std::string m_filename;
   std::string m_function;
   int m_lineNumber = 0;
-  const ErrorBase* m_originatingObject = nullptr;
+  const ErrorBase *m_originatingObject = nullptr;
   double m_timestamp = 0.0;
 };
 
-}  // namespace frc
+} // namespace frc

@@ -172,7 +172,7 @@ void PowerDistributionPanel::ClearStickyFaults() {
   }
 }
 
-void PowerDistributionPanel::InitSendable(SendableBuilder& builder) {
+void PowerDistributionPanel::InitSendable(SendableBuilder &builder) {
   builder.SetSmartDashboardType("PowerDistributionPanel");
   for (int i = 0; i < kPDPChannels; ++i) {
     builder.AddDoubleProperty("Chan" + llvm::Twine(i),

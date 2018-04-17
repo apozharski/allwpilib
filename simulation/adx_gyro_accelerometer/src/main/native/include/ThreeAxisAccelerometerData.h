@@ -16,25 +16,25 @@
 
 namespace hal {
 class ThreeAxisAccelerometerData {
- public:
+public:
   ThreeAxisAccelerometerData();
   virtual ~ThreeAxisAccelerometerData();
 
-  int32_t RegisterXCallback(HAL_NotifyCallback callback, void* param,
+  int32_t RegisterXCallback(HAL_NotifyCallback callback, void *param,
                             HAL_Bool initialNotify);
   void CancelXCallback(int32_t uid);
   void InvokeXCallback(HAL_Value value);
   double GetX();
   void SetX(double x);
 
-  int32_t RegisterYCallback(HAL_NotifyCallback callback, void* param,
+  int32_t RegisterYCallback(HAL_NotifyCallback callback, void *param,
                             HAL_Bool initialNotify);
   void CancelYCallback(int32_t uid);
   void InvokeYCallback(HAL_Value value);
   double GetY();
   void SetY(double y);
 
-  int32_t RegisterZCallback(HAL_NotifyCallback callback, void* param,
+  int32_t RegisterZCallback(HAL_NotifyCallback callback, void *param,
                             HAL_Bool initialNotify);
   void CancelZCallback(int32_t uid);
   void InvokeZCallback(HAL_Value value);
@@ -43,7 +43,7 @@ class ThreeAxisAccelerometerData {
 
   virtual void ResetData();
 
- protected:
+protected:
   wpi::mutex m_registerMutex;
   std::atomic<double> m_x{0.0};
   std::shared_ptr<NotifyListenerVector> m_xCallbacks = nullptr;
@@ -52,4 +52,4 @@ class ThreeAxisAccelerometerData {
   std::atomic<double> m_z{0.0};
   std::shared_ptr<NotifyListenerVector> m_zCallbacks = nullptr;
 };
-}  // namespace hal
+} // namespace hal

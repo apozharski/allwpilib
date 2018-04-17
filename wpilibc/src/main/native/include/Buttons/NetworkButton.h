@@ -18,16 +18,16 @@
 namespace frc {
 
 class NetworkButton : public Button {
- public:
-  NetworkButton(const llvm::Twine& tableName, const llvm::Twine& field);
+public:
+  NetworkButton(const llvm::Twine &tableName, const llvm::Twine &field);
   NetworkButton(std::shared_ptr<nt::NetworkTable> table,
-                const llvm::Twine& field);
+                const llvm::Twine &field);
   virtual ~NetworkButton() = default;
 
   virtual bool Get();
 
- private:
+private:
   nt::NetworkTableEntry m_entry;
 };
 
-}  // namespace frc
+} // namespace frc

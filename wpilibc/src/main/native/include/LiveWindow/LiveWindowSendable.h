@@ -21,7 +21,7 @@ namespace frc {
  */
 class WPI_DEPRECATED("use Sendable directly instead") LiveWindowSendable
     : public Sendable {
- public:
+public:
   /**
    * Update the table for this sendable object with the latest values.
    */
@@ -39,10 +39,10 @@ class WPI_DEPRECATED("use Sendable directly instead") LiveWindowSendable
   virtual void StopLiveWindowMode() = 0;
 
   std::string GetName() const override;
-  void SetName(const llvm::Twine& name) override;
+  void SetName(const llvm::Twine &name) override;
   std::string GetSubsystem() const override;
-  void SetSubsystem(const llvm::Twine& subsystem) override;
-  void InitSendable(SendableBuilder& builder) override;
+  void SetSubsystem(const llvm::Twine &subsystem) override;
+  void InitSendable(SendableBuilder &builder) override;
 };
 
-}  // namespace frc
+} // namespace frc

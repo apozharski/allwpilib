@@ -15,13 +15,13 @@ class Trigger;
 class Command;
 
 class ToggleButtonScheduler : public ButtonScheduler {
- public:
-  ToggleButtonScheduler(bool last, Trigger* button, Command* orders);
+public:
+  ToggleButtonScheduler(bool last, Trigger *button, Command *orders);
   virtual ~ToggleButtonScheduler() = default;
   virtual void Execute();
 
- private:
+private:
   bool pressedLast;
 };
 
-}  // namespace frc
+} // namespace frc

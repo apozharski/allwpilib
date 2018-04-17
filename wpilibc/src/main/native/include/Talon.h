@@ -15,8 +15,8 @@ namespace frc {
  * Cross the Road Electronics (CTRE) Talon and Talon SR Speed Controller.
  */
 class Talon : public PWMSpeedController {
- public:
+public:
   explicit Talon(int channel);
 };
 
-}  // namespace frc
+} // namespace frc

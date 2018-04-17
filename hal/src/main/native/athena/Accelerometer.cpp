@@ -80,8 +80,8 @@ enum Register {
 namespace hal {
 namespace init {
 void InitializeAccelerometer() {}
-}  // namespace init
-}  // namespace hal
+} // namespace init
+} // namespace hal
 
 namespace hal {
 
@@ -124,7 +124,8 @@ static void writeRegister(Register reg, uint8_t data) {
   // Execute and wait until it's done (up to a millisecond)
   initialTime = HAL_GetFPGATime(&status);
   while (accel->readSTAT(&status) & 1) {
-    if (HAL_GetFPGATime(&status) > initialTime + 1000) break;
+    if (HAL_GetFPGATime(&status) > initialTime + 1000)
+      break;
   }
 
   // Send a stop transmit/receive message with the data
@@ -135,7 +136,8 @@ static void writeRegister(Register reg, uint8_t data) {
   // Execute and wait until it's done (up to a millisecond)
   initialTime = HAL_GetFPGATime(&status);
   while (accel->readSTAT(&status) & 1) {
-    if (HAL_GetFPGATime(&status) > initialTime + 1000) break;
+    if (HAL_GetFPGATime(&status) > initialTime + 1000)
+      break;
   }
 }
 
@@ -152,7 +154,8 @@ static uint8_t readRegister(Register reg) {
   // Execute and wait until it's done (up to a millisecond)
   initialTime = HAL_GetFPGATime(&status);
   while (accel->readSTAT(&status) & 1) {
-    if (HAL_GetFPGATime(&status) > initialTime + 1000) break;
+    if (HAL_GetFPGATime(&status) > initialTime + 1000)
+      break;
   }
 
   // Receive a message with the data and stop
@@ -163,7 +166,8 @@ static uint8_t readRegister(Register reg) {
   // Execute and wait until it's done (up to a millisecond)
   initialTime = HAL_GetFPGATime(&status);
   while (accel->readSTAT(&status) & 1) {
-    if (HAL_GetFPGATime(&status) > initialTime + 1000) break;
+    if (HAL_GetFPGATime(&status) > initialTime + 1000)
+      break;
   }
 
   return accel->readDATI(&status);
@@ -181,18 +185,18 @@ static double unpackAxis(int16_t raw) {
   raw >>= 4;
 
   switch (accelerometerRange) {
-    case HAL_AccelerometerRange_k2G:
-      return raw / 1024.0;
-    case HAL_AccelerometerRange_k4G:
-      return raw / 512.0;
-    case HAL_AccelerometerRange_k8G:
-      return raw / 256.0;
-    default:
-      return 0.0;
+  case HAL_AccelerometerRange_k2G:
+    return raw / 1024.0;
+  case HAL_AccelerometerRange_k4G:
+    return raw / 512.0;
+  case HAL_AccelerometerRange_k8G:
+    return raw / 256.0;
+  default:
+    return 0.0;
   }
 }
 
-}  // namespace hal
+} // namespace hal
 
 extern "C" {
 
@@ -204,7 +208,7 @@ void HAL_SetAccelerometerActive(HAL_Bool active) {
   initializeAccelerometer();
 
   uint8_t ctrlReg1 = readRegister(kReg_CtrlReg1);
-  ctrlReg1 &= ~1;  // Clear the existing active bit
+  ctrlReg1 &= ~1; // Clear the existing active bit
   writeRegister(kReg_CtrlReg1, ctrlReg1 | (active ? 1 : 0));
 }
 
@@ -218,7 +222,7 @@ void HAL_SetAccelerometerRange(HAL_AccelerometerRange range) {
   accelerometerRange = range;
 
   uint8_t xyzDataCfg = readRegister(kReg_XYZDataCfg);
-  xyzDataCfg &= ~3;  // Clear the existing two range bits
+  xyzDataCfg &= ~3; // Clear the existing two range bits
   writeRegister(kReg_XYZDataCfg, xyzDataCfg | range);
 }
 
@@ -261,4 +265,4 @@ double HAL_GetAccelerometerZ(void) {
   return unpackAxis(raw);
 }
 
-}  // extern "C"
+} // extern "C"

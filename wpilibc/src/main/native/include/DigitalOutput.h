@@ -22,7 +22,7 @@ namespace frc {
  * shouldn't be done here.
  */
 class DigitalOutput : public ErrorBase, public SendableBase {
- public:
+public:
   explicit DigitalOutput(int channel);
   ~DigitalOutput() override;
   void Set(bool value);
@@ -35,12 +35,12 @@ class DigitalOutput : public ErrorBase, public SendableBase {
   void DisablePWM();
   void UpdateDutyCycle(double dutyCycle);
 
-  void InitSendable(SendableBuilder& builder) override;
+  void InitSendable(SendableBuilder &builder) override;
 
- private:
+private:
   int m_channel;
   HAL_DigitalHandle m_handle;
   HAL_DigitalPWMHandle m_pwmGenerator;
 };
 
-}  // namespace frc
+} // namespace frc

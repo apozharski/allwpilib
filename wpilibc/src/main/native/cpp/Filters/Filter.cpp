@@ -11,7 +11,7 @@
 
 using namespace frc;
 
-Filter::Filter(PIDSource& source)
+Filter::Filter(PIDSource &source)
     : m_source(std::shared_ptr<PIDSource>(&source, NullDeleter<PIDSource>())) {}
 
 Filter::Filter(std::shared_ptr<PIDSource> source)

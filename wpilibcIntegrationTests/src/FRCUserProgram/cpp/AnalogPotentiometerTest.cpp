@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "AnalogPotentiometer.h"  // NOLINT(build/include_order)
+#include "AnalogPotentiometer.h" // NOLINT(build/include_order)
 
 #include "AnalogOutput.h"
 #include "RobotController.h"
@@ -19,9 +19,9 @@ static const double kScale = 270.0;
 static const double kAngle = 180.0;
 
 class AnalogPotentiometerTest : public testing::Test {
- protected:
-  AnalogOutput* m_fakePot;
-  AnalogPotentiometer* m_pot;
+protected:
+  AnalogOutput *m_fakePot;
+  AnalogPotentiometer *m_pot;
 
   void SetUp() override {
     m_fakePot = new AnalogOutput(TestBench::kAnalogOutputChannel);

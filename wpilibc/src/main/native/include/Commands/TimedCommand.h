@@ -19,13 +19,13 @@ namespace frc {
  * TimedCommand is used to execute a command for a given amount of time.
  */
 class TimedCommand : public Command {
- public:
-  TimedCommand(const llvm::Twine& name, double timeout);
+public:
+  TimedCommand(const llvm::Twine &name, double timeout);
   explicit TimedCommand(double timeout);
   virtual ~TimedCommand() = default;
 
- protected:
+protected:
   bool IsFinished() override;
 };
 
-}  // namespace frc
+} // namespace frc

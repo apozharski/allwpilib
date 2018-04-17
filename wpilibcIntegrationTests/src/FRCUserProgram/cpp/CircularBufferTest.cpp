@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "circular_buffer.h"  // NOLINT(build/include_order)
+#include "circular_buffer.h" // NOLINT(build/include_order)
 
 #include <array>
 
@@ -26,7 +26,7 @@ static const std::array<double, 8> pushBackOut = {
 TEST(CircularBufferTest, PushFrontTest) {
   circular_buffer<double> queue(8);
 
-  for (auto& value : values) {
+  for (auto &value : values) {
     queue.push_front(value);
   }
 
@@ -38,7 +38,7 @@ TEST(CircularBufferTest, PushFrontTest) {
 TEST(CircularBufferTest, PushBackTest) {
   circular_buffer<double> queue(8);
 
-  for (auto& value : values) {
+  for (auto &value : values) {
     queue.push_back(value);
   }
 
@@ -64,27 +64,27 @@ TEST(CircularBufferTest, PushPopTest) {
    * front-most elements.
    */
 
-  queue.push_back(4.0);  // Overwrite 1 with 4
+  queue.push_back(4.0); // Overwrite 1 with 4
 
   // The buffer now contains 2, 3 and 4
   EXPECT_EQ(2.0, queue[0]);
   EXPECT_EQ(3.0, queue[1]);
   EXPECT_EQ(4.0, queue[2]);
 
-  queue.push_back(5.0);  // Overwrite 2 with 5
+  queue.push_back(5.0); // Overwrite 2 with 5
 
   // The buffer now contains 3, 4 and 5
   EXPECT_EQ(3.0, queue[0]);
   EXPECT_EQ(4.0, queue[1]);
   EXPECT_EQ(5.0, queue[2]);
 
-  EXPECT_EQ(5.0, queue.pop_back());  // 5 is removed
+  EXPECT_EQ(5.0, queue.pop_back()); // 5 is removed
 
   // The buffer now contains 3 and 4
   EXPECT_EQ(3.0, queue[0]);
   EXPECT_EQ(4.0, queue[1]);
 
-  EXPECT_EQ(3.0, queue.pop_front());  // 3 is removed
+  EXPECT_EQ(3.0, queue.pop_front()); // 3 is removed
 
   // Leaving only one element with value == 4
   EXPECT_EQ(4.0, queue[0]);

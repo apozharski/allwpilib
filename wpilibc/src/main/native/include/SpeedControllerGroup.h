@@ -16,10 +16,10 @@
 namespace frc {
 
 class SpeedControllerGroup : public SendableBase, public SpeedController {
- public:
+public:
   template <class... SpeedControllers>
-  explicit SpeedControllerGroup(SpeedController& speedController,
-                                SpeedControllers&... speedControllers);
+  explicit SpeedControllerGroup(SpeedController &speedController,
+                                SpeedControllers &... speedControllers);
   ~SpeedControllerGroup() override = default;
 
   void Set(double speed) override;
@@ -30,13 +30,13 @@ class SpeedControllerGroup : public SendableBase, public SpeedController {
   void StopMotor() override;
   void PIDWrite(double output) override;
 
-  void InitSendable(SendableBuilder& builder) override;
+  void InitSendable(SendableBuilder &builder) override;
 
- private:
+private:
   bool m_isInverted = false;
   std::vector<std::reference_wrapper<SpeedController>> m_speedControllers;
 };
 
-}  // namespace frc
+} // namespace frc
 
 #include "SpeedControllerGroup.inc"

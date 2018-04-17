@@ -31,9 +31,9 @@ ErrorBase::ErrorBase() { HAL_Initialize(500, 0); }
  *
  * Get the current error information associated with this sensor.
  */
-Error& ErrorBase::GetError() { return m_error; }
+Error &ErrorBase::GetError() { return m_error; }
 
-const Error& ErrorBase::GetError() const { return m_error; }
+const Error &ErrorBase::GetError() const { return m_error; }
 
 /**
  * @brief Clear the current error information associated with this sensor.
@@ -49,7 +49,7 @@ void ErrorBase::ClearError() const { m_error.Clear(); }
  * @param function       Function of the error source
  * @param lineNumber     Line number of the error source
  */
-void ErrorBase::SetErrnoError(const llvm::Twine& contextMessage,
+void ErrorBase::SetErrnoError(const llvm::Twine &contextMessage,
                               llvm::StringRef filename,
                               llvm::StringRef function, int lineNumber) const {
   llvm::SmallString<128> buf;
@@ -83,7 +83,7 @@ void ErrorBase::SetErrnoError(const llvm::Twine& contextMessage,
  * @param function       Function of the error source
  * @param lineNumber     Line number of the error source
  */
-void ErrorBase::SetImaqError(int success, const llvm::Twine& contextMessage,
+void ErrorBase::SetImaqError(int success, const llvm::Twine &contextMessage,
                              llvm::StringRef filename, llvm::StringRef function,
                              int lineNumber) const {
   // If there was an error
@@ -109,7 +109,7 @@ void ErrorBase::SetImaqError(int success, const llvm::Twine& contextMessage,
  * @param function       Function of the error source
  * @param lineNumber     Line number of the error source
  */
-void ErrorBase::SetError(Error::Code code, const llvm::Twine& contextMessage,
+void ErrorBase::SetError(Error::Code code, const llvm::Twine &contextMessage,
                          llvm::StringRef filename, llvm::StringRef function,
                          int lineNumber) const {
   //  If there was an error
@@ -140,7 +140,7 @@ void ErrorBase::SetError(Error::Code code, const llvm::Twine& contextMessage,
  */
 void ErrorBase::SetErrorRange(Error::Code code, int32_t minRange,
                               int32_t maxRange, int32_t requestedValue,
-                              const llvm::Twine& contextMessage,
+                              const llvm::Twine &contextMessage,
                               llvm::StringRef filename,
                               llvm::StringRef function, int lineNumber) const {
   //  If there was an error
@@ -169,8 +169,8 @@ void ErrorBase::SetErrorRange(Error::Code code, int32_t minRange,
  * @param function       Function of the error source
  * @param lineNumber     Line number of the error source
  */
-void ErrorBase::SetWPIError(const llvm::Twine& errorMessage, Error::Code code,
-                            const llvm::Twine& contextMessage,
+void ErrorBase::SetWPIError(const llvm::Twine &errorMessage, Error::Code code,
+                            const llvm::Twine &contextMessage,
                             llvm::StringRef filename, llvm::StringRef function,
                             int lineNumber) const {
   //  Set the current error information for this object.
@@ -184,7 +184,7 @@ void ErrorBase::SetWPIError(const llvm::Twine& errorMessage, Error::Code code,
   }
 }
 
-void ErrorBase::CloneError(const ErrorBase& rhs) const {
+void ErrorBase::CloneError(const ErrorBase &rhs) const {
   m_error.Clone(rhs.GetError());
 }
 
@@ -196,7 +196,7 @@ void ErrorBase::CloneError(const ErrorBase& rhs) const {
 bool ErrorBase::StatusIsFatal() const { return m_error.GetCode() < 0; }
 
 void ErrorBase::SetGlobalError(Error::Code code,
-                               const llvm::Twine& contextMessage,
+                               const llvm::Twine &contextMessage,
                                llvm::StringRef filename,
                                llvm::StringRef function, int lineNumber) {
   // If there was an error
@@ -209,8 +209,8 @@ void ErrorBase::SetGlobalError(Error::Code code,
   }
 }
 
-void ErrorBase::SetGlobalWPIError(const llvm::Twine& errorMessage,
-                                  const llvm::Twine& contextMessage,
+void ErrorBase::SetGlobalWPIError(const llvm::Twine &errorMessage,
+                                  const llvm::Twine &contextMessage,
                                   llvm::StringRef filename,
                                   llvm::StringRef function, int lineNumber) {
   std::lock_guard<wpi::mutex> mutex(_globalErrorMutex);
@@ -224,7 +224,7 @@ void ErrorBase::SetGlobalWPIError(const llvm::Twine& errorMessage,
 /**
  * Retrieve the current global error.
  */
-Error& ErrorBase::GetGlobalError() {
+Error &ErrorBase::GetGlobalError() {
   std::lock_guard<wpi::mutex> mutex(_globalErrorMutex);
   return _globalError;
 }

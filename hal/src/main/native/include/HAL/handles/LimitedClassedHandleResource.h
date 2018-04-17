@@ -36,18 +36,18 @@ template <typename THandle, typename TStruct, int16_t size,
 class LimitedClassedHandleResource : public HandleBase {
   friend class LimitedClassedHandleResourceTest;
 
- public:
+public:
   LimitedClassedHandleResource() = default;
-  LimitedClassedHandleResource(const LimitedClassedHandleResource&) = delete;
-  LimitedClassedHandleResource& operator=(const LimitedClassedHandleResource&) =
-      delete;
+  LimitedClassedHandleResource(const LimitedClassedHandleResource &) = delete;
+  LimitedClassedHandleResource &
+  operator=(const LimitedClassedHandleResource &) = delete;
 
   THandle Allocate(std::shared_ptr<TStruct> toSet);
   std::shared_ptr<TStruct> Get(THandle handle);
   void Free(THandle handle);
   void ResetHandles() override;
 
- private:
+private:
   std::array<std::shared_ptr<TStruct>, size> m_structures;
   std::array<wpi::mutex, size> m_handleMutexes;
   wpi::mutex m_allocateMutex;
@@ -94,7 +94,8 @@ void LimitedClassedHandleResource<THandle, TStruct, size, enumValue>::Free(
     THandle handle) {
   // get handle index, and fail early if index out of range or wrong handle
   int16_t index = getHandleTypedIndex(handle, enumValue, m_version);
-  if (index < 0 || index >= size) return;
+  if (index < 0 || index >= size)
+    return;
   // lock and deallocated handle
   std::lock_guard<wpi::mutex> allocateLock(m_allocateMutex);
   std::lock_guard<wpi::mutex> handleLock(m_handleMutexes[index]);
@@ -114,4 +115,4 @@ void LimitedClassedHandleResource<THandle, TStruct, size,
   }
   HandleBase::ResetHandles();
 }
-}  // namespace hal
+} // namespace hal

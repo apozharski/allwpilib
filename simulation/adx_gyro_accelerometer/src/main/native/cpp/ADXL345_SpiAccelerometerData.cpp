@@ -15,16 +15,18 @@ using namespace hal;
 
 const double ADXL345_SpiAccelerometer::LSB = 1 / 0.00390625;
 
-static void ADXL345SPI_ReadBufferCallback(const char* name, void* param,
-                                          uint8_t* buffer, uint32_t count) {
-  ADXL345_SpiAccelerometer* sim = static_cast<ADXL345_SpiAccelerometer*>(param);
+static void ADXL345SPI_ReadBufferCallback(const char *name, void *param,
+                                          uint8_t *buffer, uint32_t count) {
+  ADXL345_SpiAccelerometer *sim =
+      static_cast<ADXL345_SpiAccelerometer *>(param);
   sim->HandleRead(buffer, count);
 }
 
-static void ADXL345SPI_WriteBufferCallback(const char* name, void* param,
-                                           const uint8_t* buffer,
+static void ADXL345SPI_WriteBufferCallback(const char *name, void *param,
+                                           const uint8_t *buffer,
                                            uint32_t count) {
-  ADXL345_SpiAccelerometer* sim = static_cast<ADXL345_SpiAccelerometer*>(param);
+  ADXL345_SpiAccelerometer *sim =
+      static_cast<ADXL345_SpiAccelerometer *>(param);
   sim->HandleWrite(buffer, count);
 }
 
@@ -40,12 +42,12 @@ ADXL345_SpiAccelerometer::~ADXL345_SpiAccelerometer() {
   HALSIM_CancelSPIWriteCallback(m_port, m_writeCallbackId);
 }
 
-void ADXL345_SpiAccelerometer::HandleWrite(const uint8_t* buffer,
+void ADXL345_SpiAccelerometer::HandleWrite(const uint8_t *buffer,
                                            uint32_t count) {
   m_lastWriteAddress = buffer[0] & 0xF;
 }
 
-void ADXL345_SpiAccelerometer::HandleRead(uint8_t* buffer, uint32_t count) {
+void ADXL345_SpiAccelerometer::HandleRead(uint8_t *buffer, uint32_t count) {
   bool writeAll = count == 7;
   int byteIndex = 1;
 

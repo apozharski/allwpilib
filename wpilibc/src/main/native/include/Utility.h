@@ -19,35 +19,35 @@
 #include <llvm/Twine.h>
 #include <support/deprecated.h>
 
-#define wpi_assert(condition) \
+#define wpi_assert(condition)                                                  \
   wpi_assert_impl(condition, #condition, "", __FILE__, __LINE__, __FUNCTION__)
-#define wpi_assertWithMessage(condition, message)                     \
-  wpi_assert_impl(condition, #condition, message, __FILE__, __LINE__, \
+#define wpi_assertWithMessage(condition, message)                              \
+  wpi_assert_impl(condition, #condition, message, __FILE__, __LINE__,          \
                   __FUNCTION__)
 
-#define wpi_assertEqual(a, b) \
+#define wpi_assertEqual(a, b)                                                  \
   wpi_assertEqual_impl(a, b, #a, #b, "", __FILE__, __LINE__, __FUNCTION__)
-#define wpi_assertEqualWithMessage(a, b, message) \
+#define wpi_assertEqualWithMessage(a, b, message)                              \
   wpi_assertEqual_impl(a, b, #a, #b, message, __FILE__, __LINE__, __FUNCTION__)
 
-#define wpi_assertNotEqual(a, b) \
+#define wpi_assertNotEqual(a, b)                                               \
   wpi_assertNotEqual_impl(a, b, #a, #b, "", __FILE__, __LINE__, __FUNCTION__)
-#define wpi_assertNotEqualWithMessage(a, b, message)                 \
-  wpi_assertNotEqual_impl(a, b, #a, #b, message, __FILE__, __LINE__, \
+#define wpi_assertNotEqualWithMessage(a, b, message)                           \
+  wpi_assertNotEqual_impl(a, b, #a, #b, message, __FILE__, __LINE__,           \
                           __FUNCTION__)
 
-bool wpi_assert_impl(bool conditionValue, const llvm::Twine& conditionText,
-                     const llvm::Twine& message, llvm::StringRef fileName,
+bool wpi_assert_impl(bool conditionValue, const llvm::Twine &conditionText,
+                     const llvm::Twine &message, llvm::StringRef fileName,
                      int lineNumber, llvm::StringRef funcName);
 bool wpi_assertEqual_impl(int valueA, int valueB,
-                          const llvm::Twine& valueAString,
-                          const llvm::Twine& valueBString,
-                          const llvm::Twine& message, llvm::StringRef fileName,
+                          const llvm::Twine &valueAString,
+                          const llvm::Twine &valueBString,
+                          const llvm::Twine &message, llvm::StringRef fileName,
                           int lineNumber, llvm::StringRef funcName);
 bool wpi_assertNotEqual_impl(int valueA, int valueB,
-                             const llvm::Twine& valueAString,
-                             const llvm::Twine& valueBString,
-                             const llvm::Twine& message,
+                             const llvm::Twine &valueAString,
+                             const llvm::Twine &valueBString,
+                             const llvm::Twine &message,
                              llvm::StringRef fileName, int lineNumber,
                              llvm::StringRef funcName);
 
@@ -65,4 +65,4 @@ WPI_DEPRECATED("Use RobotController static class method")
 bool GetUserButton();
 std::string GetStackTrace(int offset);
 
-}  // namespace frc
+} // namespace frc

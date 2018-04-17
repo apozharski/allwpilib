@@ -181,19 +181,19 @@ double Joystick::GetThrottle() const {
  */
 double Joystick::GetAxis(AxisType axis) const {
   switch (axis) {
-    case kXAxis:
-      return GetX();
-    case kYAxis:
-      return GetY();
-    case kZAxis:
-      return GetZ();
-    case kTwistAxis:
-      return GetTwist();
-    case kThrottleAxis:
-      return GetThrottle();
-    default:
-      wpi_setWPIError(BadJoystickAxis);
-      return 0.0;
+  case kXAxis:
+    return GetX();
+  case kYAxis:
+    return GetY();
+  case kZAxis:
+    return GetZ();
+  case kTwistAxis:
+    return GetTwist();
+  case kThrottleAxis:
+    return GetThrottle();
+  default:
+    wpi_setWPIError(BadJoystickAxis);
+    return 0.0;
   }
 }
 
@@ -247,7 +247,7 @@ bool Joystick::GetTopPressed() { return GetRawButtonPressed(Button::kTop); }
  */
 bool Joystick::GetTopReleased() { return GetRawButtonReleased(Button::kTop); }
 
-Joystick* Joystick::GetStickForPort(int port) {
+Joystick *Joystick::GetStickForPort(int port) {
   static std::array<std::unique_ptr<Joystick>, DriverStation::kJoystickPorts>
       joysticks{};
   auto stick = joysticks[port].get();

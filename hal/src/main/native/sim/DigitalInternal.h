@@ -67,14 +67,14 @@ struct DigitalPort {
 };
 
 extern DigitalHandleResource<HAL_DigitalHandle, DigitalPort,
-                             kNumDigitalChannels + kNumPWMHeaders>*
-    digitalChannelHandles;
+                             kNumDigitalChannels + kNumPWMHeaders>
+    *digitalChannelHandles;
 
 bool remapDigitalSource(HAL_Handle digitalSourceHandle,
                         HAL_AnalogTriggerType analogTriggerType,
-                        uint8_t& channel, uint8_t& module, bool& analogTrigger);
+                        uint8_t &channel, uint8_t &module, bool &analogTrigger);
 int32_t remapMXPPWMChannel(int32_t channel);
 int32_t remapMXPChannel(int32_t channel);
 
-int32_t GetDigitalInputChannel(HAL_DigitalHandle handle, int32_t* status);
-}  // namespace hal
+int32_t GetDigitalInputChannel(HAL_DigitalHandle handle, int32_t *status);
+} // namespace hal

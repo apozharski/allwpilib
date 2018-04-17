@@ -20,7 +20,7 @@
 
 namespace hal {
 
-constexpr int32_t kTimebase = 40000000;  ///< 40 MHz clock
+constexpr int32_t kTimebase = 40000000; ///< 40 MHz clock
 constexpr int32_t kDefaultOversampleBits = 0;
 constexpr int32_t kDefaultAverageBits = 7;
 constexpr double kDefaultSampleRate = 50000.0;
@@ -37,13 +37,13 @@ struct AnalogPort {
 };
 
 extern IndexedHandleResource<HAL_AnalogInputHandle, hal::AnalogPort,
-                             kNumAnalogInputs, HAL_HandleEnum::AnalogInput>*
-    analogInputHandles;
+                             kNumAnalogInputs,
+                             HAL_HandleEnum::AnalogInput> *analogInputHandles;
 
-int32_t getAnalogNumActiveChannels(int32_t* status);
-int32_t getAnalogNumChannelsToActivate(int32_t* status);
+int32_t getAnalogNumActiveChannels(int32_t *status);
+int32_t getAnalogNumChannelsToActivate(int32_t *status);
 void setAnalogNumChannelsToActivate(int32_t channels);
-void setAnalogSampleRate(double samplesPerSecond, int32_t* status);
-void initializeAnalog(int32_t* status);
+void setAnalogSampleRate(double samplesPerSecond, int32_t *status);
+void initializeAnalog(int32_t *status);
 
-}  // namespace hal
+} // namespace hal

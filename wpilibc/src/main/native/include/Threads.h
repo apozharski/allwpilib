@@ -11,9 +11,9 @@
 
 namespace frc {
 
-int GetThreadPriority(std::thread& thread, bool* isRealTime);
-int GetCurrentThreadPriority(bool* isRealTime);
-bool SetThreadPriority(std::thread& thread, bool realTime, int priority);
+int GetThreadPriority(std::thread &thread, bool *isRealTime);
+int GetCurrentThreadPriority(bool *isRealTime);
+bool SetThreadPriority(std::thread &thread, bool realTime, int priority);
 bool SetCurrentThreadPriority(bool realTime, int priority);
 
-}  // namespace frc
+} // namespace frc

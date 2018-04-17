@@ -31,9 +31,9 @@ constexpr double kPi = 3.14159265358979323846;
  * @param rightMotor The motor on the right corner.
  * @param backMotor  The motor on the back corner.
  */
-KilloughDrive::KilloughDrive(SpeedController& leftMotor,
-                             SpeedController& rightMotor,
-                             SpeedController& backMotor)
+KilloughDrive::KilloughDrive(SpeedController &leftMotor,
+                             SpeedController &rightMotor,
+                             SpeedController &backMotor)
     : KilloughDrive(leftMotor, rightMotor, backMotor, kDefaultLeftMotorAngle,
                     kDefaultRightMotorAngle, kDefaultBackMotorAngle) {}
 
@@ -52,9 +52,9 @@ KilloughDrive::KilloughDrive(SpeedController& leftMotor,
  * @param backMotorAngle  The angle of the back wheel's forward direction of
  *                        travel.
  */
-KilloughDrive::KilloughDrive(SpeedController& leftMotor,
-                             SpeedController& rightMotor,
-                             SpeedController& backMotor, double leftMotorAngle,
+KilloughDrive::KilloughDrive(SpeedController &leftMotor,
+                             SpeedController &rightMotor,
+                             SpeedController &backMotor, double leftMotorAngle,
                              double rightMotorAngle, double backMotorAngle)
     : m_leftMotor(leftMotor), m_rightMotor(rightMotor), m_backMotor(backMotor) {
   m_leftVec = {std::cos(leftMotorAngle * (kPi / 180.0)),
@@ -150,11 +150,11 @@ void KilloughDrive::StopMotor() {
   m_safetyHelper.Feed();
 }
 
-void KilloughDrive::GetDescription(llvm::raw_ostream& desc) const {
+void KilloughDrive::GetDescription(llvm::raw_ostream &desc) const {
   desc << "KilloughDrive";
 }
 
-void KilloughDrive::InitSendable(SendableBuilder& builder) {
+void KilloughDrive::InitSendable(SendableBuilder &builder) {
   builder.SetSmartDashboardType("KilloughDrive");
   builder.AddDoubleProperty("Left Motor Speed",
                             [=]() { return m_leftMotor.Get(); },

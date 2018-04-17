@@ -11,7 +11,7 @@
 
 using namespace frc;
 
-PrintCommand::PrintCommand(const llvm::Twine& message)
+PrintCommand::PrintCommand(const llvm::Twine &message)
     : InstantCommand("Print \"" + message + llvm::Twine('"')) {
   m_message = message.str();
 }

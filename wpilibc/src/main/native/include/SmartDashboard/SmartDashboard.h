@@ -20,7 +20,7 @@ namespace frc {
 class Sendable;
 
 class SmartDashboard : public SensorBase {
- public:
+public:
   static void init();
 
   static bool ContainsKey(llvm::StringRef key);
@@ -37,9 +37,9 @@ class SmartDashboard : public SensorBase {
 
   static void Delete(llvm::StringRef key);
 
-  static void PutData(llvm::StringRef key, Sendable* data);
-  static void PutData(Sendable* value);
-  static Sendable* GetData(llvm::StringRef keyName);
+  static void PutData(llvm::StringRef key, Sendable *data);
+  static void PutData(Sendable *value);
+  static Sendable *GetData(llvm::StringRef keyName);
 
   static bool PutBoolean(llvm::StringRef keyName, bool value);
   static bool SetDefaultBoolean(llvm::StringRef key, bool defaultValue);
@@ -64,15 +64,15 @@ class SmartDashboard : public SensorBase {
   static bool PutNumberArray(llvm::StringRef key, llvm::ArrayRef<double> value);
   static bool SetDefaultNumberArray(llvm::StringRef key,
                                     llvm::ArrayRef<double> defaultValue);
-  static std::vector<double> GetNumberArray(
-      llvm::StringRef key, llvm::ArrayRef<double> defaultValue);
+  static std::vector<double>
+  GetNumberArray(llvm::StringRef key, llvm::ArrayRef<double> defaultValue);
 
   static bool PutStringArray(llvm::StringRef key,
                              llvm::ArrayRef<std::string> value);
   static bool SetDefaultStringArray(llvm::StringRef key,
                                     llvm::ArrayRef<std::string> defaultValue);
-  static std::vector<std::string> GetStringArray(
-      llvm::StringRef key, llvm::ArrayRef<std::string> defaultValue);
+  static std::vector<std::string>
+  GetStringArray(llvm::StringRef key, llvm::ArrayRef<std::string> defaultValue);
 
   static bool PutRaw(llvm::StringRef key, llvm::StringRef value);
   static bool SetDefaultRaw(llvm::StringRef key, llvm::StringRef defaultValue);
@@ -86,8 +86,8 @@ class SmartDashboard : public SensorBase {
 
   static void UpdateValues();
 
- private:
+private:
   virtual ~SmartDashboard() = default;
 };
 
-}  // namespace frc
+} // namespace frc

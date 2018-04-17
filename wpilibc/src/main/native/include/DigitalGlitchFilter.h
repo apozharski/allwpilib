@@ -29,17 +29,17 @@ class Counter;
  * high or low before it is classified as high or low.
  */
 class DigitalGlitchFilter : public SensorBase {
- public:
+public:
   DigitalGlitchFilter();
   ~DigitalGlitchFilter() override;
 
-  void Add(DigitalSource* input);
-  void Add(Encoder* input);
-  void Add(Counter* input);
+  void Add(DigitalSource *input);
+  void Add(Encoder *input);
+  void Add(Counter *input);
 
-  void Remove(DigitalSource* input);
-  void Remove(Encoder* input);
-  void Remove(Counter* input);
+  void Remove(DigitalSource *input);
+  void Remove(Encoder *input);
+  void Remove(Counter *input);
 
   void SetPeriodCycles(int fpgaCycles);
   void SetPeriodNanoSeconds(uint64_t nanoseconds);
@@ -47,17 +47,17 @@ class DigitalGlitchFilter : public SensorBase {
   int GetPeriodCycles();
   uint64_t GetPeriodNanoSeconds();
 
-  void InitSendable(SendableBuilder& builder) override;
+  void InitSendable(SendableBuilder &builder) override;
 
- private:
+private:
   // Sets the filter for the input to be the requested index. A value of 0
   // disables the filter, and the filter value must be between 1 and 3,
   // inclusive.
-  void DoAdd(DigitalSource* input, int requested_index);
+  void DoAdd(DigitalSource *input, int requested_index);
 
   int m_channelIndex = -1;
   static wpi::mutex m_mutex;
   static std::array<bool, 3> m_filterAllocated;
 };
 
-}  // namespace frc
+} // namespace frc

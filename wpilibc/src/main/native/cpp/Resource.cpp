@@ -36,7 +36,7 @@ Resource::Resource(uint32_t elements) {
  *                 track, that is, it will allocate resource numbers in the
  *                 range [0 .. elements - 1].
  */
-void Resource::CreateResourceObject(std::unique_ptr<Resource>& r,
+void Resource::CreateResourceObject(std::unique_ptr<Resource> &r,
                                     uint32_t elements) {
   std::lock_guard<wpi::mutex> lock(m_createMutex);
   if (!r) {
@@ -51,7 +51,7 @@ void Resource::CreateResourceObject(std::unique_ptr<Resource>& r,
  * resource value within the range is located and returned after it is marked
  * allocated.
  */
-uint32_t Resource::Allocate(const std::string& resourceDesc) {
+uint32_t Resource::Allocate(const std::string &resourceDesc) {
   std::lock_guard<wpi::mutex> lock(m_allocateMutex);
   for (uint32_t i = 0; i < m_isAllocated.size(); i++) {
     if (!m_isAllocated[i]) {
@@ -69,7 +69,7 @@ uint32_t Resource::Allocate(const std::string& resourceDesc) {
  * The user requests a specific resource value, i.e. channel number and it is
  * verified unallocated, then returned.
  */
-uint32_t Resource::Allocate(uint32_t index, const std::string& resourceDesc) {
+uint32_t Resource::Allocate(uint32_t index, const std::string &resourceDesc) {
   std::lock_guard<wpi::mutex> lock(m_allocateMutex);
   if (index >= m_isAllocated.size()) {
     wpi_setWPIErrorWithContext(ChannelIndexOutOfRange, resourceDesc);
@@ -92,7 +92,8 @@ uint32_t Resource::Allocate(uint32_t index, const std::string& resourceDesc) {
  */
 void Resource::Free(uint32_t index) {
   std::unique_lock<wpi::mutex> lock(m_allocateMutex);
-  if (index == std::numeric_limits<uint32_t>::max()) return;
+  if (index == std::numeric_limits<uint32_t>::max())
+    return;
   if (index >= m_isAllocated.size()) {
     wpi_setWPIError(NotAllocated);
     return;

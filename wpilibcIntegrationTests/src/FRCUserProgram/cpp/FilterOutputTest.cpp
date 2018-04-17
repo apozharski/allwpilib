@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "Filters/LinearDigitalFilter.h"  // NOLINT(build/include_order)
+#include "Filters/LinearDigitalFilter.h" // NOLINT(build/include_order)
 
 #include <cmath>
 #include <functional>
@@ -26,27 +26,27 @@ enum FilterOutputTestType {
   TEST_PULSE
 };
 
-std::ostream& operator<<(std::ostream& os, const FilterOutputTestType& type) {
+std::ostream &operator<<(std::ostream &os, const FilterOutputTestType &type) {
   switch (type) {
-    case TEST_SINGLE_POLE_IIR:
-      os << "LinearDigitalFilter SinglePoleIIR";
-      break;
-    case TEST_HIGH_PASS:
-      os << "LinearDigitalFilter HighPass";
-      break;
-    case TEST_MOVAVG:
-      os << "LinearDigitalFilter MovingAverage";
-      break;
-    case TEST_PULSE:
-      os << "LinearDigitalFilter Pulse";
-      break;
+  case TEST_SINGLE_POLE_IIR:
+    os << "LinearDigitalFilter SinglePoleIIR";
+    break;
+  case TEST_HIGH_PASS:
+    os << "LinearDigitalFilter HighPass";
+    break;
+  case TEST_MOVAVG:
+    os << "LinearDigitalFilter MovingAverage";
+    break;
+  case TEST_PULSE:
+    os << "LinearDigitalFilter Pulse";
+    break;
   }
 
   return os;
 }
 
 class DataWrapper : public PIDSource {
- public:
+public:
   explicit DataWrapper(double (*dataFunc)(double)) { m_dataFunc = dataFunc; }
 
   virtual void SetPIDSourceType(PIDSourceType pidSource) {}
@@ -58,7 +58,7 @@ class DataWrapper : public PIDSource {
 
   void Reset() { m_count = -TestBench::kFilterStep; }
 
- private:
+private:
   std::function<double(double)> m_dataFunc;
 
   // Make sure first call to PIDGet() uses m_count == 0
@@ -69,7 +69,7 @@ class DataWrapper : public PIDSource {
  * A fixture that includes a consistent data source wrapped in a filter
  */
 class FilterOutputTest : public testing::TestWithParam<FilterOutputTestType> {
- protected:
+protected:
   std::unique_ptr<PIDSource> m_filter;
   std::shared_ptr<DataWrapper> m_data;
   double m_expectedOutput = 0.0;
@@ -88,41 +88,41 @@ class FilterOutputTest : public testing::TestWithParam<FilterOutputTestType> {
 
   void SetUp() override {
     switch (GetParam()) {
-      case TEST_SINGLE_POLE_IIR: {
-        m_data = std::make_shared<DataWrapper>(GetData);
-        m_filter = std::make_unique<LinearDigitalFilter>(
-            LinearDigitalFilter::SinglePoleIIR(
-                m_data, TestBench::kSinglePoleIIRTimeConstant,
-                TestBench::kFilterStep));
-        m_expectedOutput = TestBench::kSinglePoleIIRExpectedOutput;
-        break;
-      }
+    case TEST_SINGLE_POLE_IIR: {
+      m_data = std::make_shared<DataWrapper>(GetData);
+      m_filter = std::make_unique<LinearDigitalFilter>(
+          LinearDigitalFilter::SinglePoleIIR(
+              m_data, TestBench::kSinglePoleIIRTimeConstant,
+              TestBench::kFilterStep));
+      m_expectedOutput = TestBench::kSinglePoleIIRExpectedOutput;
+      break;
+    }
 
-      case TEST_HIGH_PASS: {
-        m_data = std::make_shared<DataWrapper>(GetData);
-        m_filter =
-            std::make_unique<LinearDigitalFilter>(LinearDigitalFilter::HighPass(
-                m_data, TestBench::kHighPassTimeConstant,
-                TestBench::kFilterStep));
-        m_expectedOutput = TestBench::kHighPassExpectedOutput;
-        break;
-      }
+    case TEST_HIGH_PASS: {
+      m_data = std::make_shared<DataWrapper>(GetData);
+      m_filter =
+          std::make_unique<LinearDigitalFilter>(LinearDigitalFilter::HighPass(
+              m_data, TestBench::kHighPassTimeConstant,
+              TestBench::kFilterStep));
+      m_expectedOutput = TestBench::kHighPassExpectedOutput;
+      break;
+    }
 
-      case TEST_MOVAVG: {
-        m_data = std::make_shared<DataWrapper>(GetData);
-        m_filter = std::make_unique<LinearDigitalFilter>(
-            LinearDigitalFilter::MovingAverage(m_data, TestBench::kMovAvgTaps));
-        m_expectedOutput = TestBench::kMovAvgExpectedOutput;
-        break;
-      }
+    case TEST_MOVAVG: {
+      m_data = std::make_shared<DataWrapper>(GetData);
+      m_filter = std::make_unique<LinearDigitalFilter>(
+          LinearDigitalFilter::MovingAverage(m_data, TestBench::kMovAvgTaps));
+      m_expectedOutput = TestBench::kMovAvgExpectedOutput;
+      break;
+    }
 
-      case TEST_PULSE: {
-        m_data = std::make_shared<DataWrapper>(GetPulseData);
-        m_filter = std::make_unique<LinearDigitalFilter>(
-            LinearDigitalFilter::MovingAverage(m_data, TestBench::kMovAvgTaps));
-        m_expectedOutput = 0.0;
-        break;
-      }
+    case TEST_PULSE: {
+      m_data = std::make_shared<DataWrapper>(GetPulseData);
+      m_filter = std::make_unique<LinearDigitalFilter>(
+          LinearDigitalFilter::MovingAverage(m_data, TestBench::kMovAvgTaps));
+      m_expectedOutput = 0.0;
+      break;
+    }
     }
   }
 };

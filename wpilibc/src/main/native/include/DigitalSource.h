@@ -23,11 +23,11 @@ namespace frc {
  * a digital input or analog trigger but not both.
  */
 class DigitalSource : public InterruptableSensorBase {
- public:
+public:
   virtual HAL_Handle GetPortHandleForRouting() const = 0;
   virtual AnalogTriggerType GetAnalogTriggerTypeForRouting() const = 0;
   virtual bool IsAnalogTrigger() const = 0;
   virtual int GetChannel() const = 0;
 };
 
-}  // namespace frc
+} // namespace frc

@@ -49,14 +49,14 @@ class Command : public ErrorBase, public SendableBase {
   friend class CommandGroup;
   friend class Scheduler;
 
- public:
+public:
   Command();
-  explicit Command(const llvm::Twine& name);
+  explicit Command(const llvm::Twine &name);
   explicit Command(double timeout);
-  Command(const llvm::Twine& name, double timeout);
+  Command(const llvm::Twine &name, double timeout);
   ~Command() override = default;
   double TimeSinceInitialized() const;
-  void Requires(Subsystem* s);
+  void Requires(Subsystem *s);
   bool IsCanceled() const;
   void Start();
   bool Run();
@@ -66,19 +66,19 @@ class Command : public ErrorBase, public SendableBase {
   bool IsCompleted() const;
   bool IsInterruptible() const;
   void SetInterruptible(bool interruptible);
-  bool DoesRequire(Subsystem* subsystem) const;
-  typedef std::set<Subsystem*> SubsystemSet;
+  bool DoesRequire(Subsystem *subsystem) const;
+  typedef std::set<Subsystem *> SubsystemSet;
   SubsystemSet GetRequirements() const;
-  CommandGroup* GetGroup() const;
+  CommandGroup *GetGroup() const;
   void SetRunWhenDisabled(bool run);
   bool WillRunWhenDisabled() const;
   int GetID() const;
 
- protected:
+protected:
   void SetTimeout(double timeout);
   bool IsTimedOut() const;
-  bool AssertUnlocked(const std::string& message);
-  void SetParent(CommandGroup* parent);
+  bool AssertUnlocked(const std::string &message);
+  void SetParent(CommandGroup *parent);
   bool IsParented() const;
   void ClearRequirements();
 
@@ -114,7 +114,7 @@ class Command : public ErrorBase, public SendableBase {
 
   friend class ConditionalCommand;
 
- private:
+private:
   void LockChanges();
   void Removed();
   void StartRunning();
@@ -148,7 +148,7 @@ class Command : public ErrorBase, public SendableBase {
   bool m_runWhenDisabled = false;
 
   // The CommandGroup this is in
-  CommandGroup* m_parent = nullptr;
+  CommandGroup *m_parent = nullptr;
 
   // Whether or not this command has completed running
   bool m_completed = false;
@@ -156,8 +156,8 @@ class Command : public ErrorBase, public SendableBase {
   int m_commandID = m_commandCounter++;
   static int m_commandCounter;
 
- public:
-  void InitSendable(SendableBuilder& builder) override;
+public:
+  void InitSendable(SendableBuilder &builder) override;
 };
 
-}  // namespace frc
+} // namespace frc

@@ -22,10 +22,10 @@ void HALSimNTProvider::Inject(std::shared_ptr<HALSimLowFi> parentArg,
   this->Initialize();
 }
 
-void NTProviderBaseCallback(const char* name, void* param,
-                            const struct HAL_Value* value) {
+void NTProviderBaseCallback(const char *name, void *param,
+                            const struct HAL_Value *value) {
   auto info =
-      static_cast<struct HALSimNTProvider::NTProviderCallbackInfo*>(param);
+      static_cast<struct HALSimNTProvider::NTProviderCallbackInfo *>(param);
   uint32_t chan = static_cast<uint32_t>(info->channel);
   auto provider = info->provider;
   auto table = info->table;
@@ -42,7 +42,7 @@ void HALSimNTProvider::InitializeDefault(
     cbInfos.emplace_back(info);
   }
 
-  for (auto& info : cbInfos) {
+  for (auto &info : cbInfos) {
     registerFunc(info.channel, NTProviderBaseCallback, &info, true);
     OnInitializedChannel(info.channel, info.table);
   }
@@ -53,7 +53,7 @@ void HALSimNTProvider::InitializeDefaultSingle(
   struct NTProviderCallbackInfo info = {this, table, 0};
   cbInfos.push_back(info);
 
-  for (auto& info : cbInfos) {
+  for (auto &info : cbInfos) {
     registerFunc(NTProviderBaseCallback, &info, true);
   }
 }

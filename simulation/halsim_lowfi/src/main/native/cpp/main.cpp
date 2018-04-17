@@ -53,4 +53,4 @@ __declspec(dllexport)
   std::cout << "NetworkTables LowFi Simulator Initialized!" << std::endl;
   return 0;
 }
-}  // extern "C"
+} // extern "C"

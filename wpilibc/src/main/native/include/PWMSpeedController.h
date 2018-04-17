@@ -16,7 +16,7 @@ namespace frc {
  * Common base class for all PWM Speed Controllers.
  */
 class PWMSpeedController : public SafePWM, public SpeedController {
- public:
+public:
   void Set(double value) override;
   double Get() const override;
   void SetInverted(bool isInverted) override;
@@ -26,12 +26,12 @@ class PWMSpeedController : public SafePWM, public SpeedController {
 
   void PIDWrite(double output) override;
 
- protected:
+protected:
   explicit PWMSpeedController(int channel);
-  void InitSendable(SendableBuilder& builder) override;
+  void InitSendable(SendableBuilder &builder) override;
 
- private:
+private:
   bool m_isInverted = false;
 };
 
-}  // namespace frc
+} // namespace frc

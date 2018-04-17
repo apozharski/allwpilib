@@ -29,20 +29,18 @@ namespace frc {
  * @tparam T The type of values to be stored
  * @see SmartDashboard
  */
-template <class T>
-class SendableChooser : public SendableChooserBase {
+template <class T> class SendableChooser : public SendableChooserBase {
   llvm::StringMap<T> m_choices;
 
-  template <class U>
-  static U _unwrap_smart_ptr(const U& value);
+  template <class U> static U _unwrap_smart_ptr(const U &value);
 
   template <class U>
-  static U* _unwrap_smart_ptr(const std::unique_ptr<U>& value);
+  static U *_unwrap_smart_ptr(const std::unique_ptr<U> &value);
 
   template <class U>
-  static std::weak_ptr<U> _unwrap_smart_ptr(const std::shared_ptr<U>& value);
+  static std::weak_ptr<U> _unwrap_smart_ptr(const std::shared_ptr<U> &value);
 
- public:
+public:
   ~SendableChooser() override = default;
 
   void AddObject(llvm::StringRef name, T object);
@@ -50,9 +48,9 @@ class SendableChooser : public SendableChooserBase {
 
   auto GetSelected() -> decltype(_unwrap_smart_ptr(m_choices[""]));
 
-  void InitSendable(SendableBuilder& builder) override;
+  void InitSendable(SendableBuilder &builder) override;
 };
 
-}  // namespace frc
+} // namespace frc
 
 #include "SendableChooser.inc"

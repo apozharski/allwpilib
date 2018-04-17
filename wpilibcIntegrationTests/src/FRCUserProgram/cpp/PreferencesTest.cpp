@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "Preferences.h"  // NOLINT(build/include_order)
+#include "Preferences.h" // NOLINT(build/include_order)
 
 #include <cstdio>
 #include <fstream>
@@ -13,12 +13,12 @@
 #include <networktables/NetworkTableInstance.h>
 
 #include "Timer.h"
-#include "gtest/gtest.h"
 #include "ntcore.h"
+#include "gtest/gtest.h"
 
 using namespace frc;
 
-static const char* kFileName = "networktables.ini";
+static const char *kFileName = "networktables.ini";
 static const double kSaveTime = 1.2;
 
 /**
@@ -47,7 +47,7 @@ TEST(PreferencesTest, ReadPreferencesFromFile) {
   preferencesFile.close();
   inst.StartServer();
 
-  Preferences* preferences = Preferences::GetInstance();
+  Preferences *preferences = Preferences::GetInstance();
   EXPECT_EQ("Hello, preferences file",
             preferences->GetString("testFileGetString"));
   EXPECT_EQ(1, preferences->GetInt("testFileGetInt"));
@@ -64,7 +64,7 @@ TEST(PreferencesTest, ReadPreferencesFromFile) {
 TEST(PreferencesTest, WritePreferencesToFile) {
   auto inst = nt::NetworkTableInstance::GetDefault();
   inst.StartServer();
-  Preferences* preferences = Preferences::GetInstance();
+  Preferences *preferences = Preferences::GetInstance();
   preferences->Remove("testFileGetString");
   preferences->Remove("testFileGetInt");
   preferences->Remove("testFileGetDouble");
@@ -83,7 +83,7 @@ TEST(PreferencesTest, WritePreferencesToFile) {
 
   Wait(kSaveTime);
 
-  static char const* kExpectedFileContents[] = {
+  static char const *kExpectedFileContents[] = {
       "[NetworkTables Storage 3.0]",
       "string \"/Preferences/.type\"=\"RobotPreferences\"",
       "boolean \"/Preferences/testFilePutBoolean\"=true",
@@ -94,7 +94,7 @@ TEST(PreferencesTest, WritePreferencesToFile) {
       "string \"/Preferences/testFilePutString\"=\"Hello, preferences file\""};
 
   std::ifstream preferencesFile(kFileName);
-  for (auto& kExpectedFileContent : kExpectedFileContents) {
+  for (auto &kExpectedFileContent : kExpectedFileContents) {
     ASSERT_FALSE(preferencesFile.eof())
         << "Preferences file prematurely reached EOF";
 

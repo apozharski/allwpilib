@@ -27,7 +27,7 @@ using namespace frc;
  * robot to be enabled again.
  */
 void SampleRobot::StartCompetition() {
-  LiveWindow* lw = LiveWindow::GetInstance();
+  LiveWindow *lw = LiveWindow::GetInstance();
 
   RobotInit();
 
@@ -42,24 +42,28 @@ void SampleRobot::StartCompetition() {
         m_ds.InDisabled(true);
         Disabled();
         m_ds.InDisabled(false);
-        while (IsDisabled()) m_ds.WaitForData();
+        while (IsDisabled())
+          m_ds.WaitForData();
       } else if (IsAutonomous()) {
         m_ds.InAutonomous(true);
         Autonomous();
         m_ds.InAutonomous(false);
-        while (IsAutonomous() && IsEnabled()) m_ds.WaitForData();
+        while (IsAutonomous() && IsEnabled())
+          m_ds.WaitForData();
       } else if (IsTest()) {
         lw->SetEnabled(true);
         m_ds.InTest(true);
         Test();
         m_ds.InTest(false);
-        while (IsTest() && IsEnabled()) m_ds.WaitForData();
+        while (IsTest() && IsEnabled())
+          m_ds.WaitForData();
         lw->SetEnabled(false);
       } else {
         m_ds.InOperatorControl(true);
         OperatorControl();
         m_ds.InOperatorControl(false);
-        while (IsOperatorControl() && IsEnabled()) m_ds.WaitForData();
+        while (IsOperatorControl() && IsEnabled())
+          m_ds.WaitForData();
       }
     }
   }

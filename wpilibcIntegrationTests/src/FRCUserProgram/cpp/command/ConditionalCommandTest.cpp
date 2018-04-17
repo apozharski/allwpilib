@@ -18,14 +18,14 @@
 using namespace frc;
 
 class ConditionalCommandTest : public testing::Test {
- public:
-  MockConditionalCommand* m_command;
-  MockCommand* m_onTrue;
-  MockCommand* m_onFalse;
-  MockConditionalCommand* m_commandNull;
-  Subsystem* m_subsystem;
+public:
+  MockConditionalCommand *m_command;
+  MockCommand *m_onTrue;
+  MockCommand *m_onFalse;
+  MockConditionalCommand *m_commandNull;
+  Subsystem *m_subsystem;
 
- protected:
+protected:
   void SetUp() override {
     RobotState::SetImplementation(DriverStation::GetInstance());
     Scheduler::GetInstance()->SetEnabled(true);
@@ -49,7 +49,7 @@ class ConditionalCommandTest : public testing::Test {
    */
   void TeardownScheduler() { Scheduler::GetInstance()->ResetAll(); }
 
-  void AssertCommandState(MockCommand& command, int32_t initialize,
+  void AssertCommandState(MockCommand &command, int32_t initialize,
                           int32_t execute, int32_t isFinished, int32_t end,
                           int32_t interrupted) {
     EXPECT_EQ(initialize, command.GetInitializeCount());
@@ -59,7 +59,7 @@ class ConditionalCommandTest : public testing::Test {
     EXPECT_EQ(interrupted, command.GetInterruptedCount());
   }
 
-  void AssertConditionalCommandState(MockConditionalCommand& command,
+  void AssertConditionalCommandState(MockConditionalCommand &command,
                                      int32_t initialize, int32_t execute,
                                      int32_t isFinished, int32_t end,
                                      int32_t interrupted) {
@@ -80,12 +80,12 @@ TEST_F(ConditionalCommandTest, OnTrueTest) {
   AssertCommandState(*m_onFalse, 0, 0, 0, 0, 0);
   AssertConditionalCommandState(*m_command, 0, 0, 0, 0, 0);
   SCOPED_TRACE("2");
-  Scheduler::GetInstance()->Run();  // init command and select m_onTrue
+  Scheduler::GetInstance()->Run(); // init command and select m_onTrue
   AssertCommandState(*m_onTrue, 0, 0, 0, 0, 0);
   AssertCommandState(*m_onFalse, 0, 0, 0, 0, 0);
   AssertConditionalCommandState(*m_command, 0, 0, 0, 0, 0);
   SCOPED_TRACE("3");
-  Scheduler::GetInstance()->Run();  // init m_onTrue
+  Scheduler::GetInstance()->Run(); // init m_onTrue
   AssertCommandState(*m_onTrue, 0, 0, 0, 0, 0);
   AssertCommandState(*m_onFalse, 0, 0, 0, 0, 0);
   AssertConditionalCommandState(*m_command, 1, 1, 1, 0, 0);
@@ -128,12 +128,12 @@ TEST_F(ConditionalCommandTest, OnFalseTest) {
   AssertCommandState(*m_onTrue, 0, 0, 0, 0, 0);
   AssertConditionalCommandState(*m_command, 0, 0, 0, 0, 0);
   SCOPED_TRACE("2");
-  Scheduler::GetInstance()->Run();  // init command and select m_onTrue
+  Scheduler::GetInstance()->Run(); // init command and select m_onTrue
   AssertCommandState(*m_onFalse, 0, 0, 0, 0, 0);
   AssertCommandState(*m_onTrue, 0, 0, 0, 0, 0);
   AssertConditionalCommandState(*m_command, 0, 0, 0, 0, 0);
   SCOPED_TRACE("3");
-  Scheduler::GetInstance()->Run();  // init m_onTrue
+  Scheduler::GetInstance()->Run(); // init m_onTrue
   AssertCommandState(*m_onFalse, 0, 0, 0, 0, 0);
   AssertCommandState(*m_onTrue, 0, 0, 0, 0, 0);
   AssertConditionalCommandState(*m_command, 1, 1, 1, 0, 0);
@@ -176,12 +176,12 @@ TEST_F(ConditionalCommandTest, CancelSubCommandTest) {
   AssertCommandState(*m_onFalse, 0, 0, 0, 0, 0);
   AssertConditionalCommandState(*m_command, 0, 0, 0, 0, 0);
   SCOPED_TRACE("2");
-  Scheduler::GetInstance()->Run();  // init command and select m_onTrue
+  Scheduler::GetInstance()->Run(); // init command and select m_onTrue
   AssertCommandState(*m_onTrue, 0, 0, 0, 0, 0);
   AssertCommandState(*m_onFalse, 0, 0, 0, 0, 0);
   AssertConditionalCommandState(*m_command, 0, 0, 0, 0, 0);
   SCOPED_TRACE("3");
-  Scheduler::GetInstance()->Run();  // init m_onTrue
+  Scheduler::GetInstance()->Run(); // init m_onTrue
   AssertCommandState(*m_onTrue, 0, 0, 0, 0, 0);
   AssertCommandState(*m_onFalse, 0, 0, 0, 0, 0);
   AssertConditionalCommandState(*m_command, 1, 1, 1, 0, 0);
@@ -219,12 +219,12 @@ TEST_F(ConditionalCommandTest, CancelCondCommandTest) {
   AssertCommandState(*m_onFalse, 0, 0, 0, 0, 0);
   AssertConditionalCommandState(*m_command, 0, 0, 0, 0, 0);
   SCOPED_TRACE("2");
-  Scheduler::GetInstance()->Run();  // init command and select m_onTrue
+  Scheduler::GetInstance()->Run(); // init command and select m_onTrue
   AssertCommandState(*m_onTrue, 0, 0, 0, 0, 0);
   AssertCommandState(*m_onFalse, 0, 0, 0, 0, 0);
   AssertConditionalCommandState(*m_command, 0, 0, 0, 0, 0);
   SCOPED_TRACE("3");
-  Scheduler::GetInstance()->Run();  // init m_onTrue
+  Scheduler::GetInstance()->Run(); // init m_onTrue
   AssertCommandState(*m_onTrue, 0, 0, 0, 0, 0);
   AssertCommandState(*m_onFalse, 0, 0, 0, 0, 0);
   AssertConditionalCommandState(*m_command, 1, 1, 1, 0, 0);
@@ -262,12 +262,12 @@ TEST_F(ConditionalCommandTest, OnTrueTwiceTest) {
   AssertCommandState(*m_onFalse, 0, 0, 0, 0, 0);
   AssertConditionalCommandState(*m_command, 0, 0, 0, 0, 0);
   SCOPED_TRACE("2");
-  Scheduler::GetInstance()->Run();  // init command and select m_onTrue
+  Scheduler::GetInstance()->Run(); // init command and select m_onTrue
   AssertCommandState(*m_onTrue, 0, 0, 0, 0, 0);
   AssertCommandState(*m_onFalse, 0, 0, 0, 0, 0);
   AssertConditionalCommandState(*m_command, 0, 0, 0, 0, 0);
   SCOPED_TRACE("3");
-  Scheduler::GetInstance()->Run();  // init m_onTrue
+  Scheduler::GetInstance()->Run(); // init m_onTrue
   AssertCommandState(*m_onTrue, 0, 0, 0, 0, 0);
   AssertCommandState(*m_onFalse, 0, 0, 0, 0, 0);
   AssertConditionalCommandState(*m_command, 1, 1, 1, 0, 0);
@@ -303,12 +303,12 @@ TEST_F(ConditionalCommandTest, OnTrueTwiceTest) {
   AssertCommandState(*m_onFalse, 0, 0, 0, 0, 0);
   AssertConditionalCommandState(*m_command, 0, 0, 0, 0, 0);
   SCOPED_TRACE("12");
-  Scheduler::GetInstance()->Run();  // init command and select m_onTrue
+  Scheduler::GetInstance()->Run(); // init command and select m_onTrue
   AssertCommandState(*m_onTrue, 0, 0, 0, 0, 0);
   AssertCommandState(*m_onFalse, 0, 0, 0, 0, 0);
   AssertConditionalCommandState(*m_command, 0, 0, 0, 0, 0);
   SCOPED_TRACE("13");
-  Scheduler::GetInstance()->Run();  // init m_onTrue
+  Scheduler::GetInstance()->Run(); // init m_onTrue
   AssertCommandState(*m_onTrue, 0, 0, 0, 0, 0);
   AssertCommandState(*m_onFalse, 0, 0, 0, 0, 0);
   AssertConditionalCommandState(*m_command, 1, 1, 1, 0, 0);
@@ -347,12 +347,12 @@ TEST_F(ConditionalCommandTest, OnTrueInstantTest) {
   AssertCommandState(*m_onFalse, 0, 0, 0, 0, 0);
   AssertConditionalCommandState(*m_command, 0, 0, 0, 0, 0);
   SCOPED_TRACE("2");
-  Scheduler::GetInstance()->Run();  // init command and select m_onTrue
+  Scheduler::GetInstance()->Run(); // init command and select m_onTrue
   AssertCommandState(*m_onTrue, 0, 0, 0, 0, 0);
   AssertCommandState(*m_onFalse, 0, 0, 0, 0, 0);
   AssertConditionalCommandState(*m_command, 0, 0, 0, 0, 0);
   SCOPED_TRACE("3");
-  Scheduler::GetInstance()->Run();  // init m_onTrue
+  Scheduler::GetInstance()->Run(); // init m_onTrue
   AssertCommandState(*m_onTrue, 0, 0, 0, 0, 0);
   AssertCommandState(*m_onFalse, 0, 0, 0, 0, 0);
   AssertConditionalCommandState(*m_command, 1, 1, 1, 0, 0);
@@ -379,12 +379,12 @@ TEST_F(ConditionalCommandTest, CancelRequiresTest) {
   AssertCommandState(*m_onFalse, 0, 0, 0, 0, 0);
   AssertConditionalCommandState(*m_command, 0, 0, 0, 0, 0);
   SCOPED_TRACE("2");
-  Scheduler::GetInstance()->Run();  // init command and select m_onTrue
+  Scheduler::GetInstance()->Run(); // init command and select m_onTrue
   AssertCommandState(*m_onTrue, 0, 0, 0, 0, 0);
   AssertCommandState(*m_onFalse, 0, 0, 0, 0, 0);
   AssertConditionalCommandState(*m_command, 0, 0, 0, 0, 0);
   SCOPED_TRACE("3");
-  Scheduler::GetInstance()->Run();  // init m_onTrue
+  Scheduler::GetInstance()->Run(); // init m_onTrue
   AssertCommandState(*m_onTrue, 0, 0, 0, 0, 0);
   AssertCommandState(*m_onFalse, 0, 0, 0, 0, 0);
   AssertConditionalCommandState(*m_command, 1, 1, 1, 0, 0);
@@ -421,11 +421,11 @@ TEST_F(ConditionalCommandTest, OnFalseNullTest) {
   AssertCommandState(*m_onTrue, 0, 0, 0, 0, 0);
   AssertConditionalCommandState(*m_commandNull, 0, 0, 0, 0, 0);
   SCOPED_TRACE("2");
-  Scheduler::GetInstance()->Run();  // init command and select m_onTrue
+  Scheduler::GetInstance()->Run(); // init command and select m_onTrue
   AssertCommandState(*m_onTrue, 0, 0, 0, 0, 0);
   AssertConditionalCommandState(*m_commandNull, 0, 0, 0, 0, 0);
   SCOPED_TRACE("3");
-  Scheduler::GetInstance()->Run();  // init m_onTrue
+  Scheduler::GetInstance()->Run(); // init m_onTrue
   AssertCommandState(*m_onTrue, 0, 0, 0, 0, 0);
   AssertConditionalCommandState(*m_commandNull, 1, 1, 1, 1, 0);
   SCOPED_TRACE("4");

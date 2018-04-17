@@ -38,25 +38,24 @@ DoubleSolenoid::DoubleSolenoid(int forwardChannel, int reverseChannel)
  */
 DoubleSolenoid::DoubleSolenoid(int moduleNumber, int forwardChannel,
                                int reverseChannel)
-    : SolenoidBase(moduleNumber),
-      m_forwardChannel(forwardChannel),
+    : SolenoidBase(moduleNumber), m_forwardChannel(forwardChannel),
       m_reverseChannel(reverseChannel) {
   if (!SensorBase::CheckSolenoidModule(m_moduleNumber)) {
-    wpi_setWPIErrorWithContext(
-        ModuleIndexOutOfRange,
-        "Solenoid Module " + llvm::Twine(m_moduleNumber));
+    wpi_setWPIErrorWithContext(ModuleIndexOutOfRange,
+                               "Solenoid Module " +
+                                   llvm::Twine(m_moduleNumber));
     return;
   }
   if (!SensorBase::CheckSolenoidChannel(m_forwardChannel)) {
-    wpi_setWPIErrorWithContext(
-        ChannelIndexOutOfRange,
-        "Solenoid Channel " + llvm::Twine(m_forwardChannel));
+    wpi_setWPIErrorWithContext(ChannelIndexOutOfRange,
+                               "Solenoid Channel " +
+                                   llvm::Twine(m_forwardChannel));
     return;
   }
   if (!SensorBase::CheckSolenoidChannel(m_reverseChannel)) {
-    wpi_setWPIErrorWithContext(
-        ChannelIndexOutOfRange,
-        "Solenoid Channel " + llvm::Twine(m_reverseChannel));
+    wpi_setWPIErrorWithContext(ChannelIndexOutOfRange,
+                               "Solenoid Channel " +
+                                   llvm::Twine(m_reverseChannel));
     return;
   }
   int32_t status = 0;
@@ -106,23 +105,24 @@ DoubleSolenoid::~DoubleSolenoid() {
  * @param value The value to set (Off, Forward or Reverse)
  */
 void DoubleSolenoid::Set(Value value) {
-  if (StatusIsFatal()) return;
+  if (StatusIsFatal())
+    return;
 
   bool forward = false;
   bool reverse = false;
   switch (value) {
-    case kOff:
-      forward = false;
-      reverse = false;
-      break;
-    case kForward:
-      forward = true;
-      reverse = false;
-      break;
-    case kReverse:
-      forward = false;
-      reverse = true;
-      break;
+  case kOff:
+    forward = false;
+    reverse = false;
+    break;
+  case kForward:
+    forward = true;
+    reverse = false;
+    break;
+  case kReverse:
+    forward = false;
+    reverse = true;
+    break;
   }
   int fstatus = 0;
   HAL_SetSolenoid(m_forwardHandle, forward, &fstatus);
@@ -139,7 +139,8 @@ void DoubleSolenoid::Set(Value value) {
  * @return The current value of the solenoid.
  */
 DoubleSolenoid::Value DoubleSolenoid::Get() const {
-  if (StatusIsFatal()) return kOff;
+  if (StatusIsFatal())
+    return kOff;
   int fstatus = 0;
   int rstatus = 0;
   bool valueForward = HAL_GetSolenoid(m_forwardHandle, &fstatus);
@@ -148,8 +149,10 @@ DoubleSolenoid::Value DoubleSolenoid::Get() const {
   wpi_setErrorWithContext(fstatus, HAL_GetErrorMessage(fstatus));
   wpi_setErrorWithContext(rstatus, HAL_GetErrorMessage(rstatus));
 
-  if (valueForward) return kForward;
-  if (valueReverse) return kReverse;
+  if (valueForward)
+    return kForward;
+  if (valueReverse)
+    return kReverse;
   return kOff;
 }
 
@@ -181,19 +184,19 @@ bool DoubleSolenoid::IsRevSolenoidBlackListed() const {
   return (blackList & m_reverseMask) != 0;
 }
 
-void DoubleSolenoid::InitSendable(SendableBuilder& builder) {
+void DoubleSolenoid::InitSendable(SendableBuilder &builder) {
   builder.SetSmartDashboardType("Double Solenoid");
   builder.SetSafeState([=]() { Set(kOff); });
   builder.AddSmallStringProperty(
       "Value",
-      [=](llvm::SmallVectorImpl<char>& buf) -> llvm::StringRef {
+      [=](llvm::SmallVectorImpl<char> &buf) -> llvm::StringRef {
         switch (Get()) {
-          case kForward:
-            return "Forward";
-          case kReverse:
-            return "Reverse";
-          default:
-            return "Off";
+        case kForward:
+          return "Forward";
+        case kReverse:
+          return "Reverse";
+        default:
+          return "Off";
         }
       },
       [=](llvm::StringRef value) {

@@ -35,8 +35,8 @@ static HAL_DigitalHandle i2CMXPDigitalHandle2{HAL_kInvalidHandle};
 namespace hal {
 namespace init {
 void InitializeI2C() {}
-}  // namespace init
-}  // namespace hal
+} // namespace init
+} // namespace hal
 
 extern "C" {
 
@@ -45,9 +45,10 @@ extern "C" {
  * If opening the MXP port, also sets up the channel functions appropriately
  * @param port The port to open, 0 for the on-board, 1 for the MXP.
  */
-void HAL_InitializeI2C(HAL_I2CPort port, int32_t* status) {
+void HAL_InitializeI2C(HAL_I2CPort port, int32_t *status) {
   initializeDigital(status);
-  if (*status != 0) return;
+  if (*status != 0)
+    return;
 
   if (port > 1) {
     // Set port out of range error here
@@ -57,7 +58,8 @@ void HAL_InitializeI2C(HAL_I2CPort port, int32_t* status) {
   if (port == 0) {
     std::lock_guard<wpi::mutex> lock(digitalI2COnBoardMutex);
     i2COnboardObjCount++;
-    if (i2COnboardObjCount > 1) return;
+    if (i2COnboardObjCount > 1)
+      return;
     int handle = open("/dev/i2c-2", O_RDWR);
     if (handle < 0) {
       std::printf("Failed to open onboard i2c bus: %s\n", std::strerror(errno));
@@ -67,14 +69,15 @@ void HAL_InitializeI2C(HAL_I2CPort port, int32_t* status) {
   } else {
     std::lock_guard<wpi::mutex> lock(digitalI2CMXPMutex);
     i2CMXPObjCount++;
-    if (i2CMXPObjCount > 1) return;
+    if (i2CMXPObjCount > 1)
+      return;
     if ((i2CMXPDigitalHandle1 = HAL_InitializeDIOPort(
              HAL_GetPort(24), false, status)) == HAL_kInvalidHandle) {
       return;
     }
     if ((i2CMXPDigitalHandle2 = HAL_InitializeDIOPort(
              HAL_GetPort(25), false, status)) == HAL_kInvalidHandle) {
-      HAL_FreeDIOPort(i2CMXPDigitalHandle1);  // free the first port allocated
+      HAL_FreeDIOPort(i2CMXPDigitalHandle1); // free the first port allocated
       return;
     }
     digitalSystem->writeEnableMXPSpecialFunction(
@@ -101,8 +104,8 @@ void HAL_InitializeI2C(HAL_I2CPort port, int32_t* status) {
  * @return >= 0 on success or -1 on transfer abort.
  */
 int32_t HAL_TransactionI2C(HAL_I2CPort port, int32_t deviceAddress,
-                           const uint8_t* dataToSend, int32_t sendSize,
-                           uint8_t* dataReceived, int32_t receiveSize) {
+                           const uint8_t *dataToSend, int32_t sendSize,
+                           uint8_t *dataReceived, int32_t receiveSize) {
   if (port > 1) {
     // Set port out of range error here
     return -1;
@@ -112,7 +115,7 @@ int32_t HAL_TransactionI2C(HAL_I2CPort port, int32_t deviceAddress,
   msgs[0].addr = deviceAddress;
   msgs[0].flags = 0;
   msgs[0].len = sendSize;
-  msgs[0].buf = const_cast<uint8_t*>(dataToSend);
+  msgs[0].buf = const_cast<uint8_t *>(dataToSend);
   msgs[1].addr = deviceAddress;
   msgs[1].flags = I2C_M_RD;
   msgs[1].len = receiveSize;
@@ -143,7 +146,7 @@ int32_t HAL_TransactionI2C(HAL_I2CPort port, int32_t deviceAddress,
  * @return >= 0 on success or -1 on transfer abort.
  */
 int32_t HAL_WriteI2C(HAL_I2CPort port, int32_t deviceAddress,
-                     const uint8_t* dataToSend, int32_t sendSize) {
+                     const uint8_t *dataToSend, int32_t sendSize) {
   if (port > 1) {
     // Set port out of range error here
     return -1;
@@ -153,7 +156,7 @@ int32_t HAL_WriteI2C(HAL_I2CPort port, int32_t deviceAddress,
   msg.addr = deviceAddress;
   msg.flags = 0;
   msg.len = sendSize;
-  msg.buf = const_cast<uint8_t*>(dataToSend);
+  msg.buf = const_cast<uint8_t *>(dataToSend);
 
   struct i2c_rdwr_ioctl_data rdwr;
   rdwr.msgs = &msg;
@@ -181,7 +184,7 @@ int32_t HAL_WriteI2C(HAL_I2CPort port, int32_t deviceAddress,
  * device.
  * @return >= 0 on success or -1 on transfer abort.
  */
-int32_t HAL_ReadI2C(HAL_I2CPort port, int32_t deviceAddress, uint8_t* buffer,
+int32_t HAL_ReadI2C(HAL_I2CPort port, int32_t deviceAddress, uint8_t *buffer,
                     int32_t count) {
   if (port > 1) {
     // Set port out of range error here
@@ -228,4 +231,4 @@ void HAL_CloseI2C(HAL_I2CPort port) {
   }
 }
 
-}  // extern "C"
+} // extern "C"

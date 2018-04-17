@@ -17,28 +17,28 @@
 namespace frc {
 
 class SendableBase : public Sendable {
- public:
+public:
   explicit SendableBase(bool addLiveWindow = true);
   ~SendableBase() override;
 
   using Sendable::SetName;
 
   std::string GetName() const final;
-  void SetName(const llvm::Twine& name) final;
+  void SetName(const llvm::Twine &name) final;
   std::string GetSubsystem() const final;
-  void SetSubsystem(const llvm::Twine& subsystem) final;
+  void SetSubsystem(const llvm::Twine &subsystem) final;
 
- protected:
+protected:
   void AddChild(std::shared_ptr<Sendable> child);
-  void AddChild(void* child);
+  void AddChild(void *child);
 
-  void SetName(const llvm::Twine& moduleType, int channel);
-  void SetName(const llvm::Twine& moduleType, int moduleNumber, int channel);
+  void SetName(const llvm::Twine &moduleType, int channel);
+  void SetName(const llvm::Twine &moduleType, int moduleNumber, int channel);
 
- private:
+private:
   mutable wpi::mutex m_mutex;
   std::string m_name;
   std::string m_subsystem = "Ungrouped";
 };
 
-}  // namespace frc
+} // namespace frc

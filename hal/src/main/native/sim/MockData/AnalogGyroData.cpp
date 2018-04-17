@@ -17,10 +17,10 @@ void InitializeAnalogGyroData() {
   static AnalogGyroData agd[kNumAccumulators];
   ::hal::SimAnalogGyroData = agd;
 }
-}  // namespace init
-}  // namespace hal
+} // namespace init
+} // namespace hal
 
-AnalogGyroData* hal::SimAnalogGyroData;
+AnalogGyroData *hal::SimAnalogGyroData;
 void AnalogGyroData::ResetData() {
   m_angle = 0.0;
   m_angleCallbacks = nullptr;
@@ -31,10 +31,11 @@ void AnalogGyroData::ResetData() {
 }
 
 int32_t AnalogGyroData::RegisterAngleCallback(HAL_NotifyCallback callback,
-                                              void* param,
+                                              void *param,
                                               HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -67,10 +68,11 @@ void AnalogGyroData::SetAngle(double angle) {
 }
 
 int32_t AnalogGyroData::RegisterRateCallback(HAL_NotifyCallback callback,
-                                             void* param,
+                                             void *param,
                                              HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -103,10 +105,11 @@ void AnalogGyroData::SetRate(double rate) {
 }
 
 int32_t AnalogGyroData::RegisterInitializedCallback(HAL_NotifyCallback callback,
-                                                    void* param,
+                                                    void *param,
                                                     HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -145,7 +148,7 @@ void HALSIM_ResetAnalogGyroData(int32_t index) {
 
 int32_t HALSIM_RegisterAnalogGyroAngleCallback(int32_t index,
                                                HAL_NotifyCallback callback,
-                                               void* param,
+                                               void *param,
                                                HAL_Bool initialNotify) {
   return SimAnalogGyroData[index].RegisterAngleCallback(callback, param,
                                                         initialNotify);
@@ -165,7 +168,7 @@ void HALSIM_SetAnalogGyroAngle(int32_t index, double angle) {
 
 int32_t HALSIM_RegisterAnalogGyroRateCallback(int32_t index,
                                               HAL_NotifyCallback callback,
-                                              void* param,
+                                              void *param,
                                               HAL_Bool initialNotify) {
   return SimAnalogGyroData[index].RegisterRateCallback(callback, param,
                                                        initialNotify);
@@ -184,7 +187,7 @@ void HALSIM_SetAnalogGyroRate(int32_t index, double rate) {
 }
 
 int32_t HALSIM_RegisterAnalogGyroInitializedCallback(
-    int32_t index, HAL_NotifyCallback callback, void* param,
+    int32_t index, HAL_NotifyCallback callback, void *param,
     HAL_Bool initialNotify) {
   return SimAnalogGyroData[index].RegisterInitializedCallback(callback, param,
                                                               initialNotify);
@@ -204,7 +207,7 @@ void HALSIM_SetAnalogGyroInitialized(int32_t index, HAL_Bool initialized) {
 
 void HALSIM_RegisterAnalogGyroAllCallbacks(int32_t index,
                                            HAL_NotifyCallback callback,
-                                           void* param,
+                                           void *param,
                                            HAL_Bool initialNotify) {
   SimAnalogGyroData[index].RegisterAngleCallback(callback, param,
                                                  initialNotify);
@@ -212,4 +215,4 @@ void HALSIM_RegisterAnalogGyroAllCallbacks(int32_t index,
   SimAnalogGyroData[index].RegisterInitializedCallback(callback, param,
                                                        initialNotify);
 }
-}  // extern "C"
+} // extern "C"

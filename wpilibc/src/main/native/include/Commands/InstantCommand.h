@@ -19,13 +19,13 @@ namespace frc {
  * Subclassing InstantCommand is shorthand for returning true from IsFinished().
  */
 class InstantCommand : public Command {
- public:
-  explicit InstantCommand(const llvm::Twine& name);
+public:
+  explicit InstantCommand(const llvm::Twine &name);
   InstantCommand() = default;
   virtual ~InstantCommand() = default;
 
- protected:
+protected:
   bool IsFinished() override;
 };
 
-}  // namespace frc
+} // namespace frc

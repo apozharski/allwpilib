@@ -17,10 +17,10 @@ void InitializeAnalogInData() {
   static AnalogInData sind[kNumAnalogInputs];
   ::hal::SimAnalogInData = sind;
 }
-}  // namespace init
-}  // namespace hal
+} // namespace init
+} // namespace hal
 
-AnalogInData* hal::SimAnalogInData;
+AnalogInData *hal::SimAnalogInData;
 void AnalogInData::ResetData() {
   m_initialized = false;
   m_initializedCallbacks = nullptr;
@@ -43,10 +43,11 @@ void AnalogInData::ResetData() {
 }
 
 int32_t AnalogInData::RegisterInitializedCallback(HAL_NotifyCallback callback,
-                                                  void* param,
+                                                  void *param,
                                                   HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -79,10 +80,11 @@ void AnalogInData::SetInitialized(HAL_Bool initialized) {
 }
 
 int32_t AnalogInData::RegisterAverageBitsCallback(HAL_NotifyCallback callback,
-                                                  void* param,
+                                                  void *param,
                                                   HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -115,9 +117,10 @@ void AnalogInData::SetAverageBits(int32_t averageBits) {
 }
 
 int32_t AnalogInData::RegisterOversampleBitsCallback(
-    HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify) {
+    HAL_NotifyCallback callback, void *param, HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -150,10 +153,11 @@ void AnalogInData::SetOversampleBits(int32_t oversampleBits) {
 }
 
 int32_t AnalogInData::RegisterVoltageCallback(HAL_NotifyCallback callback,
-                                              void* param,
+                                              void *param,
                                               HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -186,9 +190,10 @@ void AnalogInData::SetVoltage(double voltage) {
 }
 
 int32_t AnalogInData::RegisterAccumulatorInitializedCallback(
-    HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify) {
+    HAL_NotifyCallback callback, void *param, HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -226,9 +231,10 @@ void AnalogInData::SetAccumulatorInitialized(HAL_Bool accumulatorInitialized) {
 }
 
 int32_t AnalogInData::RegisterAccumulatorValueCallback(
-    HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify) {
+    HAL_NotifyCallback callback, void *param, HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -263,9 +269,10 @@ void AnalogInData::SetAccumulatorValue(int64_t accumulatorValue) {
 }
 
 int32_t AnalogInData::RegisterAccumulatorCountCallback(
-    HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify) {
+    HAL_NotifyCallback callback, void *param, HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -300,9 +307,10 @@ void AnalogInData::SetAccumulatorCount(int64_t accumulatorCount) {
 }
 
 int32_t AnalogInData::RegisterAccumulatorCenterCallback(
-    HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify) {
+    HAL_NotifyCallback callback, void *param, HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -337,9 +345,10 @@ void AnalogInData::SetAccumulatorCenter(int32_t accumulatorCenter) {
 }
 
 int32_t AnalogInData::RegisterAccumulatorDeadbandCallback(
-    HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify) {
+    HAL_NotifyCallback callback, void *param, HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -380,7 +389,7 @@ void HALSIM_ResetAnalogInData(int32_t index) {
 
 int32_t HALSIM_RegisterAnalogInInitializedCallback(int32_t index,
                                                    HAL_NotifyCallback callback,
-                                                   void* param,
+                                                   void *param,
                                                    HAL_Bool initialNotify) {
   return SimAnalogInData[index].RegisterInitializedCallback(callback, param,
                                                             initialNotify);
@@ -400,7 +409,7 @@ void HALSIM_SetAnalogInInitialized(int32_t index, HAL_Bool initialized) {
 
 int32_t HALSIM_RegisterAnalogInAverageBitsCallback(int32_t index,
                                                    HAL_NotifyCallback callback,
-                                                   void* param,
+                                                   void *param,
                                                    HAL_Bool initialNotify) {
   return SimAnalogInData[index].RegisterAverageBitsCallback(callback, param,
                                                             initialNotify);
@@ -419,7 +428,7 @@ void HALSIM_SetAnalogInAverageBits(int32_t index, int32_t averageBits) {
 }
 
 int32_t HALSIM_RegisterAnalogInOversampleBitsCallback(
-    int32_t index, HAL_NotifyCallback callback, void* param,
+    int32_t index, HAL_NotifyCallback callback, void *param,
     HAL_Bool initialNotify) {
   return SimAnalogInData[index].RegisterOversampleBitsCallback(callback, param,
                                                                initialNotify);
@@ -439,7 +448,7 @@ void HALSIM_SetAnalogInOversampleBits(int32_t index, int32_t oversampleBits) {
 
 int32_t HALSIM_RegisterAnalogInVoltageCallback(int32_t index,
                                                HAL_NotifyCallback callback,
-                                               void* param,
+                                               void *param,
                                                HAL_Bool initialNotify) {
   return SimAnalogInData[index].RegisterVoltageCallback(callback, param,
                                                         initialNotify);
@@ -458,7 +467,7 @@ void HALSIM_SetAnalogInVoltage(int32_t index, double voltage) {
 }
 
 int32_t HALSIM_RegisterAnalogInAccumulatorInitializedCallback(
-    int32_t index, HAL_NotifyCallback callback, void* param,
+    int32_t index, HAL_NotifyCallback callback, void *param,
     HAL_Bool initialNotify) {
   return SimAnalogInData[index].RegisterAccumulatorInitializedCallback(
       callback, param, initialNotify);
@@ -479,7 +488,7 @@ void HALSIM_SetAnalogInAccumulatorInitialized(int32_t index,
 }
 
 int32_t HALSIM_RegisterAnalogInAccumulatorValueCallback(
-    int32_t index, HAL_NotifyCallback callback, void* param,
+    int32_t index, HAL_NotifyCallback callback, void *param,
     HAL_Bool initialNotify) {
   return SimAnalogInData[index].RegisterAccumulatorValueCallback(
       callback, param, initialNotify);
@@ -499,7 +508,7 @@ void HALSIM_SetAnalogInAccumulatorValue(int32_t index,
 }
 
 int32_t HALSIM_RegisterAnalogInAccumulatorCountCallback(
-    int32_t index, HAL_NotifyCallback callback, void* param,
+    int32_t index, HAL_NotifyCallback callback, void *param,
     HAL_Bool initialNotify) {
   return SimAnalogInData[index].RegisterAccumulatorCountCallback(
       callback, param, initialNotify);
@@ -519,7 +528,7 @@ void HALSIM_SetAnalogInAccumulatorCount(int32_t index,
 }
 
 int32_t HALSIM_RegisterAnalogInAccumulatorCenterCallback(
-    int32_t index, HAL_NotifyCallback callback, void* param,
+    int32_t index, HAL_NotifyCallback callback, void *param,
     HAL_Bool initialNotify) {
   return SimAnalogInData[index].RegisterAccumulatorCenterCallback(
       callback, param, initialNotify);
@@ -540,7 +549,7 @@ void HALSIM_SetAnalogInAccumulatorCenter(int32_t index,
 }
 
 int32_t HALSIM_RegisterAnalogInAccumulatorDeadbandCallback(
-    int32_t index, HAL_NotifyCallback callback, void* param,
+    int32_t index, HAL_NotifyCallback callback, void *param,
     HAL_Bool initialNotify) {
   return SimAnalogInData[index].RegisterAccumulatorDeadbandCallback(
       callback, param, initialNotify);
@@ -562,7 +571,7 @@ void HALSIM_SetAnalogInAccumulatorDeadband(int32_t index,
 
 void HALSIM_RegisterAnalogInAllCallbacks(int32_t index,
                                          HAL_NotifyCallback callback,
-                                         void* param, HAL_Bool initialNotify) {
+                                         void *param, HAL_Bool initialNotify) {
   SimAnalogInData[index].RegisterInitializedCallback(callback, param,
                                                      initialNotify);
   SimAnalogInData[index].RegisterAverageBitsCallback(callback, param,
@@ -582,4 +591,4 @@ void HALSIM_RegisterAnalogInAllCallbacks(int32_t index,
   SimAnalogInData[index].RegisterAccumulatorDeadbandCallback(callback, param,
                                                              initialNotify);
 }
-}  // extern "C"
+} // extern "C"

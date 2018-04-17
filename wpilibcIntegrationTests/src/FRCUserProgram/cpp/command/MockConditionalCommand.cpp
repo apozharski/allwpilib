@@ -9,8 +9,8 @@
 
 using namespace frc;
 
-MockConditionalCommand::MockConditionalCommand(MockCommand* onTrue,
-                                               MockCommand* onFalse)
+MockConditionalCommand::MockConditionalCommand(MockCommand *onTrue,
+                                               MockCommand *onFalse)
     : ConditionalCommand(onTrue, onFalse) {
   m_initializeCount = 0;
   m_executeCount = 0;

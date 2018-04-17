@@ -12,7 +12,7 @@
 namespace frc {
 
 class InternalButton : public Button {
- public:
+public:
   InternalButton() = default;
   explicit InternalButton(bool inverted);
   virtual ~InternalButton() = default;
@@ -22,9 +22,9 @@ class InternalButton : public Button {
 
   virtual bool Get();
 
- private:
+private:
   bool m_pressed = false;
   bool m_inverted = false;
 };
 
-}  // namespace frc
+} // namespace frc

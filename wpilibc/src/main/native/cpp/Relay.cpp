@@ -100,8 +100,10 @@ Relay::~Relay() {
   HAL_SetRelay(m_forwardHandle, false, &status);
   HAL_SetRelay(m_reverseHandle, false, &status);
   // ignore errors, as we want to make sure a free happens.
-  if (m_forwardHandle != HAL_kInvalidHandle) HAL_FreeRelayPort(m_forwardHandle);
-  if (m_reverseHandle != HAL_kInvalidHandle) HAL_FreeRelayPort(m_reverseHandle);
+  if (m_forwardHandle != HAL_kInvalidHandle)
+    HAL_FreeRelayPort(m_forwardHandle);
+  if (m_reverseHandle != HAL_kInvalidHandle)
+    HAL_FreeRelayPort(m_reverseHandle);
 }
 
 /**
@@ -120,51 +122,52 @@ Relay::~Relay() {
  * @param value The state to set the relay.
  */
 void Relay::Set(Relay::Value value) {
-  if (StatusIsFatal()) return;
+  if (StatusIsFatal())
+    return;
 
   int32_t status = 0;
 
   switch (value) {
-    case kOff:
-      if (m_direction == kBothDirections || m_direction == kForwardOnly) {
-        HAL_SetRelay(m_forwardHandle, false, &status);
-      }
-      if (m_direction == kBothDirections || m_direction == kReverseOnly) {
-        HAL_SetRelay(m_reverseHandle, false, &status);
-      }
+  case kOff:
+    if (m_direction == kBothDirections || m_direction == kForwardOnly) {
+      HAL_SetRelay(m_forwardHandle, false, &status);
+    }
+    if (m_direction == kBothDirections || m_direction == kReverseOnly) {
+      HAL_SetRelay(m_reverseHandle, false, &status);
+    }
+    break;
+  case kOn:
+    if (m_direction == kBothDirections || m_direction == kForwardOnly) {
+      HAL_SetRelay(m_forwardHandle, true, &status);
+    }
+    if (m_direction == kBothDirections || m_direction == kReverseOnly) {
+      HAL_SetRelay(m_reverseHandle, true, &status);
+    }
+    break;
+  case kForward:
+    if (m_direction == kReverseOnly) {
+      wpi_setWPIError(IncompatibleMode);
       break;
-    case kOn:
-      if (m_direction == kBothDirections || m_direction == kForwardOnly) {
-        HAL_SetRelay(m_forwardHandle, true, &status);
-      }
-      if (m_direction == kBothDirections || m_direction == kReverseOnly) {
-        HAL_SetRelay(m_reverseHandle, true, &status);
-      }
+    }
+    if (m_direction == kBothDirections || m_direction == kForwardOnly) {
+      HAL_SetRelay(m_forwardHandle, true, &status);
+    }
+    if (m_direction == kBothDirections) {
+      HAL_SetRelay(m_reverseHandle, false, &status);
+    }
+    break;
+  case kReverse:
+    if (m_direction == kForwardOnly) {
+      wpi_setWPIError(IncompatibleMode);
       break;
-    case kForward:
-      if (m_direction == kReverseOnly) {
-        wpi_setWPIError(IncompatibleMode);
-        break;
-      }
-      if (m_direction == kBothDirections || m_direction == kForwardOnly) {
-        HAL_SetRelay(m_forwardHandle, true, &status);
-      }
-      if (m_direction == kBothDirections) {
-        HAL_SetRelay(m_reverseHandle, false, &status);
-      }
-      break;
-    case kReverse:
-      if (m_direction == kForwardOnly) {
-        wpi_setWPIError(IncompatibleMode);
-        break;
-      }
-      if (m_direction == kBothDirections) {
-        HAL_SetRelay(m_forwardHandle, false, &status);
-      }
-      if (m_direction == kBothDirections || m_direction == kReverseOnly) {
-        HAL_SetRelay(m_reverseHandle, true, &status);
-      }
-      break;
+    }
+    if (m_direction == kBothDirections) {
+      HAL_SetRelay(m_forwardHandle, false, &status);
+    }
+    if (m_direction == kBothDirections || m_direction == kReverseOnly) {
+      HAL_SetRelay(m_reverseHandle, true, &status);
+    }
+    break;
   }
 
   wpi_setErrorWithContext(status, HAL_GetErrorMessage(status));
@@ -268,25 +271,25 @@ bool Relay::IsSafetyEnabled() const {
   return m_safetyHelper->IsSafetyEnabled();
 }
 
-void Relay::GetDescription(llvm::raw_ostream& desc) const {
+void Relay::GetDescription(llvm::raw_ostream &desc) const {
   desc << "Relay " << GetChannel();
 }
 
-void Relay::InitSendable(SendableBuilder& builder) {
+void Relay::InitSendable(SendableBuilder &builder) {
   builder.SetSmartDashboardType("Relay");
   builder.SetSafeState([=]() { Set(kOff); });
   builder.AddSmallStringProperty(
       "Value",
-      [=](llvm::SmallVectorImpl<char>& buf) -> llvm::StringRef {
+      [=](llvm::SmallVectorImpl<char> &buf) -> llvm::StringRef {
         switch (Get()) {
-          case kOn:
-            return "On";
-          case kForward:
-            return "Forward";
-          case kReverse:
-            return "Reverse";
-          default:
-            return "Off";
+        case kOn:
+          return "On";
+        case kForward:
+          return "Forward";
+        case kReverse:
+          return "Reverse";
+        default:
+          return "Off";
         }
       },
       [=](llvm::StringRef value) {

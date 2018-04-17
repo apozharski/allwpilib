@@ -38,10 +38,10 @@ template <typename THandle, typename TStruct, HAL_HandleEnum enumValue>
 class UnlimitedHandleResource : public HandleBase {
   friend class UnlimitedHandleResourceTest;
 
- public:
+public:
   UnlimitedHandleResource() = default;
-  UnlimitedHandleResource(const UnlimitedHandleResource&) = delete;
-  UnlimitedHandleResource& operator=(const UnlimitedHandleResource&) = delete;
+  UnlimitedHandleResource(const UnlimitedHandleResource &) = delete;
+  UnlimitedHandleResource &operator=(const UnlimitedHandleResource &) = delete;
 
   THandle Allocate(std::shared_ptr<TStruct> structure);
   std::shared_ptr<TStruct> Get(THandle handle);
@@ -52,10 +52,9 @@ class UnlimitedHandleResource : public HandleBase {
   /* Calls func(THandle, TStruct*) for each handle.  Note this holds the
    * global lock for the entirety of execution.
    */
-  template <typename Functor>
-  void ForEach(Functor func);
+  template <typename Functor> void ForEach(Functor func);
 
- private:
+private:
   std::vector<std::shared_ptr<TStruct>> m_structures;
   wpi::mutex m_handleMutex;
 };
@@ -71,7 +70,8 @@ THandle UnlimitedHandleResource<THandle, TStruct, enumValue>::Allocate(
       return static_cast<THandle>(createHandle(i, enumValue, m_version));
     }
   }
-  if (i >= INT16_MAX) return HAL_kInvalidHandle;
+  if (i >= INT16_MAX)
+    return HAL_kInvalidHandle;
 
   m_structures.push_back(structure);
   return static_cast<THandle>(
@@ -123,4 +123,4 @@ void UnlimitedHandleResource<THandle, TStruct, enumValue>::ForEach(
   }
 }
 
-}  // namespace hal
+} // namespace hal

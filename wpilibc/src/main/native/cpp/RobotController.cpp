@@ -288,4 +288,4 @@ CANStatus RobotController::GetCANStatus() {
           static_cast<int>(txFullCount), static_cast<int>(receiveErrorCount),
           static_cast<int>(transmitErrorCount)};
 }
-}  // namespace frc
+} // namespace frc

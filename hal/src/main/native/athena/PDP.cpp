@@ -19,7 +19,7 @@ using namespace hal;
 
 static std::unique_ptr<PDP> pdp[kNumPDPModules];
 
-static inline bool checkPDPInit(int32_t module, int32_t* status) {
+static inline bool checkPDPInit(int32_t module, int32_t *status) {
   if (!HAL_CheckPDPModule(module)) {
     *status = RESOURCE_OUT_OF_RANGE;
     return false;
@@ -38,12 +38,12 @@ void InitializePDP() {
     pdp[i] = nullptr;
   }
 }
-}  // namespace init
-}  // namespace hal
+} // namespace init
+} // namespace hal
 
 extern "C" {
 
-void HAL_InitializePDP(int32_t module, int32_t* status) {
+void HAL_InitializePDP(int32_t module, int32_t *status) {
   if (!HAL_CheckPDPModule(module)) {
     *status = RESOURCE_OUT_OF_RANGE;
     return;
@@ -61,8 +61,9 @@ HAL_Bool HAL_CheckPDPChannel(int32_t channel) {
   return channel < kNumPDPChannels && channel >= 0;
 }
 
-double HAL_GetPDPTemperature(int32_t module, int32_t* status) {
-  if (!checkPDPInit(module, status)) return 0;
+double HAL_GetPDPTemperature(int32_t module, int32_t *status) {
+  if (!checkPDPInit(module, status))
+    return 0;
 
   double temperature;
 
@@ -71,8 +72,9 @@ double HAL_GetPDPTemperature(int32_t module, int32_t* status) {
   return temperature;
 }
 
-double HAL_GetPDPVoltage(int32_t module, int32_t* status) {
-  if (!checkPDPInit(module, status)) return 0;
+double HAL_GetPDPVoltage(int32_t module, int32_t *status) {
+  if (!checkPDPInit(module, status))
+    return 0;
 
   double voltage;
 
@@ -82,8 +84,9 @@ double HAL_GetPDPVoltage(int32_t module, int32_t* status) {
 }
 
 double HAL_GetPDPChannelCurrent(int32_t module, int32_t channel,
-                                int32_t* status) {
-  if (!checkPDPInit(module, status)) return 0;
+                                int32_t *status) {
+  if (!checkPDPInit(module, status))
+    return 0;
 
   double current;
 
@@ -92,8 +95,9 @@ double HAL_GetPDPChannelCurrent(int32_t module, int32_t channel,
   return current;
 }
 
-double HAL_GetPDPTotalCurrent(int32_t module, int32_t* status) {
-  if (!checkPDPInit(module, status)) return 0;
+double HAL_GetPDPTotalCurrent(int32_t module, int32_t *status) {
+  if (!checkPDPInit(module, status))
+    return 0;
 
   double current;
 
@@ -102,8 +106,9 @@ double HAL_GetPDPTotalCurrent(int32_t module, int32_t* status) {
   return current;
 }
 
-double HAL_GetPDPTotalPower(int32_t module, int32_t* status) {
-  if (!checkPDPInit(module, status)) return 0;
+double HAL_GetPDPTotalPower(int32_t module, int32_t *status) {
+  if (!checkPDPInit(module, status))
+    return 0;
 
   double power;
 
@@ -112,8 +117,9 @@ double HAL_GetPDPTotalPower(int32_t module, int32_t* status) {
   return power;
 }
 
-double HAL_GetPDPTotalEnergy(int32_t module, int32_t* status) {
-  if (!checkPDPInit(module, status)) return 0;
+double HAL_GetPDPTotalEnergy(int32_t module, int32_t *status) {
+  if (!checkPDPInit(module, status))
+    return 0;
 
   double energy;
 
@@ -122,16 +128,18 @@ double HAL_GetPDPTotalEnergy(int32_t module, int32_t* status) {
   return energy;
 }
 
-void HAL_ResetPDPTotalEnergy(int32_t module, int32_t* status) {
-  if (!checkPDPInit(module, status)) return;
+void HAL_ResetPDPTotalEnergy(int32_t module, int32_t *status) {
+  if (!checkPDPInit(module, status))
+    return;
 
   *status = pdp[module]->ResetEnergy();
 }
 
-void HAL_ClearPDPStickyFaults(int32_t module, int32_t* status) {
-  if (!checkPDPInit(module, status)) return;
+void HAL_ClearPDPStickyFaults(int32_t module, int32_t *status) {
+  if (!checkPDPInit(module, status))
+    return;
 
   *status = pdp[module]->ClearStickyFaults();
 }
 
-}  // extern "C"
+} // extern "C"

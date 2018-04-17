@@ -23,31 +23,37 @@ std::shared_ptr<nt::NetworkTable> SendableBuilderImpl::GetTable() {
 
 void SendableBuilderImpl::UpdateTable() {
   uint64_t time = nt::Now();
-  for (auto& property : m_properties) {
-    if (property.update) property.update(property.entry, time);
+  for (auto &property : m_properties) {
+    if (property.update)
+      property.update(property.entry, time);
   }
-  if (m_updateTable) m_updateTable();
+  if (m_updateTable)
+    m_updateTable();
 }
 
 void SendableBuilderImpl::StartListeners() {
-  for (auto& property : m_properties) property.StartListener();
+  for (auto &property : m_properties)
+    property.StartListener();
 }
 
 void SendableBuilderImpl::StopListeners() {
-  for (auto& property : m_properties) property.StopListener();
+  for (auto &property : m_properties)
+    property.StopListener();
 }
 
 void SendableBuilderImpl::StartLiveWindowMode() {
-  if (m_safeState) m_safeState();
+  if (m_safeState)
+    m_safeState();
   StartListeners();
 }
 
 void SendableBuilderImpl::StopLiveWindowMode() {
   StopListeners();
-  if (m_safeState) m_safeState();
+  if (m_safeState)
+    m_safeState();
 }
 
-void SendableBuilderImpl::SetSmartDashboardType(const llvm::Twine& type) {
+void SendableBuilderImpl::SetSmartDashboardType(const llvm::Twine &type) {
   m_table->GetEntry(".type").SetString(type);
 }
 
@@ -59,11 +65,11 @@ void SendableBuilderImpl::SetUpdateTable(std::function<void()> func) {
   m_updateTable = func;
 }
 
-nt::NetworkTableEntry SendableBuilderImpl::GetEntry(const llvm::Twine& key) {
+nt::NetworkTableEntry SendableBuilderImpl::GetEntry(const llvm::Twine &key) {
   return m_table->GetEntry(key);
 }
 
-void SendableBuilderImpl::AddBooleanProperty(const llvm::Twine& key,
+void SendableBuilderImpl::AddBooleanProperty(const llvm::Twine &key,
                                              std::function<bool()> getter,
                                              std::function<void(bool)> setter) {
   m_properties.emplace_back(*m_table, key);
@@ -77,8 +83,9 @@ void SendableBuilderImpl::AddBooleanProperty(const llvm::Twine& key,
     m_properties.back().createListener =
         [=](nt::NetworkTableEntry entry) -> NT_EntryListener {
       return entry.AddListener(
-          [=](const nt::EntryNotification& event) {
-            if (!event.value->IsBoolean()) return;
+          [=](const nt::EntryNotification &event) {
+            if (!event.value->IsBoolean())
+              return;
             setter(event.value->GetBoolean());
           },
           NT_NOTIFY_IMMEDIATE | NT_NOTIFY_NEW | NT_NOTIFY_UPDATE);
@@ -87,7 +94,7 @@ void SendableBuilderImpl::AddBooleanProperty(const llvm::Twine& key,
 }
 
 void SendableBuilderImpl::AddDoubleProperty(
-    const llvm::Twine& key, std::function<double()> getter,
+    const llvm::Twine &key, std::function<double()> getter,
     std::function<void(double)> setter) {
   m_properties.emplace_back(*m_table, key);
   if (getter) {
@@ -100,8 +107,9 @@ void SendableBuilderImpl::AddDoubleProperty(
     m_properties.back().createListener =
         [=](nt::NetworkTableEntry entry) -> NT_EntryListener {
       return entry.AddListener(
-          [=](const nt::EntryNotification& event) {
-            if (!event.value->IsDouble()) return;
+          [=](const nt::EntryNotification &event) {
+            if (!event.value->IsDouble())
+              return;
             setter(event.value->GetDouble());
           },
           NT_NOTIFY_IMMEDIATE | NT_NOTIFY_NEW | NT_NOTIFY_UPDATE);
@@ -110,7 +118,7 @@ void SendableBuilderImpl::AddDoubleProperty(
 }
 
 void SendableBuilderImpl::AddStringProperty(
-    const llvm::Twine& key, std::function<std::string()> getter,
+    const llvm::Twine &key, std::function<std::string()> getter,
     std::function<void(llvm::StringRef)> setter) {
   m_properties.emplace_back(*m_table, key);
   if (getter) {
@@ -123,8 +131,9 @@ void SendableBuilderImpl::AddStringProperty(
     m_properties.back().createListener =
         [=](nt::NetworkTableEntry entry) -> NT_EntryListener {
       return entry.AddListener(
-          [=](const nt::EntryNotification& event) {
-            if (!event.value->IsString()) return;
+          [=](const nt::EntryNotification &event) {
+            if (!event.value->IsString())
+              return;
             setter(event.value->GetString());
           },
           NT_NOTIFY_IMMEDIATE | NT_NOTIFY_NEW | NT_NOTIFY_UPDATE);
@@ -133,7 +142,7 @@ void SendableBuilderImpl::AddStringProperty(
 }
 
 void SendableBuilderImpl::AddBooleanArrayProperty(
-    const llvm::Twine& key, std::function<std::vector<int>()> getter,
+    const llvm::Twine &key, std::function<std::vector<int>()> getter,
     std::function<void(llvm::ArrayRef<int>)> setter) {
   m_properties.emplace_back(*m_table, key);
   if (getter) {
@@ -146,8 +155,9 @@ void SendableBuilderImpl::AddBooleanArrayProperty(
     m_properties.back().createListener =
         [=](nt::NetworkTableEntry entry) -> NT_EntryListener {
       return entry.AddListener(
-          [=](const nt::EntryNotification& event) {
-            if (!event.value->IsBooleanArray()) return;
+          [=](const nt::EntryNotification &event) {
+            if (!event.value->IsBooleanArray())
+              return;
             setter(event.value->GetBooleanArray());
           },
           NT_NOTIFY_IMMEDIATE | NT_NOTIFY_NEW | NT_NOTIFY_UPDATE);
@@ -156,7 +166,7 @@ void SendableBuilderImpl::AddBooleanArrayProperty(
 }
 
 void SendableBuilderImpl::AddDoubleArrayProperty(
-    const llvm::Twine& key, std::function<std::vector<double>()> getter,
+    const llvm::Twine &key, std::function<std::vector<double>()> getter,
     std::function<void(llvm::ArrayRef<double>)> setter) {
   m_properties.emplace_back(*m_table, key);
   if (getter) {
@@ -169,8 +179,9 @@ void SendableBuilderImpl::AddDoubleArrayProperty(
     m_properties.back().createListener =
         [=](nt::NetworkTableEntry entry) -> NT_EntryListener {
       return entry.AddListener(
-          [=](const nt::EntryNotification& event) {
-            if (!event.value->IsDoubleArray()) return;
+          [=](const nt::EntryNotification &event) {
+            if (!event.value->IsDoubleArray())
+              return;
             setter(event.value->GetDoubleArray());
           },
           NT_NOTIFY_IMMEDIATE | NT_NOTIFY_NEW | NT_NOTIFY_UPDATE);
@@ -179,7 +190,7 @@ void SendableBuilderImpl::AddDoubleArrayProperty(
 }
 
 void SendableBuilderImpl::AddStringArrayProperty(
-    const llvm::Twine& key, std::function<std::vector<std::string>()> getter,
+    const llvm::Twine &key, std::function<std::vector<std::string>()> getter,
     std::function<void(llvm::ArrayRef<std::string>)> setter) {
   m_properties.emplace_back(*m_table, key);
   if (getter) {
@@ -192,8 +203,9 @@ void SendableBuilderImpl::AddStringArrayProperty(
     m_properties.back().createListener =
         [=](nt::NetworkTableEntry entry) -> NT_EntryListener {
       return entry.AddListener(
-          [=](const nt::EntryNotification& event) {
-            if (!event.value->IsStringArray()) return;
+          [=](const nt::EntryNotification &event) {
+            if (!event.value->IsStringArray())
+              return;
             setter(event.value->GetStringArray());
           },
           NT_NOTIFY_IMMEDIATE | NT_NOTIFY_NEW | NT_NOTIFY_UPDATE);
@@ -202,7 +214,7 @@ void SendableBuilderImpl::AddStringArrayProperty(
 }
 
 void SendableBuilderImpl::AddRawProperty(
-    const llvm::Twine& key, std::function<std::string()> getter,
+    const llvm::Twine &key, std::function<std::string()> getter,
     std::function<void(llvm::StringRef)> setter) {
   m_properties.emplace_back(*m_table, key);
   if (getter) {
@@ -215,8 +227,9 @@ void SendableBuilderImpl::AddRawProperty(
     m_properties.back().createListener =
         [=](nt::NetworkTableEntry entry) -> NT_EntryListener {
       return entry.AddListener(
-          [=](const nt::EntryNotification& event) {
-            if (!event.value->IsRaw()) return;
+          [=](const nt::EntryNotification &event) {
+            if (!event.value->IsRaw())
+              return;
             setter(event.value->GetRaw());
           },
           NT_NOTIFY_IMMEDIATE | NT_NOTIFY_NEW | NT_NOTIFY_UPDATE);
@@ -225,7 +238,7 @@ void SendableBuilderImpl::AddRawProperty(
 }
 
 void SendableBuilderImpl::AddValueProperty(
-    const llvm::Twine& key, std::function<std::shared_ptr<nt::Value>()> getter,
+    const llvm::Twine &key, std::function<std::shared_ptr<nt::Value>()> getter,
     std::function<void(std::shared_ptr<nt::Value>)> setter) {
   m_properties.emplace_back(*m_table, key);
   if (getter) {
@@ -238,15 +251,15 @@ void SendableBuilderImpl::AddValueProperty(
     m_properties.back().createListener =
         [=](nt::NetworkTableEntry entry) -> NT_EntryListener {
       return entry.AddListener(
-          [=](const nt::EntryNotification& event) { setter(event.value); },
+          [=](const nt::EntryNotification &event) { setter(event.value); },
           NT_NOTIFY_IMMEDIATE | NT_NOTIFY_NEW | NT_NOTIFY_UPDATE);
     };
   }
 }
 
 void SendableBuilderImpl::AddSmallStringProperty(
-    const llvm::Twine& key,
-    std::function<llvm::StringRef(llvm::SmallVectorImpl<char>& buf)> getter,
+    const llvm::Twine &key,
+    std::function<llvm::StringRef(llvm::SmallVectorImpl<char> &buf)> getter,
     std::function<void(llvm::StringRef)> setter) {
   m_properties.emplace_back(*m_table, key);
   if (getter) {
@@ -260,8 +273,9 @@ void SendableBuilderImpl::AddSmallStringProperty(
     m_properties.back().createListener =
         [=](nt::NetworkTableEntry entry) -> NT_EntryListener {
       return entry.AddListener(
-          [=](const nt::EntryNotification& event) {
-            if (!event.value->IsString()) return;
+          [=](const nt::EntryNotification &event) {
+            if (!event.value->IsString())
+              return;
             setter(event.value->GetString());
           },
           NT_NOTIFY_IMMEDIATE | NT_NOTIFY_NEW | NT_NOTIFY_UPDATE);
@@ -270,8 +284,8 @@ void SendableBuilderImpl::AddSmallStringProperty(
 }
 
 void SendableBuilderImpl::AddSmallBooleanArrayProperty(
-    const llvm::Twine& key,
-    std::function<llvm::ArrayRef<int>(llvm::SmallVectorImpl<int>& buf)> getter,
+    const llvm::Twine &key,
+    std::function<llvm::ArrayRef<int>(llvm::SmallVectorImpl<int> &buf)> getter,
     std::function<void(llvm::ArrayRef<int>)> setter) {
   m_properties.emplace_back(*m_table, key);
   if (getter) {
@@ -285,8 +299,9 @@ void SendableBuilderImpl::AddSmallBooleanArrayProperty(
     m_properties.back().createListener =
         [=](nt::NetworkTableEntry entry) -> NT_EntryListener {
       return entry.AddListener(
-          [=](const nt::EntryNotification& event) {
-            if (!event.value->IsBooleanArray()) return;
+          [=](const nt::EntryNotification &event) {
+            if (!event.value->IsBooleanArray())
+              return;
             setter(event.value->GetBooleanArray());
           },
           NT_NOTIFY_IMMEDIATE | NT_NOTIFY_NEW | NT_NOTIFY_UPDATE);
@@ -295,8 +310,8 @@ void SendableBuilderImpl::AddSmallBooleanArrayProperty(
 }
 
 void SendableBuilderImpl::AddSmallDoubleArrayProperty(
-    const llvm::Twine& key,
-    std::function<llvm::ArrayRef<double>(llvm::SmallVectorImpl<double>& buf)>
+    const llvm::Twine &key,
+    std::function<llvm::ArrayRef<double>(llvm::SmallVectorImpl<double> &buf)>
         getter,
     std::function<void(llvm::ArrayRef<double>)> setter) {
   m_properties.emplace_back(*m_table, key);
@@ -311,8 +326,9 @@ void SendableBuilderImpl::AddSmallDoubleArrayProperty(
     m_properties.back().createListener =
         [=](nt::NetworkTableEntry entry) -> NT_EntryListener {
       return entry.AddListener(
-          [=](const nt::EntryNotification& event) {
-            if (!event.value->IsDoubleArray()) return;
+          [=](const nt::EntryNotification &event) {
+            if (!event.value->IsDoubleArray())
+              return;
             setter(event.value->GetDoubleArray());
           },
           NT_NOTIFY_IMMEDIATE | NT_NOTIFY_NEW | NT_NOTIFY_UPDATE);
@@ -321,10 +337,9 @@ void SendableBuilderImpl::AddSmallDoubleArrayProperty(
 }
 
 void SendableBuilderImpl::AddSmallStringArrayProperty(
-    const llvm::Twine& key,
-    std::function<
-        llvm::ArrayRef<std::string>(llvm::SmallVectorImpl<std::string>& buf)>
-        getter,
+    const llvm::Twine &key, std::function<llvm::ArrayRef<std::string>(
+                                llvm::SmallVectorImpl<std::string> &buf)>
+                                getter,
     std::function<void(llvm::ArrayRef<std::string>)> setter) {
   m_properties.emplace_back(*m_table, key);
   if (getter) {
@@ -338,8 +353,9 @@ void SendableBuilderImpl::AddSmallStringArrayProperty(
     m_properties.back().createListener =
         [=](nt::NetworkTableEntry entry) -> NT_EntryListener {
       return entry.AddListener(
-          [=](const nt::EntryNotification& event) {
-            if (!event.value->IsStringArray()) return;
+          [=](const nt::EntryNotification &event) {
+            if (!event.value->IsStringArray())
+              return;
             setter(event.value->GetStringArray());
           },
           NT_NOTIFY_IMMEDIATE | NT_NOTIFY_NEW | NT_NOTIFY_UPDATE);
@@ -348,8 +364,8 @@ void SendableBuilderImpl::AddSmallStringArrayProperty(
 }
 
 void SendableBuilderImpl::AddSmallRawProperty(
-    const llvm::Twine& key,
-    std::function<llvm::StringRef(llvm::SmallVectorImpl<char>& buf)> getter,
+    const llvm::Twine &key,
+    std::function<llvm::StringRef(llvm::SmallVectorImpl<char> &buf)> getter,
     std::function<void(llvm::StringRef)> setter) {
   m_properties.emplace_back(*m_table, key);
   if (getter) {
@@ -363,8 +379,9 @@ void SendableBuilderImpl::AddSmallRawProperty(
     m_properties.back().createListener =
         [=](nt::NetworkTableEntry entry) -> NT_EntryListener {
       return entry.AddListener(
-          [=](const nt::EntryNotification& event) {
-            if (!event.value->IsRaw()) return;
+          [=](const nt::EntryNotification &event) {
+            if (!event.value->IsRaw())
+              return;
             setter(event.value->GetRaw());
           },
           NT_NOTIFY_IMMEDIATE | NT_NOTIFY_NEW | NT_NOTIFY_UPDATE);

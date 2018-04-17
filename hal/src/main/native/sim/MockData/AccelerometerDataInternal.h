@@ -17,36 +17,36 @@
 
 namespace hal {
 class AccelerometerData {
- public:
-  int32_t RegisterActiveCallback(HAL_NotifyCallback callback, void* param,
+public:
+  int32_t RegisterActiveCallback(HAL_NotifyCallback callback, void *param,
                                  HAL_Bool initialNotify);
   void CancelActiveCallback(int32_t uid);
   void InvokeActiveCallback(HAL_Value value);
   HAL_Bool GetActive();
   void SetActive(HAL_Bool active);
 
-  int32_t RegisterRangeCallback(HAL_NotifyCallback callback, void* param,
+  int32_t RegisterRangeCallback(HAL_NotifyCallback callback, void *param,
                                 HAL_Bool initialNotify);
   void CancelRangeCallback(int32_t uid);
   void InvokeRangeCallback(HAL_Value value);
   HAL_AccelerometerRange GetRange();
   void SetRange(HAL_AccelerometerRange range);
 
-  int32_t RegisterXCallback(HAL_NotifyCallback callback, void* param,
+  int32_t RegisterXCallback(HAL_NotifyCallback callback, void *param,
                             HAL_Bool initialNotify);
   void CancelXCallback(int32_t uid);
   void InvokeXCallback(HAL_Value value);
   double GetX();
   void SetX(double x);
 
-  int32_t RegisterYCallback(HAL_NotifyCallback callback, void* param,
+  int32_t RegisterYCallback(HAL_NotifyCallback callback, void *param,
                             HAL_Bool initialNotify);
   void CancelYCallback(int32_t uid);
   void InvokeYCallback(HAL_Value value);
   double GetY();
   void SetY(double y);
 
-  int32_t RegisterZCallback(HAL_NotifyCallback callback, void* param,
+  int32_t RegisterZCallback(HAL_NotifyCallback callback, void *param,
                             HAL_Bool initialNotify);
   void CancelZCallback(int32_t uid);
   void InvokeZCallback(HAL_Value value);
@@ -55,7 +55,7 @@ class AccelerometerData {
 
   virtual void ResetData();
 
- private:
+private:
   wpi::mutex m_registerMutex;
   std::atomic<HAL_Bool> m_active{false};
   std::shared_ptr<NotifyListenerVector> m_activeCallbacks = nullptr;
@@ -69,5 +69,5 @@ class AccelerometerData {
   std::atomic<double> m_z{0.0};
   std::shared_ptr<NotifyListenerVector> m_zCallbacks = nullptr;
 };
-extern AccelerometerData* SimAccelerometerData;
-}  // namespace hal
+extern AccelerometerData *SimAccelerometerData;
+} // namespace hal

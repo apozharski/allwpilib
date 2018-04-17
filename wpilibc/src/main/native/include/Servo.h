@@ -19,7 +19,7 @@ namespace frc {
  * servo provided in the FIRST Kit of Parts in 2008.
  */
 class Servo : public SafePWM {
- public:
+public:
   explicit Servo(int channel);
   void Set(double value);
   void SetOffline();
@@ -29,9 +29,9 @@ class Servo : public SafePWM {
   static double GetMaxAngle() { return kMaxServoAngle; }
   static double GetMinAngle() { return kMinServoAngle; }
 
-  void InitSendable(SendableBuilder& builder) override;
+  void InitSendable(SendableBuilder &builder) override;
 
- private:
+private:
   double GetServoAngleRange() const { return kMaxServoAngle - kMinServoAngle; }
 
   static constexpr double kMaxServoAngle = 180.0;
@@ -41,4 +41,4 @@ class Servo : public SafePWM {
   static constexpr double kDefaultMinServoPWM = .6;
 };
 
-}  // namespace frc
+} // namespace frc

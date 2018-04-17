@@ -24,11 +24,11 @@ struct AnalogTrigger {
   uint8_t index;
 };
 
-}  // namespace
+} // namespace
 
 static LimitedHandleResource<HAL_AnalogTriggerHandle, AnalogTrigger,
-                             kNumAnalogTriggers, HAL_HandleEnum::AnalogTrigger>*
-    analogTriggerHandles;
+                             kNumAnalogTriggers, HAL_HandleEnum::AnalogTrigger>
+    *analogTriggerHandles;
 
 namespace hal {
 namespace init {
@@ -39,13 +39,14 @@ void InitializeAnalogTrigger() {
       atH;
   analogTriggerHandles = &atH;
 }
-}  // namespace init
-}  // namespace hal
+} // namespace init
+} // namespace hal
 
 extern "C" {
 
-HAL_AnalogTriggerHandle HAL_InitializeAnalogTrigger(
-    HAL_AnalogInputHandle portHandle, int32_t* index, int32_t* status) {
+HAL_AnalogTriggerHandle
+HAL_InitializeAnalogTrigger(HAL_AnalogInputHandle portHandle, int32_t *index,
+                            int32_t *status) {
   // ensure we are given a valid and active AnalogInput handle
   auto analog_port = analogInputHandles->Get(portHandle);
   if (analog_port == nullptr) {
@@ -58,7 +59,7 @@ HAL_AnalogTriggerHandle HAL_InitializeAnalogTrigger(
     return HAL_kInvalidHandle;
   }
   auto trigger = analogTriggerHandles->Get(handle);
-  if (trigger == nullptr) {  // would only occur on thread issue
+  if (trigger == nullptr) { // would only occur on thread issue
     *status = HAL_HANDLE_ERROR;
     return HAL_kInvalidHandle;
   }
@@ -72,14 +73,14 @@ HAL_AnalogTriggerHandle HAL_InitializeAnalogTrigger(
 }
 
 void HAL_CleanAnalogTrigger(HAL_AnalogTriggerHandle analogTriggerHandle,
-                            int32_t* status) {
+                            int32_t *status) {
   analogTriggerHandles->Free(analogTriggerHandle);
   // caller owns the analog input handle.
 }
 
 void HAL_SetAnalogTriggerLimitsRaw(HAL_AnalogTriggerHandle analogTriggerHandle,
                                    int32_t lower, int32_t upper,
-                                   int32_t* status) {
+                                   int32_t *status) {
   auto trigger = analogTriggerHandles->Get(analogTriggerHandle);
   if (trigger == nullptr) {
     *status = HAL_HANDLE_ERROR;
@@ -98,7 +99,7 @@ void HAL_SetAnalogTriggerLimitsRaw(HAL_AnalogTriggerHandle analogTriggerHandle,
  */
 void HAL_SetAnalogTriggerLimitsVoltage(
     HAL_AnalogTriggerHandle analogTriggerHandle, double lower, double upper,
-    int32_t* status) {
+    int32_t *status) {
   auto trigger = analogTriggerHandles->Get(analogTriggerHandle);
   if (trigger == nullptr) {
     *status = HAL_HANDLE_ERROR;
@@ -122,7 +123,7 @@ void HAL_SetAnalogTriggerLimitsVoltage(
  * trigger, otherwise the immediate value is used.
  */
 void HAL_SetAnalogTriggerAveraged(HAL_AnalogTriggerHandle analogTriggerHandle,
-                                  HAL_Bool useAveragedValue, int32_t* status) {
+                                  HAL_Bool useAveragedValue, int32_t *status) {
   auto trigger = analogTriggerHandles->Get(analogTriggerHandle);
   if (trigger == nullptr) {
     *status = HAL_HANDLE_ERROR;
@@ -143,7 +144,7 @@ void HAL_SetAnalogTriggerAveraged(HAL_AnalogTriggerHandle analogTriggerHandle,
  * pot crosses through zero.
  */
 void HAL_SetAnalogTriggerFiltered(HAL_AnalogTriggerHandle analogTriggerHandle,
-                                  HAL_Bool useFilteredValue, int32_t* status) {
+                                  HAL_Bool useFilteredValue, int32_t *status) {
   auto trigger = analogTriggerHandles->Get(analogTriggerHandle);
   if (trigger == nullptr) {
     *status = HAL_HANDLE_ERROR;
@@ -162,8 +163,9 @@ void HAL_SetAnalogTriggerFiltered(HAL_AnalogTriggerHandle analogTriggerHandle,
  * True if the analog input is between the upper and lower limits.
  * @return The InWindow output of the analog trigger.
  */
-HAL_Bool HAL_GetAnalogTriggerInWindow(
-    HAL_AnalogTriggerHandle analogTriggerHandle, int32_t* status) {
+HAL_Bool
+HAL_GetAnalogTriggerInWindow(HAL_AnalogTriggerHandle analogTriggerHandle,
+                             int32_t *status) {
   auto trigger = analogTriggerHandles->Get(analogTriggerHandle);
   if (trigger == nullptr) {
     *status = HAL_HANDLE_ERROR;
@@ -179,8 +181,9 @@ HAL_Bool HAL_GetAnalogTriggerInWindow(
  * If in Hysteresis, maintain previous state.
  * @return The TriggerState output of the analog trigger.
  */
-HAL_Bool HAL_GetAnalogTriggerTriggerState(
-    HAL_AnalogTriggerHandle analogTriggerHandle, int32_t* status) {
+HAL_Bool
+HAL_GetAnalogTriggerTriggerState(HAL_AnalogTriggerHandle analogTriggerHandle,
+                                 int32_t *status) {
   auto trigger = analogTriggerHandles->Get(analogTriggerHandle);
   if (trigger == nullptr) {
     *status = HAL_HANDLE_ERROR;
@@ -195,7 +198,7 @@ HAL_Bool HAL_GetAnalogTriggerTriggerState(
  */
 HAL_Bool HAL_GetAnalogTriggerOutput(HAL_AnalogTriggerHandle analogTriggerHandle,
                                     HAL_AnalogTriggerType type,
-                                    int32_t* status) {
+                                    int32_t *status) {
   auto trigger = analogTriggerHandles->Get(analogTriggerHandle);
   if (trigger == nullptr) {
     *status = HAL_HANDLE_ERROR;
@@ -203,19 +206,18 @@ HAL_Bool HAL_GetAnalogTriggerOutput(HAL_AnalogTriggerHandle analogTriggerHandle,
   }
   bool result = false;
   switch (type) {
-    case HAL_Trigger_kInWindow:
-      result =
-          trigger->trigger->readOutput_InHysteresis(trigger->index, status);
-      break;  // XXX: Backport
-    case HAL_Trigger_kState:
-      result = trigger->trigger->readOutput_OverLimit(trigger->index, status);
-      break;  // XXX: Backport
-    case HAL_Trigger_kRisingPulse:
-    case HAL_Trigger_kFallingPulse:
-      *status = ANALOG_TRIGGER_PULSE_OUTPUT_ERROR;
-      return false;
+  case HAL_Trigger_kInWindow:
+    result = trigger->trigger->readOutput_InHysteresis(trigger->index, status);
+    break; // XXX: Backport
+  case HAL_Trigger_kState:
+    result = trigger->trigger->readOutput_OverLimit(trigger->index, status);
+    break; // XXX: Backport
+  case HAL_Trigger_kRisingPulse:
+  case HAL_Trigger_kFallingPulse:
+    *status = ANALOG_TRIGGER_PULSE_OUTPUT_ERROR;
+    return false;
   }
   return result;
 }
 
-}  // extern "C"
+} // extern "C"

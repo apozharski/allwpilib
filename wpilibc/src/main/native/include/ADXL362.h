@@ -19,7 +19,7 @@ namespace frc {
  * This class allows access to an Analog Devices ADXL362 3-axis accelerometer.
  */
 class ADXL362 : public SensorBase, public Accelerometer {
- public:
+public:
   enum Axes { kAxis_X = 0x00, kAxis_Y = 0x02, kAxis_Z = 0x04 };
   struct AllAxes {
     double XAxis;
@@ -27,13 +27,13 @@ class ADXL362 : public SensorBase, public Accelerometer {
     double ZAxis;
   };
 
- public:
+public:
   explicit ADXL362(Range range = kRange_2G);
   explicit ADXL362(SPI::Port port, Range range = kRange_2G);
   virtual ~ADXL362() = default;
 
-  ADXL362(const ADXL362&) = delete;
-  ADXL362& operator=(const ADXL362&) = delete;
+  ADXL362(const ADXL362 &) = delete;
+  ADXL362 &operator=(const ADXL362 &) = delete;
 
   // Accelerometer interface
   void SetRange(Range range) override;
@@ -44,11 +44,11 @@ class ADXL362 : public SensorBase, public Accelerometer {
   virtual double GetAcceleration(Axes axis);
   virtual AllAxes GetAccelerations();
 
-  void InitSendable(SendableBuilder& builder) override;
+  void InitSendable(SendableBuilder &builder) override;
 
- private:
+private:
   SPI m_spi;
   double m_gsPerLSB = 0.001;
 };
 
-}  // namespace frc
+} // namespace frc

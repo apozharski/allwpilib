@@ -50,11 +50,11 @@ DigitalGlitchFilter::~DigitalGlitchFilter() {
  *
  * @param input The DigitalSource to add.
  */
-void DigitalGlitchFilter::Add(DigitalSource* input) {
+void DigitalGlitchFilter::Add(DigitalSource *input) {
   DoAdd(input, m_channelIndex + 1);
 }
 
-void DigitalGlitchFilter::DoAdd(DigitalSource* input, int requestedIndex) {
+void DigitalGlitchFilter::DoAdd(DigitalSource *input, int requestedIndex) {
   // Some sources from Counters and Encoders are null. By pushing the check
   // here, we catch the issue more generally.
   if (input) {
@@ -84,7 +84,7 @@ void DigitalGlitchFilter::DoAdd(DigitalSource* input, int requestedIndex) {
  *
  * @param input The Encoder to add.
  */
-void DigitalGlitchFilter::Add(Encoder* input) {
+void DigitalGlitchFilter::Add(Encoder *input) {
   Add(input->m_aSource.get());
   if (StatusIsFatal()) {
     return;
@@ -97,7 +97,7 @@ void DigitalGlitchFilter::Add(Encoder* input) {
  *
  * @param input The Counter to add.
  */
-void DigitalGlitchFilter::Add(Counter* input) {
+void DigitalGlitchFilter::Add(Counter *input) {
   Add(input->m_upSource.get());
   if (StatusIsFatal()) {
     return;
@@ -113,7 +113,7 @@ void DigitalGlitchFilter::Add(Counter* input) {
  *
  * @param input The DigitalSource to remove.
  */
-void DigitalGlitchFilter::Remove(DigitalSource* input) { DoAdd(input, 0); }
+void DigitalGlitchFilter::Remove(DigitalSource *input) { DoAdd(input, 0); }
 
 /**
  * Removes an encoder from this filter.
@@ -123,7 +123,7 @@ void DigitalGlitchFilter::Remove(DigitalSource* input) { DoAdd(input, 0); }
  *
  * @param input The Encoder to remove.
  */
-void DigitalGlitchFilter::Remove(Encoder* input) {
+void DigitalGlitchFilter::Remove(Encoder *input) {
   Remove(input->m_aSource.get());
   if (StatusIsFatal()) {
     return;
@@ -139,7 +139,7 @@ void DigitalGlitchFilter::Remove(Encoder* input) {
  *
  * @param input The Counter to remove.
  */
-void DigitalGlitchFilter::Remove(Counter* input) {
+void DigitalGlitchFilter::Remove(Counter *input) {
   Remove(input->m_upSource.get());
   if (StatusIsFatal()) {
     return;
@@ -201,4 +201,4 @@ uint64_t DigitalGlitchFilter::GetPeriodNanoSeconds() {
          static_cast<uint64_t>(HAL_GetSystemClockTicksPerMicrosecond() / 4);
 }
 
-void DigitalGlitchFilter::InitSendable(SendableBuilder&) {}
+void DigitalGlitchFilter::InitSendable(SendableBuilder &) {}

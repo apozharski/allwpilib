@@ -25,14 +25,12 @@ constexpr double kPi = 3.14159265358979323846;
  *
  * If a motor needs to be inverted, do so before passing it in.
  */
-MecanumDrive::MecanumDrive(SpeedController& frontLeftMotor,
-                           SpeedController& rearLeftMotor,
-                           SpeedController& frontRightMotor,
-                           SpeedController& rearRightMotor)
-    : m_frontLeftMotor(frontLeftMotor),
-      m_rearLeftMotor(rearLeftMotor),
-      m_frontRightMotor(frontRightMotor),
-      m_rearRightMotor(rearRightMotor) {
+MecanumDrive::MecanumDrive(SpeedController &frontLeftMotor,
+                           SpeedController &rearLeftMotor,
+                           SpeedController &frontRightMotor,
+                           SpeedController &rearRightMotor)
+    : m_frontLeftMotor(frontLeftMotor), m_rearLeftMotor(rearLeftMotor),
+      m_frontRightMotor(frontRightMotor), m_rearRightMotor(rearRightMotor) {
   AddChild(&m_frontLeftMotor);
   AddChild(&m_rearLeftMotor);
   AddChild(&m_frontRightMotor);
@@ -124,11 +122,11 @@ void MecanumDrive::StopMotor() {
   m_safetyHelper.Feed();
 }
 
-void MecanumDrive::GetDescription(llvm::raw_ostream& desc) const {
+void MecanumDrive::GetDescription(llvm::raw_ostream &desc) const {
   desc << "MecanumDrive";
 }
 
-void MecanumDrive::InitSendable(SendableBuilder& builder) {
+void MecanumDrive::InitSendable(SendableBuilder &builder) {
   builder.SetSmartDashboardType("MecanumDrive");
   builder.AddDoubleProperty("Front Left Motor Speed",
                             [=]() { return m_frontLeftMotor.Get(); },

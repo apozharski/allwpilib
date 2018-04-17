@@ -16,7 +16,7 @@ namespace frc {
  * CAN PDP.
  */
 class PowerDistributionPanel : public SensorBase {
- public:
+public:
   PowerDistributionPanel();
   explicit PowerDistributionPanel(int module);
 
@@ -29,10 +29,10 @@ class PowerDistributionPanel : public SensorBase {
   void ResetTotalEnergy();
   void ClearStickyFaults();
 
-  void InitSendable(SendableBuilder& builder) override;
+  void InitSendable(SendableBuilder &builder) override;
 
- private:
+private:
   int m_module;
 };
 
-}  // namespace frc
+} // namespace frc

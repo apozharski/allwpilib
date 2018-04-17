@@ -32,8 +32,8 @@ std::unique_ptr<tSPI> spiSystem;
 wpi::mutex digitalDIOMutex;
 
 DigitalHandleResource<HAL_DigitalHandle, DigitalPort,
-                      kNumDigitalChannels + kNumPWMHeaders>*
-    digitalChannelHandles;
+                      kNumDigitalChannels + kNumPWMHeaders>
+    *digitalChannelHandles;
 
 namespace init {
 void InitializeDigitalInternal() {
@@ -42,12 +42,12 @@ void InitializeDigitalInternal() {
       dcH;
   digitalChannelHandles = &dcH;
 }
-}  // namespace init
+} // namespace init
 
 namespace detail {
-wpi::mutex& UnsafeGetDIOMutex() { return digitalDIOMutex; }
-tDIO* UnsafeGetDigialSystem() { return digitalSystem.get(); }
-int32_t ComputeDigitalMask(HAL_DigitalHandle handle, int32_t* status) {
+wpi::mutex &UnsafeGetDIOMutex() { return digitalDIOMutex; }
+tDIO *UnsafeGetDigialSystem() { return digitalSystem.get(); }
+int32_t ComputeDigitalMask(HAL_DigitalHandle handle, int32_t *status) {
   auto port = digitalChannelHandles->Get(handle, HAL_HandleEnum::DIO);
   if (port == nullptr) {
     *status = HAL_HANDLE_ERROR;
@@ -64,20 +64,22 @@ int32_t ComputeDigitalMask(HAL_DigitalHandle handle, int32_t* status) {
   }
   return output.value;
 }
-}  // namespace detail
+} // namespace detail
 
 /**
  * Initialize the digital system.
  */
-void initializeDigital(int32_t* status) {
+void initializeDigital(int32_t *status) {
   static std::atomic_bool initialized{false};
   static wpi::mutex initializeMutex;
   // Initial check, as if it's true initialization has finished
-  if (initialized) return;
+  if (initialized)
+    return;
 
   std::lock_guard<wpi::mutex> lock(initializeMutex);
   // Second check in case another thread was waiting
-  if (initialized) return;
+  if (initialized)
+    return;
 
   digitalSystem.reset(tDIO::create(status));
 
@@ -93,10 +95,11 @@ void initializeDigital(int32_t* status) {
 
   // Make sure that the 9403 IONode has had a chance to initialize before
   // continuing.
-  while (pwmSystem->readLoopTiming(status) == 0) std::this_thread::yield();
+  while (pwmSystem->readLoopTiming(status) == 0)
+    std::this_thread::yield();
 
   if (pwmSystem->readLoopTiming(status) != kExpectedLoopTiming) {
-    *status = LOOP_TIMING_ERROR;  // NOTE: Doesn't display the error
+    *status = LOOP_TIMING_ERROR; // NOTE: Doesn't display the error
   }
 
   // Calculate the length, in ms, of one DIO loop
@@ -147,9 +150,9 @@ int32_t remapMXPChannel(int32_t channel) { return channel - 10; }
 
 int32_t remapMXPPWMChannel(int32_t channel) {
   if (channel < 14) {
-    return channel - 10;  // first block of 4 pwms (MXP 0-3)
+    return channel - 10; // first block of 4 pwms (MXP 0-3)
   } else {
-    return channel - 6;  // block of PWMs after SPI
+    return channel - 6; // block of PWMs after SPI
   }
 }
 
@@ -161,8 +164,8 @@ int32_t remapMXPPWMChannel(int32_t channel) {
  */
 bool remapDigitalSource(HAL_Handle digitalSourceHandle,
                         HAL_AnalogTriggerType analogTriggerType,
-                        uint8_t& channel, uint8_t& module,
-                        bool& analogTrigger) {
+                        uint8_t &channel, uint8_t &module,
+                        bool &analogTrigger) {
   if (isHandleType(digitalSourceHandle, HAL_HandleEnum::AnalogTrigger)) {
     // If handle passed, index is not negative
     int32_t index = getHandleIndex(digitalSourceHandle);
@@ -190,9 +193,9 @@ bool remapDigitalSource(HAL_Handle digitalSourceHandle,
   }
 }
 
-}  // namespace hal
+} // namespace hal
 
 // Unused function here to test template compile.
 __attribute__((unused)) static void CompileFunctorTest() {
-  hal::UnsafeManipulateDIO(0, nullptr, [](hal::DIOSetProxy& proxy) {});
+  hal::UnsafeManipulateDIO(0, nullptr, [](hal::DIOSetProxy &proxy) {});
 }

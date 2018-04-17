@@ -23,29 +23,24 @@ using namespace frc;
 static constexpr int kAccumulateDepth = 2048;
 
 class SPI::Accumulator {
- public:
+public:
   Accumulator(HAL_SPIPort port, int xferSize, int validMask, int validValue,
               int dataShift, int dataSize, bool isSigned, bool bigEndian)
       : m_notifier([=]() {
           std::lock_guard<wpi::mutex> lock(m_mutex);
           Update();
         }),
-        m_buf(new uint8_t[xferSize * kAccumulateDepth]),
-        m_validMask(validMask),
-        m_validValue(validValue),
-        m_dataMax(1 << dataSize),
-        m_dataMsbMask(1 << (dataSize - 1)),
-        m_dataShift(dataShift),
-        m_xferSize(xferSize),
-        m_isSigned(isSigned),
-        m_bigEndian(bigEndian),
+        m_buf(new uint8_t[xferSize * kAccumulateDepth]), m_validMask(validMask),
+        m_validValue(validValue), m_dataMax(1 << dataSize),
+        m_dataMsbMask(1 << (dataSize - 1)), m_dataShift(dataShift),
+        m_xferSize(xferSize), m_isSigned(isSigned), m_bigEndian(bigEndian),
         m_port(port) {}
   ~Accumulator() { delete[] m_buf; }
 
   void Update();
 
   Notifier m_notifier;
-  uint8_t* m_buf;
+  uint8_t *m_buf;
   wpi::mutex m_mutex;
 
   int64_t m_value = 0;
@@ -57,12 +52,12 @@ class SPI::Accumulator {
 
   int32_t m_validMask;
   int32_t m_validValue;
-  int32_t m_dataMax;      // one more than max data value
-  int32_t m_dataMsbMask;  // data field MSB mask (for signed)
-  uint8_t m_dataShift;    // data field shift right amount, in bits
-  int32_t m_xferSize;     // SPI transfer size, in bytes
-  bool m_isSigned;        // is data field signed?
-  bool m_bigEndian;       // is response big endian?
+  int32_t m_dataMax;     // one more than max data value
+  int32_t m_dataMsbMask; // data field MSB mask (for signed)
+  uint8_t m_dataShift;   // data field shift right amount, in bits
+  int32_t m_xferSize;    // SPI transfer size, in bytes
+  bool m_isSigned;       // is data field signed?
+  bool m_bigEndian;      // is response big endian?
   HAL_SPIPort m_port;
 };
 
@@ -75,7 +70,8 @@ void SPI::Accumulator::Update() {
     // get amount of data available
     int32_t numToRead =
         HAL_ReadSPIAutoReceivedData(m_port, m_buf, 0, 0, &status);
-    if (status != 0) return;  // error reading
+    if (status != 0)
+      return; // error reading
 
     // only get whole responses
     numToRead -= numToRead % m_xferSize;
@@ -83,11 +79,13 @@ void SPI::Accumulator::Update() {
       numToRead = m_xferSize * kAccumulateDepth;
       done = false;
     }
-    if (numToRead == 0) return;  // no samples
+    if (numToRead == 0)
+      return; // no samples
 
     // read buffered data
     HAL_ReadSPIAutoReceivedData(m_port, m_buf, numToRead, 0, &status);
-    if (status != 0) return;  // error reading
+    if (status != 0)
+      return; // error reading
 
     // loop over all responses
     for (int32_t off = 0; off < numToRead; off += m_xferSize) {
@@ -111,11 +109,13 @@ void SPI::Accumulator::Update() {
         int32_t data = static_cast<int32_t>(resp >> m_dataShift);
         data &= m_dataMax - 1;
         // 2s complement conversion if signed MSB is set
-        if (m_isSigned && (data & m_dataMsbMask) != 0) data -= m_dataMax;
+        if (m_isSigned && (data & m_dataMsbMask) != 0)
+          data -= m_dataMax;
         // center offset
         data -= m_center;
         // only accumulate if outside deadband
-        if (data < -m_deadband || data > m_deadband) m_value += data;
+        if (data < -m_deadband || data > m_deadband)
+          m_value += data;
         ++m_count;
         m_lastValue = data;
       } else {
@@ -235,7 +235,7 @@ void SPI::SetChipSelectActiveLow() {
  * If not running in output only mode, also saves the data received
  * on the MISO input during the transfer into the receive FIFO.
  */
-int SPI::Write(uint8_t* data, int size) {
+int SPI::Write(uint8_t *data, int size) {
   int retVal = 0;
   retVal = HAL_WriteSPI(m_port, data, size);
   return retVal;
@@ -254,7 +254,7 @@ int SPI::Write(uint8_t* data, int size) {
  *                 that data is already in the receive FIFO from a previous
  *                 write.
  */
-int SPI::Read(bool initiate, uint8_t* dataReceived, int size) {
+int SPI::Read(bool initiate, uint8_t *dataReceived, int size) {
   int retVal = 0;
   if (initiate) {
     llvm::SmallVector<uint8_t, 32> dataToSend;
@@ -273,7 +273,7 @@ int SPI::Read(bool initiate, uint8_t* dataReceived, int size) {
  * @param dataReceived Buffer to receive data from the device
  * @param size         The length of the transaction, in bytes
  */
-int SPI::Transaction(uint8_t* dataToSend, uint8_t* dataReceived, int size) {
+int SPI::Transaction(uint8_t *dataToSend, uint8_t *dataReceived, int size) {
   int retVal = 0;
   retVal = HAL_TransactionSPI(m_port, dataToSend, dataReceived, size);
   return retVal;
@@ -343,7 +343,7 @@ void SPI::StartAutoRate(double period) {
  * @param rising trigger on the rising edge
  * @param falling trigger on the falling edge
  */
-void SPI::StartAutoTrigger(DigitalSource& source, bool rising, bool falling) {
+void SPI::StartAutoTrigger(DigitalSource &source, bool rising, bool falling) {
   int32_t status = 0;
   HAL_StartSPIAutoTrigger(
       m_port, source.GetPortHandleForRouting(),
@@ -384,7 +384,7 @@ void SPI::ForceAutoRead() {
  * @param timeout timeout in seconds (ms resolution)
  * @return Number of bytes remaining to be read
  */
-int SPI::ReadAutoReceivedData(uint8_t* buffer, int numToRead, double timeout) {
+int SPI::ReadAutoReceivedData(uint8_t *buffer, int numToRead, double timeout) {
   int32_t status = 0;
   int32_t val =
       HAL_ReadSPIAutoReceivedData(m_port, buffer, numToRead, timeout, &status);
@@ -459,7 +459,8 @@ void SPI::FreeAccumulator() {
  * Resets the accumulator to zero.
  */
 void SPI::ResetAccumulator() {
-  if (!m_accum) return;
+  if (!m_accum)
+    return;
   std::lock_guard<wpi::mutex> lock(m_accum->m_mutex);
   m_accum->m_value = 0;
   m_accum->m_count = 0;
@@ -475,7 +476,8 @@ void SPI::ResetAccumulator() {
  * account when integrating.
  */
 void SPI::SetAccumulatorCenter(int center) {
-  if (!m_accum) return;
+  if (!m_accum)
+    return;
   std::lock_guard<wpi::mutex> lock(m_accum->m_mutex);
   m_accum->m_center = center;
 }
@@ -484,7 +486,8 @@ void SPI::SetAccumulatorCenter(int center) {
  * Set the accumulator's deadband.
  */
 void SPI::SetAccumulatorDeadband(int deadband) {
-  if (!m_accum) return;
+  if (!m_accum)
+    return;
   std::lock_guard<wpi::mutex> lock(m_accum->m_mutex);
   m_accum->m_deadband = deadband;
 }
@@ -493,7 +496,8 @@ void SPI::SetAccumulatorDeadband(int deadband) {
  * Read the last value read by the accumulator engine.
  */
 int SPI::GetAccumulatorLastValue() const {
-  if (!m_accum) return 0;
+  if (!m_accum)
+    return 0;
   std::lock_guard<wpi::mutex> lock(m_accum->m_mutex);
   m_accum->Update();
   return m_accum->m_lastValue;
@@ -505,7 +509,8 @@ int SPI::GetAccumulatorLastValue() const {
  * @return The 64-bit value accumulated since the last Reset().
  */
 int64_t SPI::GetAccumulatorValue() const {
-  if (!m_accum) return 0;
+  if (!m_accum)
+    return 0;
   std::lock_guard<wpi::mutex> lock(m_accum->m_mutex);
   m_accum->Update();
   return m_accum->m_value;
@@ -520,7 +525,8 @@ int64_t SPI::GetAccumulatorValue() const {
  * @return The number of times samples from the channel were accumulated.
  */
 int64_t SPI::GetAccumulatorCount() const {
-  if (!m_accum) return 0;
+  if (!m_accum)
+    return 0;
   std::lock_guard<wpi::mutex> lock(m_accum->m_mutex);
   m_accum->Update();
   return m_accum->m_count;
@@ -532,10 +538,12 @@ int64_t SPI::GetAccumulatorCount() const {
  * @return The accumulated average value (value / count).
  */
 double SPI::GetAccumulatorAverage() const {
-  if (!m_accum) return 0;
+  if (!m_accum)
+    return 0;
   std::lock_guard<wpi::mutex> lock(m_accum->m_mutex);
   m_accum->Update();
-  if (m_accum->m_count == 0) return 0.0;
+  if (m_accum->m_count == 0)
+    return 0.0;
   return static_cast<double>(m_accum->m_value) / m_accum->m_count;
 }
 
@@ -548,7 +556,7 @@ double SPI::GetAccumulatorAverage() const {
  * @param value Pointer to the 64-bit accumulated output.
  * @param count Pointer to the number of accumulation cycles.
  */
-void SPI::GetAccumulatorOutput(int64_t& value, int64_t& count) const {
+void SPI::GetAccumulatorOutput(int64_t &value, int64_t &count) const {
   if (!m_accum) {
     value = 0;
     count = 0;

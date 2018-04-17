@@ -18,7 +18,7 @@ namespace frc {
  * This class allows access to the roboRIO's internal accelerometer.
  */
 class BuiltInAccelerometer : public SensorBase, public Accelerometer {
- public:
+public:
   explicit BuiltInAccelerometer(Range range = kRange_8G);
 
   // Accelerometer interface
@@ -27,7 +27,7 @@ class BuiltInAccelerometer : public SensorBase, public Accelerometer {
   double GetY() override;
   double GetZ() override;
 
-  void InitSendable(SendableBuilder& builder) override;
+  void InitSendable(SendableBuilder &builder) override;
 };
 
-}  // namespace frc
+} // namespace frc

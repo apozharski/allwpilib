@@ -54,7 +54,7 @@ public class Ultrasonic extends SensorBase implements PIDSource, Sendable {
   private static Thread m_task = null;
   private Unit m_units;
   private static int m_instances = 0;
-  
+
   /**
    * Background task that goes through the list of ultrasonic sensors and pings each one in turn.
    * The counter is configured to read the timing of the returned echo pulse.

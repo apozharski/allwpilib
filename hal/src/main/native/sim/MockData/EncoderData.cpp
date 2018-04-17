@@ -17,10 +17,10 @@ void InitializeEncoderData() {
   static EncoderData sed[kNumEncoders];
   ::hal::SimEncoderData = sed;
 }
-}  // namespace init
-}  // namespace hal
+} // namespace init
+} // namespace hal
 
-EncoderData* hal::SimEncoderData;
+EncoderData *hal::SimEncoderData;
 void EncoderData::ResetData() {
   m_initialized = false;
   m_initializedCallbacks = nullptr;
@@ -43,10 +43,11 @@ void EncoderData::ResetData() {
 }
 
 int32_t EncoderData::RegisterInitializedCallback(HAL_NotifyCallback callback,
-                                                 void* param,
+                                                 void *param,
                                                  HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -79,10 +80,11 @@ void EncoderData::SetInitialized(HAL_Bool initialized) {
 }
 
 int32_t EncoderData::RegisterCountCallback(HAL_NotifyCallback callback,
-                                           void* param,
+                                           void *param,
                                            HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -115,10 +117,11 @@ void EncoderData::SetCount(int32_t count) {
 }
 
 int32_t EncoderData::RegisterPeriodCallback(HAL_NotifyCallback callback,
-                                            void* param,
+                                            void *param,
                                             HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -151,10 +154,11 @@ void EncoderData::SetPeriod(double period) {
 }
 
 int32_t EncoderData::RegisterResetCallback(HAL_NotifyCallback callback,
-                                           void* param,
+                                           void *param,
                                            HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -187,10 +191,11 @@ void EncoderData::SetReset(HAL_Bool reset) {
 }
 
 int32_t EncoderData::RegisterMaxPeriodCallback(HAL_NotifyCallback callback,
-                                               void* param,
+                                               void *param,
                                                HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -223,10 +228,11 @@ void EncoderData::SetMaxPeriod(double maxPeriod) {
 }
 
 int32_t EncoderData::RegisterDirectionCallback(HAL_NotifyCallback callback,
-                                               void* param,
+                                               void *param,
                                                HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -259,9 +265,10 @@ void EncoderData::SetDirection(HAL_Bool direction) {
 }
 
 int32_t EncoderData::RegisterReverseDirectionCallback(
-    HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify) {
+    HAL_NotifyCallback callback, void *param, HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -296,9 +303,10 @@ void EncoderData::SetReverseDirection(HAL_Bool reverseDirection) {
 }
 
 int32_t EncoderData::RegisterSamplesToAverageCallback(
-    HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify) {
+    HAL_NotifyCallback callback, void *param, HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -333,9 +341,10 @@ void EncoderData::SetSamplesToAverage(int32_t samplesToAverage) {
 }
 
 int32_t EncoderData::RegisterDistancePerPulseCallback(
-    HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify) {
+    HAL_NotifyCallback callback, void *param, HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -375,7 +384,7 @@ void HALSIM_ResetEncoderData(int32_t index) {
 
 int32_t HALSIM_RegisterEncoderInitializedCallback(int32_t index,
                                                   HAL_NotifyCallback callback,
-                                                  void* param,
+                                                  void *param,
                                                   HAL_Bool initialNotify) {
   return SimEncoderData[index].RegisterInitializedCallback(callback, param,
                                                            initialNotify);
@@ -395,7 +404,7 @@ void HALSIM_SetEncoderInitialized(int32_t index, HAL_Bool initialized) {
 
 int32_t HALSIM_RegisterEncoderCountCallback(int32_t index,
                                             HAL_NotifyCallback callback,
-                                            void* param,
+                                            void *param,
                                             HAL_Bool initialNotify) {
   return SimEncoderData[index].RegisterCountCallback(callback, param,
                                                      initialNotify);
@@ -415,7 +424,7 @@ void HALSIM_SetEncoderCount(int32_t index, int32_t count) {
 
 int32_t HALSIM_RegisterEncoderPeriodCallback(int32_t index,
                                              HAL_NotifyCallback callback,
-                                             void* param,
+                                             void *param,
                                              HAL_Bool initialNotify) {
   return SimEncoderData[index].RegisterPeriodCallback(callback, param,
                                                       initialNotify);
@@ -435,7 +444,7 @@ void HALSIM_SetEncoderPeriod(int32_t index, double period) {
 
 int32_t HALSIM_RegisterEncoderResetCallback(int32_t index,
                                             HAL_NotifyCallback callback,
-                                            void* param,
+                                            void *param,
                                             HAL_Bool initialNotify) {
   return SimEncoderData[index].RegisterResetCallback(callback, param,
                                                      initialNotify);
@@ -455,7 +464,7 @@ void HALSIM_SetEncoderReset(int32_t index, HAL_Bool reset) {
 
 int32_t HALSIM_RegisterEncoderMaxPeriodCallback(int32_t index,
                                                 HAL_NotifyCallback callback,
-                                                void* param,
+                                                void *param,
                                                 HAL_Bool initialNotify) {
   return SimEncoderData[index].RegisterMaxPeriodCallback(callback, param,
                                                          initialNotify);
@@ -475,7 +484,7 @@ void HALSIM_SetEncoderMaxPeriod(int32_t index, double maxPeriod) {
 
 int32_t HALSIM_RegisterEncoderDirectionCallback(int32_t index,
                                                 HAL_NotifyCallback callback,
-                                                void* param,
+                                                void *param,
                                                 HAL_Bool initialNotify) {
   return SimEncoderData[index].RegisterDirectionCallback(callback, param,
                                                          initialNotify);
@@ -494,7 +503,7 @@ void HALSIM_SetEncoderDirection(int32_t index, HAL_Bool direction) {
 }
 
 int32_t HALSIM_RegisterEncoderReverseDirectionCallback(
-    int32_t index, HAL_NotifyCallback callback, void* param,
+    int32_t index, HAL_NotifyCallback callback, void *param,
     HAL_Bool initialNotify) {
   return SimEncoderData[index].RegisterReverseDirectionCallback(callback, param,
                                                                 initialNotify);
@@ -514,7 +523,7 @@ void HALSIM_SetEncoderReverseDirection(int32_t index,
 }
 
 int32_t HALSIM_RegisterEncoderSamplesToAverageCallback(
-    int32_t index, HAL_NotifyCallback callback, void* param,
+    int32_t index, HAL_NotifyCallback callback, void *param,
     HAL_Bool initialNotify) {
   return SimEncoderData[index].RegisterSamplesToAverageCallback(callback, param,
                                                                 initialNotify);
@@ -535,7 +544,7 @@ void HALSIM_SetEncoderSamplesToAverage(int32_t index,
 
 void HALSIM_RegisterEncoderAllCallbacks(int32_t index,
                                         HAL_NotifyCallback callback,
-                                        void* param, HAL_Bool initialNotify) {
+                                        void *param, HAL_Bool initialNotify) {
   SimEncoderData[index].RegisterInitializedCallback(callback, param,
                                                     initialNotify);
   SimEncoderData[index].RegisterCountCallback(callback, param, initialNotify);
@@ -552,4 +561,4 @@ void HALSIM_RegisterEncoderAllCallbacks(int32_t index,
   SimEncoderData[index].RegisterDistancePerPulseCallback(callback, param,
                                                          initialNotify);
 }
-}  // extern "C"
+} // extern "C"

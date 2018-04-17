@@ -17,7 +17,7 @@ namespace frc {
  * that is controlling an actuator in a separate thread.
  */
 class Controller {
- public:
+public:
   virtual ~Controller() = default;
 
   /**
@@ -32,4 +32,4 @@ class Controller {
   virtual void Disable() = 0;
 };
 
-}  // namespace frc
+} // namespace frc

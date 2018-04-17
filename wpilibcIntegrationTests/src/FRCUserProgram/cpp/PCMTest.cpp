@@ -30,12 +30,12 @@ static const double kCompressorOnVoltage = 5.00;
 static const double kCompressorOffVoltage = 1.68;
 
 class PCMTest : public testing::Test {
- protected:
-  Compressor* m_compressor;
+protected:
+  Compressor *m_compressor;
 
-  DigitalOutput* m_fakePressureSwitch;
-  AnalogInput* m_fakeCompressor;
-  DoubleSolenoid* m_doubleSolenoid;
+  DigitalOutput *m_fakePressureSwitch;
+  AnalogInput *m_fakeCompressor;
+  DoubleSolenoid *m_doubleSolenoid;
   DigitalInput *m_fakeSolenoid1, *m_fakeSolenoid2;
 
   void SetUp() override {

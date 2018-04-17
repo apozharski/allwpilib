@@ -17,12 +17,12 @@ struct Vector2d {
   Vector2d(double x, double y);
 
   void Rotate(double angle);
-  double Dot(const Vector2d& vec) const;
+  double Dot(const Vector2d &vec) const;
   double Magnitude() const;
-  double ScalarProject(const Vector2d& vec) const;
+  double ScalarProject(const Vector2d &vec) const;
 
   double x = 0.0;
   double y = 0.0;
 };
 
-}  // namespace frc
+} // namespace frc

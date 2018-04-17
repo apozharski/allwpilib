@@ -14,16 +14,16 @@
 namespace frc {
 
 class WaitUntilCommand : public Command {
- public:
+public:
   explicit WaitUntilCommand(double time);
-  WaitUntilCommand(const llvm::Twine& name, double time);
+  WaitUntilCommand(const llvm::Twine &name, double time);
   virtual ~WaitUntilCommand() = default;
 
- protected:
+protected:
   virtual bool IsFinished();
 
- private:
+private:
   double m_time;
 };
 
-}  // namespace frc
+} // namespace frc

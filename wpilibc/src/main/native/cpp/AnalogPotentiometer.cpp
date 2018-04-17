@@ -25,8 +25,7 @@ using namespace frc;
 AnalogPotentiometer::AnalogPotentiometer(int channel, double fullRange,
                                          double offset)
     : m_analog_input(std::make_shared<AnalogInput>(channel)),
-      m_fullRange(fullRange),
-      m_offset(offset) {
+      m_fullRange(fullRange), m_offset(offset) {
   AddChild(m_analog_input);
 }
 
@@ -40,10 +39,9 @@ AnalogPotentiometer::AnalogPotentiometer(int channel, double fullRange,
  * @param offset    The angular value (in desired units) representing the
  *                  angular output at 0V.
  */
-AnalogPotentiometer::AnalogPotentiometer(AnalogInput* input, double fullRange,
+AnalogPotentiometer::AnalogPotentiometer(AnalogInput *input, double fullRange,
                                          double offset)
-    : m_analog_input(input, NullDeleter<AnalogInput>()),
-      m_fullRange(fullRange),
+    : m_analog_input(input, NullDeleter<AnalogInput>()), m_fullRange(fullRange),
       m_offset(offset) {}
 
 /**
@@ -82,6 +80,6 @@ double AnalogPotentiometer::PIDGet() { return Get(); }
 /**
  * Live Window code, only does anything if live window is activated.
  */
-void AnalogPotentiometer::InitSendable(SendableBuilder& builder) {
+void AnalogPotentiometer::InitSendable(SendableBuilder &builder) {
   m_analog_input->InitSendable(builder);
 }

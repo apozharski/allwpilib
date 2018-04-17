@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "Notifier.h"  // NOLINT(build/include_order)
+#include "Notifier.h" // NOLINT(build/include_order)
 
 #include <llvm/raw_ostream.h>
 
@@ -17,7 +17,7 @@ using namespace frc;
 
 unsigned notifierCounter;
 
-void notifierHandler(void*) { notifierCounter++; }
+void notifierHandler(void *) { notifierCounter++; }
 
 /**
  * Test if the Wait function works
@@ -34,8 +34,8 @@ TEST(NotifierTest, DISABLED_TestTimerNotifications) {
   Wait(10.5);
   llvm::outs() << "...Wait\n";
 
-  EXPECT_EQ(10u, notifierCounter)
-      << "Received " << notifierCounter << " notifications in 10.5 seconds";
+  EXPECT_EQ(10u, notifierCounter) << "Received " << notifierCounter
+                                  << " notifications in 10.5 seconds";
   llvm::outs() << "Received " << notifierCounter
                << " notifications in 10.5 seconds";
 

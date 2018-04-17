@@ -36,4 +36,4 @@ constexpr int32_t kNumSolenoidChannels = 8;
 constexpr int32_t kNumPDPModules = 63;
 constexpr int32_t kNumPDPChannels = 16;
 
-}  // namespace hal
+} // namespace hal

@@ -24,7 +24,7 @@ public abstract class GyroBase extends SensorBase implements Gyro, PIDSource, Se
    */
   @Override
   public double pidGet(PIDSourceType pidSource) {
-    switch (m_pidSource) {
+    switch (pidSource) {
       case kRate:
         return getRate();
       case kDisplacement:

@@ -97,15 +97,15 @@ class SpeedController;
  * mode. However, it is not designed to give exactly the same response.
  */
 class DifferentialDrive : public RobotDriveBase {
- public:
+public:
   static constexpr double kDefaultQuickStopThreshold = 0.2;
   static constexpr double kDefaultQuickStopAlpha = 0.1;
 
-  DifferentialDrive(SpeedController& leftMotor, SpeedController& rightMotor);
+  DifferentialDrive(SpeedController &leftMotor, SpeedController &rightMotor);
   ~DifferentialDrive() override = default;
 
-  DifferentialDrive(const DifferentialDrive&) = delete;
-  DifferentialDrive& operator=(const DifferentialDrive&) = delete;
+  DifferentialDrive(const DifferentialDrive &) = delete;
+  DifferentialDrive &operator=(const DifferentialDrive &) = delete;
 
   void ArcadeDrive(double xSpeed, double zRotation, bool squaredInputs = true);
   void CurvatureDrive(double xSpeed, double zRotation, bool isQuickTurn);
@@ -116,17 +116,17 @@ class DifferentialDrive : public RobotDriveBase {
   void SetQuickStopAlpha(double alpha);
 
   void StopMotor() override;
-  void GetDescription(llvm::raw_ostream& desc) const override;
+  void GetDescription(llvm::raw_ostream &desc) const override;
 
-  void InitSendable(SendableBuilder& builder) override;
+  void InitSendable(SendableBuilder &builder) override;
 
- private:
-  SpeedController& m_leftMotor;
-  SpeedController& m_rightMotor;
+private:
+  SpeedController &m_leftMotor;
+  SpeedController &m_rightMotor;
 
   double m_quickStopThreshold = kDefaultQuickStopThreshold;
   double m_quickStopAlpha = kDefaultQuickStopAlpha;
   double m_quickStopAccumulator = 0.0;
 };
 
-}  // namespace frc
+} // namespace frc

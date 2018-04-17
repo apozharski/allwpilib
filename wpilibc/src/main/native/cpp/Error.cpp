@@ -15,7 +15,7 @@
 
 using namespace frc;
 
-void Error::Clone(const Error& error) {
+void Error::Clone(const Error &error) {
   m_code = error.m_code;
   m_message = error.m_message;
   m_filename = error.m_filename;
@@ -35,15 +35,15 @@ std::string Error::GetFunction() const { return m_function; }
 
 int Error::GetLineNumber() const { return m_lineNumber; }
 
-const ErrorBase* Error::GetOriginatingObject() const {
+const ErrorBase *Error::GetOriginatingObject() const {
   return m_originatingObject;
 }
 
 double Error::GetTimestamp() const { return m_timestamp; }
 
-void Error::Set(Code code, const llvm::Twine& contextMessage,
+void Error::Set(Code code, const llvm::Twine &contextMessage,
                 llvm::StringRef filename, llvm::StringRef function,
-                int lineNumber, const ErrorBase* originatingObject) {
+                int lineNumber, const ErrorBase *originatingObject) {
   bool report = true;
 
   if (code == m_code && GetTime() - m_timestamp < 1) {

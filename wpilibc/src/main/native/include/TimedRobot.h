@@ -25,7 +25,7 @@ namespace frc {
  * Notifier instance.
  */
 class TimedRobot : public IterativeRobotBase {
- public:
+public:
   static constexpr double kDefaultPeriod = 0.02;
 
   void StartCompetition() override;
@@ -33,11 +33,11 @@ class TimedRobot : public IterativeRobotBase {
   void SetPeriod(double seconds);
   double GetPeriod() const;
 
- protected:
+protected:
   TimedRobot();
   virtual ~TimedRobot();
 
- private:
+private:
   std::atomic<double> m_period{kDefaultPeriod};
 
   // Prevents loop from starting if user calls SetPeriod() in RobotInit()
@@ -46,4 +46,4 @@ class TimedRobot : public IterativeRobotBase {
   std::unique_ptr<Notifier> m_loop;
 };
 
-}  // namespace frc
+} // namespace frc

@@ -59,5 +59,5 @@ extern void InitializeSolenoid();
 extern void InitializeSPI();
 extern void InitializeThreads();
 
-}  // namespace init
-}  // namespace hal
+} // namespace init
+} // namespace hal

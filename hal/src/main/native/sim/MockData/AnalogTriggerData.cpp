@@ -17,10 +17,10 @@ void InitializeAnalogTriggerData() {
   static AnalogTriggerData satd[kNumAnalogTriggers];
   ::hal::SimAnalogTriggerData = satd;
 }
-}  // namespace init
-}  // namespace hal
+} // namespace init
+} // namespace hal
 
-AnalogTriggerData* hal::SimAnalogTriggerData;
+AnalogTriggerData *hal::SimAnalogTriggerData;
 void AnalogTriggerData::ResetData() {
   m_initialized = 0;
   m_initializedCallbacks = nullptr;
@@ -33,9 +33,10 @@ void AnalogTriggerData::ResetData() {
 }
 
 int32_t AnalogTriggerData::RegisterInitializedCallback(
-    HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify) {
+    HAL_NotifyCallback callback, void *param, HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -68,9 +69,10 @@ void AnalogTriggerData::SetInitialized(HAL_Bool initialized) {
 }
 
 int32_t AnalogTriggerData::RegisterTriggerLowerBoundCallback(
-    HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify) {
+    HAL_NotifyCallback callback, void *param, HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -105,9 +107,10 @@ void AnalogTriggerData::SetTriggerLowerBound(double triggerLowerBound) {
 }
 
 int32_t AnalogTriggerData::RegisterTriggerUpperBoundCallback(
-    HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify) {
+    HAL_NotifyCallback callback, void *param, HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -142,9 +145,10 @@ void AnalogTriggerData::SetTriggerUpperBound(double triggerUpperBound) {
 }
 
 int32_t AnalogTriggerData::RegisterTriggerModeCallback(
-    HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify) {
+    HAL_NotifyCallback callback, void *param, HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
-  if (callback == nullptr) return -1;
+  if (callback == nullptr)
+    return -1;
   int32_t newUid = 0;
   {
     std::lock_guard<wpi::mutex> lock(m_registerMutex);
@@ -184,7 +188,7 @@ void HALSIM_ResetAnalogTriggerData(int32_t index) {
 }
 
 int32_t HALSIM_RegisterAnalogTriggerInitializedCallback(
-    int32_t index, HAL_NotifyCallback callback, void* param,
+    int32_t index, HAL_NotifyCallback callback, void *param,
     HAL_Bool initialNotify) {
   return SimAnalogTriggerData[index].RegisterInitializedCallback(
       callback, param, initialNotify);
@@ -203,7 +207,7 @@ void HALSIM_SetAnalogTriggerInitialized(int32_t index, HAL_Bool initialized) {
 }
 
 int32_t HALSIM_RegisterAnalogTriggerTriggerLowerBoundCallback(
-    int32_t index, HAL_NotifyCallback callback, void* param,
+    int32_t index, HAL_NotifyCallback callback, void *param,
     HAL_Bool initialNotify) {
   return SimAnalogTriggerData[index].RegisterTriggerLowerBoundCallback(
       callback, param, initialNotify);
@@ -224,7 +228,7 @@ void HALSIM_SetAnalogTriggerTriggerLowerBound(int32_t index,
 }
 
 int32_t HALSIM_RegisterAnalogTriggerTriggerUpperBoundCallback(
-    int32_t index, HAL_NotifyCallback callback, void* param,
+    int32_t index, HAL_NotifyCallback callback, void *param,
     HAL_Bool initialNotify) {
   return SimAnalogTriggerData[index].RegisterTriggerUpperBoundCallback(
       callback, param, initialNotify);
@@ -245,7 +249,7 @@ void HALSIM_SetAnalogTriggerTriggerUpperBound(int32_t index,
 }
 
 int32_t HALSIM_RegisterAnalogTriggerTriggerModeCallback(
-    int32_t index, HAL_NotifyCallback callback, void* param,
+    int32_t index, HAL_NotifyCallback callback, void *param,
     HAL_Bool initialNotify) {
   return SimAnalogTriggerData[index].RegisterTriggerModeCallback(
       callback, param, initialNotify);
@@ -266,7 +270,7 @@ void HALSIM_SetAnalogTriggerTriggerMode(int32_t index,
 
 void HALSIM_RegisterAnalogTriggerAllCallbacks(int32_t index,
                                               HAL_NotifyCallback callback,
-                                              void* param,
+                                              void *param,
                                               HAL_Bool initialNotify) {
   SimAnalogTriggerData[index].RegisterInitializedCallback(callback, param,
                                                           initialNotify);
@@ -277,4 +281,4 @@ void HALSIM_RegisterAnalogTriggerAllCallbacks(int32_t index,
   SimAnalogTriggerData[index].RegisterTriggerModeCallback(callback, param,
                                                           initialNotify);
 }
-}  // extern "C"
+} // extern "C"

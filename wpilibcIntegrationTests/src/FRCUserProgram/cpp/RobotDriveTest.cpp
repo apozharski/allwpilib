@@ -5,17 +5,17 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
+#include "RobotDrive.h"
 #include "Drive/DifferentialDrive.h"
 #include "Drive/MecanumDrive.h"
 #include "MockSpeedController.h"
-#include "RobotDrive.h"
 #include "TestBench.h"
 #include "gtest/gtest.h"
 
 using namespace frc;
 
 class RobotDriveTest : public testing::Test {
- protected:
+protected:
   MockSpeedController m_rdFrontLeft;
   MockSpeedController m_rdRearLeft;
   MockSpeedController m_rdFrontRight;

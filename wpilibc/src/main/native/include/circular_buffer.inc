@@ -25,24 +25,19 @@ typename circular_buffer<T>::size_type circular_buffer<T>::size() const {
 /**
  * Returns value at front of buffer
  */
-template <class T>
-T& circular_buffer<T>::front() {
-  return (*this)[0];
-}
+template <class T> T &circular_buffer<T>::front() { return (*this)[0]; }
 
 /**
  * Returns value at front of buffer
  */
-template <class T>
-const T& circular_buffer<T>::front() const {
+template <class T> const T &circular_buffer<T>::front() const {
   return (*this)[0];
 }
 
 /**
  * Returns value at back of buffer
  */
-template <class T>
-T& circular_buffer<T>::back() {
+template <class T> T &circular_buffer<T>::back() {
   // If there are no elements in the buffer, do nothing
   if (m_length == 0) {
     return 0;
@@ -54,8 +49,7 @@ T& circular_buffer<T>::back() {
 /**
  * Returns value at back of buffer
  */
-template <class T>
-const T& circular_buffer<T>::back() const {
+template <class T> const T &circular_buffer<T>::back() const {
   // If there are no elements in the buffer, do nothing
   if (m_length == 0) {
     return 0;
@@ -68,8 +62,7 @@ const T& circular_buffer<T>::back() const {
  * Push new value onto front of the buffer. The value at the back is overwritten
  * if the buffer is full.
  */
-template <class T>
-void circular_buffer<T>::push_front(T value) {
+template <class T> void circular_buffer<T>::push_front(T value) {
   if (m_data.size() == 0) {
     return;
   }
@@ -87,8 +80,7 @@ void circular_buffer<T>::push_front(T value) {
  * Push new value onto back of the buffer. The value at the front is overwritten
  * if the buffer is full.
  */
-template <class T>
-void circular_buffer<T>::push_back(T value) {
+template <class T> void circular_buffer<T>::push_back(T value) {
   if (m_data.size() == 0) {
     return;
   }
@@ -106,14 +98,13 @@ void circular_buffer<T>::push_back(T value) {
 /**
  * Pop value at front of buffer.
  */
-template <class T>
-T circular_buffer<T>::pop_front() {
+template <class T> T circular_buffer<T>::pop_front() {
   // If there are no elements in the buffer, do nothing
   if (m_length == 0) {
     return 0;
   }
 
-  T& temp = m_data[m_front];
+  T &temp = m_data[m_front];
   m_front = ModuloInc(m_front);
   m_length--;
   return temp;
@@ -122,8 +113,7 @@ T circular_buffer<T>::pop_front() {
 /**
  * Pop value at back of buffer.
  */
-template <class T>
-T circular_buffer<T>::pop_back() {
+template <class T> T circular_buffer<T>::pop_back() {
   // If there are no elements in the buffer, do nothing
   if (m_length == 0) {
     return 0;
@@ -136,8 +126,7 @@ T circular_buffer<T>::pop_back() {
 /**
  * Resizes internal buffer to given size.
  */
-template <class T>
-void circular_buffer<T>::resize(size_t size) {
+template <class T> void circular_buffer<T>::resize(size_t size) {
   if (size > m_data.size()) {
     // Find end of buffer
     size_t insertLocation = (m_front + m_length) % m_data.size();
@@ -189,8 +178,7 @@ void circular_buffer<T>::resize(size_t size) {
 /**
  * Sets internal buffer contents to zero.
  */
-template <class T>
-void circular_buffer<T>::reset() {
+template <class T> void circular_buffer<T>::reset() {
   std::fill(m_data.begin(), m_data.end(), 0);
   m_front = 0;
   m_length = 0;
@@ -199,16 +187,14 @@ void circular_buffer<T>::reset() {
 /**
  * @return Element at index starting from front of buffer.
  */
-template <class T>
-T& circular_buffer<T>::operator[](size_t index) {
+template <class T> T &circular_buffer<T>::operator[](size_t index) {
   return m_data[(m_front + index) % m_data.size()];
 }
 
 /**
  * @return Element at index starting from front of buffer.
  */
-template <class T>
-const T& circular_buffer<T>::operator[](size_t index) const {
+template <class T> const T &circular_buffer<T>::operator[](size_t index) const {
   return m_data[(m_front + index) % m_data.size()];
 }
 
@@ -217,8 +203,7 @@ const T& circular_buffer<T>::operator[](size_t index) const {
  *
  * @return The result of the modulo operation.
  */
-template <class T>
-size_t circular_buffer<T>::ModuloInc(size_t index) {
+template <class T> size_t circular_buffer<T>::ModuloInc(size_t index) {
   return (index + 1) % m_data.size();
 }
 
@@ -227,8 +212,7 @@ size_t circular_buffer<T>::ModuloInc(size_t index) {
  *
  * @return The result of the modulo operation.
  */
-template <class T>
-size_t circular_buffer<T>::ModuloDec(size_t index) {
+template <class T> size_t circular_buffer<T>::ModuloDec(size_t index) {
   if (index == 0) {
     return m_data.size() - 1;
   } else {
@@ -236,4 +220,4 @@ size_t circular_buffer<T>::ModuloDec(size_t index) {
   }
 }
 
-}  // namespace frc
+} // namespace frc

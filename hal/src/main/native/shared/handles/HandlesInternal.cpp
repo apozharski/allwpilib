@@ -13,14 +13,14 @@
 #include <support/mutex.h>
 
 namespace hal {
-static llvm::SmallVector<HandleBase*, 32>* globalHandles;
+static llvm::SmallVector<HandleBase *, 32> *globalHandles;
 static wpi::mutex globalHandleMutex;
 namespace init {
 void InitializeHandlesInternal() {
-  static llvm::SmallVector<HandleBase*, 32> gH;
+  static llvm::SmallVector<HandleBase *, 32> gH;
   globalHandles = &gH;
 }
-}  // namespace init
+} // namespace init
 HandleBase::HandleBase() {
   std::lock_guard<wpi::mutex> lock(globalHandleMutex);
   auto index = std::find(globalHandles->begin(), globalHandles->end(), this);
@@ -45,7 +45,7 @@ void HandleBase::ResetHandles() {
 }
 void HandleBase::ResetGlobalHandles() {
   std::unique_lock<wpi::mutex> lock(globalHandleMutex);
-  for (auto&& i : *globalHandles) {
+  for (auto &&i : *globalHandles) {
     if (i != nullptr) {
       lock.unlock();
       i->ResetHandles();
@@ -81,9 +81,11 @@ HAL_PortHandle createPortHandleForSPI(uint8_t channel) {
 }
 HAL_Handle createHandle(int16_t index, HAL_HandleEnum handleType,
                         int16_t version) {
-  if (index < 0) return HAL_kInvalidHandle;
+  if (index < 0)
+    return HAL_kInvalidHandle;
   uint8_t hType = static_cast<uint8_t>(handleType);
-  if (hType == 0 || hType > 127) return HAL_kInvalidHandle;
+  if (hType == 0 || hType > 127)
+    return HAL_kInvalidHandle;
   // set last 8 bits, then shift to first 8 bits
   HAL_Handle handle = hType;
   handle = handle << 8;
@@ -93,4 +95,4 @@ HAL_Handle createHandle(int16_t index, HAL_HandleEnum handleType,
   handle += index;
   return handle;
 }
-}  // namespace hal
+} // namespace hal

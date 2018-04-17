@@ -32,8 +32,8 @@ using namespace frc;
  * This allows breakpoints to be set on an assert. The users don't call this,
  * but instead use the wpi_assert macros in Utility.h.
  */
-bool wpi_assert_impl(bool conditionValue, const llvm::Twine& conditionText,
-                     const llvm::Twine& message, llvm::StringRef fileName,
+bool wpi_assert_impl(bool conditionValue, const llvm::Twine &conditionText,
+                     const llvm::Twine &message, llvm::StringRef fileName,
                      int lineNumber, llvm::StringRef funcName) {
   if (!conditionValue) {
     llvm::SmallString<128> locBuf;
@@ -68,10 +68,10 @@ bool wpi_assert_impl(bool conditionValue, const llvm::Twine& conditionText,
  * This should not be called directly; it should only be used by
  * wpi_assertEqual_impl and wpi_assertNotEqual_impl.
  */
-void wpi_assertEqual_common_impl(const llvm::Twine& valueA,
-                                 const llvm::Twine& valueB,
-                                 const llvm::Twine& equalityType,
-                                 const llvm::Twine& message,
+void wpi_assertEqual_common_impl(const llvm::Twine &valueA,
+                                 const llvm::Twine &valueB,
+                                 const llvm::Twine &equalityType,
+                                 const llvm::Twine &message,
                                  llvm::StringRef fileName, int lineNumber,
                                  llvm::StringRef funcName) {
   llvm::SmallString<128> locBuf;
@@ -106,9 +106,9 @@ void wpi_assertEqual_common_impl(const llvm::Twine& valueA,
  * call this, but instead use the wpi_assertEqual macros in Utility.h.
  */
 bool wpi_assertEqual_impl(int valueA, int valueB,
-                          const llvm::Twine& valueAString,
-                          const llvm::Twine& valueBString,
-                          const llvm::Twine& message, llvm::StringRef fileName,
+                          const llvm::Twine &valueAString,
+                          const llvm::Twine &valueBString,
+                          const llvm::Twine &message, llvm::StringRef fileName,
                           int lineNumber, llvm::StringRef funcName) {
   if (!(valueA == valueB)) {
     wpi_assertEqual_common_impl(valueAString, valueBString, "==", message,
@@ -125,9 +125,9 @@ bool wpi_assertEqual_impl(int valueA, int valueB,
  * this, but instead use the wpi_assertNotEqual macros in Utility.h.
  */
 bool wpi_assertNotEqual_impl(int valueA, int valueB,
-                             const llvm::Twine& valueAString,
-                             const llvm::Twine& valueBString,
-                             const llvm::Twine& message,
+                             const llvm::Twine &valueAString,
+                             const llvm::Twine &valueBString,
+                             const llvm::Twine &message,
                              llvm::StringRef fileName, int lineNumber,
                              llvm::StringRef funcName) {
   if (!(valueA != valueB)) {
@@ -205,13 +205,13 @@ bool GetUserButton() {
 /**
  * Demangle a C++ symbol, used for printing stack traces.
  */
-static std::string demangle(char const* mangledSymbol) {
+static std::string demangle(char const *mangledSymbol) {
   char buffer[256];
   size_t length;
   int32_t status;
 
   if (std::sscanf(mangledSymbol, "%*[^(]%*[(]%255[^)+]", buffer)) {
-    char* symbol = abi::__cxa_demangle(buffer, nullptr, &length, &status);
+    char *symbol = abi::__cxa_demangle(buffer, nullptr, &length, &status);
     if (status == 0) {
       return symbol;
     } else {
@@ -231,9 +231,9 @@ static std::string demangle(char const* mangledSymbol) {
  * @param offset The number of symbols at the top of the stack to ignore
  */
 std::string GetStackTrace(int offset) {
-  void* stackTrace[128];
+  void *stackTrace[128];
   int stackSize = backtrace(stackTrace, 128);
-  char** mangledSymbols = backtrace_symbols(stackTrace, stackSize);
+  char **mangledSymbols = backtrace_symbols(stackTrace, stackSize);
   llvm::SmallString<1024> buf;
   llvm::raw_svector_ostream trace(buf);
 
@@ -250,11 +250,11 @@ std::string GetStackTrace(int offset) {
 }
 
 #else
-static std::string demangle(char const* mangledSymbol) {
+static std::string demangle(char const *mangledSymbol) {
   return "no demangling on windows";
 }
 
 std::string GetStackTrace(int offset) { return "no stack trace on windows"; }
 #endif
 
-}  // namespace frc
+} // namespace frc

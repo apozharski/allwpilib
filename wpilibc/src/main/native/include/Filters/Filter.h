@@ -17,8 +17,8 @@ namespace frc {
  * Interface for filters
  */
 class Filter : public PIDSource {
- public:
-  explicit Filter(PIDSource& source);
+public:
+  explicit Filter(PIDSource &source);
   explicit Filter(std::shared_ptr<PIDSource> source);
   virtual ~Filter() = default;
 
@@ -40,7 +40,7 @@ class Filter : public PIDSource {
    */
   virtual void Reset() = 0;
 
- protected:
+protected:
   /**
    * Calls PIDGet() of source
    *
@@ -48,8 +48,8 @@ class Filter : public PIDSource {
    */
   double PIDGetSource();
 
- private:
+private:
   std::shared_ptr<PIDSource> m_source;
 };
 
-}  // namespace frc
+} // namespace frc

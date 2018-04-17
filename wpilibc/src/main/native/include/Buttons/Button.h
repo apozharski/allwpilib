@@ -24,12 +24,12 @@ namespace frc {
  * names renamed to fit the Button object use.
  */
 class Button : public Trigger {
- public:
-  virtual void WhenPressed(Command* command);
-  virtual void WhileHeld(Command* command);
-  virtual void WhenReleased(Command* command);
-  virtual void CancelWhenPressed(Command* command);
-  virtual void ToggleWhenPressed(Command* command);
+public:
+  virtual void WhenPressed(Command *command);
+  virtual void WhileHeld(Command *command);
+  virtual void WhenReleased(Command *command);
+  virtual void CancelWhenPressed(Command *command);
+  virtual void ToggleWhenPressed(Command *command);
 };
 
-}  // namespace frc
+} // namespace frc

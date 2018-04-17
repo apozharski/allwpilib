@@ -16,4 +16,4 @@ enum class AnalogTriggerType {
   kFallingPulse = 3
 };
 
-}  // namespace frc
+} // namespace frc

@@ -26,7 +26,7 @@ class NidecBrushless : public ErrorBase,
                        public SendableBase,
                        public SpeedController,
                        public MotorSafety {
- public:
+public:
   NidecBrushless(int pwmChannel, int dioChannel);
   ~NidecBrushless() override = default;
 
@@ -49,14 +49,14 @@ class NidecBrushless : public ErrorBase,
   bool IsAlive() const override;
   void SetSafetyEnabled(bool enabled) override;
   bool IsSafetyEnabled() const override;
-  void GetDescription(llvm::raw_ostream& desc) const override;
+  void GetDescription(llvm::raw_ostream &desc) const override;
 
   int GetChannel() const;
 
   // Sendable interface
-  void InitSendable(SendableBuilder& builder) override;
+  void InitSendable(SendableBuilder &builder) override;
 
- private:
+private:
   MotorSafetyHelper m_safetyHelper;
   bool m_isInverted = false;
   std::atomic_bool m_disabled{false};
@@ -65,4 +65,4 @@ class NidecBrushless : public ErrorBase,
   double m_speed = 0.0;
 };
 
-}  // namespace frc
+} // namespace frc

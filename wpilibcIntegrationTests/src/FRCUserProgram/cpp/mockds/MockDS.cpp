@@ -17,8 +17,8 @@
 
 #include "udpsockets/UDPClient.h"
 
-static void LoggerFunc(unsigned int level, const char* file, unsigned int line,
-                       const char* msg) {
+static void LoggerFunc(unsigned int level, const char *file, unsigned int line,
+                       const char *msg) {
   llvm::SmallString<128> buf;
   llvm::raw_svector_ostream oss(buf);
   if (level == 20) {
@@ -40,21 +40,22 @@ static void LoggerFunc(unsigned int level, const char* file, unsigned int line,
   llvm::errs() << oss.str();
 }
 
-static void generateEnabledDsPacket(llvm::SmallVectorImpl<uint8_t>& data,
+static void generateEnabledDsPacket(llvm::SmallVectorImpl<uint8_t> &data,
                                     uint16_t sendCount) {
   data.clear();
   data.push_back(sendCount >> 8);
   data.push_back(sendCount);
-  data.push_back(0x01);  // general data tag
-  data.push_back(0x04);  // teleop enabled
-  data.push_back(0x10);  // normal data request
-  data.push_back(0x00);  // red 1 station
+  data.push_back(0x01); // general data tag
+  data.push_back(0x04); // teleop enabled
+  data.push_back(0x10); // normal data request
+  data.push_back(0x00); // red 1 station
 }
 
 using namespace frc;
 
 void MockDS::start() {
-  if (m_active) return;
+  if (m_active)
+    return;
   m_active = true;
   m_thread = std::thread([&]() {
     wpi::Logger logger(LoggerFunc);
@@ -86,5 +87,6 @@ void MockDS::start() {
 
 void MockDS::stop() {
   m_active = false;
-  if (m_thread.joinable()) m_thread.join();
+  if (m_thread.joinable())
+    m_thread.join();
 }

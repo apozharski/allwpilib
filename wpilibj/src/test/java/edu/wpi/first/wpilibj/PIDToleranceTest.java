@@ -33,19 +33,12 @@ public class PIDToleranceTest {
       m_val = 0;
     }
 
-    @Override
-    public PIDSourceType getPIDSourceType() {
-      return PIDSourceType.kDisplacement;
-    }
 
     @Override
-    public double pidGet() {
+    public double pidGet(PIDSourceType pidSource) {
       return m_val;
     }
 
-    @Override
-    public void setPIDSourceType(PIDSourceType arg0) {
-    }
   }
 
   private FakeInput m_inp;

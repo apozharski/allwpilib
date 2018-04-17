@@ -55,7 +55,8 @@ DigitalOutput::DigitalOutput(int channel) {
  * Free the resources associated with a digital output.
  */
 DigitalOutput::~DigitalOutput() {
-  if (StatusIsFatal()) return;
+  if (StatusIsFatal())
+    return;
   // Disable the PWM in case it was running.
   DisablePWM();
 
@@ -70,7 +71,8 @@ DigitalOutput::~DigitalOutput() {
  * @param value 1 (true) for high, 0 (false) for disabled
  */
 void DigitalOutput::Set(bool value) {
-  if (StatusIsFatal()) return;
+  if (StatusIsFatal())
+    return;
 
   int32_t status = 0;
   HAL_SetDIO(m_handle, value, &status);
@@ -83,7 +85,8 @@ void DigitalOutput::Set(bool value) {
  * @return the state of the digital output.
  */
 bool DigitalOutput::Get() const {
-  if (StatusIsFatal()) return false;
+  if (StatusIsFatal())
+    return false;
 
   int32_t status = 0;
   bool val = HAL_GetDIO(m_handle, &status);
@@ -105,7 +108,8 @@ int DigitalOutput::GetChannel() const { return m_channel; }
  * @param length The pulse length in seconds
  */
 void DigitalOutput::Pulse(double length) {
-  if (StatusIsFatal()) return;
+  if (StatusIsFatal())
+    return;
 
   int32_t status = 0;
   HAL_Pulse(m_handle, length, &status);
@@ -118,7 +122,8 @@ void DigitalOutput::Pulse(double length) {
  * Determine if a previously started pulse is still going.
  */
 bool DigitalOutput::IsPulsing() const {
-  if (StatusIsFatal()) return false;
+  if (StatusIsFatal())
+    return false;
 
   int32_t status = 0;
   bool value = HAL_IsPulsing(m_handle, &status);
@@ -137,7 +142,8 @@ bool DigitalOutput::IsPulsing() const {
  * @param rate The frequency to output all digital output PWM signals.
  */
 void DigitalOutput::SetPWMRate(double rate) {
-  if (StatusIsFatal()) return;
+  if (StatusIsFatal())
+    return;
 
   int32_t status = 0;
   HAL_SetDigitalPWMRate(rate, &status);
@@ -158,19 +164,23 @@ void DigitalOutput::SetPWMRate(double rate) {
  * @param initialDutyCycle The duty-cycle to start generating. [0..1]
  */
 void DigitalOutput::EnablePWM(double initialDutyCycle) {
-  if (m_pwmGenerator != HAL_kInvalidHandle) return;
+  if (m_pwmGenerator != HAL_kInvalidHandle)
+    return;
 
   int32_t status = 0;
 
-  if (StatusIsFatal()) return;
+  if (StatusIsFatal())
+    return;
   m_pwmGenerator = HAL_AllocateDigitalPWM(&status);
   wpi_setErrorWithContext(status, HAL_GetErrorMessage(status));
 
-  if (StatusIsFatal()) return;
+  if (StatusIsFatal())
+    return;
   HAL_SetDigitalPWMDutyCycle(m_pwmGenerator, initialDutyCycle, &status);
   wpi_setErrorWithContext(status, HAL_GetErrorMessage(status));
 
-  if (StatusIsFatal()) return;
+  if (StatusIsFatal())
+    return;
   HAL_SetDigitalPWMOutputChannel(m_pwmGenerator, m_channel, &status);
   wpi_setErrorWithContext(status, HAL_GetErrorMessage(status));
 }
@@ -181,8 +191,10 @@ void DigitalOutput::EnablePWM(double initialDutyCycle) {
  * Free up one of the 6 DO PWM generator resources that were in use.
  */
 void DigitalOutput::DisablePWM() {
-  if (StatusIsFatal()) return;
-  if (m_pwmGenerator == HAL_kInvalidHandle) return;
+  if (StatusIsFatal())
+    return;
+  if (m_pwmGenerator == HAL_kInvalidHandle)
+    return;
 
   int32_t status = 0;
 
@@ -206,14 +218,15 @@ void DigitalOutput::DisablePWM() {
  * @param dutyCycle The duty-cycle to change to. [0..1]
  */
 void DigitalOutput::UpdateDutyCycle(double dutyCycle) {
-  if (StatusIsFatal()) return;
+  if (StatusIsFatal())
+    return;
 
   int32_t status = 0;
   HAL_SetDigitalPWMDutyCycle(m_pwmGenerator, dutyCycle, &status);
   wpi_setErrorWithContext(status, HAL_GetErrorMessage(status));
 }
 
-void DigitalOutput::InitSendable(SendableBuilder& builder) {
+void DigitalOutput::InitSendable(SendableBuilder &builder) {
   builder.SetSmartDashboardType("Digital Output");
   builder.AddBooleanProperty("Value", [=]() { return Get(); },
                              [=](bool value) { Set(value); });

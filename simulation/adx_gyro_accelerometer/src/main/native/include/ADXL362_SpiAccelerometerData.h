@@ -11,14 +11,14 @@
 
 namespace hal {
 class ADXL362_SpiAccelerometer : public ThreeAxisAccelerometerData {
- public:
+public:
   explicit ADXL362_SpiAccelerometer(int port);
   virtual ~ADXL362_SpiAccelerometer();
 
-  void HandleWrite(const uint8_t* buffer, uint32_t count);
-  void HandleRead(uint8_t* buffer, uint32_t count);
+  void HandleWrite(const uint8_t *buffer, uint32_t count);
+  void HandleRead(uint8_t *buffer, uint32_t count);
 
- private:
+private:
   int m_port;
   int m_writeCallbackId;
   int m_readCallbackId;
@@ -27,4 +27,4 @@ class ADXL362_SpiAccelerometer : public ThreeAxisAccelerometerData {
 
   static const double LSB;
 };
-}  // namespace hal
+} // namespace hal

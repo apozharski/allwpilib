@@ -20,7 +20,7 @@ namespace frc {
  * via SPI. This class assumes the sensor is wired in 4-wire SPI mode.
  */
 class ADXL345_SPI : public SensorBase, public Accelerometer {
- public:
+public:
   enum Axes { kAxis_X = 0x00, kAxis_Y = 0x02, kAxis_Z = 0x04 };
 
   struct AllAxes {
@@ -32,8 +32,8 @@ class ADXL345_SPI : public SensorBase, public Accelerometer {
   explicit ADXL345_SPI(SPI::Port port, Range range = kRange_2G);
   ~ADXL345_SPI() override = default;
 
-  ADXL345_SPI(const ADXL345_SPI&) = delete;
-  ADXL345_SPI& operator=(const ADXL345_SPI&) = delete;
+  ADXL345_SPI(const ADXL345_SPI &) = delete;
+  ADXL345_SPI &operator=(const ADXL345_SPI &) = delete;
 
   // Accelerometer interface
   void SetRange(Range range) override;
@@ -44,9 +44,9 @@ class ADXL345_SPI : public SensorBase, public Accelerometer {
   virtual double GetAcceleration(Axes axis);
   virtual AllAxes GetAccelerations();
 
-  void InitSendable(SendableBuilder& builder) override;
+  void InitSendable(SendableBuilder &builder) override;
 
- protected:
+protected:
   SPI m_spi;
 
   static constexpr int kPowerCtlRegister = 0x2D;
@@ -72,4 +72,4 @@ class ADXL345_SPI : public SensorBase, public Accelerometer {
   };
 };
 
-}  // namespace frc
+} // namespace frc

@@ -17,7 +17,7 @@
 using namespace frc;
 
 class CommandTest : public testing::Test {
- protected:
+protected:
   void SetUp() override {
     RobotState::SetImplementation(DriverStation::GetInstance());
     Scheduler::GetInstance()->SetEnabled(true);
@@ -34,7 +34,7 @@ class CommandTest : public testing::Test {
    */
   void TeardownScheduler() { Scheduler::GetInstance()->ResetAll(); }
 
-  void AssertCommandState(MockCommand& command, int32_t initialize,
+  void AssertCommandState(MockCommand &command, int32_t initialize,
                           int32_t execute, int32_t isFinished, int32_t end,
                           int32_t interrupted) {
     EXPECT_EQ(initialize, command.GetInitializeCount());
@@ -46,11 +46,11 @@ class CommandTest : public testing::Test {
 };
 
 class ASubsystem : public Subsystem {
- private:
-  Command* m_command = nullptr;
+private:
+  Command *m_command = nullptr;
 
- public:
-  explicit ASubsystem(const std::string& name) : Subsystem(name) {}
+public:
+  explicit ASubsystem(const std::string &name) : Subsystem(name) {}
 
   void InitDefaultCommand() override {
     if (m_command != nullptr) {
@@ -58,7 +58,7 @@ class ASubsystem : public Subsystem {
     }
   }
 
-  void Init(Command* command) { m_command = command; }
+  void Init(Command *command) { m_command = command; }
 };
 
 // CommandParallelGroupTest ported from CommandParallelGroupTest.java
@@ -177,7 +177,7 @@ TEST_F(CommandTest, ThreeCommandOnSubSystem) {
   AssertCommandState(command1, 1, 1, 1, 0, 0);
   AssertCommandState(command2, 0, 0, 0, 0, 0);
   AssertCommandState(command3, 0, 0, 0, 0, 0);
-  Wait(1);  // command 1 timeout
+  Wait(1); // command 1 timeout
 
   Scheduler::GetInstance()->Run();
   AssertCommandState(command1, 1, 1, 1, 0, 1);
@@ -188,7 +188,7 @@ TEST_F(CommandTest, ThreeCommandOnSubSystem) {
   AssertCommandState(command1, 1, 1, 1, 0, 1);
   AssertCommandState(command2, 1, 2, 2, 0, 0);
   AssertCommandState(command3, 0, 0, 0, 0, 0);
-  Wait(2);  // command 2 timeout
+  Wait(2); // command 2 timeout
 
   Scheduler::GetInstance()->Run();
   AssertCommandState(command1, 1, 1, 1, 0, 1);
@@ -320,7 +320,7 @@ TEST_F(CommandTest,
 // END CommandSequentialGroupTest
 
 class ModifiedMockCommand : public MockCommand {
- public:
+public:
   ModifiedMockCommand() : MockCommand() { SetTimeout(2.0); }
   bool IsFinished() override {
     return MockCommand::IsFinished() || IsTimedOut();

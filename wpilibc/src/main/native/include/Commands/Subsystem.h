@@ -23,35 +23,35 @@ class Command;
 class Subsystem : public ErrorBase, public SendableBase {
   friend class Scheduler;
 
- public:
-  explicit Subsystem(const llvm::Twine& name);
+public:
+  explicit Subsystem(const llvm::Twine &name);
 
-  void SetDefaultCommand(Command* command);
-  Command* GetDefaultCommand();
+  void SetDefaultCommand(Command *command);
+  Command *GetDefaultCommand();
   llvm::StringRef GetDefaultCommandName();
-  void SetCurrentCommand(Command* command);
-  Command* GetCurrentCommand() const;
+  void SetCurrentCommand(Command *command);
+  Command *GetCurrentCommand() const;
   llvm::StringRef GetCurrentCommandName() const;
   virtual void Periodic();
   virtual void InitDefaultCommand();
 
-  void AddChild(const llvm::Twine& name, std::shared_ptr<Sendable> child);
-  void AddChild(const llvm::Twine& name, Sendable* child);
-  void AddChild(const llvm::Twine& name, Sendable& child);
+  void AddChild(const llvm::Twine &name, std::shared_ptr<Sendable> child);
+  void AddChild(const llvm::Twine &name, Sendable *child);
+  void AddChild(const llvm::Twine &name, Sendable &child);
   void AddChild(std::shared_ptr<Sendable> child);
-  void AddChild(Sendable* child);
-  void AddChild(Sendable& child);
+  void AddChild(Sendable *child);
+  void AddChild(Sendable &child);
 
- private:
+private:
   void ConfirmCommand();
 
-  Command* m_currentCommand = nullptr;
+  Command *m_currentCommand = nullptr;
   bool m_currentCommandChanged = true;
-  Command* m_defaultCommand = nullptr;
+  Command *m_defaultCommand = nullptr;
   bool m_initializedDefaultCommand = false;
 
- public:
-  void InitSendable(SendableBuilder& builder) override;
+public:
+  void InitSendable(SendableBuilder &builder) override;
 };
 
-}  // namespace frc
+} // namespace frc

@@ -18,7 +18,7 @@ namespace frc {
  */
 class WPI_DEPRECATED("Inherit directly from GenericHID instead.") JoystickBase
     : public GenericHID {
- public:
+public:
   explicit JoystickBase(int port);
   virtual ~JoystickBase() = default;
 
@@ -27,4 +27,4 @@ class WPI_DEPRECATED("Inherit directly from GenericHID instead.") JoystickBase
   virtual double GetThrottle() const = 0;
 };
 
-}  // namespace frc
+} // namespace frc

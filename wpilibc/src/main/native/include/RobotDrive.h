@@ -33,7 +33,7 @@ class GenericHID;
  * the Tank/Arcade functions intended to be used for Operator Control driving.
  */
 class RobotDrive : public MotorSafety, public ErrorBase {
- public:
+public:
   enum MotorType {
     kFrontLeftMotor = 0,
     kFrontRightMotor = 1,
@@ -47,18 +47,18 @@ class RobotDrive : public MotorSafety, public ErrorBase {
   RobotDrive(int frontLeftMotorChannel, int rearLeftMotorChannel,
              int frontRightMotorChannel, int rearRightMotorChannel);
   WPI_DEPRECATED("Use DifferentialDrive or MecanumDrive classes instead.")
-  RobotDrive(SpeedController* leftMotor, SpeedController* rightMotor);
+  RobotDrive(SpeedController *leftMotor, SpeedController *rightMotor);
   WPI_DEPRECATED("Use DifferentialDrive or MecanumDrive classes instead.")
-  RobotDrive(SpeedController& leftMotor, SpeedController& rightMotor);
+  RobotDrive(SpeedController &leftMotor, SpeedController &rightMotor);
   WPI_DEPRECATED("Use DifferentialDrive or MecanumDrive classes instead.")
   RobotDrive(std::shared_ptr<SpeedController> leftMotor,
              std::shared_ptr<SpeedController> rightMotor);
   WPI_DEPRECATED("Use DifferentialDrive or MecanumDrive classes instead.")
-  RobotDrive(SpeedController* frontLeftMotor, SpeedController* rearLeftMotor,
-             SpeedController* frontRightMotor, SpeedController* rearRightMotor);
+  RobotDrive(SpeedController *frontLeftMotor, SpeedController *rearLeftMotor,
+             SpeedController *frontRightMotor, SpeedController *rearRightMotor);
   WPI_DEPRECATED("Use DifferentialDrive or MecanumDrive classes instead.")
-  RobotDrive(SpeedController& frontLeftMotor, SpeedController& rearLeftMotor,
-             SpeedController& frontRightMotor, SpeedController& rearRightMotor);
+  RobotDrive(SpeedController &frontLeftMotor, SpeedController &rearLeftMotor,
+             SpeedController &frontRightMotor, SpeedController &rearRightMotor);
   WPI_DEPRECATED("Use DifferentialDrive or MecanumDrive classes instead.")
   RobotDrive(std::shared_ptr<SpeedController> frontLeftMotor,
              std::shared_ptr<SpeedController> rearLeftMotor,
@@ -66,27 +66,27 @@ class RobotDrive : public MotorSafety, public ErrorBase {
              std::shared_ptr<SpeedController> rearRightMotor);
   virtual ~RobotDrive() = default;
 
-  RobotDrive(const RobotDrive&) = delete;
-  RobotDrive& operator=(const RobotDrive&) = delete;
+  RobotDrive(const RobotDrive &) = delete;
+  RobotDrive &operator=(const RobotDrive &) = delete;
 
   void Drive(double outputMagnitude, double curve);
-  void TankDrive(GenericHID* leftStick, GenericHID* rightStick,
+  void TankDrive(GenericHID *leftStick, GenericHID *rightStick,
                  bool squaredInputs = true);
-  void TankDrive(GenericHID& leftStick, GenericHID& rightStick,
+  void TankDrive(GenericHID &leftStick, GenericHID &rightStick,
                  bool squaredInputs = true);
-  void TankDrive(GenericHID* leftStick, int leftAxis, GenericHID* rightStick,
+  void TankDrive(GenericHID *leftStick, int leftAxis, GenericHID *rightStick,
                  int rightAxis, bool squaredInputs = true);
-  void TankDrive(GenericHID& leftStick, int leftAxis, GenericHID& rightStick,
+  void TankDrive(GenericHID &leftStick, int leftAxis, GenericHID &rightStick,
                  int rightAxis, bool squaredInputs = true);
   void TankDrive(double leftValue, double rightValue,
                  bool squaredInputs = true);
-  void ArcadeDrive(GenericHID* stick, bool squaredInputs = true);
-  void ArcadeDrive(GenericHID& stick, bool squaredInputs = true);
-  void ArcadeDrive(GenericHID* moveStick, int moveChannel,
-                   GenericHID* rotateStick, int rotateChannel,
+  void ArcadeDrive(GenericHID *stick, bool squaredInputs = true);
+  void ArcadeDrive(GenericHID &stick, bool squaredInputs = true);
+  void ArcadeDrive(GenericHID *moveStick, int moveChannel,
+                   GenericHID *rotateStick, int rotateChannel,
                    bool squaredInputs = true);
-  void ArcadeDrive(GenericHID& moveStick, int moveChannel,
-                   GenericHID& rotateStick, int rotateChannel,
+  void ArcadeDrive(GenericHID &moveStick, int moveChannel,
+                   GenericHID &rotateStick, int rotateChannel,
                    bool squaredInputs = true);
   void ArcadeDrive(double moveValue, double rotateValue,
                    bool squaredInputs = true);
@@ -105,13 +105,13 @@ class RobotDrive : public MotorSafety, public ErrorBase {
   void StopMotor() override;
   bool IsSafetyEnabled() const override;
   void SetSafetyEnabled(bool enabled) override;
-  void GetDescription(llvm::raw_ostream& desc) const override;
+  void GetDescription(llvm::raw_ostream &desc) const override;
 
- protected:
+protected:
   void InitRobotDrive();
   double Limit(double number);
-  void Normalize(double* wheelSpeeds);
-  void RotateVector(double& x, double& y, double angle);
+  void Normalize(double *wheelSpeeds);
+  void RotateVector(double &x, double &y, double angle);
 
   static constexpr int kMaxNumberOfMotors = 4;
 
@@ -124,15 +124,19 @@ class RobotDrive : public MotorSafety, public ErrorBase {
   std::shared_ptr<SpeedController> m_rearRightMotor;
   std::unique_ptr<MotorSafetyHelper> m_safetyHelper;
 
- private:
+private:
   int GetNumMotors() {
     int motors = 0;
-    if (m_frontLeftMotor) motors++;
-    if (m_frontRightMotor) motors++;
-    if (m_rearLeftMotor) motors++;
-    if (m_rearRightMotor) motors++;
+    if (m_frontLeftMotor)
+      motors++;
+    if (m_frontRightMotor)
+      motors++;
+    if (m_rearLeftMotor)
+      motors++;
+    if (m_rearRightMotor)
+      motors++;
     return motors;
   }
 };
 
-}  // namespace frc
+} // namespace frc

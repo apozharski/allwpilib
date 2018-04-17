@@ -33,9 +33,11 @@ Notifier::Notifier(TimerEventHandler handler) {
     for (;;) {
       int32_t status = 0;
       HAL_NotifierHandle notifier = m_notifier.load();
-      if (notifier == 0) break;
+      if (notifier == 0)
+        break;
       uint64_t curTime = HAL_WaitForNotifierAlarm(notifier, &status);
-      if (curTime == 0 || status != 0) break;
+      if (curTime == 0 || status != 0)
+        break;
 
       TimerEventHandler handler;
       {
@@ -48,7 +50,8 @@ Notifier::Notifier(TimerEventHandler handler) {
       }
 
       // call callback
-      if (handler) handler();
+      if (handler)
+        handler();
     }
   });
 }
@@ -64,7 +67,8 @@ Notifier::~Notifier() {
   wpi_setErrorWithContext(status, HAL_GetErrorMessage(status));
 
   // Join the thread to ensure the handler has exited.
-  if (m_thread.joinable()) m_thread.join();
+  if (m_thread.joinable())
+    m_thread.join();
 
   HAL_CleanNotifier(handle, &status);
 }
@@ -76,7 +80,8 @@ void Notifier::UpdateAlarm() {
   int32_t status = 0;
   // Return if we are being destructed, or were not created successfully
   auto notifier = m_notifier.load();
-  if (notifier == 0) return;
+  if (notifier == 0)
+    return;
   HAL_UpdateNotifierAlarm(
       notifier, static_cast<uint64_t>(m_expirationTime * 1e6), &status);
   wpi_setErrorWithContext(status, HAL_GetErrorMessage(status));

@@ -34,17 +34,10 @@ public abstract class PIDCommand extends Command implements Sendable {
    * A source which calls {@link PIDCommand#returnPIDInput()}.
    */
   private final PIDSource m_source = new PIDSource() {
-    public void setPIDSourceType(PIDSourceType pidSource) {
-    }
-
-    public PIDSourceType getPIDSourceType() {
-      return PIDSourceType.kDisplacement;
-    }
-
-    public double pidGet() {
-      return returnPIDInput();
-    }
-  };
+      public double pidGet(PIDSourceType pidSource) {
+        return returnPIDInput();
+      }
+    };
 
   /**
    * Instantiates a {@link PIDCommand} that will use the given p, i and d values.

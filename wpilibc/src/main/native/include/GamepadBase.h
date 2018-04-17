@@ -18,7 +18,7 @@ namespace frc {
  */
 class WPI_DEPRECATED("Inherit directly from GenericHID instead.") GamepadBase
     : public GenericHID {
- public:
+public:
   explicit GamepadBase(int port);
   virtual ~GamepadBase() = default;
 
@@ -26,4 +26,4 @@ class WPI_DEPRECATED("Inherit directly from GenericHID instead.") GamepadBase
   virtual bool GetStickButton(JoystickHand hand) const = 0;
 };
 
-}  // namespace frc
+} // namespace frc

@@ -29,21 +29,21 @@ class Command;
  * functionality of the Trigger class.
  */
 class Trigger : public SendableBase {
- public:
+public:
   Trigger() = default;
   ~Trigger() override = default;
   bool Grab();
   virtual bool Get() = 0;
-  void WhenActive(Command* command);
-  void WhileActive(Command* command);
-  void WhenInactive(Command* command);
-  void CancelWhenActive(Command* command);
-  void ToggleWhenActive(Command* command);
+  void WhenActive(Command *command);
+  void WhileActive(Command *command);
+  void WhenInactive(Command *command);
+  void CancelWhenActive(Command *command);
+  void ToggleWhenActive(Command *command);
 
-  void InitSendable(SendableBuilder& builder) override;
+  void InitSendable(SendableBuilder &builder) override;
 
- private:
+private:
   std::atomic_bool m_sendablePressed{false};
 };
 
-}  // namespace frc
+} // namespace frc

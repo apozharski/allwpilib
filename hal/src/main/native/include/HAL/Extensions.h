@@ -20,6 +20,6 @@
 typedef int halsim_extension_init_func_t(void);
 
 extern "C" {
-int HAL_LoadOneExtension(const char* library);
+int HAL_LoadOneExtension(const char *library);
 int HAL_LoadExtensions(void);
-}  // extern "C"
+} // extern "C"

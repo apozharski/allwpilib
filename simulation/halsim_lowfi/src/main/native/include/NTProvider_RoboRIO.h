@@ -12,7 +12,7 @@
 #include <HALSimLowFi.h>
 
 class HALSimNTProviderRoboRIO : public HALSimNTProvider {
- public:
+public:
   void Initialize() override;
   void OnCallback(uint32_t channel,
                   std::shared_ptr<nt::NetworkTable> table) override;

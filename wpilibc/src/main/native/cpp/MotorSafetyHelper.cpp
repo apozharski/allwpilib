@@ -17,7 +17,7 @@
 
 using namespace frc;
 
-std::set<MotorSafetyHelper*> MotorSafetyHelper::m_helperList;
+std::set<MotorSafetyHelper *> MotorSafetyHelper::m_helperList;
 wpi::mutex MotorSafetyHelper::m_listMutex;
 
 /**
@@ -32,7 +32,7 @@ wpi::mutex MotorSafetyHelper::m_listMutex;
  * @param safeObject a pointer to the motor object implementing MotorSafety.
  *                   This is used to call the Stop() method on the motor.
  */
-MotorSafetyHelper::MotorSafetyHelper(MotorSafety* safeObject)
+MotorSafetyHelper::MotorSafetyHelper(MotorSafety *safeObject)
     : m_safeObject(safeObject) {
   m_enabled = false;
   m_expiration = DEFAULT_SAFETY_EXPIRATION;
@@ -105,8 +105,9 @@ void MotorSafetyHelper::Check() {
     stopTime = m_stopTime;
   }
 
-  DriverStation& ds = DriverStation::GetInstance();
-  if (!enabled || ds.IsDisabled() || ds.IsTest()) return;
+  DriverStation &ds = DriverStation::GetInstance();
+  if (!enabled || ds.IsDisabled() || ds.IsTest())
+    return;
 
   if (stopTime < Timer::GetFPGATimestamp()) {
     llvm::SmallString<128> buf;

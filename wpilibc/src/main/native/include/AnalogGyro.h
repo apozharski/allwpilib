@@ -31,7 +31,7 @@ class AnalogInput;
  * This class is for gyro sensors that connect to an analog input.
  */
 class AnalogGyro : public GyroBase {
- public:
+public:
   static constexpr int kOversampleBits = 10;
   static constexpr int kAverageBits = 0;
   static constexpr double kSamplesPerSecond = 50.0;
@@ -39,7 +39,7 @@ class AnalogGyro : public GyroBase {
   static constexpr double kDefaultVoltsPerDegreePerSecond = 0.007;
 
   explicit AnalogGyro(int channel);
-  explicit AnalogGyro(AnalogInput* channel);
+  explicit AnalogGyro(AnalogInput *channel);
   explicit AnalogGyro(std::shared_ptr<AnalogInput> channel);
   AnalogGyro(int channel, int center, double offset);
   AnalogGyro(std::shared_ptr<AnalogInput> channel, int center, double offset);
@@ -55,11 +55,11 @@ class AnalogGyro : public GyroBase {
   virtual void InitGyro();
   void Calibrate() override;
 
- protected:
+protected:
   std::shared_ptr<AnalogInput> m_analog;
 
- private:
+private:
   HAL_GyroHandle m_gyroHandle = HAL_kInvalidHandle;
 };
 
-}  // namespace frc
+} // namespace frc

@@ -13,7 +13,7 @@
 namespace hal {
 
 class fpga_clock {
- public:
+public:
   typedef std::chrono::microseconds::rep rep;
   typedef std::chrono::microseconds::period period;
   typedef std::chrono::microseconds duration;
@@ -28,4 +28,4 @@ class fpga_clock {
 
   static const time_point min_time;
 };
-}  // namespace hal
+} // namespace hal

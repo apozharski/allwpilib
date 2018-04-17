@@ -26,7 +26,7 @@
 #define DLCLOSE FreeLibrary
 #else
 #define DELIM ':'
-#define HTYPE void*
+#define HTYPE void *
 #define PREFIX "lib"
 #define DLOPEN(a) dlopen(a, RTLD_LAZY)
 #define DLSYM dlsym
@@ -36,13 +36,13 @@
 namespace hal {
 namespace init {
 void InitializeExtensions() {}
-}  // namespace init
-}  // namespace hal
+} // namespace init
+} // namespace hal
 
 extern "C" {
 
-int HAL_LoadOneExtension(const char* library) {
-  int rc = 1;  // It is expected and reasonable not to find an extra simulation
+int HAL_LoadOneExtension(const char *library) {
+  int rc = 1; // It is expected and reasonable not to find an extra simulation
   HTYPE handle = DLOPEN(library);
 #if !defined(WIN32) && !defined(_WIN32)
   if (!handle) {
@@ -56,14 +56,17 @@ int HAL_LoadOneExtension(const char* library) {
     handle = DLOPEN(libraryName.c_str());
   }
 #endif
-  if (!handle) return rc;
+  if (!handle)
+    return rc;
 
-  auto init = reinterpret_cast<halsim_extension_init_func_t*>(
+  auto init = reinterpret_cast<halsim_extension_init_func_t *>(
       DLSYM(handle, "HALSIM_InitExtension"));
 
-  if (init) rc = (*init)();
+  if (init)
+    rc = (*init)();
 
-  if (rc != 0) DLCLOSE(handle);
+  if (rc != 0)
+    DLCLOSE(handle);
   return rc;
 }
 
@@ -74,16 +77,18 @@ int HAL_LoadOneExtension(const char* library) {
 int HAL_LoadExtensions(void) {
   int rc = 1;
   llvm::SmallVector<llvm::StringRef, 2> libraries;
-  const char* e = std::getenv("HALSIM_EXTENSIONS");
-  if (!e) return rc;
+  const char *e = std::getenv("HALSIM_EXTENSIONS");
+  if (!e)
+    return rc;
   llvm::StringRef env{e};
   env.split(libraries, DELIM, -1, false);
-  for (auto& libref : libraries) {
+  for (auto &libref : libraries) {
     llvm::SmallString<128> library(libref);
     rc = HAL_LoadOneExtension(library.c_str());
-    if (rc < 0) break;
+    if (rc < 0)
+      break;
   }
   return rc;
 }
 
-}  // extern "C"
+} // extern "C"

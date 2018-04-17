@@ -13,8 +13,8 @@
 #include "DriverStation.h"
 #include "LiveWindow/LiveWindow.h"
 #include "Timer.h"
-#include "gtest/gtest.h"
 #include "mockds/MockDS.h"
+#include "gtest/gtest.h"
 
 using namespace frc;
 
@@ -22,11 +22,12 @@ class TestEnvironment : public testing::Environment {
   bool m_alreadySetUp = false;
   MockDS m_mockDS;
 
- public:
+public:
   void SetUp() override {
     /* Only set up once.  This allows gtest_repeat to be used to
             automatically repeat tests. */
-    if (m_alreadySetUp) return;
+    if (m_alreadySetUp)
+      return;
     m_alreadySetUp = true;
 
     if (!HAL_Initialize(500, 0)) {
@@ -63,5 +64,5 @@ class TestEnvironment : public testing::Environment {
   void TearDown() override { m_mockDS.stop(); }
 };
 
-testing::Environment* const environment =
+testing::Environment *const environment =
     testing::AddGlobalTestEnvironment(new TestEnvironment);

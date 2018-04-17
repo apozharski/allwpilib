@@ -13,12 +13,12 @@ using namespace frc;
 
 std::string LiveWindowSendable::GetName() const { return std::string(); }
 
-void LiveWindowSendable::SetName(const llvm::Twine&) {}
+void LiveWindowSendable::SetName(const llvm::Twine &) {}
 
 std::string LiveWindowSendable::GetSubsystem() const { return std::string(); }
 
-void LiveWindowSendable::SetSubsystem(const llvm::Twine&) {}
+void LiveWindowSendable::SetSubsystem(const llvm::Twine &) {}
 
-void LiveWindowSendable::InitSendable(SendableBuilder& builder) {
+void LiveWindowSendable::InitSendable(SendableBuilder &builder) {
   builder.SetUpdateTable([=]() { UpdateTable(); });
 }

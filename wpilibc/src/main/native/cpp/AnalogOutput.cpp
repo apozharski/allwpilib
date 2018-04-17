@@ -89,7 +89,7 @@ double AnalogOutput::GetVoltage() const {
   return voltage;
 }
 
-void AnalogOutput::InitSendable(SendableBuilder& builder) {
+void AnalogOutput::InitSendable(SendableBuilder &builder) {
   builder.SetSmartDashboardType("Analog Output");
   builder.AddDoubleProperty("Value", [=]() { return GetVoltage(); },
                             [=](double value) { SetVoltage(value); });

@@ -15,7 +15,7 @@
 
 #define HAL_IO_CONFIG_DATA_SIZE 32
 #define HAL_SYS_STATUS_DATA_SIZE 44
-#define HAL_USER_STATUS_DATA_SIZE \
+#define HAL_USER_STATUS_DATA_SIZE                                              \
   (984 - HAL_IO_CONFIG_DATA_SIZE - HAL_SYS_STATUS_DATA_SIZE)
 
 #define HALFRC_NetworkCommunication_DynamicType_DSEnhancedIO_Input 17
@@ -87,11 +87,11 @@ struct HAL_JoystickDescriptor {
 };
 
 struct HAL_MatchInfo {
-  char* eventName;
+  char *eventName;
   HAL_MatchType matchType;
   uint16_t matchNumber;
   uint8_t replayNumber;
-  char* gameSpecificMessage;
+  char *gameSpecificMessage;
 };
 
 #ifdef __cplusplus
@@ -99,28 +99,28 @@ extern "C" {
 #endif
 
 int32_t HAL_SendError(HAL_Bool isError, int32_t errorCode, HAL_Bool isLVCode,
-                      const char* details, const char* location,
-                      const char* callStack, HAL_Bool printMsg);
+                      const char *details, const char *location,
+                      const char *callStack, HAL_Bool printMsg);
 
-int32_t HAL_GetControlWord(HAL_ControlWord* controlWord);
-HAL_AllianceStationID HAL_GetAllianceStation(int32_t* status);
-int32_t HAL_GetJoystickAxes(int32_t joystickNum, HAL_JoystickAxes* axes);
-int32_t HAL_GetJoystickPOVs(int32_t joystickNum, HAL_JoystickPOVs* povs);
+int32_t HAL_GetControlWord(HAL_ControlWord *controlWord);
+HAL_AllianceStationID HAL_GetAllianceStation(int32_t *status);
+int32_t HAL_GetJoystickAxes(int32_t joystickNum, HAL_JoystickAxes *axes);
+int32_t HAL_GetJoystickPOVs(int32_t joystickNum, HAL_JoystickPOVs *povs);
 int32_t HAL_GetJoystickButtons(int32_t joystickNum,
-                               HAL_JoystickButtons* buttons);
+                               HAL_JoystickButtons *buttons);
 int32_t HAL_GetJoystickDescriptor(int32_t joystickNum,
-                                  HAL_JoystickDescriptor* desc);
+                                  HAL_JoystickDescriptor *desc);
 HAL_Bool HAL_GetJoystickIsXbox(int32_t joystickNum);
 int32_t HAL_GetJoystickType(int32_t joystickNum);
-char* HAL_GetJoystickName(int32_t joystickNum);
-void HAL_FreeJoystickName(char* name);
+char *HAL_GetJoystickName(int32_t joystickNum);
+void HAL_FreeJoystickName(char *name);
 int32_t HAL_GetJoystickAxisType(int32_t joystickNum, int32_t axis);
 int32_t HAL_SetJoystickOutputs(int32_t joystickNum, int64_t outputs,
                                int32_t leftRumble, int32_t rightRumble);
-double HAL_GetMatchTime(int32_t* status);
+double HAL_GetMatchTime(int32_t *status);
 
-int HAL_GetMatchInfo(HAL_MatchInfo* info);
-void HAL_FreeMatchInfo(HAL_MatchInfo* info);
+int HAL_GetMatchInfo(HAL_MatchInfo *info);
+void HAL_FreeMatchInfo(HAL_MatchInfo *info);
 
 #ifndef HAL_USE_LABVIEW
 
@@ -136,8 +136,8 @@ void HAL_ObserveUserProgramAutonomous(void);
 void HAL_ObserveUserProgramTeleop(void);
 void HAL_ObserveUserProgramTest(void);
 
-#endif  // HAL_USE_LABVIEW
+#endif // HAL_USE_LABVIEW
 
 #ifdef __cplusplus
-}  // extern "C"
+} // extern "C"
 #endif

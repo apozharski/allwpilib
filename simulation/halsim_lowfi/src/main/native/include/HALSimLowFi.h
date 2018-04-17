@@ -16,24 +16,24 @@
 #include <networktables/NetworkTableInstance.h>
 
 class HALSimLowFi {
- public:
+public:
   std::shared_ptr<nt::NetworkTable> table;
   void Initialize();
 };
 
 typedef void (*HALCbRegisterIndexedFunc)(int32_t index,
                                          HAL_NotifyCallback callback,
-                                         void* param, HAL_Bool initialNotify);
+                                         void *param, HAL_Bool initialNotify);
 typedef void (*HALCbRegisterSingleFunc)(HAL_NotifyCallback callback,
-                                        void* param, HAL_Bool initialNotify);
+                                        void *param, HAL_Bool initialNotify);
 
-void NTProviderBaseCallback(const char* name, void* param,
-                            const struct HAL_Value* value);
+void NTProviderBaseCallback(const char *name, void *param,
+                            const struct HAL_Value *value);
 
 class HALSimNTProvider {
- public:
+public:
   struct NTProviderCallbackInfo {
-    HALSimNTProvider* provider;
+    HALSimNTProvider *provider;
     std::shared_ptr<nt::NetworkTable> table;
     int channel;
   };

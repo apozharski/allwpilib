@@ -18,30 +18,30 @@
 
 namespace hal {
 class I2CData {
- public:
+public:
   I2CData();
   ~I2CData();
 
-  int32_t RegisterInitializedCallback(HAL_NotifyCallback callback, void* param,
+  int32_t RegisterInitializedCallback(HAL_NotifyCallback callback, void *param,
                                       HAL_Bool initialNotify);
   void CancelInitializedCallback(int32_t uid);
   void InvokeInitializedCallback(HAL_Value value);
   HAL_Bool GetInitialized();
   void SetInitialized(HAL_Bool initialized);
 
-  int32_t RegisterReadCallback(HAL_BufferCallback callback, void* param);
+  int32_t RegisterReadCallback(HAL_BufferCallback callback, void *param);
   void CancelReadCallback(int32_t uid);
 
-  int32_t RegisterWriteCallback(HAL_ConstBufferCallback callback, void* param);
+  int32_t RegisterWriteCallback(HAL_ConstBufferCallback callback, void *param);
   void CancelWriteCallback(int32_t uid);
 
-  void Write(int32_t deviceAddress, const uint8_t* dataToSend,
+  void Write(int32_t deviceAddress, const uint8_t *dataToSend,
              int32_t sendSize);
-  void Read(int32_t deviceAddress, uint8_t* buffer, int32_t count);
+  void Read(int32_t deviceAddress, uint8_t *buffer, int32_t count);
 
   void ResetData();
 
- private:
+private:
   wpi::mutex m_registerMutex;
   wpi::mutex m_dataMutex;
   std::atomic<HAL_Bool> m_initialized{false};
@@ -49,5 +49,5 @@ class I2CData {
   std::shared_ptr<BufferListenerVector> m_readCallbacks = nullptr;
   std::shared_ptr<ConstBufferListenerVector> m_writeCallbacks = nullptr;
 };
-extern I2CData* SimI2CData;
-}  // namespace hal
+extern I2CData *SimI2CData;
+} // namespace hal

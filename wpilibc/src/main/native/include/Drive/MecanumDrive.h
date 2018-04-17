@@ -63,31 +63,31 @@ class SpeedController;
  * deadband of 0 is used.
  */
 class MecanumDrive : public RobotDriveBase {
- public:
-  MecanumDrive(SpeedController& frontLeftMotor, SpeedController& rearLeftMotor,
-               SpeedController& frontRightMotor,
-               SpeedController& rearRightMotor);
+public:
+  MecanumDrive(SpeedController &frontLeftMotor, SpeedController &rearLeftMotor,
+               SpeedController &frontRightMotor,
+               SpeedController &rearRightMotor);
   ~MecanumDrive() override = default;
 
-  MecanumDrive(const MecanumDrive&) = delete;
-  MecanumDrive& operator=(const MecanumDrive&) = delete;
+  MecanumDrive(const MecanumDrive &) = delete;
+  MecanumDrive &operator=(const MecanumDrive &) = delete;
 
   void DriveCartesian(double x, double y, double rotation,
                       double gyroAngle = 0.0);
   void DrivePolar(double magnitude, double angle, double rotation);
 
   void StopMotor() override;
-  void GetDescription(llvm::raw_ostream& desc) const override;
+  void GetDescription(llvm::raw_ostream &desc) const override;
 
-  void InitSendable(SendableBuilder& builder) override;
+  void InitSendable(SendableBuilder &builder) override;
 
- private:
-  SpeedController& m_frontLeftMotor;
-  SpeedController& m_rearLeftMotor;
-  SpeedController& m_frontRightMotor;
-  SpeedController& m_rearRightMotor;
+private:
+  SpeedController &m_frontLeftMotor;
+  SpeedController &m_rearLeftMotor;
+  SpeedController &m_frontRightMotor;
+  SpeedController &m_rearRightMotor;
 
   bool reported = false;
 };
 
-}  // namespace frc
+} // namespace frc

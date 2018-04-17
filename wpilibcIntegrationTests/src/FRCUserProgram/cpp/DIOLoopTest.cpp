@@ -5,9 +5,9 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "DigitalInput.h"  // NOLINT(build/include_order)
+#include "DigitalInput.h" // NOLINT(build/include_order)
 
-#include "DigitalOutput.h"  // NOLINT(build/include_order)
+#include "DigitalOutput.h" // NOLINT(build/include_order)
 
 #include "Counter.h"
 #include "InterruptableSensorBase.h"
@@ -29,9 +29,9 @@ static const double kSynchronousInterruptTimeTolerance = 0.01;
  * together.
  */
 class DIOLoopTest : public testing::Test {
- protected:
-  DigitalInput* m_input;
-  DigitalOutput* m_output;
+protected:
+  DigitalInput *m_input;
+  DigitalOutput *m_output;
 
   void SetUp() override {
     m_input = new DigitalInput(TestBench::kLoop1InputChannel);
@@ -141,8 +141,8 @@ TEST_F(DIOLoopTest, FakeCounter) {
   EXPECT_EQ(100, counter.Get()) << "Counter did not count up to 100.";
 }
 
-static void InterruptHandler(uint32_t interruptAssertedMask, void* param) {
-  *reinterpret_cast<int32_t*>(param) = 12345;
+static void InterruptHandler(uint32_t interruptAssertedMask, void *param) {
+  *reinterpret_cast<int32_t *>(param) = 12345;
 }
 
 TEST_F(DIOLoopTest, AsynchronousInterruptWorks) {
@@ -162,8 +162,8 @@ TEST_F(DIOLoopTest, AsynchronousInterruptWorks) {
   EXPECT_EQ(12345, param) << "The interrupt did not run.";
 }
 
-static void* InterruptTriggerer(void* data) {
-  DigitalOutput* output = static_cast<DigitalOutput*>(data);
+static void *InterruptTriggerer(void *data) {
+  DigitalOutput *output = static_cast<DigitalOutput *>(data);
   output->Set(false);
   Wait(kSynchronousInterruptTime);
   output->Set(true);

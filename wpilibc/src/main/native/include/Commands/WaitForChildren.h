@@ -14,13 +14,13 @@
 namespace frc {
 
 class WaitForChildren : public Command {
- public:
+public:
   explicit WaitForChildren(double timeout);
-  WaitForChildren(const llvm::Twine& name, double timeout);
+  WaitForChildren(const llvm::Twine &name, double timeout);
   virtual ~WaitForChildren() = default;
 
- protected:
+protected:
   virtual bool IsFinished();
 };
 
-}  // namespace frc
+} // namespace frc

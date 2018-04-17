@@ -19,8 +19,8 @@
 using namespace hal;
 
 static LimitedHandleResource<HAL_DigitalPWMHandle, uint8_t,
-                             kNumDigitalPWMOutputs, HAL_HandleEnum::DigitalPWM>*
-    digitalPWMHandles;
+                             kNumDigitalPWMOutputs,
+                             HAL_HandleEnum::DigitalPWM> *digitalPWMHandles;
 
 namespace hal {
 namespace init {
@@ -31,8 +31,8 @@ void InitializeDIO() {
       dpH;
   digitalPWMHandles = &dpH;
 }
-}  // namespace init
-}  // namespace hal
+} // namespace init
+} // namespace hal
 
 extern "C" {
 
@@ -40,8 +40,9 @@ extern "C" {
  * Create a new instance of a digital port.
  */
 HAL_DigitalHandle HAL_InitializeDIOPort(HAL_PortHandle portHandle,
-                                        HAL_Bool input, int32_t* status) {
-  if (*status != 0) return HAL_kInvalidHandle;
+                                        HAL_Bool input, int32_t *status) {
+  if (*status != 0)
+    return HAL_kInvalidHandle;
 
   int16_t channel = getPortHandleChannel(portHandle);
   if (channel == InvalidHandleIndex) {
@@ -53,10 +54,10 @@ HAL_DigitalHandle HAL_InitializeDIOPort(HAL_PortHandle portHandle,
       digitalChannelHandles->Allocate(channel, HAL_HandleEnum::DIO, status);
 
   if (*status != 0)
-    return HAL_kInvalidHandle;  // failed to allocate. Pass error back.
+    return HAL_kInvalidHandle; // failed to allocate. Pass error back.
 
   auto port = digitalChannelHandles->Get(handle, HAL_HandleEnum::DIO);
-  if (port == nullptr) {  // would only occur on thread issue.
+  if (port == nullptr) { // would only occur on thread issue.
     *status = HAL_HANDLE_ERROR;
     return HAL_kInvalidHandle;
   }
@@ -78,7 +79,8 @@ void HAL_FreeDIOPort(HAL_DigitalHandle dioPortHandle) {
   auto port = digitalChannelHandles->Get(dioPortHandle, HAL_HandleEnum::DIO);
   // no status, so no need to check for a proper free.
   digitalChannelHandles->Free(dioPortHandle, HAL_HandleEnum::DIO);
-  if (port == nullptr) return;
+  if (port == nullptr)
+    return;
   SimDIOData[port->channel].SetInitialized(true);
 }
 
@@ -88,7 +90,7 @@ void HAL_FreeDIOPort(HAL_DigitalHandle dioPortHandle) {
  *
  * @return PWM Generator handle
  */
-HAL_DigitalPWMHandle HAL_AllocateDigitalPWM(int32_t* status) {
+HAL_DigitalPWMHandle HAL_AllocateDigitalPWM(int32_t *status) {
   auto handle = digitalPWMHandles->Allocate();
   if (handle == HAL_kInvalidHandle) {
     *status = NO_AVAILABLE_RESOURCES;
@@ -96,7 +98,7 @@ HAL_DigitalPWMHandle HAL_AllocateDigitalPWM(int32_t* status) {
   }
 
   auto id = digitalPWMHandles->Get(handle);
-  if (id == nullptr) {  // would only occur on thread issue.
+  if (id == nullptr) { // would only occur on thread issue.
     *status = HAL_HANDLE_ERROR;
     return HAL_kInvalidHandle;
   }
@@ -113,10 +115,11 @@ HAL_DigitalPWMHandle HAL_AllocateDigitalPWM(int32_t* status) {
  * @param pwmGenerator The pwmGen to free that was allocated with
  * allocateDigitalPWM()
  */
-void HAL_FreeDigitalPWM(HAL_DigitalPWMHandle pwmGenerator, int32_t* status) {
+void HAL_FreeDigitalPWM(HAL_DigitalPWMHandle pwmGenerator, int32_t *status) {
   auto port = digitalPWMHandles->Get(pwmGenerator);
   digitalPWMHandles->Free(pwmGenerator);
-  if (port == nullptr) return;
+  if (port == nullptr)
+    return;
   int32_t id = *port;
   SimDigitalPWMData[id].SetInitialized(false);
 }
@@ -129,7 +132,7 @@ void HAL_FreeDigitalPWM(HAL_DigitalPWMHandle pwmGenerator, int32_t* status) {
  *
  * @param rate The frequency to output all digital output PWM signals.
  */
-void HAL_SetDigitalPWMRate(double rate, int32_t* status) {
+void HAL_SetDigitalPWMRate(double rate, int32_t *status) {
   // Currently rounding in the log rate domain... heavy weight toward picking a
   // higher freq.
   // TODO: Round in the linear rate domain.
@@ -148,15 +151,17 @@ void HAL_SetDigitalPWMRate(double rate, int32_t* status) {
  * @param dutyCycle The percent duty cycle to output [0..1].
  */
 void HAL_SetDigitalPWMDutyCycle(HAL_DigitalPWMHandle pwmGenerator,
-                                double dutyCycle, int32_t* status) {
+                                double dutyCycle, int32_t *status) {
   auto port = digitalPWMHandles->Get(pwmGenerator);
   if (port == nullptr) {
     *status = HAL_HANDLE_ERROR;
     return;
   }
   int32_t id = *port;
-  if (dutyCycle > 1.0) dutyCycle = 1.0;
-  if (dutyCycle < 0.0) dutyCycle = 0.0;
+  if (dutyCycle > 1.0)
+    dutyCycle = 1.0;
+  if (dutyCycle < 0.0)
+    dutyCycle = 0.0;
   SimDigitalPWMData[id].SetDutyCycle(dutyCycle);
 }
 
@@ -167,7 +172,7 @@ void HAL_SetDigitalPWMDutyCycle(HAL_DigitalPWMHandle pwmGenerator,
  * @param channel The Digital Output channel to output on
  */
 void HAL_SetDigitalPWMOutputChannel(HAL_DigitalPWMHandle pwmGenerator,
-                                    int32_t channel, int32_t* status) {
+                                    int32_t channel, int32_t *status) {
   auto port = digitalPWMHandles->Get(pwmGenerator);
   if (port == nullptr) {
     *status = HAL_HANDLE_ERROR;
@@ -186,14 +191,15 @@ void HAL_SetDigitalPWMOutputChannel(HAL_DigitalPWMHandle pwmGenerator,
  * output)
  */
 void HAL_SetDIO(HAL_DigitalHandle dioPortHandle, HAL_Bool value,
-                int32_t* status) {
+                int32_t *status) {
   auto port = digitalChannelHandles->Get(dioPortHandle, HAL_HandleEnum::DIO);
   if (port == nullptr) {
     *status = HAL_HANDLE_ERROR;
     return;
   }
   if (value != 0 && value != 1) {
-    if (value != 0) value = 1;
+    if (value != 0)
+      value = 1;
   }
   SimDIOData[port->channel].SetValue(value);
 }
@@ -205,7 +211,7 @@ void HAL_SetDIO(HAL_DigitalHandle dioPortHandle, HAL_Bool value,
  * @param input true to set input, false for output
  */
 void HAL_SetDIODirection(HAL_DigitalHandle dioPortHandle, HAL_Bool input,
-                         int32_t* status) {
+                         int32_t *status) {
   auto port = digitalChannelHandles->Get(dioPortHandle, HAL_HandleEnum::DIO);
   if (port == nullptr) {
     *status = HAL_HANDLE_ERROR;
@@ -222,15 +228,17 @@ void HAL_SetDIODirection(HAL_DigitalHandle dioPortHandle, HAL_Bool input,
  * @param channel The digital I/O channel
  * @return The state of the specified channel
  */
-HAL_Bool HAL_GetDIO(HAL_DigitalHandle dioPortHandle, int32_t* status) {
+HAL_Bool HAL_GetDIO(HAL_DigitalHandle dioPortHandle, int32_t *status) {
   auto port = digitalChannelHandles->Get(dioPortHandle, HAL_HandleEnum::DIO);
   if (port == nullptr) {
     *status = HAL_HANDLE_ERROR;
     return false;
   }
   HAL_Bool value = SimDIOData[port->channel].GetValue();
-  if (value > 1) value = 1;
-  if (value < 0) value = 0;
+  if (value > 1)
+    value = 1;
+  if (value < 0)
+    value = 0;
   return value;
 }
 
@@ -241,15 +249,17 @@ HAL_Bool HAL_GetDIO(HAL_DigitalHandle dioPortHandle, int32_t* status) {
  * @param channel The digital I/O channel
  * @return The direction of the specified channel
  */
-HAL_Bool HAL_GetDIODirection(HAL_DigitalHandle dioPortHandle, int32_t* status) {
+HAL_Bool HAL_GetDIODirection(HAL_DigitalHandle dioPortHandle, int32_t *status) {
   auto port = digitalChannelHandles->Get(dioPortHandle, HAL_HandleEnum::DIO);
   if (port == nullptr) {
     *status = HAL_HANDLE_ERROR;
     return false;
   }
   HAL_Bool value = SimDIOData[port->channel].GetIsInput();
-  if (value > 1) value = 1;
-  if (value < 0) value = 0;
+  if (value > 1)
+    value = 1;
+  if (value < 0)
+    value = 0;
   return value;
 }
 
@@ -262,7 +272,7 @@ HAL_Bool HAL_GetDIODirection(HAL_DigitalHandle dioPortHandle, int32_t* status) {
  * @param pulseLength The active length of the pulse (in seconds)
  */
 void HAL_Pulse(HAL_DigitalHandle dioPortHandle, double pulseLength,
-               int32_t* status) {
+               int32_t *status) {
   auto port = digitalChannelHandles->Get(dioPortHandle, HAL_HandleEnum::DIO);
   if (port == nullptr) {
     *status = HAL_HANDLE_ERROR;
@@ -276,7 +286,7 @@ void HAL_Pulse(HAL_DigitalHandle dioPortHandle, double pulseLength,
  *
  * @return A pulse is in progress
  */
-HAL_Bool HAL_IsPulsing(HAL_DigitalHandle dioPortHandle, int32_t* status) {
+HAL_Bool HAL_IsPulsing(HAL_DigitalHandle dioPortHandle, int32_t *status) {
   auto port = digitalChannelHandles->Get(dioPortHandle, HAL_HandleEnum::DIO);
   if (port == nullptr) {
     *status = HAL_HANDLE_ERROR;
@@ -291,8 +301,8 @@ HAL_Bool HAL_IsPulsing(HAL_DigitalHandle dioPortHandle, int32_t* status) {
  *
  * @return A pulse on some line is in progress
  */
-HAL_Bool HAL_IsAnyPulsing(int32_t* status) {
-  return false;  // TODO(Thad) Figure this out
+HAL_Bool HAL_IsAnyPulsing(int32_t *status) {
+  return false; // TODO(Thad) Figure this out
 }
 
 /**
@@ -304,7 +314,7 @@ HAL_Bool HAL_IsAnyPulsing(int32_t* status) {
  *                    means "none" and 1 - 3 means filter # filterIndex - 1.
  */
 void HAL_SetFilterSelect(HAL_DigitalHandle dioPortHandle, int32_t filterIndex,
-                         int32_t* status) {
+                         int32_t *status) {
   auto port = digitalChannelHandles->Get(dioPortHandle, HAL_HandleEnum::DIO);
   if (port == nullptr) {
     *status = HAL_HANDLE_ERROR;
@@ -322,7 +332,7 @@ void HAL_SetFilterSelect(HAL_DigitalHandle dioPortHandle, int32_t filterIndex,
  * @return filterIndex The filter index.  Must be in the range 0 - 3,
  * where 0 means "none" and 1 - 3 means filter # filterIndex - 1.
  */
-int32_t HAL_GetFilterSelect(HAL_DigitalHandle dioPortHandle, int32_t* status) {
+int32_t HAL_GetFilterSelect(HAL_DigitalHandle dioPortHandle, int32_t *status) {
   auto port = digitalChannelHandles->Get(dioPortHandle, HAL_HandleEnum::DIO);
   if (port == nullptr) {
     *status = HAL_HANDLE_ERROR;
@@ -343,7 +353,7 @@ int32_t HAL_GetFilterSelect(HAL_DigitalHandle dioPortHandle, int32_t* status) {
  * @param value The number of cycles that the signal must not transition to be
  * counted as a transition.
  */
-void HAL_SetFilterPeriod(int32_t filterIndex, int64_t value, int32_t* status) {
+void HAL_SetFilterPeriod(int32_t filterIndex, int64_t value, int32_t *status) {
   // TODO(Thad) figure this out
 }
 
@@ -359,7 +369,7 @@ void HAL_SetFilterPeriod(int32_t filterIndex, int64_t value, int32_t* status) {
  * @param value The number of cycles that the signal must not transition to be
  * counted as a transition.
  */
-int64_t HAL_GetFilterPeriod(int32_t filterIndex, int32_t* status) {
-  return 0;  // TODO(Thad) figure this out
+int64_t HAL_GetFilterPeriod(int32_t filterIndex, int32_t *status) {
+  return 0; // TODO(Thad) figure this out
 }
-}  // extern "C"
+} // extern "C"

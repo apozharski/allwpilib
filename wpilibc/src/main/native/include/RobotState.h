@@ -12,7 +12,7 @@
 namespace frc {
 
 class RobotStateInterface {
- public:
+public:
   virtual ~RobotStateInterface() = default;
   virtual bool IsDisabled() const = 0;
   virtual bool IsEnabled() const = 0;
@@ -22,11 +22,11 @@ class RobotStateInterface {
 };
 
 class RobotState {
- private:
+private:
   static std::shared_ptr<RobotStateInterface> impl;
 
- public:
-  static void SetImplementation(RobotStateInterface& i);
+public:
+  static void SetImplementation(RobotStateInterface &i);
   static void SetImplementation(std::shared_ptr<RobotStateInterface> i);
   static bool IsDisabled();
   static bool IsEnabled();
@@ -35,4 +35,4 @@ class RobotState {
   static bool IsTest();
 };
 
-}  // namespace frc
+} // namespace frc

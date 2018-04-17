@@ -15,8 +15,8 @@ namespace frc {
  * Digilent DMC 60 Speed Controller.
  */
 class DMC60 : public PWMSpeedController {
- public:
+public:
   explicit DMC60(int channel);
 };
 
-}  // namespace frc
+} // namespace frc

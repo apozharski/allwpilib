@@ -15,8 +15,8 @@ namespace frc {
  * Vex Robotics Victor SP Speed Controller.
  */
 class VictorSP : public PWMSpeedController {
- public:
+public:
   explicit VictorSP(int channel);
 };
 
-}  // namespace frc
+} // namespace frc

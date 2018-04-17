@@ -10,7 +10,7 @@
 #include <stdint.h>
 
 class TestBench {
- public:
+public:
   /* Analog input channels */
   static const uint32_t kCameraGyroChannel = 0;
   static const uint32_t kFakeCompressorChannel = 1;

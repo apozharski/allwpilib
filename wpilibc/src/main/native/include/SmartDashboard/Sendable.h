@@ -16,7 +16,7 @@ namespace frc {
 class SendableBuilder;
 
 class Sendable {
- public:
+public:
   virtual ~Sendable() = default;
 
   /**
@@ -31,7 +31,7 @@ class Sendable {
    *
    * @param name name
    */
-  virtual void SetName(const llvm::Twine& name) = 0;
+  virtual void SetName(const llvm::Twine &name) = 0;
 
   /**
    * Sets both the subsystem name and device name of this Sendable object.
@@ -39,7 +39,7 @@ class Sendable {
    * @param subsystem subsystem name
    * @param name device name
    */
-  void SetName(const llvm::Twine& subsystem, const llvm::Twine& name) {
+  void SetName(const llvm::Twine &subsystem, const llvm::Twine &name) {
     SetSubsystem(subsystem);
     SetName(name);
   }
@@ -56,14 +56,14 @@ class Sendable {
    *
    * @param subsystem subsystem name
    */
-  virtual void SetSubsystem(const llvm::Twine& subsystem) = 0;
+  virtual void SetSubsystem(const llvm::Twine &subsystem) = 0;
 
   /**
    * Initializes this Sendable object.
    *
    * @param builder sendable builder
    */
-  virtual void InitSendable(SendableBuilder& builder) = 0;
+  virtual void InitSendable(SendableBuilder &builder) = 0;
 };
 
-}  // namespace frc
+} // namespace frc

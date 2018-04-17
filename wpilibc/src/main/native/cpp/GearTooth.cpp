@@ -45,7 +45,7 @@ GearTooth::GearTooth(int channel, bool directionSensitive) : Counter(channel) {
  * @param directionSensitive True to enable the pulse length decoding in
  *                           hardware to specify count direction.
  */
-GearTooth::GearTooth(DigitalSource* source, bool directionSensitive)
+GearTooth::GearTooth(DigitalSource *source, bool directionSensitive)
     : Counter(source) {
   EnableDirectionSensing(directionSensitive);
   SetName("GearTooth", source->GetChannel());
@@ -68,7 +68,7 @@ GearTooth::GearTooth(std::shared_ptr<DigitalSource> source,
   SetName("GearTooth", source->GetChannel());
 }
 
-void GearTooth::InitSendable(SendableBuilder& builder) {
+void GearTooth::InitSendable(SendableBuilder &builder) {
   Counter::InitSendable(builder);
   builder.SetSmartDashboardType("Gear Tooth");
 }

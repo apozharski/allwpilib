@@ -68,19 +68,19 @@ namespace frc {
  * sure PIDGet() gets called at the desired, constant frequency!
  */
 class LinearDigitalFilter : public Filter {
- public:
-  LinearDigitalFilter(PIDSource& source, llvm::ArrayRef<double> ffGains,
+public:
+  LinearDigitalFilter(PIDSource &source, llvm::ArrayRef<double> ffGains,
                       llvm::ArrayRef<double> fbGains);
   LinearDigitalFilter(std::shared_ptr<PIDSource> source,
                       llvm::ArrayRef<double> ffGains,
                       llvm::ArrayRef<double> fbGains);
 
   // Static methods to create commonly used filters
-  static LinearDigitalFilter SinglePoleIIR(PIDSource& source,
+  static LinearDigitalFilter SinglePoleIIR(PIDSource &source,
                                            double timeConstant, double period);
-  static LinearDigitalFilter HighPass(PIDSource& source, double timeConstant,
+  static LinearDigitalFilter HighPass(PIDSource &source, double timeConstant,
                                       double period);
-  static LinearDigitalFilter MovingAverage(PIDSource& source, int taps);
+  static LinearDigitalFilter MovingAverage(PIDSource &source, int taps);
   static LinearDigitalFilter SinglePoleIIR(std::shared_ptr<PIDSource> source,
                                            double timeConstant, double period);
   static LinearDigitalFilter HighPass(std::shared_ptr<PIDSource> source,
@@ -95,11 +95,11 @@ class LinearDigitalFilter : public Filter {
   // PIDSource interface
   double PIDGet() override;
 
- private:
+private:
   circular_buffer<double> m_inputs;
   circular_buffer<double> m_outputs;
   std::vector<double> m_inputGains;
   std::vector<double> m_outputGains;
 };
 
-}  // namespace frc
+} // namespace frc

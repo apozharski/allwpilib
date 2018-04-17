@@ -18,7 +18,7 @@ class WPI_DEPRECATED(
     "you're inexperienced, don't. Unless you know what you are doing, complex "
     "code will be much more difficult under this system. Use TimedRobot or "
     "Command-Based instead.") SampleRobot : public RobotBase {
- public:
+public:
   void StartCompetition() override;
 
   virtual void RobotInit();
@@ -28,12 +28,12 @@ class WPI_DEPRECATED(
   virtual void Test();
   virtual void RobotMain();
 
- protected:
+protected:
   SampleRobot();
   virtual ~SampleRobot() = default;
 
- private:
+private:
   bool m_robotMainOverridden = true;
 };
 
-}  // namespace frc
+} // namespace frc

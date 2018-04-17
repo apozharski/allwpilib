@@ -49,7 +49,7 @@ class AnalogTrigger;
 class AnalogTriggerOutput : public DigitalSource {
   friend class AnalogTrigger;
 
- public:
+public:
   ~AnalogTriggerOutput() override;
   bool Get() const;
 
@@ -59,18 +59,18 @@ class AnalogTriggerOutput : public DigitalSource {
   bool IsAnalogTrigger() const override;
   int GetChannel() const override;
 
-  void InitSendable(SendableBuilder& builder) override;
+  void InitSendable(SendableBuilder &builder) override;
 
- protected:
-  AnalogTriggerOutput(const AnalogTrigger& trigger,
+protected:
+  AnalogTriggerOutput(const AnalogTrigger &trigger,
                       AnalogTriggerType outputType);
 
- private:
+private:
   // Uses reference rather than smart pointer because a user can not construct
   // an AnalogTriggerOutput themselves and because the AnalogTriggerOutput
   // should always be in scope at the same time as an AnalogTrigger.
-  const AnalogTrigger& m_trigger;
+  const AnalogTrigger &m_trigger;
   AnalogTriggerType m_outputType;
 };
 
-}  // namespace frc
+} // namespace frc

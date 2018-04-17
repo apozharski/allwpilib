@@ -20,10 +20,10 @@ struct Relay {
   bool fwd;
 };
 
-}  // namespace
+} // namespace
 
 static IndexedHandleResource<HAL_RelayHandle, Relay, kNumRelayChannels,
-                             HAL_HandleEnum::Relay>* relayHandles;
+                             HAL_HandleEnum::Relay> *relayHandles;
 
 // Create a mutex to protect changes to the relay values
 static wpi::mutex digitalRelayMutex;
@@ -36,16 +36,17 @@ void InitializeRelay() {
       rH;
   relayHandles = &rH;
 }
-}  // namespace init
-}  // namespace hal
+} // namespace init
+} // namespace hal
 
 extern "C" {
 
 HAL_RelayHandle HAL_InitializeRelayPort(HAL_PortHandle portHandle, HAL_Bool fwd,
-                                        int32_t* status) {
+                                        int32_t *status) {
   initializeDigital(status);
 
-  if (*status != 0) return HAL_kInvalidHandle;
+  if (*status != 0)
+    return HAL_kInvalidHandle;
 
   int16_t channel = getPortHandleChannel(portHandle);
   if (channel == InvalidHandleIndex) {
@@ -53,15 +54,16 @@ HAL_RelayHandle HAL_InitializeRelayPort(HAL_PortHandle portHandle, HAL_Bool fwd,
     return HAL_kInvalidHandle;
   }
 
-  if (!fwd) channel += kNumRelayHeaders;  // add 4 to reverse channels
+  if (!fwd)
+    channel += kNumRelayHeaders; // add 4 to reverse channels
 
   auto handle = relayHandles->Allocate(channel, status);
 
   if (*status != 0)
-    return HAL_kInvalidHandle;  // failed to allocate. Pass error back.
+    return HAL_kInvalidHandle; // failed to allocate. Pass error back.
 
   auto port = relayHandles->Get(handle);
-  if (port == nullptr) {  // would only occur on thread issue.
+  if (port == nullptr) { // would only occur on thread issue.
     *status = HAL_HANDLE_ERROR;
     return HAL_kInvalidHandle;
   }
@@ -70,9 +72,9 @@ HAL_RelayHandle HAL_InitializeRelayPort(HAL_PortHandle portHandle, HAL_Bool fwd,
     // Subtract number of headers to put channel in range
     channel -= kNumRelayHeaders;
 
-    port->fwd = false;  // set to reverse
+    port->fwd = false; // set to reverse
   } else {
-    port->fwd = true;  // set to forward
+    port->fwd = true; // set to forward
   }
 
   port->channel = static_cast<uint8_t>(channel);
@@ -96,7 +98,7 @@ HAL_Bool HAL_CheckRelayChannel(int32_t channel) {
  * Set the state of a relay output.
  */
 void HAL_SetRelay(HAL_RelayHandle relayPortHandle, HAL_Bool on,
-                  int32_t* status) {
+                  int32_t *status) {
   auto port = relayHandles->Get(relayPortHandle);
   if (port == nullptr) {
     *status = HAL_HANDLE_ERROR;
@@ -110,7 +112,8 @@ void HAL_SetRelay(HAL_RelayHandle relayPortHandle, HAL_Bool on,
     relays = relaySystem->readValue_Reverse(status);
   }
 
-  if (*status != 0) return;  // bad status read
+  if (*status != 0)
+    return; // bad status read
 
   if (on) {
     relays |= 1 << port->channel;
@@ -128,7 +131,7 @@ void HAL_SetRelay(HAL_RelayHandle relayPortHandle, HAL_Bool on,
 /**
  * Get the current state of the relay channel
  */
-HAL_Bool HAL_GetRelay(HAL_RelayHandle relayPortHandle, int32_t* status) {
+HAL_Bool HAL_GetRelay(HAL_RelayHandle relayPortHandle, int32_t *status) {
   auto port = relayHandles->Get(relayPortHandle);
   if (port == nullptr) {
     *status = HAL_HANDLE_ERROR;
@@ -145,4 +148,4 @@ HAL_Bool HAL_GetRelay(HAL_RelayHandle relayPortHandle, int32_t* status) {
   return (relays & (1 << port->channel)) != 0;
 }
 
-}  // extern "C"
+} // extern "C"

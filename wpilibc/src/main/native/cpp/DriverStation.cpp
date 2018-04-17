@@ -34,7 +34,7 @@ struct MatchInfoData {
 };
 
 class MatchDataSender {
- public:
+public:
   std::shared_ptr<nt::NetworkTable> table;
   nt::NetworkTableEntry typeMetadata;
   nt::NetworkTableEntry gameSpecificMessage;
@@ -68,7 +68,7 @@ class MatchDataSender {
     controlWord.ForceSetDouble(0);
   }
 };
-}  // namespace frc
+} // namespace frc
 
 using namespace frc;
 
@@ -86,7 +86,7 @@ DriverStation::~DriverStation() {
  *
  * @return Pointer to the DS instance
  */
-DriverStation& DriverStation::GetInstance() {
+DriverStation &DriverStation::GetInstance() {
   static DriverStation instance;
   return instance;
 }
@@ -96,7 +96,7 @@ DriverStation& DriverStation::GetInstance() {
  *
  * The error is also printed to the program console.
  */
-void DriverStation::ReportError(const llvm::Twine& error) {
+void DriverStation::ReportError(const llvm::Twine &error) {
   llvm::SmallString<128> temp;
   HAL_SendError(1, 1, 0, error.toNullTerminatedStringRef(temp).data(), "", "",
                 1);
@@ -107,7 +107,7 @@ void DriverStation::ReportError(const llvm::Twine& error) {
  *
  * The warning is also printed to the program console.
  */
-void DriverStation::ReportWarning(const llvm::Twine& error) {
+void DriverStation::ReportWarning(const llvm::Twine &error) {
   llvm::SmallString<128> temp;
   HAL_SendError(0, 1, 0, error.toNullTerminatedStringRef(temp).data(), "", "",
                 1);
@@ -119,9 +119,9 @@ void DriverStation::ReportWarning(const llvm::Twine& error) {
  * The error is also printed to the program console.
  */
 void DriverStation::ReportError(bool isError, int32_t code,
-                                const llvm::Twine& error,
-                                const llvm::Twine& location,
-                                const llvm::Twine& stack) {
+                                const llvm::Twine &error,
+                                const llvm::Twine &location,
+                                const llvm::Twine &stack) {
   llvm::SmallString<128> errorTemp;
   llvm::SmallString<128> locationTemp;
   llvm::SmallString<128> stackTemp;
@@ -564,16 +564,16 @@ DriverStation::Alliance DriverStation::GetAlliance() const {
   int32_t status = 0;
   auto allianceStationID = HAL_GetAllianceStation(&status);
   switch (allianceStationID) {
-    case HAL_AllianceStationID_kRed1:
-    case HAL_AllianceStationID_kRed2:
-    case HAL_AllianceStationID_kRed3:
-      return kRed;
-    case HAL_AllianceStationID_kBlue1:
-    case HAL_AllianceStationID_kBlue2:
-    case HAL_AllianceStationID_kBlue3:
-      return kBlue;
-    default:
-      return kInvalid;
+  case HAL_AllianceStationID_kRed1:
+  case HAL_AllianceStationID_kRed2:
+  case HAL_AllianceStationID_kRed3:
+    return kRed;
+  case HAL_AllianceStationID_kBlue1:
+  case HAL_AllianceStationID_kBlue2:
+  case HAL_AllianceStationID_kBlue3:
+    return kBlue;
+  default:
+    return kInvalid;
   }
 }
 
@@ -588,17 +588,17 @@ int DriverStation::GetLocation() const {
   int32_t status = 0;
   auto allianceStationID = HAL_GetAllianceStation(&status);
   switch (allianceStationID) {
-    case HAL_AllianceStationID_kRed1:
-    case HAL_AllianceStationID_kBlue1:
-      return 1;
-    case HAL_AllianceStationID_kRed2:
-    case HAL_AllianceStationID_kBlue2:
-      return 2;
-    case HAL_AllianceStationID_kRed3:
-    case HAL_AllianceStationID_kBlue3:
-      return 3;
-    default:
-      return 0;
+  case HAL_AllianceStationID_kRed1:
+  case HAL_AllianceStationID_kBlue1:
+    return 1;
+  case HAL_AllianceStationID_kRed2:
+  case HAL_AllianceStationID_kBlue2:
+    return 2;
+  case HAL_AllianceStationID_kRed3:
+  case HAL_AllianceStationID_kBlue3:
+    return 3;
+  default:
+    return 0;
   }
 }
 
@@ -686,30 +686,30 @@ void DriverStation::SendMatchData() {
   bool isRedAlliance = false;
   int stationNumber = 1;
   switch (alliance) {
-    case HAL_AllianceStationID::HAL_AllianceStationID_kBlue1:
-      isRedAlliance = false;
-      stationNumber = 1;
-      break;
-    case HAL_AllianceStationID::HAL_AllianceStationID_kBlue2:
-      isRedAlliance = false;
-      stationNumber = 2;
-      break;
-    case HAL_AllianceStationID::HAL_AllianceStationID_kBlue3:
-      isRedAlliance = false;
-      stationNumber = 3;
-      break;
-    case HAL_AllianceStationID::HAL_AllianceStationID_kRed1:
-      isRedAlliance = true;
-      stationNumber = 1;
-      break;
-    case HAL_AllianceStationID::HAL_AllianceStationID_kRed2:
-      isRedAlliance = true;
-      stationNumber = 2;
-      break;
-    default:
-      isRedAlliance = true;
-      stationNumber = 3;
-      break;
+  case HAL_AllianceStationID::HAL_AllianceStationID_kBlue1:
+    isRedAlliance = false;
+    stationNumber = 1;
+    break;
+  case HAL_AllianceStationID::HAL_AllianceStationID_kBlue2:
+    isRedAlliance = false;
+    stationNumber = 2;
+    break;
+  case HAL_AllianceStationID::HAL_AllianceStationID_kBlue3:
+    isRedAlliance = false;
+    stationNumber = 3;
+    break;
+  case HAL_AllianceStationID::HAL_AllianceStationID_kRed1:
+    isRedAlliance = true;
+    stationNumber = 1;
+    break;
+  case HAL_AllianceStationID::HAL_AllianceStationID_kRed2:
+    isRedAlliance = true;
+    stationNumber = 2;
+    break;
+  default:
+    isRedAlliance = true;
+    stationNumber = 3;
+    break;
   }
 
   MatchInfoData tmpDataStore;
@@ -853,7 +853,7 @@ DriverStation::DriverStation() {
  * Reports errors related to unplugged joysticks
  * Throttles the errors so that they don't overwhelm the DS
  */
-void DriverStation::ReportJoystickUnpluggedError(const llvm::Twine& message) {
+void DriverStation::ReportJoystickUnpluggedError(const llvm::Twine &message) {
   double currentTime = Timer::GetFPGATimestamp();
   if (currentTime > m_nextMessageTime) {
     ReportError(message);
@@ -866,7 +866,7 @@ void DriverStation::ReportJoystickUnpluggedError(const llvm::Twine& message) {
  *
  * Throttles the errors so that they don't overwhelm the DS.
  */
-void DriverStation::ReportJoystickUnpluggedWarning(const llvm::Twine& message) {
+void DriverStation::ReportJoystickUnpluggedWarning(const llvm::Twine &message) {
   double currentTime = Timer::GetFPGATimestamp();
   if (currentTime > m_nextMessageTime) {
     ReportWarning(message);
@@ -881,16 +881,21 @@ void DriverStation::Run() {
     HAL_WaitForDSData();
     GetData();
 
-    if (IsDisabled()) safetyCounter = 0;
+    if (IsDisabled())
+      safetyCounter = 0;
 
     if (++safetyCounter >= 4) {
       MotorSafetyHelper::CheckMotors();
       safetyCounter = 0;
     }
-    if (m_userInDisabled) HAL_ObserveUserProgramDisabled();
-    if (m_userInAutonomous) HAL_ObserveUserProgramAutonomous();
-    if (m_userInTeleop) HAL_ObserveUserProgramTeleop();
-    if (m_userInTest) HAL_ObserveUserProgramTest();
+    if (m_userInDisabled)
+      HAL_ObserveUserProgramDisabled();
+    if (m_userInAutonomous)
+      HAL_ObserveUserProgramAutonomous();
+    if (m_userInTeleop)
+      HAL_ObserveUserProgramTeleop();
+    if (m_userInTest)
+      HAL_ObserveUserProgramTest();
   }
 }
 
@@ -904,7 +909,7 @@ void DriverStation::Run() {
  * @param controlWord Structure to put the return control word data into.
  */
 void DriverStation::UpdateControlWord(bool force,
-                                      HAL_ControlWord& controlWord) const {
+                                      HAL_ControlWord &controlWord) const {
   auto now = std::chrono::steady_clock::now();
   std::lock_guard<wpi::mutex> lock(m_controlWordMutex);
   // Update every 50 ms or on force.

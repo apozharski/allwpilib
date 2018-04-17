@@ -18,7 +18,7 @@
 enum HALSimDSNT_Mode { teleop, auton, test };
 
 class HALSimDSNT {
- public:
+public:
   std::shared_ptr<nt::NetworkTable> rootTable, modeTable, allianceTable;
   enum HALSimDSNT_Mode currentMode;
   bool isEnabled, lastIsEnabled, isEstop;

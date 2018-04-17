@@ -17,11 +17,11 @@
 #include "../visa/visa.h"
 #include "HAL/Errors.h"
 
-constexpr const char* OnboardResourceVISA = "ASRL1::INSTR";
-constexpr const char* MxpResourceVISA = "ASRL2::INSTR";
+constexpr const char *OnboardResourceVISA = "ASRL1::INSTR";
+constexpr const char *MxpResourceVISA = "ASRL2::INSTR";
 
-constexpr const char* OnboardResourceOS = "/dev/ttyS0";
-constexpr const char* MxpResourceOS = "/dev/ttyS1";
+constexpr const char *OnboardResourceOS = "/dev/ttyS0";
+constexpr const char *MxpResourceOS = "/dev/ttyS1";
 
 namespace hal {
 
@@ -30,11 +30,11 @@ std::string SerialHelper::m_usbNames[2]{"", ""};
 wpi::mutex SerialHelper::m_nameMutex;
 
 SerialHelper::SerialHelper() {
-  viOpenDefaultRM(reinterpret_cast<ViSession*>(&m_resourceHandle));
+  viOpenDefaultRM(reinterpret_cast<ViSession *>(&m_resourceHandle));
 }
 
 std::string SerialHelper::GetVISASerialPortName(HAL_SerialPort port,
-                                                int32_t* status) {
+                                                int32_t *status) {
   if (port == HAL_SerialPort::HAL_SerialPort_Onboard) {
     return OnboardResourceVISA;
   } else if (port == HAL_SerialPort::HAL_SerialPort_MXP) {
@@ -61,7 +61,7 @@ std::string SerialHelper::GetVISASerialPortName(HAL_SerialPort port,
 }
 
 std::string SerialHelper::GetOSSerialPortName(HAL_SerialPort port,
-                                              int32_t* status) {
+                                              int32_t *status) {
   if (port == HAL_SerialPort::HAL_SerialPort_Onboard) {
     return OnboardResourceOS;
   } else if (port == HAL_SerialPort::HAL_SerialPort_MXP) {
@@ -87,7 +87,7 @@ std::string SerialHelper::GetOSSerialPortName(HAL_SerialPort port,
   }
 }
 
-std::vector<std::string> SerialHelper::GetVISASerialPortList(int32_t* status) {
+std::vector<std::string> SerialHelper::GetVISASerialPortList(int32_t *status) {
   std::vector<std::string> retVec;
 
   // Always add 2 onboard ports
@@ -103,14 +103,14 @@ std::vector<std::string> SerialHelper::GetVISASerialPortList(int32_t* status) {
     return retVec;
   }
 
-  for (auto& i : m_visaResource) {
+  for (auto &i : m_visaResource) {
     retVec.emplace_back(i.str());
   }
 
   return retVec;
 }
 
-std::vector<std::string> SerialHelper::GetOSSerialPortList(int32_t* status) {
+std::vector<std::string> SerialHelper::GetOSSerialPortList(int32_t *status) {
   std::vector<std::string> retVec;
 
   // Always add 2 onboard ports
@@ -126,7 +126,7 @@ std::vector<std::string> SerialHelper::GetOSSerialPortList(int32_t* status) {
     return retVec;
   }
 
-  for (auto& i : m_osResource) {
+  for (auto &i : m_osResource) {
     retVec.emplace_back(i.str());
   }
 
@@ -137,8 +137,8 @@ void SerialHelper::SortHubPathVector() {
   m_sortedHubPath.clear();
   m_sortedHubPath = m_unsortedHubPath;
   std::sort(m_sortedHubPath.begin(), m_sortedHubPath.end(),
-            [](const llvm::SmallVectorImpl<char>& lhs,
-               const llvm::SmallVectorImpl<char>& rhs) -> int {
+            [](const llvm::SmallVectorImpl<char> &lhs,
+               const llvm::SmallVectorImpl<char> &rhs) -> int {
               llvm::StringRef lhsRef(lhs.begin(), lhs.size());
               llvm::StringRef rhsRef(rhs.begin(), rhs.size());
               return lhsRef.compare(rhsRef);
@@ -146,9 +146,9 @@ void SerialHelper::SortHubPathVector() {
 }
 
 void SerialHelper::CoiteratedSort(
-    llvm::SmallVectorImpl<llvm::SmallString<16>>& vec) {
+    llvm::SmallVectorImpl<llvm::SmallString<16>> &vec) {
   llvm::SmallVector<llvm::SmallString<16>, 4> sortedVec;
-  for (auto& str : m_sortedHubPath) {
+  for (auto &str : m_sortedHubPath) {
     for (size_t i = 0; i < m_unsortedHubPath.size(); i++) {
       if (llvm::StringRef{m_unsortedHubPath[i].begin(),
                           m_unsortedHubPath[i].size()}
@@ -161,14 +161,14 @@ void SerialHelper::CoiteratedSort(
   vec = sortedVec;
 }
 
-void SerialHelper::QueryHubPaths(int32_t* status) {
+void SerialHelper::QueryHubPaths(int32_t *status) {
   // VISA resource matching string
-  const char* str = "?*";
+  const char *str = "?*";
   // Items needed for VISA
   ViUInt32 retCnt = 0;
   ViFindList viList = 0;
   ViChar desc[VI_FIND_BUFLEN];
-  *status = viFindRsrc(m_resourceHandle, const_cast<char*>(str), &viList,
+  *status = viFindRsrc(m_resourceHandle, const_cast<char *>(str), &viList,
                        &retCnt, desc);
 
   if (*status < 0) {
@@ -194,36 +194,45 @@ void SerialHelper::QueryHubPaths(int32_t* status) {
     // Open the resource, grab its interface name, and close it.
     ViSession vSession;
     *status = viOpen(m_resourceHandle, desc, VI_NULL, VI_NULL, &vSession);
-    if (*status < 0) goto done;
+    if (*status < 0)
+      goto done;
     *status = 0;
 
     *status = viGetAttribute(vSession, VI_ATTR_INTF_INST_NAME, &osName);
     // Ignore an error here, as we want to close the session on an error
     // Use a seperate close variable so we can check
     ViStatus closeStatus = viClose(vSession);
-    if (*status < 0) goto done;
-    if (closeStatus < 0) goto done;
+    if (*status < 0)
+      goto done;
+    if (closeStatus < 0)
+      goto done;
     *status = 0;
 
     // split until (/dev/
     llvm::StringRef devNameRef = llvm::StringRef{osName}.split("(/dev/").second;
     // String not found, continue
-    if (devNameRef.equals("")) continue;
+    if (devNameRef.equals(""))
+      continue;
 
     // Split at )
     llvm::StringRef matchString = devNameRef.split(')').first;
-    if (matchString.equals(devNameRef)) continue;
+    if (matchString.equals(devNameRef))
+      continue;
 
     // Search directories to get a list of system accessors
     std::error_code ec;
     for (auto p = llvm::sys::fs::recursive_directory_iterator(
              "/sys/devices/soc0", ec);
          p != llvm::sys::fs::recursive_directory_iterator(); p.increment(ec)) {
-      if (ec) break;
+      if (ec)
+        break;
       llvm::StringRef path{p->path()};
-      if (path.find("amba") == llvm::StringRef::npos) continue;
-      if (path.find("usb") == llvm::StringRef::npos) continue;
-      if (path.find(matchString) == llvm::StringRef::npos) continue;
+      if (path.find("amba") == llvm::StringRef::npos)
+        continue;
+      if (path.find("usb") == llvm::StringRef::npos)
+        continue;
+      if (path.find(matchString) == llvm::StringRef::npos)
+        continue;
 
       llvm::SmallVector<llvm::StringRef, 16> pathSplitVec;
       // Split path into individual directories
@@ -247,11 +256,13 @@ void SerialHelper::QueryHubPaths(int32_t* status) {
 
       // Get the index for our device
       int hubIndex = findtty;
-      if (findtty == -1) hubIndex = findregex;
+      if (findtty == -1)
+        hubIndex = findregex;
 
       int devStart = findusb + 1;
 
-      if (hubIndex < devStart) continue;
+      if (hubIndex < devStart)
+        continue;
 
       // Add our devices to our list
       m_unsortedHubPath.emplace_back(
@@ -271,7 +282,7 @@ done:
   viClose(viList);
 }
 
-int32_t SerialHelper::GetIndexForPort(HAL_SerialPort port, int32_t* status) {
+int32_t SerialHelper::GetIndexForPort(HAL_SerialPort port, int32_t *status) {
   // Hold lock whenever we're using the names array
   std::lock_guard<wpi::mutex> lock(m_nameMutex);
 
@@ -328,4 +339,4 @@ int32_t SerialHelper::GetIndexForPort(HAL_SerialPort port, int32_t* status) {
   return retIndex;
 }
 
-}  // namespace hal
+} // namespace hal

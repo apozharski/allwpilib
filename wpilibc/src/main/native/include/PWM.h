@@ -34,7 +34,7 @@ namespace frc {
  *   - 0 = disabled (i.e. PWM output is held low)
  */
 class PWM : public ErrorBase, public SendableBase {
- public:
+public:
   /**
    * Represents the amount to multiply the minimum servo-pulse pwm period by.
    */
@@ -69,16 +69,16 @@ class PWM : public ErrorBase, public SendableBase {
                  double deadbandMin, double min);
   void SetRawBounds(int max, int deadbandMax, int center, int deadbandMin,
                     int min);
-  void GetRawBounds(int32_t* max, int32_t* deadbandMax, int32_t* center,
-                    int32_t* deadbandMin, int32_t* min);
+  void GetRawBounds(int32_t *max, int32_t *deadbandMax, int32_t *center,
+                    int32_t *deadbandMin, int32_t *min);
   int GetChannel() const { return m_channel; }
 
- protected:
-  void InitSendable(SendableBuilder& builder) override;
+protected:
+  void InitSendable(SendableBuilder &builder) override;
 
- private:
+private:
   int m_channel;
   HAL_DigitalHandle m_handle;
 };
 
-}  // namespace frc
+} // namespace frc

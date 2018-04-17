@@ -15,13 +15,13 @@
 using namespace frc;
 
 class PIDToleranceTest : public testing::Test {
- protected:
+protected:
   const double setpoint = 50.0;
   const double range = 200;
   const double tolerance = 10.0;
 
   class FakeInput : public PIDSource {
-   public:
+  public:
     double val = 0;
 
     void SetPIDSourceType(PIDSourceType pidSource) {}
@@ -37,7 +37,7 @@ class PIDToleranceTest : public testing::Test {
 
   FakeInput inp;
   FakeOutput out;
-  PIDController* pid;
+  PIDController *pid;
 
   void SetUp() override {
     pid = new PIDController(0.5, 0.0, 0.0, &inp, &out);
@@ -87,8 +87,8 @@ TEST_F(PIDToleranceTest, Percent) {
       << pid->GetError();
 
   inp.val =
-      setpoint + (tolerance) / 200 *
-                     range;  // half of percent tolerance away from setpoint
+      setpoint +
+      (tolerance) / 200 * range; // half of percent tolerance away from setpoint
   Wait(1.0);
 
   EXPECT_TRUE(pid->OnTarget())
@@ -97,7 +97,7 @@ TEST_F(PIDToleranceTest, Percent) {
 
   inp.val =
       setpoint +
-      (tolerance) / 50 * range;  // double percent tolerance away from setPoint
+      (tolerance) / 50 * range; // double percent tolerance away from setPoint
 
   Wait(1.0);
 

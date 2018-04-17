@@ -24,7 +24,7 @@ namespace frc {
  * buttons depends on the code in the Driver Station.
  */
 class Joystick : public GenericHID {
- public:
+public:
   static constexpr int kDefaultXAxis = 0;
   static constexpr int kDefaultYAxis = 1;
   static constexpr int kDefaultZAxis = 2;
@@ -37,8 +37,8 @@ class Joystick : public GenericHID {
   explicit Joystick(int port);
   virtual ~Joystick() = default;
 
-  Joystick(const Joystick&) = delete;
-  Joystick& operator=(const Joystick&) = delete;
+  Joystick(const Joystick &) = delete;
+  Joystick &operator=(const Joystick &) = delete;
 
   void SetXChannel(int channel);
   void SetYChannel(int channel);
@@ -76,7 +76,7 @@ class Joystick : public GenericHID {
   bool GetTopReleased();
 
   WPI_DEPRECATED("Use Joystick instances instead.")
-  static Joystick* GetStickForPort(int port);
+  static Joystick *GetStickForPort(int port);
 
   WPI_DEPRECATED("Use the more specific button getter functions.")
   bool GetButton(ButtonType button) const;
@@ -85,11 +85,11 @@ class Joystick : public GenericHID {
   double GetDirectionRadians() const;
   double GetDirectionDegrees() const;
 
- private:
+private:
   enum Axis { kX, kY, kZ, kTwist, kThrottle, kNumAxes };
   enum Button { kTrigger = 1, kTop = 2 };
 
   std::array<int, Axis::kNumAxes> m_axes;
 };
 
-}  // namespace frc
+} // namespace frc

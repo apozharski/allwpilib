@@ -17,7 +17,7 @@ namespace frc {
  * DoubleSolenoid classes.
  */
 class SolenoidBase : public ErrorBase, public SendableBase {
- public:
+public:
   static int GetAll(int module);
   int GetAll() const;
 
@@ -30,13 +30,13 @@ class SolenoidBase : public ErrorBase, public SendableBase {
   static void ClearAllPCMStickyFaults(int module);
   void ClearAllPCMStickyFaults();
 
- protected:
+protected:
   explicit SolenoidBase(int pcmID);
 
   static constexpr int m_maxModules = 63;
   static constexpr int m_maxPorts = 8;
 
-  int m_moduleNumber;  // PCM module number
+  int m_moduleNumber; // PCM module number
 };
 
-}  // namespace frc
+} // namespace frc

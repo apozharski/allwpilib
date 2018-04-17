@@ -24,7 +24,7 @@ class SpeedController;
  * Common base class for drive platforms.
  */
 class RobotDriveBase : public MotorSafety, public SendableBase {
- public:
+public:
   /**
    * The location of a motor on the robot for the purpose of driving.
    */
@@ -41,8 +41,8 @@ class RobotDriveBase : public MotorSafety, public SendableBase {
   RobotDriveBase();
   ~RobotDriveBase() override = default;
 
-  RobotDriveBase(const RobotDriveBase&) = delete;
-  RobotDriveBase& operator=(const RobotDriveBase&) = delete;
+  RobotDriveBase(const RobotDriveBase &) = delete;
+  RobotDriveBase &operator=(const RobotDriveBase &) = delete;
 
   void SetDeadband(double deadband);
   void SetMaxOutput(double maxOutput);
@@ -53,9 +53,9 @@ class RobotDriveBase : public MotorSafety, public SendableBase {
   void StopMotor() override = 0;
   bool IsSafetyEnabled() const override;
   void SetSafetyEnabled(bool enabled) override;
-  void GetDescription(llvm::raw_ostream& desc) const override = 0;
+  void GetDescription(llvm::raw_ostream &desc) const override = 0;
 
- protected:
+protected:
   double Limit(double number);
   double ApplyDeadband(double number, double deadband);
   void Normalize(llvm::MutableArrayRef<double> wheelSpeeds);
@@ -65,4 +65,4 @@ class RobotDriveBase : public MotorSafety, public SendableBase {
   MotorSafetyHelper m_safetyHelper{this};
 };
 
-}  // namespace frc
+} // namespace frc

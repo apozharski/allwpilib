@@ -23,7 +23,7 @@ class DigitalGlitchFilter;
  * implemented anywhere else.
  */
 class DigitalInput : public DigitalSource {
- public:
+public:
   explicit DigitalInput(int channel);
   ~DigitalInput() override;
   bool Get() const;
@@ -34,13 +34,13 @@ class DigitalInput : public DigitalSource {
   AnalogTriggerType GetAnalogTriggerTypeForRouting() const override;
   bool IsAnalogTrigger() const override;
 
-  void InitSendable(SendableBuilder& builder) override;
+  void InitSendable(SendableBuilder &builder) override;
 
- private:
+private:
   int m_channel;
   HAL_DigitalHandle m_handle;
 
   friend class DigitalGlitchFilter;
 };
 
-}  // namespace frc
+} // namespace frc

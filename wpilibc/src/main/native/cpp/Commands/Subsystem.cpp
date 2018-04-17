@@ -20,7 +20,7 @@ using namespace frc;
  *
  * @param name the name of the subsystem
  */
-Subsystem::Subsystem(const llvm::Twine& name) {
+Subsystem::Subsystem(const llvm::Twine &name) {
   SetName(name, name);
   Scheduler::GetInstance()->RegisterSubsystem(this);
 }
@@ -46,7 +46,7 @@ void Subsystem::InitDefaultCommand() {}
  *
  * @param command the default command (or null if there should be none)
  */
-void Subsystem::SetDefaultCommand(Command* command) {
+void Subsystem::SetDefaultCommand(Command *command) {
   if (command == nullptr) {
     m_defaultCommand = nullptr;
   } else {
@@ -74,7 +74,7 @@ void Subsystem::SetDefaultCommand(Command* command) {
  *
  * @return the default command
  */
-Command* Subsystem::GetDefaultCommand() {
+Command *Subsystem::GetDefaultCommand() {
   if (!m_initializedDefaultCommand) {
     m_initializedDefaultCommand = true;
     InitDefaultCommand();
@@ -88,7 +88,7 @@ Command* Subsystem::GetDefaultCommand() {
  * @return the default command name
  */
 llvm::StringRef Subsystem::GetDefaultCommandName() {
-  Command* defaultCommand = GetDefaultCommand();
+  Command *defaultCommand = GetDefaultCommand();
   if (defaultCommand) {
     return defaultCommand->GetName();
   } else {
@@ -101,7 +101,7 @@ llvm::StringRef Subsystem::GetDefaultCommandName() {
  *
  * @param command the new current command
  */
-void Subsystem::SetCurrentCommand(Command* command) {
+void Subsystem::SetCurrentCommand(Command *command) {
   m_currentCommand = command;
   m_currentCommandChanged = true;
 }
@@ -111,7 +111,7 @@ void Subsystem::SetCurrentCommand(Command* command) {
  *
  * @return the command which currently claims this subsystem
  */
-Command* Subsystem::GetCurrentCommand() const { return m_currentCommand; }
+Command *Subsystem::GetCurrentCommand() const { return m_currentCommand; }
 
 /**
  * Returns the current command name, or empty string if no current command.
@@ -119,7 +119,7 @@ Command* Subsystem::GetCurrentCommand() const { return m_currentCommand; }
  * @return the current command name
  */
 llvm::StringRef Subsystem::GetCurrentCommandName() const {
-  Command* currentCommand = GetCurrentCommand();
+  Command *currentCommand = GetCurrentCommand();
   if (currentCommand) {
     return currentCommand->GetName();
   } else {
@@ -141,7 +141,8 @@ void Subsystem::Periodic() {}
  * avoid that situation.
  */
 void Subsystem::ConfirmCommand() {
-  if (m_currentCommandChanged) m_currentCommandChanged = false;
+  if (m_currentCommandChanged)
+    m_currentCommandChanged = false;
 }
 
 /**
@@ -151,7 +152,7 @@ void Subsystem::ConfirmCommand() {
  * @param name name to give child
  * @param child sendable
  */
-void Subsystem::AddChild(const llvm::Twine& name,
+void Subsystem::AddChild(const llvm::Twine &name,
                          std::shared_ptr<Sendable> child) {
   AddChild(name, *child);
 }
@@ -163,7 +164,7 @@ void Subsystem::AddChild(const llvm::Twine& name,
  * @param name name to give child
  * @param child sendable
  */
-void Subsystem::AddChild(const llvm::Twine& name, Sendable* child) {
+void Subsystem::AddChild(const llvm::Twine &name, Sendable *child) {
   AddChild(name, *child);
 }
 
@@ -174,7 +175,7 @@ void Subsystem::AddChild(const llvm::Twine& name, Sendable* child) {
  * @param name name to give child
  * @param child sendable
  */
-void Subsystem::AddChild(const llvm::Twine& name, Sendable& child) {
+void Subsystem::AddChild(const llvm::Twine &name, Sendable &child) {
   child.SetName(GetSubsystem(), name);
   LiveWindow::GetInstance()->Add(&child);
 }
@@ -191,19 +192,19 @@ void Subsystem::AddChild(std::shared_ptr<Sendable> child) { AddChild(*child); }
  *
  * @param child sendable
  */
-void Subsystem::AddChild(Sendable* child) { AddChild(*child); }
+void Subsystem::AddChild(Sendable *child) { AddChild(*child); }
 
 /**
  * Associate a {@link Sendable} with this Subsystem.
  *
  * @param child sendable
  */
-void Subsystem::AddChild(Sendable& child) {
+void Subsystem::AddChild(Sendable &child) {
   child.SetSubsystem(GetSubsystem());
   LiveWindow::GetInstance()->Add(&child);
 }
 
-void Subsystem::InitSendable(SendableBuilder& builder) {
+void Subsystem::InitSendable(SendableBuilder &builder) {
   builder.SetSmartDashboardType("Subsystem");
 
   builder.AddBooleanProperty(

@@ -21,7 +21,7 @@ namespace frc {
  * have two positions controlled by two separate channels.
  */
 class DoubleSolenoid : public SolenoidBase {
- public:
+public:
   enum Value { kOff, kForward, kReverse };
 
   explicit DoubleSolenoid(int forwardChannel, int reverseChannel);
@@ -32,15 +32,15 @@ class DoubleSolenoid : public SolenoidBase {
   bool IsFwdSolenoidBlackListed() const;
   bool IsRevSolenoidBlackListed() const;
 
-  void InitSendable(SendableBuilder& builder) override;
+  void InitSendable(SendableBuilder &builder) override;
 
- private:
-  int m_forwardChannel;  // The forward channel on the module to control.
-  int m_reverseChannel;  // The reverse channel on the module to control.
-  int m_forwardMask;     // The mask for the forward channel.
-  int m_reverseMask;     // The mask for the reverse channel.
+private:
+  int m_forwardChannel; // The forward channel on the module to control.
+  int m_reverseChannel; // The reverse channel on the module to control.
+  int m_forwardMask;    // The mask for the forward channel.
+  int m_reverseMask;    // The mask for the reverse channel.
   HAL_SolenoidHandle m_forwardHandle = HAL_kInvalidHandle;
   HAL_SolenoidHandle m_reverseHandle = HAL_kInvalidHandle;
 };
 
-}  // namespace frc
+} // namespace frc

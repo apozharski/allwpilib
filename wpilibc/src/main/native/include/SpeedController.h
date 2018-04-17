@@ -15,7 +15,7 @@ namespace frc {
  * Interface for speed controlling devices.
  */
 class SpeedController : public PIDOutput {
- public:
+public:
   virtual ~SpeedController() = default;
   /**
    * Common interface for setting the speed of a speed controller.
@@ -56,4 +56,4 @@ class SpeedController : public PIDOutput {
   virtual void StopMotor() = 0;
 };
 
-}  // namespace frc
+} // namespace frc

@@ -12,7 +12,7 @@
 namespace frc {
 
 class MockSpeedController : public SpeedController {
- public:
+public:
   void Set(double speed) override;
   double Get() const override;
   void SetInverted(bool isInverted) override;
@@ -22,9 +22,9 @@ class MockSpeedController : public SpeedController {
 
   void PIDWrite(double output) override;
 
- private:
+private:
   double m_speed = 0.0;
   bool m_isInverted = false;
 };
 
-}  // namespace frc
+} // namespace frc

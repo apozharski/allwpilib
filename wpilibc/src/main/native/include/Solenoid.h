@@ -20,7 +20,7 @@ namespace frc {
  * used for any device within the current spec of the PCM.
  */
 class Solenoid : public SolenoidBase {
- public:
+public:
   explicit Solenoid(int channel);
   Solenoid(int moduleNumber, int channel);
   ~Solenoid() override;
@@ -30,11 +30,11 @@ class Solenoid : public SolenoidBase {
   void SetPulseDuration(double durationSeconds);
   void StartPulse();
 
-  void InitSendable(SendableBuilder& builder) override;
+  void InitSendable(SendableBuilder &builder) override;
 
- private:
+private:
   HAL_SolenoidHandle m_solenoidHandle = HAL_kInvalidHandle;
-  int m_channel;  // The channel on the module to control
+  int m_channel; // The channel on the module to control
 };
 
-}  // namespace frc
+} // namespace frc

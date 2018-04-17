@@ -97,7 +97,7 @@ double Servo::GetAngle() const {
   return GetPosition() * GetServoAngleRange() + kMinServoAngle;
 }
 
-void Servo::InitSendable(SendableBuilder& builder) {
+void Servo::InitSendable(SendableBuilder &builder) {
   builder.SetSmartDashboardType("Servo");
   builder.AddDoubleProperty("Value", [=]() { return Get(); },
                             [=](double value) { Set(value); });

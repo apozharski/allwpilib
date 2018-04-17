@@ -19,11 +19,11 @@
 namespace frc {
 
 class PIDCommand : public Command, public PIDOutput, public PIDSource {
- public:
-  PIDCommand(const llvm::Twine& name, double p, double i, double d);
-  PIDCommand(const llvm::Twine& name, double p, double i, double d,
+public:
+  PIDCommand(const llvm::Twine &name, double p, double i, double d);
+  PIDCommand(const llvm::Twine &name, double p, double i, double d,
              double period);
-  PIDCommand(const llvm::Twine& name, double p, double i, double d, double f,
+  PIDCommand(const llvm::Twine &name, double p, double i, double d, double f,
              double period);
   PIDCommand(double p, double i, double d);
   PIDCommand(double p, double i, double d, double period);
@@ -38,7 +38,7 @@ class PIDCommand : public Command, public PIDOutput, public PIDSource {
   // PIDSource interface
   double PIDGet() override;
 
- protected:
+protected:
   std::shared_ptr<PIDController> GetPIDController() const;
   void _Initialize() override;
   void _Interrupted() override;
@@ -50,12 +50,12 @@ class PIDCommand : public Command, public PIDOutput, public PIDSource {
   virtual double ReturnPIDInput() = 0;
   virtual void UsePIDOutput(double output) = 0;
 
- private:
+private:
   // The internal PIDController
   std::shared_ptr<PIDController> m_controller;
 
- public:
-  void InitSendable(SendableBuilder& builder) override;
+public:
+  void InitSendable(SendableBuilder &builder) override;
 };
 
-}  // namespace frc
+} // namespace frc

@@ -21,11 +21,11 @@ struct AnalogOutput {
   uint8_t channel;
 };
 
-}  // namespace
+} // namespace
 
 static IndexedHandleResource<HAL_AnalogOutputHandle, AnalogOutput,
-                             kNumAnalogOutputs, HAL_HandleEnum::AnalogOutput>*
-    analogOutputHandles;
+                             kNumAnalogOutputs,
+                             HAL_HandleEnum::AnalogOutput> *analogOutputHandles;
 
 namespace hal {
 namespace init {
@@ -35,8 +35,8 @@ void InitializeAnalogOutput() {
       aoH;
   analogOutputHandles = &aoH;
 }
-}  // namespace init
-}  // namespace hal
+} // namespace init
+} // namespace hal
 
 extern "C" {
 
@@ -44,10 +44,11 @@ extern "C" {
  * Initialize the analog output port using the given port object.
  */
 HAL_AnalogOutputHandle HAL_InitializeAnalogOutputPort(HAL_PortHandle portHandle,
-                                                      int32_t* status) {
+                                                      int32_t *status) {
   initializeAnalog(status);
 
-  if (*status != 0) return HAL_kInvalidHandle;
+  if (*status != 0)
+    return HAL_kInvalidHandle;
 
   int16_t channel = getPortHandleChannel(portHandle);
   if (channel == InvalidHandleIndex) {
@@ -59,10 +60,10 @@ HAL_AnalogOutputHandle HAL_InitializeAnalogOutputPort(HAL_PortHandle portHandle,
       analogOutputHandles->Allocate(channel, status);
 
   if (*status != 0)
-    return HAL_kInvalidHandle;  // failed to allocate. Pass error back.
+    return HAL_kInvalidHandle; // failed to allocate. Pass error back.
 
   auto port = analogOutputHandles->Get(handle);
-  if (port == nullptr) {  // would only error on thread issue
+  if (port == nullptr) { // would only error on thread issue
     *status = HAL_HANDLE_ERROR;
     return HAL_kInvalidHandle;
   }
@@ -88,7 +89,7 @@ HAL_Bool HAL_CheckAnalogOutputChannel(int32_t channel) {
 }
 
 void HAL_SetAnalogOutput(HAL_AnalogOutputHandle analogOutputHandle,
-                         double voltage, int32_t* status) {
+                         double voltage, int32_t *status) {
   auto port = analogOutputHandles->Get(analogOutputHandle);
   if (port == nullptr) {
     *status = HAL_HANDLE_ERROR;
@@ -106,7 +107,7 @@ void HAL_SetAnalogOutput(HAL_AnalogOutputHandle analogOutputHandle,
 }
 
 double HAL_GetAnalogOutput(HAL_AnalogOutputHandle analogOutputHandle,
-                           int32_t* status) {
+                           int32_t *status) {
   auto port = analogOutputHandles->Get(analogOutputHandle);
   if (port == nullptr) {
     *status = HAL_HANDLE_ERROR;
@@ -118,4 +119,4 @@ double HAL_GetAnalogOutput(HAL_AnalogOutputHandle analogOutputHandle,
   return rawValue * 5.0 / 0x1000;
 }
 
-}  // extern "C"
+} // extern "C"

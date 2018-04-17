@@ -28,7 +28,7 @@ Scheduler::Scheduler() {
  *
  * @return the Scheduler
  */
-Scheduler* Scheduler::GetInstance() {
+Scheduler *Scheduler::GetInstance() {
   static Scheduler instance;
   return &instance;
 }
@@ -43,7 +43,7 @@ void Scheduler::SetEnabled(bool enabled) { m_enabled = enabled; }
  *
  * @param command The command to be scheduled
  */
-void Scheduler::AddCommand(Command* command) {
+void Scheduler::AddCommand(Command *command) {
   std::lock_guard<wpi::mutex> lock(m_additionsMutex);
   if (std::find(m_additions.begin(), m_additions.end(), command) !=
       m_additions.end())
@@ -51,13 +51,14 @@ void Scheduler::AddCommand(Command* command) {
   m_additions.push_back(command);
 }
 
-void Scheduler::AddButton(ButtonScheduler* button) {
+void Scheduler::AddButton(ButtonScheduler *button) {
   std::lock_guard<wpi::mutex> lock(m_buttonsMutex);
   m_buttons.push_back(button);
 }
 
-void Scheduler::ProcessCommandAddition(Command* command) {
-  if (command == nullptr) return;
+void Scheduler::ProcessCommandAddition(Command *command) {
+  if (command == nullptr)
+    return;
 
   // Check to make sure no adding during adding
   if (m_adding) {
@@ -73,7 +74,7 @@ void Scheduler::ProcessCommandAddition(Command* command) {
     Command::SubsystemSet requirements = command->GetRequirements();
     for (Command::SubsystemSet::iterator iter = requirements.begin();
          iter != requirements.end(); iter++) {
-      Subsystem* lock = *iter;
+      Subsystem *lock = *iter;
       if (lock->GetCurrentCommand() != nullptr &&
           !lock->GetCurrentCommand()->IsInterruptible())
         return;
@@ -83,7 +84,7 @@ void Scheduler::ProcessCommandAddition(Command* command) {
     m_adding = true;
     for (Command::SubsystemSet::iterator iter = requirements.begin();
          iter != requirements.end(); iter++) {
-      Subsystem* lock = *iter;
+      Subsystem *lock = *iter;
       if (lock->GetCurrentCommand() != nullptr) {
         lock->GetCurrentCommand()->Cancel();
         Remove(lock->GetCurrentCommand());
@@ -116,7 +117,8 @@ void Scheduler::ProcessCommandAddition(Command* command) {
 void Scheduler::Run() {
   // Get button input (going backwards preserves button priority)
   {
-    if (!m_enabled) return;
+    if (!m_enabled)
+      return;
 
     std::lock_guard<wpi::mutex> lock(m_buttonsMutex);
     for (auto rButtonIter = m_buttons.rbegin(); rButtonIter != m_buttons.rend();
@@ -128,7 +130,7 @@ void Scheduler::Run() {
   // Call every subsystem's periodic method
   for (auto subsystemIter = m_subsystems.begin();
        subsystemIter != m_subsystems.end(); subsystemIter++) {
-    Subsystem* subsystem = *subsystemIter;
+    Subsystem *subsystem = *subsystemIter;
     subsystem->Periodic();
   }
 
@@ -137,7 +139,7 @@ void Scheduler::Run() {
   // Loop through the commands
   for (auto commandIter = m_commands.begin();
        commandIter != m_commands.end();) {
-    Command* command = *commandIter;
+    Command *command = *commandIter;
     // Increment before potentially removing to keep the iterator valid
     ++commandIter;
     if (!command->Run()) {
@@ -159,7 +161,7 @@ void Scheduler::Run() {
   // Add in the defaults
   for (auto subsystemIter = m_subsystems.begin();
        subsystemIter != m_subsystems.end(); subsystemIter++) {
-    Subsystem* lock = *subsystemIter;
+    Subsystem *lock = *subsystemIter;
     if (lock->GetCurrentCommand() == nullptr) {
       ProcessCommandAddition(lock->GetDefaultCommand());
     }
@@ -175,7 +177,7 @@ void Scheduler::Run() {
  *
  * @param system the system
  */
-void Scheduler::RegisterSubsystem(Subsystem* subsystem) {
+void Scheduler::RegisterSubsystem(Subsystem *subsystem) {
   if (subsystem == nullptr) {
     wpi_setWPIErrorWithContext(NullParameter, "subsystem");
     return;
@@ -188,17 +190,18 @@ void Scheduler::RegisterSubsystem(Subsystem* subsystem) {
  *
  * @param command the command to remove
  */
-void Scheduler::Remove(Command* command) {
+void Scheduler::Remove(Command *command) {
   if (command == nullptr) {
     wpi_setWPIErrorWithContext(NullParameter, "command");
     return;
   }
 
-  if (!m_commands.erase(command)) return;
+  if (!m_commands.erase(command))
+    return;
 
   Command::SubsystemSet requirements = command->GetRequirements();
   for (auto iter = requirements.begin(); iter != requirements.end(); iter++) {
-    Subsystem* lock = *iter;
+    Subsystem *lock = *iter;
     lock->SetCurrentCommand(nullptr);
   }
 
@@ -225,7 +228,7 @@ void Scheduler::ResetAll() {
   m_cancelEntry = nt::NetworkTableEntry();
 }
 
-void Scheduler::InitSendable(SendableBuilder& builder) {
+void Scheduler::InitSendable(SendableBuilder &builder) {
   builder.SetSmartDashboardType("Scheduler");
   m_namesEntry = builder.GetEntry("Names");
   m_idsEntry = builder.GetEntry("Ids");
@@ -243,7 +246,7 @@ void Scheduler::InitSendable(SendableBuilder& builder) {
       for (auto commandIter = m_commands.begin();
            commandIter != m_commands.end(); ++commandIter) {
         for (size_t i = 0; i < toCancel.size(); i++) {
-          Command* c = *commandIter;
+          Command *c = *commandIter;
           if (c->GetID() == toCancel[i]) {
             c->Cancel();
           }
@@ -259,7 +262,7 @@ void Scheduler::InitSendable(SendableBuilder& builder) {
       ids.resize(0);
       for (auto commandIter = m_commands.begin();
            commandIter != m_commands.end(); ++commandIter) {
-        Command* c = *commandIter;
+        Command *c = *commandIter;
         commands.push_back(c->GetName());
         ids.push_back(c->GetID());
       }

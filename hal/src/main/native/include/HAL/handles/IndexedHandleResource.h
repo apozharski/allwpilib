@@ -38,17 +38,17 @@ template <typename THandle, typename TStruct, int16_t size,
 class IndexedHandleResource : public HandleBase {
   friend class IndexedHandleResourceTest;
 
- public:
+public:
   IndexedHandleResource() = default;
-  IndexedHandleResource(const IndexedHandleResource&) = delete;
-  IndexedHandleResource& operator=(const IndexedHandleResource&) = delete;
+  IndexedHandleResource(const IndexedHandleResource &) = delete;
+  IndexedHandleResource &operator=(const IndexedHandleResource &) = delete;
 
-  THandle Allocate(int16_t index, int32_t* status);
+  THandle Allocate(int16_t index, int32_t *status);
   std::shared_ptr<TStruct> Get(THandle handle);
   void Free(THandle handle);
   void ResetHandles() override;
 
- private:
+private:
   std::array<std::shared_ptr<TStruct>, size> m_structures;
   std::array<wpi::mutex, size> m_handleMutexes;
 };
@@ -56,7 +56,7 @@ class IndexedHandleResource : public HandleBase {
 template <typename THandle, typename TStruct, int16_t size,
           HAL_HandleEnum enumValue>
 THandle IndexedHandleResource<THandle, TStruct, size, enumValue>::Allocate(
-    int16_t index, int32_t* status) {
+    int16_t index, int32_t *status) {
   // don't aquire the lock if we can fail early.
   if (index < 0 || index >= size) {
     *status = RESOURCE_OUT_OF_RANGE;
@@ -93,7 +93,8 @@ void IndexedHandleResource<THandle, TStruct, size, enumValue>::Free(
     THandle handle) {
   // get handle index, and fail early if index out of range or wrong handle
   int16_t index = getHandleTypedIndex(handle, enumValue, m_version);
-  if (index < 0 || index >= size) return;
+  if (index < 0 || index >= size)
+    return;
   // lock and deallocated handle
   std::lock_guard<wpi::mutex> lock(m_handleMutexes[index]);
   m_structures[index].reset();
@@ -108,4 +109,4 @@ void IndexedHandleResource<THandle, TStruct, size, enumValue>::ResetHandles() {
   }
   HandleBase::ResetHandles();
 }
-}  // namespace hal
+} // namespace hal

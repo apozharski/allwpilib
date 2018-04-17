@@ -23,9 +23,9 @@ namespace frc {
  * calibrated by finding the center value over a period of time.
  */
 class AnalogAccelerometer : public SensorBase, public PIDSource {
- public:
+public:
   explicit AnalogAccelerometer(int channel);
-  explicit AnalogAccelerometer(AnalogInput* channel);
+  explicit AnalogAccelerometer(AnalogInput *channel);
   explicit AnalogAccelerometer(std::shared_ptr<AnalogInput> channel);
   ~AnalogAccelerometer() override = default;
 
@@ -34,9 +34,9 @@ class AnalogAccelerometer : public SensorBase, public PIDSource {
   void SetZero(double zero);
   double PIDGet() override;
 
-  void InitSendable(SendableBuilder& builder) override;
+  void InitSendable(SendableBuilder &builder) override;
 
- private:
+private:
   void InitAccelerometer();
 
   std::shared_ptr<AnalogInput> m_analogInput;
@@ -44,4 +44,4 @@ class AnalogAccelerometer : public SensorBase, public PIDSource {
   double m_zeroGVoltage = 2.5;
 };
 
-}  // namespace frc
+} // namespace frc
