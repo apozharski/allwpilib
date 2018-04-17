@@ -28,18 +28,8 @@ public class SetDistanceToBox extends Command {
 			PIDSourceType m_sourceType = PIDSourceType.kDisplacement;
 
 			@Override
-			public double pidGet() {
+			public double pidGet(PIDSourceType pidSource) {
 				return Robot.m_drivetrain.getDistanceToObstacle();
-			}
-
-			@Override
-			public void setPIDSourceType(PIDSourceType pidSource) {
-				m_sourceType = pidSource;
-			}
-
-			@Override
-			public PIDSourceType getPIDSourceType() {
-				return m_sourceType;
 			}
 		}, d -> Robot.m_drivetrain.drive(d, d));
 
